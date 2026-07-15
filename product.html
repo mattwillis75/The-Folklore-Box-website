@@ -439,5 +439,21 @@
         // ... (Paste the rest of your UI toggle, updateCartUI, and PayPal SDK logic here exactly as it was before) ...
     });
 </script>
+
+    <!-- Mobile Menu Toggle Script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const mobileToggle = document.getElementById('mobile-toggle');
+            const navList = document.getElementById('nav-list');
+
+            if (mobileToggle && navList) {
+                mobileToggle.addEventListener('click', () => {
+                    navList.classList.toggle('mobile-active');
+                    mobileToggle.classList.toggle('open');
+                });
+            }
+        });
+    </script>
+    
 </body>
 </html>
