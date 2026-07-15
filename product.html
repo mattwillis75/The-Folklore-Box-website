@@ -159,6 +159,84 @@
         footer a { color: #ffffff; text-decoration: none; margin: 0 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
         footer a:hover { color: var(--accent-red); }
         .social-links { margin-bottom: 2rem; }
+
+        /* --- Mobile Navigation Styles --- */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            z-index: 1005;
+        }
+
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background-color: #ffffff;
+            transition: all 0.3s ease;
+            border-radius: 3px;
+        }
+
+        /* When the screen is smaller than 850px (tablets and phones) */
+        @media (max-width: 850px) {
+            .mobile-menu-toggle {
+                display: flex; /* Show the hamburger icon */
+            }
+
+            nav ul {
+                display: none; /* Hide the horizontal menu */
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: rgba(0, 0, 0, 0.95);
+                padding: 1rem 0;
+                border-bottom: 1px solid #333;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            }
+
+            /* The class our JavaScript will toggle to show the menu */
+            nav ul.mobile-active {
+                display: flex;
+            }
+
+            nav ul li {
+                width: 100%;
+                text-align: center;
+                padding: 0.8rem 0;
+            }
+
+            /* Adjust the red dropdown for mobile */
+            .dropdown-content {
+                position: static;
+                transform: none;
+                background-color: transparent;
+                box-shadow: none;
+                margin-top: 0;
+                display: none;
+            }
+
+            .dropdown:hover .dropdown-content {
+                display: flex;
+            }
+
+            .dropdown-content::before {
+                display: none;
+            }
+            
+            /* Change hamburger to an 'X' when open */
+            .mobile-menu-toggle.open span:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+            .mobile-menu-toggle.open span:nth-child(2) {
+                opacity: 0;
+            }
+            .mobile-menu-toggle.open span:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+        }
+        
     </style>
 </head>
 <body>
