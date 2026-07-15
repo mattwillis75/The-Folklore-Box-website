@@ -697,5 +697,20 @@
         });
     </script>
 
+    <!-- Mobile Menu Toggle Script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const mobileToggle = document.getElementById('mobile-toggle');
+            const navList = document.getElementById('nav-list');
+
+            if (mobileToggle && navList) {
+                mobileToggle.addEventListener('click', () => {
+                    navList.classList.toggle('mobile-active');
+                    mobileToggle.classList.toggle('open');
+                });
+            }
+        });
+    </script>
+
 </body>
 </html>
