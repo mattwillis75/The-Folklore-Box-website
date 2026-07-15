@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | The Folklore Box</title>
+    <meta name="description" content="Illustration portfolio of Matt Willis, creator of The Folklore Box.">
+    
+    <!-- Google Fonts: Lato Light (300) and Spectral Regular (400) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Spectral:wght@400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Base Colors & Typography - Dark Theme */
+        :root {
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --accent-red: #cc0000;
+            --header-bg: rgba(0, 0, 0, 0.85);
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            font-weight: 300;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Spectral', serif;
+            font-weight: 400;
+            color: #ffffff;
+        }
+
+        /* Fixed Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 3rem;
+            background: var(--header-bg);
+            border-bottom: 1px solid #333333;
+            z-index: 1000;
+            box-sizing: border-box;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+
+        .logo img {
+            max-width: 180px;
+            height: auto;
+        }
+
+        /* Navigation & Dropdowns */
+        nav ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            transition: color 0.3s ease, background-color 0.3s ease;
+            font-family: 'Lato', sans-serif;
+        }
+
+        nav a:hover {
+            color: var(--accent-red);
+        }
+
+        /* Active Page Highlight */
+        .active-page {
+            color: var(--accent-red) !important;
+        }
+
+        /* Dropdown Styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--accent-red);
+            min-width: 180px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+            z-index: 1001;
+            border-radius: 4px;
+            flex-direction: column;
+            margin-top: 1.5rem; 
+            padding: 0.5rem 0;
+        }
+
+        .dropdown-content::before {
+            content: "";
+            position: absolute;
+            top: -1.5rem;
+            left: 0;
+            width: 100%;
+            height: 1.5rem;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: flex;
+        }
+
+        .dropdown-content a {
+            padding: 10px 16px;
+            display: block;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #a30000; 
+            color: #ffffff;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background-color: #ffffff;
+            margin: 0 15px; 
+        }
+
+        /* --- Portfolio Specific Layout --- */
+        main {
+            padding-top: 100px; 
+            min-height: 100vh;
+        }
+
+        .portfolio-header {
+            text-align: center;
+            padding: 3rem 2rem 1rem;
+            transition: opacity 0.8s ease; 
+        }
+
+        .portfolio-header.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .portfolio-header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Grid System & Gap Border Method */
+        .portfolio-wrapper {
+            padding: 2rem 4rem 6rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); 
+            gap: 2px; /* Creates the uniform inner lines */
+            background-color: transparent; 
+            border: 2px solid transparent; /* Creates the uniform outer frame */
+            transition: background-color 0.8s ease, border-color 0.8s ease;
+        }
+
+        /* Toggled by JS to fade lines in without flashing */
+        .portfolio-grid.lines-visible {
+            background-color: #ffffff;
+            border-color: #ffffff;
+        }
+
+        /* Grid Items */
+        .portfolio-item {
+            position: relative;
+            aspect-ratio: 1 / 1;
+            cursor: pointer;
+            overflow: hidden;
+            background-color: #000000; 
+            padding: 1.2rem; 
+            box-sizing: border-box;
+            
+            opacity: 0;
+            transform: scale(0.3);
+            
+            transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1), 
+                        opacity 0.9s ease;
+        }
+
+        /* Red Transparency Hover Overlay */
+        .portfolio-item::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(204, 0, 0, 0); 
+            transition: background-color 0.3s ease;
+            pointer-events: none; 
+            z-index: 5;
+        }
+
+        .portfolio-item:hover::after {
+            background-color: rgba(204, 0, 0, 0.5); 
+        }
+
+        .portfolio-item.is-loaded {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .portfolio-item:hover {
+            z-index: 10;
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; 
+            transition: transform 0.6s ease;
+            display: block;
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.08); 
+        }
+
+        /* Empty filler items to plug bottom row gaps */
+        .portfolio-item.empty-item {
+            cursor: default;
+            pointer-events: none;
+        }
+        
+        .portfolio-item.empty-item::after {
+            display: none !important;
+        }
+
+        /* Classes toggled by JS to part the grid */
+        .portfolio-item.move-up {
+            transform: translateY(-80vh) scale(0.9) !important;
+            opacity: 0.05 !important;
+            pointer-events: none;
+        }
+
+        .portfolio-item.move-down {
+            transform: translateY(80vh) scale(0.9) !important;
+            opacity: 0.05 !important;
+            pointer-events: none;
+        }
+
+        /* --- Full Screen Center Display (Modal) --- */
+        .portfolio-display {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 500; 
+            pointer-events: none; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .portfolio-display.active {
+            opacity: 1;
+            pointer-events: auto;
+            background: rgba(0,0,0,0.4);
+        }
+
+        .display-content {
+            transform: scale(0.8);
+            transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 90%;
+            max-height: 80vh;
+            margin-top: 50px; 
+        }
+
+        .portfolio-display.active .display-content {
+            transform: scale(1);
+        }
+
+        .display-content img {
+            max-width: 100%;
+            max-height: 65vh;
+            object-fit: contain; 
+            box-shadow: 0 15px 50px rgba(0,0,0,0.8);
+            border: 1px solid #333;
+        }
+
+        .display-title {
+            margin-top: 1.5rem;
+            font-family: 'Spectral', serif;
+            font-size: 2rem;
+            color: #ffffff;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        .close-display {
+            position: absolute;
+            top: 100px;
+            right: 40px;
+            color: #ffffff;
+            font-size: 3.5rem;
+            cursor: pointer;
+            z-index: 501;
+            transition: color 0.3s, transform 0.3s;
+            line-height: 1;
+        }
+
+        .close-display:hover {
+            color: var(--accent-red);
+            transform: scale(1.1);
+        }
+
+        /* Footer */
+        footer {
+            background: #000000; 
+            color: #ffffff;
+            padding: 4rem 2rem;
+            text-align: center;
+            border-top: 1px solid #222;
+            position: relative;
+            z-index: 100;
+        }
+
+        footer a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 1rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+        
+        footer a:hover {
+            color: var(--accent-red);
+        }
+
+        .social-links { margin-bottom: 2rem; }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header id="main-header">
+        <div class="logo">
+            <a href="index.html">
+                <img src="./The-folklore-box-logo.png" alt="The Folklore Box Logo">
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li class="dropdown">
+                    <a href="index.html">Home</a>
+                    <div class="dropdown-content">
+                        <a href="index.html#collections">Goods & Wares</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="index.html#about">About the Artist</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="index.html#map-teaser">The Folklore Map</a>
+                    </div>
+                </li>
+                
+                <li><a href="portfolio.html" class="active-page">Portfolio</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="uk-folklore-map.html">UK Folklore Map</a></li>
+                <li><a href="journal.html">Journal</a></li>
+                <li><a href="wholesale.html">Wholesale</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="portfolio-header" id="portfolioHeader">
+            <h1>Illustration Portfolio</h1>
+        </div>
+
+        <div class="portfolio-wrapper">
+            <!-- The Grid -->
+            <section class="portfolio-grid" id="portfolioGrid">
+                
+                <div class="portfolio-item" data-title="Cat People film poster" data-src="./Portfolio-1.png">
+                    <img src="./Portfolio-1.png" alt="Detail of Cat People film poster">
+                </div>
+                
+                <div class="portfolio-item" data-title="Reading from a forbidden tome" data-src="./Portfolio-2.png">
+                    <img src="./Portfolio-2.png" alt="Detail of Reading from a forbidden tome">
+                </div>
+                
+                <div class="portfolio-item" data-title="A night in Devil's hollow" data-src="./Portfolio-3.png">
+                    <img src="./Portfolio-3.png" alt="Detail of A night in Devil's hollow">
+                </div>
+                
+                <div class="portfolio-item" data-title="Gathering the harvest" data-src="./Portfolio-4.png">
+                    <img src="./Portfolio-4.png" alt="Detail of Gathering the harvest">
+                </div>
+                
+                <div class="portfolio-item" data-title="The gardener" data-src="./Portfolio-5.png">
+                    <img src="./Portfolio-5.png" alt="Detail of The gardener">
+                </div>
+                
+                <div class="portfolio-item" data-title="The lantern man" data-src="./Portfolio-6.png">
+                    <img src="./Portfolio-6.png" alt="Detail of The lantern man">
+                </div>
+                
+                <div class="portfolio-item" data-title="Black Shuck leaping over Bungay church" data-src="./Portfolio-7.png">
+                    <img src="./Portfolio-7.png" alt="Detail of Black Shuck leaping over Bungay church">
+                </div>
+                
+                <div class="portfolio-item" data-title="Mari Lwyd" data-src="./Portfolio-8.png">
+                    <img src="./Portfolio-8.png" alt="Detail of Mari Lwyd">
+                </div>
+                
+                <div class="portfolio-item" data-title="Night of the Demon film poster" data-src="./Portfolio-9.png">
+                    <img src="./Portfolio-9.png" alt="Detail of Night of the Demon film poster">
+                </div>
+                
+                <div class="portfolio-item" data-title="The bower" data-src="./Portfolio-10.png">
+                    <img src="./Portfolio-10.png" alt="Detail of The bower">
+                </div>
+                
+                <div class="portfolio-item" data-title="Man-eating plant" data-src="./Portfolio-11.png">
+                    <img src="./Portfolio-11.png" alt="Detail of Man-eating plant">
+                </div>
+                
+                <div class="portfolio-item" data-title="Wirdston-in-the-Wold" data-src="./Portfolio-12.png">
+                    <img src="./Portfolio-12.png" alt="Detail of Wirdston-in-the-Wold">
+                </div>
+                
+                <div class="portfolio-item" data-title="Dragonhoard" data-src="./Portfolio-13.png">
+                    <img src="./Portfolio-13.png" alt="Detail of Dragonhoard">
+                </div>
+                
+                <div class="portfolio-item" data-title="Baba Yaga" data-src="./Portfolio-14.png">
+                    <img src="./Portfolio-14.png" alt="Detail of Baba Yaga">
+                </div>
+                
+                <div class="portfolio-item" data-title="The Fog film poster" data-src="./Portfolio-15.png">
+                    <img src="./Portfolio-15.png" alt="Detail of The Fog film poster">
+                </div>
+                
+                <div class="portfolio-item" data-title="Victorious" data-src="./Portfolio-16.png">
+                    <img src="./Portfolio-16.png" alt="Detail of Victorious">
+                </div>
+                
+                <div class="portfolio-item" data-title="The procession" data-src="./Portfolio-17.png">
+                    <img src="./Portfolio-17.png" alt="Detail of The procession">
+                </div>
+                
+                <div class="portfolio-item" data-title="Imbolc" data-src="./Portfolio-18.png">
+                    <img src="./Portfolio-18.png" alt="Detail of Imbolc">
+                </div>
+                
+                <div class="portfolio-item" data-title="Hail Satan!" data-src="./Portfolio-19.png">
+                    <img src="./Portfolio-19.png" alt="Detail of Hail Satan!">
+                </div>
+                
+                <div class="portfolio-item" data-title="The Mushroomist" data-src="./Portfolio-20.png">
+                    <img src="./Portfolio-20.png" alt="Detail of The Mushroomist">
+                </div>
+                
+                <div class="portfolio-item" data-title="Green man with hagstone" data-src="./Portfolio-21.png">
+                    <img src="./Portfolio-21.png" alt="Detail of Green man with hagstone">
+                </div>
+
+            </section>
+        </div>
+
+        <!-- The Center Display Area -->
+        <div id="portfolioDisplay" class="portfolio-display">
+            <span class="close-display">&times;</span>
+            <div class="display-content">
+                <img id="displayImg" src="" alt="Full artwork view">
+                <div id="displayTitle" class="display-title"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="https://instagram.com/the_folklore_box" target="_blank">Instagram: @the_folklore_box</a> | 
+            <a href="https://facebook.com/thefolklorebox" target="_blank">Facebook: @thefolklorebox</a>
+        </div>
+        <div style="margin-bottom: 2rem;">
+            <a href="shop.html">Shop</a>
+            <a href="wholesale.html">Wholesale Enquiries</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <p style="font-size: 0.8rem; color: #555; font-family: 'Lato', sans-serif;">
+            &copy; 2026 The Folklore Box by Matt Willis. All rights reserved.
+        </p>
+    </footer>
+
+    <!-- Interactive Scripts -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const portfolioGrid = document.getElementById('portfolioGrid');
+            const realItems = document.querySelectorAll('.portfolio-item:not(.empty-item)');
+            const display = document.getElementById('portfolioDisplay');
+            const displayImg = document.getElementById('displayImg');
+            const displayTitle = document.getElementById('displayTitle');
+            const closeBtn = document.querySelector('.close-display');
+            const portfolioHeader = document.getElementById('portfolioHeader');
+
+            // 1. Dynamic Grid Balancer (plugs the empty gaps with black squares)
+            const balanceGrid = () => {
+                portfolioGrid.querySelectorAll('.empty-item').forEach(el => el.remove());
+                
+                const gridCols = window.getComputedStyle(portfolioGrid).getPropertyValue('grid-template-columns').split(' ').length;
+                const remainder = realItems.length % gridCols;
+                
+                if (remainder !== 0) {
+                    const missing = gridCols - remainder;
+                    for (let i = 0; i < missing; i++) {
+                        const emptyItem = document.createElement('div');
+                        emptyItem.className = 'portfolio-item empty-item is-loaded'; 
+                        portfolioGrid.appendChild(emptyItem);
+                    }
+                }
+            };
+
+            // Run balancer on load and whenever the window is resized
+            balanceGrid();
+            let resizeTimer;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(balanceGrid, 150);
+            });
+
+            // 2. Random Staggered Entrance
+            realItems.forEach(item => {
+                const randomDelay = Math.random() * 600; 
+                setTimeout(() => {
+                    item.classList.add('is-loaded');
+                }, randomDelay);
+
+                // 3. Click Interaction (The Grid Parting Effect)
+                item.addEventListener('click', () => {
+                    const rect = item.getBoundingClientRect();
+                    const clickCenterY = rect.top + (rect.height / 2);
+
+                    // Re-select all children (including empty dummies) to make them part correctly
+                    Array.from(portfolioGrid.children).forEach(otherItem => {
+                        const otherRect = otherItem.getBoundingClientRect();
+                        const otherCenterY = otherRect.top + (otherRect.height / 2);
+
+                        if (otherCenterY <= clickCenterY) {
+                            otherItem.classList.add('move-up');
+                        } else {
+                            otherItem.classList.add('move-down');
+                        }
+                    });
+
+                    displayImg.src = item.dataset.src;
+                    displayTitle.textContent = item.dataset.title;
+                    
+                    portfolioHeader.classList.add('fade-out');
+                    portfolioGrid.classList.remove('lines-visible'); 
+                    display.classList.add('active');
+                });
+            });
+
+            // Fade in the white grid lines after the entrance animation settles
+            setTimeout(() => {
+                portfolioGrid.classList.add('lines-visible');
+            }, 1200);
+
+            // 4. Closing the View
+            const closeDisplay = () => {
+                display.classList.remove('active');
+                portfolioHeader.classList.remove('fade-out');
+                portfolioGrid.classList.add('lines-visible'); 
+                
+                Array.from(portfolioGrid.children).forEach(item => {
+                    item.classList.remove('move-up', 'move-down');
+                });
+            };
+
+            closeBtn.addEventListener('click', closeDisplay);
+
+            display.addEventListener('click', (e) => {
+                if (e.target !== displayImg && e.target !== displayTitle) {
+                    closeDisplay();
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

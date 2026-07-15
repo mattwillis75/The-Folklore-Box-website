@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop | The Folklore Box</title>
+    <meta name="description" content="Shop original artwork, prints, and wooden wares by illustrator Matt Willis.">
+    
+    <!-- Google Fonts: Lato Light (300) and Spectral Regular (400) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Spectral:wght@400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Base Colors & Typography - Dark Theme */
+        :root {
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --accent-red: #cc0000;
+            --header-bg: rgba(0, 0, 0, 0.85);
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            font-weight: 300;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Spectral', serif;
+            font-weight: 400;
+            color: #ffffff;
+        }
+
+        /* Fixed Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 3rem;
+            background: var(--header-bg);
+            border-bottom: 1px solid #333333;
+            z-index: 1000;
+            box-sizing: border-box;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+
+        .logo img {
+            max-width: 180px;
+            height: auto;
+        }
+
+        /* Navigation & Dropdowns */
+        nav ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            transition: color 0.3s ease, background-color 0.3s ease;
+            font-family: 'Lato', sans-serif;
+        }
+
+        nav a:hover {
+            color: var(--accent-red);
+        }
+
+        .active-page {
+            color: var(--accent-red) !important;
+        }
+        
+        /* Highlight the cart specifically */
+        #cart-toggle {
+            color: var(--accent-red);
+            border: 1px solid var(--accent-red);
+            padding: 0.5rem 1rem;
+            border-radius: 3px;
+        }
+        
+        #cart-toggle:hover {
+            background: var(--accent-red);
+            color: #ffffff;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--accent-red);
+            min-width: 180px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+            z-index: 1001;
+            border-radius: 4px;
+            flex-direction: column;
+            margin-top: 1.5rem; 
+            padding: 0.5rem 0;
+        }
+
+        .dropdown-content::before {
+            content: "";
+            position: absolute;
+            top: -1.5rem;
+            left: 0;
+            width: 100%;
+            height: 1.5rem;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: flex;
+        }
+
+        .dropdown-content a {
+            padding: 10px 16px;
+            display: block;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #a30000; 
+            color: #ffffff;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background-color: #ffffff;
+            margin: 0 15px; 
+        }
+
+        /* --- Shop Specific Layout --- */
+        main {
+            padding-top: 100px; 
+            min-height: 100vh;
+        }
+
+        .shop-header {
+            text-align: center;
+            padding: 3rem 2rem 1rem;
+        }
+
+        .shop-header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2.5rem;
+            padding: 2rem 4rem 6rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Product Cards */
+        .product-card {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 4px;
+            transition: border-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            border-color: var(--accent-red);
+            transform: translateY(-5px);
+        }
+        
+        .product-card a {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 1.5rem;
+            box-sizing: border-box;
+        }
+
+        .product-image {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background: #000;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+        
+        .product-details {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .product-title {
+            font-size: 1.5rem;
+            margin: 0 0 1rem 0;
+            line-height: 1.3;
+        }
+
+        .product-prices {
+            font-family: 'Lato', sans-serif;
+            color: #999;
+            margin-bottom: 1.5rem;
+            flex-grow: 1; 
+        }
+
+        .product-prices p {
+            margin: 0.3rem 0;
+            font-size: 1.2rem;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #222; 
+            color: #fff;
+            padding: 1rem 2rem;
+            text-align: center;
+            border: 1px solid #444;
+            font-family: 'Lato', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 3px;
+            transition: background 0.3s ease, border-color 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
+            margin-top: auto; 
+        }
+
+        .product-card:hover .btn {
+            background: var(--accent-red);
+            border-color: var(--accent-red);
+        }
+
+        /* --- Slide-Out Cart Styles --- */
+        .cart-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.6);
+            z-index: 1001;
+            display: none;
+            backdrop-filter: blur(3px);
+        }
+
+        .cart-overlay.active {
+            display: block;
+        }
+
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -450px; 
+            width: 450px;
+            max-width: 100vw;
+            height: 100vh;
+            background: #0a0a0a;
+            border-left: 1px solid #222;
+            z-index: 1002;
+            transition: right 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            padding: 2rem;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-sidebar.open {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cart-header h2 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .close-cart {
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: #fff;
+            line-height: 1;
+            transition: color 0.3s;
+        }
+
+        .close-cart:hover {
+            color: var(--accent-red);
+        }
+
+        .cart-items-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #222;
+        }
+
+        .cart-item-title {
+            flex-grow: 1;
+            padding-right: 1rem;
+            font-weight: 600;
+        }
+
+        .remove-btn {
+            background: none;
+            border: none;
+            color: #888;
+            cursor: pointer;
+            font-size: 1.5rem;
+            padding: 0 0 0 1rem;
+            transition: color 0.2s;
+        }
+
+        .remove-btn:hover {
+            color: var(--accent-red);
+        }
+
+        .cart-footer {
+            border-top: 1px solid #333;
+            padding-top: 1.5rem;
+        }
+
+        .cart-total {
+            font-size: 1.8rem;
+            text-align: right;
+            margin-bottom: 1.5rem;
+            font-family: 'Spectral', serif;
+        }
+
+        /* Footer */
+        footer {
+            background: #000000; 
+            color: #ffffff;
+            padding: 4rem 2rem;
+            text-align: center;
+            border-top: 1px solid #222;
+        }
+
+        footer a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 1rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+        
+        footer a:hover {
+            color: var(--accent-red);
+        }
+
+        .social-links { margin-bottom: 2rem; }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header id="main-header">
+        <div class="logo">
+            <a href="index.html">
+                <img src="./The-folklore-box-logo.png" alt="The Folklore Box Logo">
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li class="dropdown">
+                    <a href="index.html">Home</a>
+                    <div class="dropdown-content">
+                        <a href="index.html#collections">Goods & Wares</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="index.html#about">About the Artist</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="index.html#map-teaser">The Folklore Map</a>
+                    </div>
+                </li>
+                
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="shop.html" class="active-page">Shop</a></li>
+                <li><a href="uk-folklore-map.html">UK Folklore Map</a></li>
+                <li><a href="journal.html">Journal</a></li>
+                <li><a href="wholesale.html">Wholesale</a></li>
+                <li><a href="#" id="cart-toggle">Cart (0)</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="shop-header">
+            <h1>The Shop</h1>
+        </div>
+
+        <!-- Products will be dynamically injected here -->
+        <section class="shop-grid" id="shop-grid">
+            <p style="color: #888; text-align: center; grid-column: 1 / -1;">Loading products...</p>
+        </section>
+    </main>
+
+    <!-- Slide-Out Shopping Cart -->
+    <div class="cart-overlay" id="cart-overlay"></div>
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <span class="close-cart" id="close-cart">&times;</span>
+        </div>
+        
+        <div class="cart-items-container" id="cart-items">
+            <!-- Items injected via JS -->
+        </div>
+
+        <div class="cart-footer">
+            <div class="cart-total" id="cart-total">Total: £0.00</div>
+            <!-- PayPal Buttons will render here -->
+            <div id="paypal-button-container"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="https://instagram.com/the_folklore_box" target="_blank">Instagram: @the_folklore_box</a> | 
+            <a href="https://facebook.com/thefolklorebox" target="_blank">Facebook: @thefolklorebox</a>
+        </div>
+        <div style="margin-bottom: 2rem;">
+            <a href="shop.html">Shop</a>
+            <a href="wholesale.html">Wholesale Enquiries</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <p style="font-size: 0.8rem; color: #555; font-family: 'Lato', sans-serif;">
+            &copy; 2026 The Folklore Box by Matt Willis. All rights reserved.
+        </p>
+    </footer>
+
+    <!-- PAYPAL JAVASCRIPT SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID_HERE&currency=GBP"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            // --- 1. FETCH AND PARSE THE TEXT FILE ---
+            const shopGrid = document.getElementById('shop-grid');
+            let products = [];
+
+            try {
+                const response = await fetch('products.txt');
+                
+                if (!response.ok) {
+                    throw new Error("Could not find products.txt");
+                }
+                
+                const text = await response.text();
+                
+                // Split the file by the "---" separator
+                const rawItems = text.split('---');
+
+                rawItems.forEach(rawItem => {
+                    if (rawItem.trim() === '') return; // Skip empty blocks
+                    
+                    const lines = rawItem.trim().split('\n');
+                    let product = { shippingOptions: [] };
+                    
+                    lines.forEach(line => {
+                        const sepIndex = line.indexOf(':');
+                        if (sepIndex > -1) {
+                            const key = line.slice(0, sepIndex).trim().toLowerCase();
+                            const value = line.slice(sepIndex + 1).trim();
+                            
+                            if (key === 'title') {
+                                product.title = value;
+                                // Automatically creates an ID like "fine-art-print-black-shuck"
+                                product.id = value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+                            }
+                            else if (key === 'image') product.image = value;
+                            else if (key === 'item cost') product.basePrice = parseFloat(value);
+                            else if (key === 'uk standard delivery') product.shippingOptions.push({ label: 'UK Standard', cost: parseFloat(value) });
+                            else if (key === 'uk tracked & signed') product.shippingOptions.push({ label: 'UK Tracked & Signed', cost: parseFloat(value) });
+                            else if (key === 'international delivery') product.shippingOptions.push({ label: 'International', cost: parseFloat(value) });
+                        }
+                    });
+                    
+                    if (product.title) products.push(product);
+                });
+
+                // --- 2. BUILD THE HTML CARDS ---
+                if (products.length === 0) {
+                    shopGrid.innerHTML = '<p style="color: #fff; grid-column: 1 / -1; text-align: center;">No products found in database.</p>';
+                } else {
+                    shopGrid.innerHTML = ''; // Clear loading message
+                    products.forEach(product => {
+                        shopGrid.innerHTML += `
+                            <div class="product-card">
+                                <a href="product.html?id=${product.id}">
+                                    <div class="product-image">
+                                        <img src="${product.image}" alt="${product.title}">
+                                    </div>
+                                    <div class="product-details">
+                                        <h3 class="product-title">${product.title}</h3>
+                                        <div class="product-prices">
+                                            <p>From £${product.basePrice.toFixed(2)}</p>
+                                        </div>
+                                        <div class="btn">View Details</div>
+                                    </div>
+                                </a>
+                            </div>
+                        `;
+                    });
+                }
+            } catch (error) {
+                console.error("Error loading products:", error);
+                shopGrid.innerHTML = '<p style="color: #cc0000; grid-column: 1 / -1; text-align: center;">Error loading products database. If testing locally, ensure you are using a local server.</p>';
+            }
+
+            // --- 3. LOCAL STORAGE CART LOGIC ---
+            let cart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
+
+            const saveCart = () => {
+                localStorage.setItem('folkloreCart', JSON.stringify(cart));
+            };
+
+            const cartToggle = document.getElementById('cart-toggle');
+            const cartSidebar = document.getElementById('cart-sidebar');
+            const cartOverlay = document.getElementById('cart-overlay');
+            const closeCartBtn = document.getElementById('close-cart');
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartTotalElement = document.getElementById('cart-total');
+
+            // Toggle Cart UI
+            const openCart = () => {
+                cartSidebar.classList.add('open');
+                cartOverlay.classList.add('active');
+            };
+            
+            const closeCart = () => {
+                cartSidebar.classList.remove('open');
+                cartOverlay.classList.remove('active');
+            };
+
+            cartToggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                openCart();
+            });
+            closeCartBtn.addEventListener('click', closeCart);
+            cartOverlay.addEventListener('click', closeCart);
+
+            // Update Cart UI
+            const updateCartUI = () => {
+                cartItemsContainer.innerHTML = '';
+                let total = 0;
+
+                if (cart.length === 0) {
+                    cartItemsContainer.innerHTML = '<p style="color: #777; font-style: italic;">Your cart is currently empty.</p>';
+                    cartTotalElement.textContent = 'Total: £0.00';
+                    cartToggle.textContent = 'Cart (0)';
+                    return;
+                }
+
+                cart.forEach((item, index) => {
+                    total += item.price;
+                    cartItemsContainer.innerHTML += `
+                        <div class="cart-item">
+                            <div class="cart-item-title">${item.title}</div>
+                            <div>£${item.price.toFixed(2)}</div>
+                            <button class="remove-btn" onclick="removeFromCart(${index})" title="Remove item">&times;</button>
+                        </div>
+                    `;
+                });
+
+                cartTotalElement.textContent = `Total: £${total.toFixed(2)}`;
+                cartToggle.textContent = `Cart (${cart.length})`;
+            };
+
+            // Remove from Cart
+            window.removeFromCart = function(index) {
+                cart.splice(index, 1);
+                saveCart(); 
+                updateCartUI();
+            };
+
+            // Initialize PayPal Smart Buttons
+            paypal.Buttons({
+                style: {
+                    color: 'gold',
+                    shape: 'rect',
+                    label: 'checkout',
+                    layout: 'vertical'
+                },
+                createOrder: function(data, actions) {
+                    let currentTotal = cart.reduce((sum, item) => sum + item.price, 0);
+                    
+                    if (currentTotal === 0) {
+                        alert("Your cart is empty!");
+                        return;
+                    }
+
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                currency_code: 'GBP',
+                                value: currentTotal.toFixed(2)
+                            }
+                        }]
+                    });
+                },
+                onApprove: function(data, actions) {
+                    return actions.order.capture().then(function(details) {
+                        alert('Payment successful! Thank you for your order, ' + details.payer.name.given_name + '.');
+                        cart = []; 
+                        saveCart(); 
+                        updateCartUI();
+                        closeCart();
+                    });
+                },
+                onError: function(err) {
+                    console.error('PayPal Checkout Error:', err);
+                    alert('There was an issue connecting to PayPal. Please try again.');
+                }
+            }).render('#paypal-button-container');
+
+            // Initial render on page load
+            updateCartUI();
+        });
+    </script>
+
+</body>
+</html>
