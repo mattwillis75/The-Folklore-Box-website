@@ -241,7 +241,7 @@
         let foundProduct = null;
 
         try {
-            const response = await fetch('products.txt');
+            const response = await fetch('products.txt', { cache: 'no-store' });
             const text = await response.text();
             const rawItems = text.split('---');
 
