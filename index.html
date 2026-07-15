@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Folklore Box | British Folklore & Mythological Illustrations</title>
+    <meta name="description" content="Original artwork, prints, and wooden wares by illustrator Matt Willis. Co-creator of SHUCK zine.">
+    
+    <!-- Google Fonts: Lato Light (300) and Spectral Regular (400) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Spectral:wght@400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Base Colors & Typography - Dark Theme */
+        :root {
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --accent-red: #cc0000; /* Deep Folklore Red */
+            --header-bg: rgba(0, 0, 0, 0.85);
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            font-weight: 300;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Spectral', serif;
+            font-weight: 400;
+            color: #ffffff;
+        }
+
+        /* Fixed Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 3rem;
+            background: var(--header-bg);
+            border-bottom: 1px solid #333333;
+            z-index: 1000;
+            box-sizing: border-box;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+
+        .logo img {
+            max-width: 180px;
+            height: auto;
+        }
+
+        /* Navigation & Dropdowns */
+        nav ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            transition: color 0.3s ease, background-color 0.3s ease;
+            font-family: 'Lato', sans-serif;
+        }
+
+        nav a:hover {
+            color: var(--accent-red);
+        }
+
+        /* Active Page Highlight */
+        .active-page {
+            color: var(--accent-red) !important;
+        }
+
+        /* Dropdown Styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--accent-red);
+            min-width: 180px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+            z-index: 1001;
+            border-radius: 4px;
+            flex-direction: column;
+            margin-top: 1.5rem; 
+            padding: 0.5rem 0;
+        }
+
+        /* The invisible bridge to prevent the dropdown from closing */
+        .dropdown-content::before {
+            content: "";
+            position: absolute;
+            top: -1.5rem; /* Exactly matches the margin-top above */
+            left: 0;
+            width: 100%;
+            height: 1.5rem;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: flex;
+        }
+
+        .dropdown-content a {
+            padding: 10px 16px;
+            display: block;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #a30000; 
+            color: #ffffff;
+        }
+
+        /* White dividing line that stops before edges */
+        .dropdown-divider {
+            height: 1px;
+            background-color: #ffffff;
+            margin: 0 15px; 
+        }
+
+        /* Layout */
+        main {
+            padding-top: 0; 
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        section {
+            margin-bottom: 5rem;
+            scroll-margin-top: 100px;
+        }
+
+        /* Full-Width Carousel */
+        .hero-carousel-container {
+            position: relative;
+            width: 100%;
+            height: 100vh; 
+            min-height: 500px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #000;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /* Carousel Navigation Arrows */
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-arrow:hover {
+            background: var(--accent-red);
+            border-color: var(--accent-red);
+        }
+
+        .arrow-left { left: 20px; }
+        .arrow-right { right: 20px; }
+
+        /* Hero Text Overlay */
+        .hero-content {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.6); 
+            padding: 3rem;
+            border-radius: 8px;
+            max-width: 800px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin: 0 0 1rem 0;
+            line-height: 1.2;
+        }
+
+        .hero-content .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        /* Typography & Elements */
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 2.5rem;
+            padding-bottom: 0.5rem;
+            display: inline-block;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent-red);
+            transition: width 0.3s ease;
+        }
+
+        h2:hover::after {
+            width: 100%;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--accent-red);
+            color: #fff;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            font-family: 'Lato', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 3px;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn:hover {
+            background: #e60000;
+            transform: translateY(-2px);
+        }
+
+        /* Grid Image Styles */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .grid-image {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+            border-radius: 4px;
+        }
+
+        .grid-item h3 {
+            font-size: 1.5rem;
+            margin-top: 0;
+        }
+
+        .about-text {
+            max-width: 800px;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            color: #dddddd;
+        }
+
+        /* Map Teaser Image Style */
+        .map-teaser-img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            margin-bottom: 2rem;
+            border-radius: 4px;
+        }
+
+        /* Footer */
+        footer {
+            background: #000000; 
+            color: #ffffff;
+            padding: 4rem 2rem;
+            text-align: center;
+            border-top: 1px solid #222;
+        }
+
+        footer a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 1rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+        
+        footer a:hover {
+            color: var(--accent-red);
+        }
+
+        .social-links {
+            margin-bottom: 2rem;
+        }
+
+        /* --- Animations --- */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .grid-item:nth-child(1) { transition-delay: 0.1s; }
+        .grid-item:nth-child(2) { transition-delay: 0.2s; }
+        .grid-item:nth-child(3) { transition-delay: 0.3s; }
+        .grid-item:nth-child(4) { transition-delay: 0.4s; }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation (Fixed) -->
+    <header id="main-header">
+        <div class="logo">
+            <a href="index.html">
+                <img src="./The-folklore-box-logo.png" alt="The Folklore Box Logo">
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <!-- Home Link with Dropdown -->
+                <li class="dropdown">
+                    <a href="index.html" class="active-page">Home</a>
+                    <div class="dropdown-content">
+                        <a href="#collections">Goods & Wares</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#about">About the Artist</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#map-teaser">The Folklore Map</a>
+                    </div>
+                </li>
+                
+                <!-- Separate Horizontal Page Links -->
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="uk-folklore-map.html">UK Folklore Map</a></li>
+                <li><a href="journal.html">Journal</a></li>
+                <li><a href="wholesale.html">Wholesale</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        
+        <!-- Full Width Hero Carousel -->
+        <section class="hero-carousel-container">
+            <!-- Carousel Images -->
+            <div class="carousel-slide active">
+                <img src="./Carousel-1.jpg" alt="British Folklore Illustration 1">
+            </div>
+            <div class="carousel-slide">
+                <img src="./Carousel-2.jpg" alt="British Folklore Illustration 2">
+            </div>
+            <div class="carousel-slide">
+                <img src="./Carousel-3.jpg" alt="British Folklore Illustration 3">
+            </div>
+            <div class="carousel-slide">
+                <img src="./Carousel-4.jpg" alt="British Folklore Illustration 4">
+            </div>
+            <div class="carousel-slide">
+                <img src="./Carousel-5.jpg" alt="British Folklore Illustration 5">
+            </div>
+
+            <!-- Navigation Arrows -->
+            <button class="carousel-arrow arrow-left" onclick="changeSlide(-1)">&#10094;</button>
+            <button class="carousel-arrow arrow-right" onclick="changeSlide(1)">&#10095;</button>
+
+            <!-- Hero Content Overlay -->
+            <div class="hero-content animate-on-scroll is-visible">
+                <h1>British Folklore & Myths</h1>
+                <p class="subtitle">Original artwork, prints, and wooden wares by illustrator Matt Willis.</p>
+                <a href="#collections" class="btn">Explore the Shop</a>
+            </div>
+        </section>
+
+        <!-- Container for remaining sections -->
+        <div class="container">
+            
+            <!-- Featured Collections Grid -->
+            <section id="collections" class="collections">
+                <h2 class="animate-on-scroll">Goods & Wares</h2>
+                <div class="grid">
+                    <div class="grid-item animate-on-scroll">
+                        <img src="./Home-4.png" alt="Fine Art Prints" class="grid-image">
+                        <h3>Prints</h3>
+                    </div>
+                    <div class="grid-item animate-on-scroll">
+                        <img src="./Home-5.png" alt="Wooden Badges and Clocks" class="grid-image">
+                        <h3>Wooden Wares</h3>
+                    </div>
+                    <div class="grid-item animate-on-scroll">
+                        <img src="./Home-6.png" alt="Screen-printed Apparel and Totes" class="grid-image">
+                        <h3>Apparel & Totes</h3>
+                    </div>
+                    <div class="grid-item animate-on-scroll">
+                        <img src="./Home-7.png" alt="SHUCK Zine Publications" class="grid-image">
+                        <h3>Publications</h3>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section id="about" class="about animate-on-scroll">
+                <h2>About the Illustrator</h2>
+                <p class="about-text">
+                    The Folklore Box is the studio and shop of Matt Willis, an illustrator specializing in the myths, legends, and dark history of the British Isles. Alongside his personal illustration work, Matt is the designer and co-creator of <strong>SHUCK</strong>, a collaborative zine exploring Norfolk folklore, crafted alongside Siofra Connor of the Norfolk Folklore Society and undead writer Ada Nemesis.
+                </p>
+                <a href="portfolio.html" class="btn">View Portfolio</a>
+            </section>
+
+            <!-- Interactive Map Teaser -->
+            <section id="map-teaser" class="map-teaser animate-on-scroll">
+                <h2>The UK Folklore Map</h2>
+                <img src="./Home-8.png" alt="UK Folklore Interactive Map Teaser" class="map-teaser-img">
+                <p class="about-text">Discover the local legends, black dogs, and ancient tales haunting the British landscape with our interactive map.</p>
+                <a href="uk-folklore-map.html" class="btn">Explore the Map</a>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="https://instagram.com/the_folklore_box" target="_blank">Instagram: @the_folklore_box</a> | 
+            <a href="https://facebook.com/thefolklorebox" target="_blank">Facebook: @thefolklorebox</a>
+        </div>
+        <div style="margin-bottom: 2rem;">
+            <a href="shop.html">Shop</a>
+            <a href="wholesale.html">Wholesale Enquiries</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <p style="font-size: 0.8rem; color: #555; font-family: 'Lato', sans-serif;">
+            &copy; 2026 The Folklore Box by Matt Willis. All rights reserved.
+        </p>
+    </footer>
+
+    <!-- Interactive Scripts -->
+    <script>
+        // --- Carousel Logic ---
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        let slideInterval;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            if (index >= slides.length) currentSlide = 0;
+            if (index < 0) currentSlide = slides.length - 1;
+            slides[currentSlide].classList.add('active');
+        }
+
+        function changeSlide(direction) {
+            currentSlide += direction;
+            showSlide(currentSlide);
+            resetInterval(); 
+        }
+
+        function autoAdvanceSlide() {
+            currentSlide++;
+            showSlide(currentSlide);
+        }
+
+        function resetInterval() {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(autoAdvanceSlide, 5000); 
+        }
+
+        slideInterval = setInterval(autoAdvanceSlide, 5000);
+
+        // --- Scroll Animations Logic ---
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15 
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target); 
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(element => {
+            observer.observe(element);
+        });
+
+        // --- Header Scroll Effect ---
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.style.boxShadow = '0 2px 20px rgba(255, 0, 0, 0.1)';
+                header.style.borderBottom = '1px solid var(--accent-red)';
+            } else {
+                header.style.boxShadow = 'none';
+                header.style.borderBottom = '1px solid #333333';
+            }
+        });
+    </script>
+
+</body>
+</html>
