@@ -494,7 +494,7 @@
             let products = [];
 
             try {
-                const response = await fetch('products.txt');
+                const response = await fetch('products.txt', { cache: 'no-store' });
                 
                 if (!response.ok) {
                     throw new Error("Could not find products.txt");
