@@ -99,14 +99,26 @@
 </head>
 <body>
 
-    <header id="main-header">
+   <header id="main-header">
         <div class="logo"><a href="index.html"><img src="./The-folklore-box-logo.png" alt="The Folklore Box Logo"></a></div>
         <div class="mobile-menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
         <nav>
             <ul id="nav-list">
-                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="index.html">Home</a>
+                    <div class="dropdown-content">
+                        <a href="index.html#collections">Goods & Wares</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="index.html#about">About the Artist</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="index.html#map-teaser">The Folklore Map</a>
+                    </div>
+                </li>
                 <li><a href="portfolio.html">Portfolio</a></li>
-                <li><a href="shop.html">Shop</a></li>
+                <li><a href="shop.html" class="active-page">Shop</a></li>
+                <li><a href="uk-folklore-map.html">UK Folklore Map</a></li>
+                <li><a href="journal.html">Journal</a></li>
+                <li><a href="wholesale.html">Wholesale</a></li>
                 <li><a href="#" id="cart-toggle">Cart (0)</a></li>
             </ul>
         </nav>
