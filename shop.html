@@ -154,6 +154,24 @@
             margin: 0 15px; 
         }
 
+        /* Mobile Menu */
+        .mobile-menu-toggle { display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1005; }
+        .mobile-menu-toggle span { width: 25px; height: 3px; background-color: #ffffff; transition: all 0.3s ease; border-radius: 3px; }
+        
+        @media (max-width: 850px) {
+            .mobile-menu-toggle { display: flex; }
+            nav ul { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background-color: rgba(0, 0, 0, 0.95); padding: 1rem 0; border-bottom: 1px solid #333; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+            nav ul.mobile-active { display: flex; }
+            nav ul li { width: 100%; text-align: center; padding: 0.8rem 0; }
+            
+            .dropdown-content { position: static; transform: none; background-color: transparent; box-shadow: none; margin-top: 0; display: none; }
+            .dropdown-content::before { display: none; }
+            
+            .mobile-menu-toggle.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .mobile-menu-toggle.open span:nth-child(2) { opacity: 0; }
+            .mobile-menu-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+        }
+
         /* --- Shop Specific Layout --- */
         main {
             padding-top: 100px; 
@@ -172,11 +190,20 @@
 
         .shop-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2.5rem;
+            /* Shrunk min-width from 300px to 220px to match Etsy scale */
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 2rem;
             padding: 2rem 4rem 6rem;
             max-width: 1400px;
             margin: 0 auto;
+        }
+
+        @media (max-width: 600px) {
+            .shop-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                padding: 1rem 1.5rem 4rem;
+                gap: 1rem;
+            }
         }
 
         /* Product Cards */
@@ -185,6 +212,7 @@
             border: 1px solid #333;
             border-radius: 4px;
             transition: border-color 0.3s ease, transform 0.3s ease;
+            cursor: pointer;
         }
 
         .product-card:hover {
@@ -198,7 +226,7 @@
             display: flex;
             flex-direction: column;
             height: 100%;
-            padding: 1.5rem;
+            padding: 1rem;
             box-sizing: border-box;
         }
 
@@ -206,7 +234,7 @@
             width: 100%;
             aspect-ratio: 1 / 1;
             background: #000;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -228,49 +256,25 @@
             display: flex;
             flex-direction: column;
             flex-grow: 1;
+            justify-content: space-between;
         }
 
         .product-title {
-            font-size: 1.5rem;
-            margin: 0 0 1rem 0;
+            font-size: 1.15rem; /* Shrunk slightly for smaller boxes */
+            margin: 0 0 0.8rem 0;
             line-height: 1.3;
         }
 
         .product-prices {
             font-family: 'Lato', sans-serif;
             color: #999;
-            margin-bottom: 1.5rem;
-            flex-grow: 1; 
         }
 
         .product-prices p {
-            margin: 0.3rem 0;
-            font-size: 1.2rem;
+            margin: 0;
+            font-size: 1.1rem;
             color: #fff;
             font-weight: 600;
-        }
-
-        .btn {
-            display: inline-block;
-            background: #222; 
-            color: #fff;
-            padding: 1rem 2rem;
-            text-align: center;
-            border: 1px solid #444;
-            font-family: 'Lato', sans-serif;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-radius: 3px;
-            transition: background 0.3s ease, border-color 0.3s ease;
-            width: 100%;
-            box-sizing: border-box;
-            margin-top: auto; 
-        }
-
-        .product-card:hover .btn {
-            background: var(--accent-red);
-            border-color: var(--accent-red);
         }
 
         /* --- Slide-Out Cart Styles --- */
@@ -404,84 +408,6 @@
         }
 
         .social-links { margin-bottom: 2rem; }
-
-        /* --- Mobile Navigation Styles --- */
-        .mobile-menu-toggle {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            gap: 5px;
-            z-index: 1005;
-        }
-
-        .mobile-menu-toggle span {
-            width: 25px;
-            height: 3px;
-            background-color: #ffffff;
-            transition: all 0.3s ease;
-            border-radius: 3px;
-        }
-
-        /* When the screen is smaller than 850px (tablets and phones) */
-        @media (max-width: 850px) {
-            .mobile-menu-toggle {
-                display: flex; /* Show the hamburger icon */
-            }
-
-            nav ul {
-                display: none; /* Hide the horizontal menu */
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background-color: rgba(0, 0, 0, 0.95);
-                padding: 1rem 0;
-                border-bottom: 1px solid #333;
-                box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-            }
-
-            /* The class our JavaScript will toggle to show the menu */
-            nav ul.mobile-active {
-                display: flex;
-            }
-
-            nav ul li {
-                width: 100%;
-                text-align: center;
-                padding: 0.8rem 0;
-            }
-
-            /* Adjust the red dropdown for mobile */
-            .dropdown-content {
-                position: static;
-                transform: none;
-                background-color: transparent;
-                box-shadow: none;
-                margin-top: 0;
-                display: none;
-            }
-
-            .dropdown:hover .dropdown-content {
-                display: flex;
-            }
-
-            .dropdown-content::before {
-                display: none;
-            }
-            
-            /* Change hamburger to an 'X' when open */
-            .mobile-menu-toggle.open span:nth-child(1) {
-                transform: translateY(8px) rotate(45deg);
-            }
-            .mobile-menu-toggle.open span:nth-child(2) {
-                opacity: 0;
-            }
-            .mobile-menu-toggle.open span:nth-child(3) {
-                transform: translateY(-8px) rotate(-45deg);
-            }
-        }
-        
     </style>
 </head>
 <body>
@@ -493,6 +419,7 @@
                 <img src="./The-folklore-box-logo.png" alt="The Folklore Box Logo">
             </a>
         </div>
+        
         <div class="mobile-menu-toggle" id="mobile-toggle">
             <span></span>
             <span></span>
@@ -578,6 +505,7 @@
             let products = [];
 
             try {
+                // Using cache: 'no-store' prevents the browser from loading stale text files
                 const response = await fetch('products.txt', { cache: 'no-store' });
                 
                 if (!response.ok) {
@@ -585,12 +513,10 @@
                 }
                 
                 const text = await response.text();
-                
-                // Split the file by the "---" separator
                 const rawItems = text.split('---');
 
                 rawItems.forEach(rawItem => {
-                    if (rawItem.trim() === '') return; // Skip empty blocks
+                    if (rawItem.trim() === '') return;
                     
                     const lines = rawItem.trim().split('\n');
                     let product = { shippingOptions: [] };
@@ -603,7 +529,6 @@
                             
                             if (key === 'title') {
                                 product.title = value;
-                                // Automatically creates an ID like "fine-art-print-black-shuck"
                                 product.id = value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
                             }
                             else if (key === 'image') product.image = value;
@@ -621,8 +546,9 @@
                 if (products.length === 0) {
                     shopGrid.innerHTML = '<p style="color: #fff; grid-column: 1 / -1; text-align: center;">No products found in database.</p>';
                 } else {
-                    shopGrid.innerHTML = ''; // Clear loading message
+                    shopGrid.innerHTML = '';
                     products.forEach(product => {
+                        // The entire card is now wrapped in the link, button removed
                         shopGrid.innerHTML += `
                             <div class="product-card">
                                 <a href="product.html?id=${product.id}">
@@ -632,9 +558,8 @@
                                     <div class="product-details">
                                         <h3 class="product-title">${product.title}</h3>
                                         <div class="product-prices">
-                                            <p>From £${product.basePrice.toFixed(2)}</p>
+                                            <p>£${product.basePrice.toFixed(2)}</p>
                                         </div>
-                                        <div class="btn">View Details</div>
                                     </div>
                                 </a>
                             </div>
@@ -712,6 +637,16 @@
                 updateCartUI();
             };
 
+            // Mobile Menu Toggle logic
+            const mobileToggle = document.getElementById('mobile-toggle');
+            const navList = document.getElementById('nav-list');
+            if (mobileToggle && navList) {
+                mobileToggle.addEventListener('click', () => {
+                    navList.classList.toggle('mobile-active');
+                    mobileToggle.classList.toggle('open');
+                });
+            }
+
             // Initialize PayPal Smart Buttons
             paypal.Buttons({
                 style: {
@@ -754,21 +689,6 @@
 
             // Initial render on page load
             updateCartUI();
-        });
-    </script>
-
-    <!-- Mobile Menu Toggle Script -->
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const mobileToggle = document.getElementById('mobile-toggle');
-            const navList = document.getElementById('nav-list');
-
-            if (mobileToggle && navList) {
-                mobileToggle.addEventListener('click', () => {
-                    navList.classList.toggle('mobile-active');
-                    mobileToggle.classList.toggle('open');
-                });
-            }
         });
     </script>
 
