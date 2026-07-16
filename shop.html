@@ -89,7 +89,6 @@
             color: var(--accent-red) !important;
         }
         
-        /* Highlight the cart specifically */
         #cart-toggle {
             color: var(--accent-red);
             border: 1px solid var(--accent-red);
@@ -188,12 +187,46 @@
             margin-bottom: 0.5rem;
         }
 
+        /* Category Filter Styles */
+        .shop-filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 0 2rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .filter-btn {
+            background: transparent;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 0.6rem 1.5rem;
+            border-radius: 30px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--accent-red);
+        }
+
+        .filter-btn.active {
+            background: var(--accent-red);
+            border-color: var(--accent-red);
+            color: #fff;
+        }
+
         .shop-grid {
             display: grid;
-            /* Shrunk min-width from 300px to 220px to match Etsy scale */
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 2rem;
-            padding: 2rem 4rem 6rem;
+            padding: 0 4rem 6rem;
             max-width: 1400px;
             margin: 0 auto;
         }
@@ -201,7 +234,7 @@
         @media (max-width: 600px) {
             .shop-grid {
                 grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-                padding: 1rem 1.5rem 4rem;
+                padding: 0 1.5rem 4rem;
                 gap: 1rem;
             }
         }
@@ -260,7 +293,7 @@
         }
 
         .product-title {
-            font-size: 1.15rem; /* Shrunk slightly for smaller boxes */
+            font-size: 1.15rem; 
             margin: 0 0 0.8rem 0;
             line-height: 1.3;
         }
@@ -454,6 +487,9 @@
             <h1>The Shop</h1>
         </div>
 
+        <!-- Filter Buttons will be dynamically injected here -->
+        <div class="shop-filters" id="shop-filters"></div>
+
         <!-- Products will be dynamically injected here -->
         <section class="shop-grid" id="shop-grid">
             <p style="color: #888; text-align: center; grid-column: 1 / -1;">Loading products...</p>
@@ -468,13 +504,10 @@
             <span class="close-cart" id="close-cart">&times;</span>
         </div>
         
-        <div class="cart-items-container" id="cart-items">
-            <!-- Items injected via JS -->
-        </div>
+        <div class="cart-items-container" id="cart-items"></div>
 
         <div class="cart-footer">
             <div class="cart-total" id="cart-total">Total: £0.00</div>
-            <!-- PayPal Buttons will render here -->
             <div id="paypal-button-container"></div>
         </div>
     </div>
@@ -496,16 +529,17 @@
     </footer>
 
     <!-- PAYPAL JAVASCRIPT SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id=YOAdhiDRZNrw0vQ1zesmeCq6FS8q-0Fb3NmmEHgVqkO5h8t5ZhXDrgdUeon4diJcPZnXYkYnbztRGHTKlRUR_CLIENT_ID_HERE&currency=GBP"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID_HERE&currency=GBP"></script>
 
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
-            // --- 1. FETCH AND PARSE THE TEXT FILE ---
             const shopGrid = document.getElementById('shop-grid');
+            const filtersContainer = document.getElementById('shop-filters');
             let products = [];
+            let uniqueSections = new Set(); // Stores all categories automatically
 
+            // --- 1. FETCH AND PARSE THE TEXT FILE ---
             try {
-                // Using cache: 'no-store' prevents the browser from loading stale text files
                 const response = await fetch('products.txt', { cache: 'no-store' });
                 
                 if (!response.ok) {
@@ -519,7 +553,7 @@
                     if (rawItem.trim() === '') return;
                     
                     const lines = rawItem.trim().split('\n');
-                    let product = { shippingOptions: [] };
+                    let product = { shippingOptions: [], sections: [] };
                     
                     lines.forEach(line => {
                         const sepIndex = line.indexOf(':');
@@ -532,6 +566,10 @@
                                 product.id = value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
                             }
                             else if (key === 'image') product.image = value;
+                            else if (key === 'sections') {
+                                // Split by comma and remove spaces around the category names
+                                product.sections = value.split(',').map(s => s.trim());
+                            }
                             else if (key === 'item cost') product.basePrice = parseFloat(value);
                             else if (key === 'uk standard delivery') product.shippingOptions.push({ label: 'UK Standard', cost: parseFloat(value) });
                             else if (key === 'uk tracked & signed') product.shippingOptions.push({ label: 'UK Tracked & Signed', cost: parseFloat(value) });
@@ -539,16 +577,52 @@
                         }
                     });
                     
-                    if (product.title) products.push(product);
+                    if (product.title) {
+                        products.push(product);
+                        // Add each section to our master list
+                        product.sections.forEach(section => uniqueSections.add(section));
+                    }
                 });
 
-                // --- 2. BUILD THE HTML CARDS ---
-                if (products.length === 0) {
-                    shopGrid.innerHTML = '<p style="color: #fff; grid-column: 1 / -1; text-align: center;">No products found in database.</p>';
-                } else {
-                    shopGrid.innerHTML = '';
-                    products.forEach(product => {
-                        // The entire card is now wrapped in the link, button removed
+                // --- 2. BUILD THE FILTER BUTTONS ---
+                if (uniqueSections.size > 0) {
+                    let filterHTML = `<button class="filter-btn active" data-filter="All">All Goods</button>`;
+                    
+                    // Sort categories alphabetically
+                    Array.from(uniqueSections).sort().forEach(sec => {
+                        filterHTML += `<button class="filter-btn" data-filter="${sec}">${sec}</button>`;
+                    });
+                    
+                    filtersContainer.innerHTML = filterHTML;
+
+                    // Add click listeners to filter buttons
+                    document.querySelectorAll('.filter-btn').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            // Turn all buttons off, then turn the clicked one on
+                            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                            e.target.classList.add('active');
+                            
+                            // Re-render the grid based on the button's data attribute
+                            renderGrid(e.target.dataset.filter);
+                        });
+                    });
+                }
+
+                // --- 3. RENDER THE HTML CARDS ---
+                function renderGrid(filterValue) {
+                    shopGrid.innerHTML = ''; // Clear current grid
+
+                    // Filter the products array based on the selected section
+                    const filteredProducts = filterValue === 'All' 
+                        ? products 
+                        : products.filter(p => p.sections.includes(filterValue));
+
+                    if (filteredProducts.length === 0) {
+                        shopGrid.innerHTML = '<p style="color: #fff; grid-column: 1 / -1; text-align: center;">No products found in this section.</p>';
+                        return;
+                    }
+
+                    filteredProducts.forEach(product => {
                         shopGrid.innerHTML += `
                             <div class="product-card">
                                 <a href="product.html?id=${product.id}">
@@ -566,17 +640,19 @@
                         `;
                     });
                 }
+
+                // Run the initial render to show all products
+                renderGrid('All');
+
             } catch (error) {
                 console.error("Error loading products:", error);
                 shopGrid.innerHTML = '<p style="color: #cc0000; grid-column: 1 / -1; text-align: center;">Error loading products database. If testing locally, ensure you are using a local server.</p>';
             }
 
-            // --- 3. LOCAL STORAGE CART LOGIC ---
+            // --- 4. LOCAL STORAGE CART LOGIC ---
             let cart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
 
-            const saveCart = () => {
-                localStorage.setItem('folkloreCart', JSON.stringify(cart));
-            };
+            const saveCart = () => { localStorage.setItem('folkloreCart', JSON.stringify(cart)); };
 
             const cartToggle = document.getElementById('cart-toggle');
             const cartSidebar = document.getElementById('cart-sidebar');
@@ -585,25 +661,13 @@
             const cartItemsContainer = document.getElementById('cart-items');
             const cartTotalElement = document.getElementById('cart-total');
 
-            // Toggle Cart UI
-            const openCart = () => {
-                cartSidebar.classList.add('open');
-                cartOverlay.classList.add('active');
-            };
-            
-            const closeCart = () => {
-                cartSidebar.classList.remove('open');
-                cartOverlay.classList.remove('active');
-            };
+            const openCart = () => { cartSidebar.classList.add('open'); cartOverlay.classList.add('active'); };
+            const closeCart = () => { cartSidebar.classList.remove('open'); cartOverlay.classList.remove('active'); };
 
-            cartToggle.addEventListener('click', (e) => {
-                e.preventDefault();
-                openCart();
-            });
+            cartToggle.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
             closeCartBtn.addEventListener('click', closeCart);
             cartOverlay.addEventListener('click', closeCart);
 
-            // Update Cart UI
             const updateCartUI = () => {
                 cartItemsContainer.innerHTML = '';
                 let total = 0;
@@ -630,7 +694,6 @@
                 cartToggle.textContent = `Cart (${cart.length})`;
             };
 
-            // Remove from Cart
             window.removeFromCart = function(index) {
                 cart.splice(index, 1);
                 saveCart(); 
@@ -649,31 +712,13 @@
 
             // Initialize PayPal Smart Buttons
             paypal.Buttons({
-                style: {
-                    color: 'gold',
-                    shape: 'rect',
-                    label: 'checkout',
-                    layout: 'vertical'
-                },
+                style: { color: 'gold', shape: 'rect', label: 'checkout', layout: 'vertical' },
                 createOrder: function(data, actions) {
                     let currentTotal = cart.reduce((sum, item) => sum + item.price, 0);
-                    
-                    if (currentTotal === 0) {
-                        alert("Your cart is empty!");
-                        return;
-                    }
-
+                    if (currentTotal === 0) { alert("Your cart is empty!"); return; }
                     return actions.order.create({
-                        purchase_units: [{
-                            amount: {
-                                currency_code: 'GBP',
-                                value: currentTotal.toFixed(2)
-                            }
-                        }],
-                        // THIS IS THE NEW ADDITION
-                        application_context: {
-                            shipping_preference: 'GET_FROM_FILE' // Forces PayPal to collect/confirm the delivery address
-                        }
+                        purchase_units: [{ amount: { currency_code: 'GBP', value: currentTotal.toFixed(2) } }],
+                        application_context: { shipping_preference: 'GET_FROM_FILE' }
                     });
                 },
                 onApprove: function(data, actions) {
@@ -691,10 +736,8 @@
                 }
             }).render('#paypal-button-container');
 
-            // Initial render on page load
             updateCartUI();
         });
     </script>
-
 </body>
 </html>
