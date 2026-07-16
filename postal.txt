@@ -1,0 +1,17 @@
+Class: Letter
+UK Base: 1.50
+UK Additional: 0.50
+Int Base: 4.50
+Int Additional: 1.00
+---
+Class: Large Letter
+UK Base: 2.50
+UK Additional: 0.50
+Int Base: 8.50
+Int Additional: 1.50
+---
+Class: Small Parcel
+UK Base: 4.50
+UK Additional: 1.00
+Int Base: 12.50
+Int Additional: 2.00
