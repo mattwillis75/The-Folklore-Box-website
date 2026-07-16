@@ -93,9 +93,15 @@
         .remove-btn { background: none; border: none; color: #888; cursor: pointer; font-size: 1.5rem; padding: 0 0 0 1rem; transition: color 0.2s; }
         .remove-btn:hover { color: var(--accent-red); }
         .cart-footer { border-top: 1px solid #333; padding-top: 1.5rem; }
-        .cart-total { font-size: 1.8rem; text-align: right; margin-bottom: 1.5rem; font-family: 'Spectral', serif; }
+        
+        /* New Cart Shipping Styles */
+        .cart-shipping-selector { margin-bottom: 1rem; border-bottom: 1px solid #222; padding-bottom: 1rem; }
+        .cart-shipping-selector label { display: block; color: #aaa; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
+        .cart-shipping-selector select { width: 100%; padding: 0.8rem; background: #111; color: #fff; border: 1px solid #333; border-radius: 3px; cursor: pointer; }
+        .cart-breakdown { margin-bottom: 1rem; color: #aaa; font-size: 1.1rem; }
+        .cart-row { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
+        .cart-total { font-size: 1.8rem; text-align: right; margin-bottom: 1.5rem; font-family: 'Spectral', serif; color: var(--accent-red); border-top: 1px solid #333; padding-top: 1rem; }
 
-        /* Footer */
         footer { background: #000000; color: #ffffff; padding: 4rem 2rem; text-align: center; border-top: 1px solid #222; }
         footer a { color: #ffffff; text-decoration: none; margin: 0 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
         footer a:hover { color: var(--accent-red); }
@@ -144,6 +150,17 @@
         <div class="cart-header"><h2>Your Cart</h2><span class="close-cart" id="close-cart">&times;</span></div>
         <div class="cart-items-container" id="cart-items"></div>
         <div class="cart-footer">
+            <div class="cart-shipping-selector">
+                <label for="cart-destination">Deliver to:</label>
+                <select id="cart-destination">
+                    <option value="uk">United Kingdom</option>
+                    <option value="int">International</option>
+                </select>
+            </div>
+            <div class="cart-breakdown">
+                <div class="cart-row"><span>Items:</span><span id="cart-subtotal">£0.00</span></div>
+                <div class="cart-row"><span>Postage:</span><span id="cart-shipping-cost">£0.00</span></div>
+            </div>
             <div class="cart-total" id="cart-total">Total: £0.00</div>
             <div id="paypal-button-container"></div>
         </div>
@@ -170,7 +187,33 @@
             const filtersContainer = document.getElementById('shop-filters');
             let products = [];
             let uniqueSections = new Set(); 
+            let postalRates = {};
 
+            // 1. Fetch Postal Rates
+            try {
+                const postalResponse = await fetch('postal.txt', { cache: 'no-store' });
+                const postalText = await postalResponse.text();
+                postalText.split('---').forEach(block => {
+                    if(!block.trim()) return;
+                    let currentClass = "";
+                    let rates = {};
+                    block.trim().split('\n').forEach(line => {
+                        const sepIndex = line.indexOf(':');
+                        if(sepIndex > -1) {
+                            const key = line.slice(0, sepIndex).trim().toLowerCase();
+                            const value = line.slice(sepIndex + 1).trim();
+                            if(key === 'class') currentClass = value;
+                            else if(key === 'uk base') rates.ukBase = parseFloat(value);
+                            else if(key === 'uk additional') rates.ukAdd = parseFloat(value);
+                            else if(key === 'int base') rates.intBase = parseFloat(value);
+                            else if(key === 'int additional') rates.intAdd = parseFloat(value);
+                        }
+                    });
+                    if(currentClass) postalRates[currentClass] = rates;
+                });
+            } catch(e) { console.error("Could not load postal rates."); }
+
+            // 2. Fetch and Build Grid
             try {
                 const response = await fetch('products.txt', { cache: 'no-store' });
                 if (!response.ok) throw new Error("Could not find products.txt");
@@ -182,7 +225,7 @@
                     if (rawItem.trim() === '') return;
                     
                     const lines = rawItem.trim().split('\n');
-                    let product = { shippingOptions: [], sections: [] };
+                    let product = { sections: [] };
                     
                     lines.forEach(line => {
                         const sepIndex = line.indexOf(':');
@@ -194,13 +237,10 @@
                                 product.title = value;
                                 product.id = value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
                             }
-                            // Backwards compatible with both "Main image" and old "Image" tags
                             else if (key === 'main image' || key === 'image') product.mainImage = value;
                             else if (key === 'sections') product.sections = value.split(',').map(s => s.trim());
+                            else if (key === 'postal class') product.postalClass = value;
                             else if (key === 'item cost') product.basePrice = parseFloat(value);
-                            else if (key === 'uk standard delivery') product.shippingOptions.push({ label: 'UK Standard', cost: parseFloat(value) });
-                            else if (key === 'uk tracked & signed') product.shippingOptions.push({ label: 'UK Tracked & Signed', cost: parseFloat(value) });
-                            else if (key === 'international delivery') product.shippingOptions.push({ label: 'International', cost: parseFloat(value) });
                         }
                     });
                     
@@ -254,19 +294,17 @@
                 renderGrid('All');
 
             } catch (error) {
-                console.error("Error loading products:", error);
                 shopGrid.innerHTML = '<p style="color: #cc0000; grid-column: 1 / -1; text-align: center;">Error loading products database. If testing locally, ensure you are using a local server.</p>';
             }
 
+            // --- CART LOGIC ---
             let cart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
-            const saveCart = () => { localStorage.setItem('folkloreCart', JSON.stringify(cart)); };
-
-            const cartToggle = document.getElementById('cart-toggle');
+            
             const cartSidebar = document.getElementById('cart-sidebar');
             const cartOverlay = document.getElementById('cart-overlay');
+            const cartToggle = document.getElementById('cart-toggle');
             const closeCartBtn = document.getElementById('close-cart');
-            const cartItemsContainer = document.getElementById('cart-items');
-            const cartTotalElement = document.getElementById('cart-total');
+            const destSelect = document.getElementById('cart-destination');
 
             const openCart = () => { cartSidebar.classList.add('open'); cartOverlay.classList.add('active'); };
             const closeCart = () => { cartSidebar.classList.remove('open'); cartOverlay.classList.remove('active'); };
@@ -274,54 +312,92 @@
             cartToggle.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
             closeCartBtn.addEventListener('click', closeCart);
             cartOverlay.addEventListener('click', closeCart);
+            destSelect.addEventListener('change', updateCartUI);
 
-            const updateCartUI = () => {
-                cartItemsContainer.innerHTML = '';
-                let total = 0;
+            function updateCartUI() {
+                const container = document.getElementById('cart-items');
+                container.innerHTML = '';
+                let itemsTotal = 0; let shippingTotal = 0; let finalTotal = 0;
+                
                 if (cart.length === 0) {
-                    cartItemsContainer.innerHTML = '<p style="color: #777; font-style: italic;">Your cart is currently empty.</p>';
-                    cartTotalElement.textContent = 'Total: £0.00';
-                    cartToggle.textContent = 'Cart (0)';
+                    container.innerHTML = '<p style="color: #777; font-style: italic;">Your cart is currently empty.</p>';
+                    document.getElementById('cart-subtotal').textContent = `£0.00`;
+                    document.getElementById('cart-shipping-cost').textContent = `£0.00`;
+                    document.getElementById('cart-total').textContent = `Total: £0.00`;
+                    document.getElementById('cart-toggle').textContent = `Cart (0)`;
                     return;
                 }
+
+                const dest = destSelect.value;
+                let maxBase = 0; let maxBaseIndex = -1;
+
                 cart.forEach((item, index) => {
-                    total += item.price;
-                    cartItemsContainer.innerHTML += `
-                        <div class="cart-item">
-                            <div class="cart-item-title">${item.title}</div>
-                            <div>£${item.price.toFixed(2)}</div>
-                            <button class="remove-btn" onclick="removeFromCart(${index})" title="Remove item">&times;</button>
-                        </div>
-                    `;
+                    itemsTotal += item.price;
+                    container.innerHTML += `<div class="cart-item"><div class="cart-item-title">${item.title}</div><div>£${item.price.toFixed(2)}</div><button class="remove-btn" onclick="removeFromCart(${index})">&times;</button></div>`;
+                    
+                    const rates = postalRates[item.postalClass];
+                    if(rates) {
+                        const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                        if(baseRate > maxBase) { maxBase = baseRate; maxBaseIndex = index; }
+                    }
                 });
-                cartTotalElement.textContent = `Total: £${total.toFixed(2)}`;
-                cartToggle.textContent = `Cart (${cart.length})`;
-            };
 
-            window.removeFromCart = function(index) { cart.splice(index, 1); saveCart(); updateCartUI(); };
+                cart.forEach((item, index) => {
+                    const rates = postalRates[item.postalClass];
+                    if(rates) {
+                        shippingTotal += (index === maxBaseIndex) ? 
+                            (dest === 'uk' ? rates.ukBase : rates.intBase) : 
+                            (dest === 'uk' ? rates.ukAdd : rates.intAdd);
+                    }
+                });
 
-            const mobileToggle = document.getElementById('mobile-toggle');
-            const navList = document.getElementById('nav-list');
-            if (mobileToggle && navList) {
-                mobileToggle.addEventListener('click', () => { navList.classList.toggle('mobile-active'); mobileToggle.classList.toggle('open'); });
+                finalTotal = itemsTotal + shippingTotal;
+
+                document.getElementById('cart-subtotal').textContent = `£${itemsTotal.toFixed(2)}`;
+                document.getElementById('cart-shipping-cost').textContent = `£${shippingTotal.toFixed(2)}`;
+                document.getElementById('cart-total').textContent = `Total: £${finalTotal.toFixed(2)}`;
+                document.getElementById('cart-toggle').textContent = `Cart (${cart.length})`;
             }
 
+            window.removeFromCart = (i) => { cart.splice(i, 1); localStorage.setItem('folkloreCart', JSON.stringify(cart)); updateCartUI(); };
+            
+            document.getElementById('mobile-toggle').addEventListener('click', () => { document.getElementById('nav-list').classList.toggle('mobile-active'); });
+
+            // --- PAYPAL INITIALIZATION ---
             paypal.Buttons({
                 style: { color: 'gold', shape: 'rect', label: 'checkout', layout: 'vertical' },
                 createOrder: function(data, actions) {
-                    let currentTotal = cart.reduce((sum, item) => sum + item.price, 0);
-                    if (currentTotal === 0) { alert("Your cart is empty!"); return; }
+                    let itemsTotal = 0; let shippingTotal = 0; let maxBase = 0; let maxBaseIndex = -1;
+                    const dest = destSelect.value;
+                    cart.forEach((item, index) => {
+                        itemsTotal += item.price;
+                        const rates = postalRates[item.postalClass];
+                        if(rates) {
+                            const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                            if(baseRate > maxBase) { maxBase = baseRate; maxBaseIndex = index; }
+                        }
+                    });
+                    cart.forEach((item, index) => {
+                        const rates = postalRates[item.postalClass];
+                        if(rates) {
+                            shippingTotal += (index === maxBaseIndex) ? (dest === 'uk' ? rates.ukBase : rates.intBase) : (dest === 'uk' ? rates.ukAdd : rates.intAdd);
+                        }
+                    });
+                    let finalTotal = itemsTotal + shippingTotal;
+
+                    if (finalTotal === 0) { alert("Your cart is empty!"); return; }
                     return actions.order.create({
-                        purchase_units: [{ amount: { currency_code: 'GBP', value: currentTotal.toFixed(2) } }],
+                        purchase_units: [{ amount: { currency_code: 'GBP', value: finalTotal.toFixed(2) } }],
                         application_context: { shipping_preference: 'GET_FROM_FILE' }
                     });
                 },
                 onApprove: function(data, actions) {
                     return actions.order.capture().then(function(details) {
                         alert('Payment successful! Thank you for your order, ' + details.payer.name.given_name + '.');
-                        cart = []; saveCart(); updateCartUI(); closeCart();
+                        cart = []; localStorage.setItem('folkloreCart', JSON.stringify(cart)); updateCartUI(); closeCart();
                     });
-                }
+                },
+                onError: function(err) { console.error('PayPal Checkout Error:', err); alert('There was an issue connecting to PayPal. Please try again.'); }
             }).render('#paypal-button-container');
 
             updateCartUI();
