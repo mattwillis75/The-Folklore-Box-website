@@ -12,7 +12,7 @@ Title: SHUCK Zine - Issue 8 (Norfolk Fairies)
 Main image: ./Home-7.png
 Images: ./shuck-8-page1.png, ./shuck-8-page2.png, ./shuck-8-back.png
 Description: The eighth issue of our collaborative folklore zine, focusing on the hidden world of Norfolk fairies and fey creatures. Contains 32 pages of original illustrations.
-Sections: Zines, Folklore
+Sections: Zines
 Item cost: 8.00
 UK standard delivery: 2.00
 UK tracked & signed: 4.50
