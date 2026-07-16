@@ -5,39 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product | The Folklore Box</title>
     
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;600&family=Spectral:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
         /* Base Styles */
-        :root {
-            --bg-color: #000000;
-            --text-color: #ffffff;
-            --accent-red: #cc0000;
-            --header-bg: rgba(0, 0, 0, 0.85);
-        }
-        body {
-            font-family: 'Lato', sans-serif;
-            font-weight: 300;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
+        :root { --bg-color: #000000; --text-color: #ffffff; --accent-red: #cc0000; --header-bg: rgba(0, 0, 0, 0.85); }
+        body { font-family: 'Lato', sans-serif; font-weight: 300; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 0; line-height: 1.6; overflow-x: hidden; }
         h1, h2, h3 { font-family: 'Spectral', serif; font-weight: 400; color: #ffffff; }
         
         /* Header & Nav */
         header { position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 3rem; background: var(--header-bg); border-bottom: 1px solid #333333; z-index: 1000; box-sizing: border-box; backdrop-filter: blur(8px); }
         .logo img { max-width: 180px; height: auto; }
-        
         nav ul { list-style: none; display: flex; align-items: center; gap: 2rem; margin: 0; padding: 0; }
         nav a { text-decoration: none; color: #ffffff; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; transition: color 0.3s ease; }
         nav a:hover { color: var(--accent-red); }
-        
         #cart-toggle { color: var(--accent-red); border: 1px solid var(--accent-red); padding: 0.5rem 1rem; border-radius: 3px; }
         #cart-toggle:hover { background: var(--accent-red); color: #ffffff; }
 
@@ -55,7 +38,15 @@
         .product-container { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; padding: 2rem; }
         @media (max-width: 800px) { .product-container { grid-template-columns: 1fr; } }
         
-        .product-image-container img { width: 100%; height: auto; border: 1px solid #333; border-radius: 4px; }
+        /* New Gallery Styles */
+        .product-gallery { display: flex; flex-direction: column; gap: 1rem; }
+        .product-image-container img { width: 100%; height: auto; border: 1px solid #333; border-radius: 4px; transition: opacity 0.3s ease; }
+        
+        .gallery-thumbnails { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .gallery-thumbnails img { width: 80px; height: 80px; object-fit: cover; border: 2px solid transparent; border-radius: 4px; cursor: pointer; transition: all 0.3s ease; opacity: 0.6; }
+        .gallery-thumbnails img:hover { opacity: 1; border-color: #555; }
+        .gallery-thumbnails img.active { border-color: var(--accent-red); opacity: 1; }
+
         .product-info h1 { font-size: 2.5rem; margin-top: 0; }
         .product-description { font-size: 1.1rem; color: #ccc; margin-bottom: 2rem; }
         
@@ -86,7 +77,6 @@
         .cart-footer { border-top: 1px solid #333; padding-top: 1.5rem; }
         .cart-total { font-size: 1.8rem; text-align: right; margin-bottom: 1.5rem; font-family: 'Spectral', serif; }
 
-        /* Footer */
         footer { background: #000000; color: #ffffff; padding: 4rem 2rem; text-align: center; border-top: 1px solid #222; }
         footer a { color: #ffffff; text-decoration: none; margin: 0 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
         footer a:hover { color: var(--accent-red); }
@@ -124,7 +114,6 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <footer>
         <div class="social-links">
             <a href="https://instagram.com/the_folklore_box" target="_blank">Instagram: @the_folklore_box</a> | 
@@ -135,13 +124,10 @@
             <a href="wholesale.html">Wholesale Enquiries</a>
             <a href="contact.html">Contact</a>
         </div>
-        <p style="font-size: 0.8rem; color: #555; font-family: 'Lato', sans-serif;">
-            &copy; 2026 The Folklore Box by Matt Willis. All rights reserved.
-        </p>
+        <p style="font-size: 0.8rem; color: #555; font-family: 'Lato', sans-serif;">&copy; 2026 The Folklore Box by Matt Willis. All rights reserved.</p>
     </footer>
 
-    <!-- PAYPAL JAVASCRIPT SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id=AdhiDRZNrw0vQ1zesmeCq6FS8q-0Fb3NmmEHgVqkO5h8t5ZhXDrgdUeon4diJcPZnXYkYnbztRGHTKlR&currency=GBP"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID_HERE&currency=GBP"></script>
 
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
@@ -159,14 +145,16 @@
                 for (const rawItem of rawItems) {
                     if (rawItem.trim() === '') continue;
                     const lines = rawItem.trim().split('\n');
-                    let product = { shippingOptions: [] };
+                    let product = { shippingOptions: [], additionalImages: [] };
+                    
                     lines.forEach(line => {
                         const sepIndex = line.indexOf(':');
                         if (sepIndex > -1) {
                             const key = line.slice(0, sepIndex).trim().toLowerCase();
                             const value = line.slice(sepIndex + 1).trim();
-                            if (key === 'title') { product.title = value; product.id = value.toLowerCase().replace(/[^a-z0-9]+/g, '-'); }
-                            else if (key === 'image') product.image = value;
+                            if (key === 'title') { product.title = value; product.id = value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, ''); }
+                            else if (key === 'main image' || key === 'image') product.mainImage = value;
+                            else if (key === 'images') product.additionalImages = value.split(',').map(s => s.trim());
                             else if (key === 'description') product.description = value;
                             else if (key === 'item cost') product.basePrice = parseFloat(value);
                             else if (key === 'uk standard delivery') product.shippingOptions.push({ label: 'UK Standard', cost: parseFloat(value) });
@@ -178,12 +166,35 @@
                 }
 
                 if (foundProduct) {
+                    // 1. Build Shipping Options
                     let shippingSelectHTML = `<select id="shipping-select">`;
                     foundProduct.shippingOptions.forEach((opt, index) => { shippingSelectHTML += `<option value="${index}">${opt.label}</option>`; });
                     shippingSelectHTML += `</select>`;
 
+                    // 2. Build Image Gallery
+                    let allImages = [foundProduct.mainImage];
+                    if (foundProduct.additionalImages.length > 0) {
+                        allImages = allImages.concat(foundProduct.additionalImages);
+                    }
+
+                    let galleryHTML = '';
+                    if (allImages.length > 1) {
+                        galleryHTML = `<div class="gallery-thumbnails">`;
+                        allImages.forEach((imgSrc, index) => {
+                            const activeClass = index === 0 ? 'active' : '';
+                            galleryHTML += `<img src="${imgSrc}" class="thumbnail ${activeClass}" data-src="${imgSrc}" alt="${foundProduct.title} thumbnail">`;
+                        });
+                        galleryHTML += `</div>`;
+                    }
+
+                    // 3. Inject Layout
                     productContainer.innerHTML = `
-                        <div class="product-image-container"><img src="${foundProduct.image}" alt="${foundProduct.title}"></div>
+                        <div class="product-gallery">
+                            <div class="product-image-container">
+                                <img id="main-product-image" src="${foundProduct.mainImage}" alt="${foundProduct.title}">
+                            </div>
+                            ${galleryHTML}
+                        </div>
                         <div class="product-info">
                             <h1>${foundProduct.title}</h1>
                             <p class="product-description">${foundProduct.description}</p>
@@ -200,17 +211,37 @@
                         </div>
                     `;
 
-                    // Update prices
+                    // 4. Interactive Scripts for generated elements
                     const shippingSelect = document.getElementById('shipping-select');
                     shippingSelect.addEventListener('change', (e) => {
                         const selectedShipping = foundProduct.shippingOptions[e.target.value];
                         document.getElementById('display-postage').textContent = `£${selectedShipping.cost.toFixed(2)}`;
                         document.getElementById('display-total').textContent = `£${(foundProduct.basePrice + selectedShipping.cost).toFixed(2)}`;
                     });
+
+                    // Gallery interactivity
+                    if (allImages.length > 1) {
+                        const thumbnails = document.querySelectorAll('.gallery-thumbnails .thumbnail');
+                        const mainImage = document.getElementById('main-product-image');
+
+                        thumbnails.forEach(thumb => {
+                            thumb.addEventListener('click', (e) => {
+                                // Fade effect
+                                mainImage.style.opacity = 0.5;
+                                setTimeout(() => {
+                                    mainImage.src = e.target.dataset.src;
+                                    mainImage.style.opacity = 1;
+                                }, 150);
+                                
+                                thumbnails.forEach(t => t.classList.remove('active'));
+                                e.target.classList.add('active');
+                            });
+                        });
+                    }
                 }
             } catch (err) { productContainer.innerHTML = "Error loading product."; }
 
-            // --- CART LOGIC (With Event Delegation) ---
+            // --- CART LOGIC ---
             let cart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
             
             const cartSidebar = document.getElementById('cart-sidebar');
@@ -260,45 +291,22 @@
             
             // --- PAYPAL INITIALIZATION ---
             paypal.Buttons({
-                style: {
-                    color: 'gold',
-                    shape: 'rect',
-                    label: 'checkout',
-                    layout: 'vertical'
-                },
+                style: { color: 'gold', shape: 'rect', label: 'checkout', layout: 'vertical' },
                 createOrder: function(data, actions) {
                     let currentTotal = cart.reduce((sum, item) => sum + item.price, 0);
-                    
-                    if (currentTotal === 0) {
-                        alert("Your cart is empty!");
-                        return;
-                    }
-
+                    if (currentTotal === 0) { alert("Your cart is empty!"); return; }
                     return actions.order.create({
-                        purchase_units: [{
-                            amount: {
-                                currency_code: 'GBP',
-                                value: currentTotal.toFixed(2)
-                            }
-                        }],
-                        application_context: {
-                            shipping_preference: 'GET_FROM_FILE' // Forces PayPal to collect/confirm delivery address
-                        }
+                        purchase_units: [{ amount: { currency_code: 'GBP', value: currentTotal.toFixed(2) } }],
+                        application_context: { shipping_preference: 'GET_FROM_FILE' }
                     });
                 },
                 onApprove: function(data, actions) {
                     return actions.order.capture().then(function(details) {
                         alert('Payment successful! Thank you for your order, ' + details.payer.name.given_name + '.');
-                        cart = []; 
-                        localStorage.setItem('folkloreCart', JSON.stringify(cart)); 
-                        updateCartUI();
-                        closeCart();
+                        cart = []; localStorage.setItem('folkloreCart', JSON.stringify(cart)); updateCartUI(); closeCart();
                     });
                 },
-                onError: function(err) {
-                    console.error('PayPal Checkout Error:', err);
-                    alert('There was an issue connecting to PayPal. Please try again.');
-                }
+                onError: function(err) { console.error('PayPal Checkout Error:', err); alert('There was an issue connecting to PayPal. Please try again.'); }
             }).render('#paypal-button-container');
 
             updateCartUI();
