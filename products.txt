@@ -7,9 +7,9 @@ UK standard delivery: 2.00
 UK tracked & signed: 4.50
 International delivery: 8.50
 ---
-Title: Fine Art Print - Black Shuck
+Title: Fine Art Print - Mari Lwyd
 Image: ./Home-4.png
-Description: A high-quality fine art print featuring Black Shuck, the ghostly black dog said to roam the coastline and countryside of East Anglia.
+Description: A high-quality fine art print featuring the MAri Lwyd from Welsh Folklore.
 Sections: Prints
 Item cost: 15.00
 UK standard delivery: 2.00
