@@ -363,44 +363,49 @@
             
             document.getElementById('mobile-toggle').addEventListener('click', () => { document.getElementById('nav-list').classList.toggle('mobile-active'); });
 
-            // --- PAYPAL INITIALIZATION ---
-            paypal.Buttons({
-                style: { color: 'gold', shape: 'rect', label: 'checkout', layout: 'vertical' },
-                createOrder: function(data, actions) {
-                    let itemsTotal = 0; let shippingTotal = 0; let maxBase = 0; let maxBaseIndex = -1;
-                    const dest = destSelect.value;
-                    cart.forEach((item, index) => {
-                        itemsTotal += item.price;
-                        const rates = postalRates[item.postalClass];
-                        if(rates) {
-                            const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
-                            if(baseRate > maxBase) { maxBase = baseRate; maxBaseIndex = index; }
-                        }
-                    });
-                    cart.forEach((item, index) => {
-                        const rates = postalRates[item.postalClass];
-                        if(rates) {
-                            shippingTotal += (index === maxBaseIndex) ? (dest === 'uk' ? rates.ukBase : rates.intBase) : (dest === 'uk' ? rates.ukAdd : rates.intAdd);
-                        }
-                    });
-                    let finalTotal = itemsTotal + shippingTotal;
-
-                    if (finalTotal === 0) { alert("Your cart is empty!"); return; }
-                    return actions.order.create({
-                        purchase_units: [{ amount: { currency_code: 'GBP', value: finalTotal.toFixed(2) } }],
-                        application_context: { shipping_preference: 'GET_FROM_FILE' }
-                    });
-                },
-                onApprove: function(data, actions) {
-                    return actions.order.capture().then(function(details) {
-                        alert('Payment successful! Thank you for your order, ' + details.payer.name.given_name + '.');
-                        cart = []; localStorage.setItem('folkloreCart', JSON.stringify(cart)); updateCartUI(); closeCart();
-                    });
-                },
-                onError: function(err) { console.error('PayPal Checkout Error:', err); alert('There was an issue connecting to PayPal. Please try again.'); }
-            }).render('#paypal-button-container');
-
+            // RUN UI UPDATE BEFORE PAYPAL 
             updateCartUI();
+
+            // --- PAYPAL INITIALIZATION ---
+            try {
+                paypal.Buttons({
+                    style: { color: 'gold', shape: 'rect', label: 'checkout', layout: 'vertical' },
+                    createOrder: function(data, actions) {
+                        let itemsTotal = 0; let shippingTotal = 0; let maxBase = 0; let maxBaseIndex = -1;
+                        const dest = destSelect.value;
+                        cart.forEach((item, index) => {
+                            itemsTotal += item.price;
+                            const rates = postalRates[item.postalClass];
+                            if(rates) {
+                                const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                                if(baseRate > maxBase) { maxBase = baseRate; maxBaseIndex = index; }
+                            }
+                        });
+                        cart.forEach((item, index) => {
+                            const rates = postalRates[item.postalClass];
+                            if(rates) {
+                                shippingTotal += (index === maxBaseIndex) ? (dest === 'uk' ? rates.ukBase : rates.intBase) : (dest === 'uk' ? rates.ukAdd : rates.intAdd);
+                            }
+                        });
+                        let finalTotal = itemsTotal + shippingTotal;
+
+                        if (finalTotal === 0) { alert("Your cart is empty!"); return; }
+                        return actions.order.create({
+                            purchase_units: [{ amount: { currency_code: 'GBP', value: finalTotal.toFixed(2) } }],
+                            application_context: { shipping_preference: 'GET_FROM_FILE' }
+                        });
+                    },
+                    onApprove: function(data, actions) {
+                        return actions.order.capture().then(function(details) {
+                            alert('Payment successful! Thank you for your order, ' + details.payer.name.given_name + '.');
+                            cart = []; localStorage.setItem('folkloreCart', JSON.stringify(cart)); updateCartUI(); closeCart();
+                        });
+                    },
+                    onError: function(err) { console.error('PayPal Checkout Error:', err); alert('There was an issue connecting to PayPal. Please try again.'); }
+                }).render('#paypal-button-container');
+            } catch (error) {
+                console.warn("PayPal SDK could not initialize. Please ensure a valid Client ID is set.", error);
+            }
         });
     </script>
 </body>
