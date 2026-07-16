@@ -97,8 +97,8 @@
             background: transparent;
             padding: 0 0 4rem 0; 
             border-bottom: 1px solid var(--accent-red); 
-            /* 75ch = ~15 words per line. This restrains the text AND the image */
-            max-width: 75ch; 
+            /* Reduced to 55ch for a tighter, ~10-12 word line length */
+            max-width: 55ch; 
         }
 
         .journal-entry:last-child {
@@ -106,7 +106,7 @@
             padding-bottom: 0;
         }
 
-        /* Image is now 4:3 ratio and locks to the 75ch width of the text */
+        /* Image remains 4:3 and automatically shrinks to match the new 55ch text width */
         .entry-image { 
             width: 100%; 
             aspect-ratio: 4 / 3; 
