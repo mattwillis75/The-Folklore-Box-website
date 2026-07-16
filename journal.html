@@ -60,7 +60,7 @@
         /* Sticky Sidebar */
         .journal-sidebar {
             position: sticky;
-            top: 120px; /* Sticks just below the header */
+            top: 120px;
             background: #0a0a0a;
             border: 1px solid #222;
             padding: 2rem;
@@ -92,27 +92,49 @@
         /* Journal Feed */
         .journal-feed { display: flex; flex-direction: column; gap: 4rem; }
         
+        /* Updated Entry Styles */
         .journal-entry {
-            background: #050505;
-            border: 1px solid #111;
-            padding: 0;
-            border-radius: 4px;
-            overflow: hidden;
-            transition: transform 0.3s ease;
+            background: transparent;
+            padding: 0 0 4rem 0; /* Add bottom spacing before the red line */
+            border-bottom: 1px solid var(--accent-red); /* Red separator line */
         }
 
-        .entry-image { width: 100%; max-height: 500px; object-fit: cover; border-bottom: 1px solid #222; display: block; background: #111;}
+        /* Removes the red line from the very last entry */
+        .journal-entry:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .entry-image { width: 100%; max-height: 500px; object-fit: cover; display: block; background: #111;}
         
-        .entry-content { padding: 3rem; }
-        @media (max-width: 600px) { .entry-content { padding: 1.5rem; } }
+        /* Removed left/right padding so text is flush with the image */
+        .entry-content { padding: 1.5rem 0 0 0; }
 
         .entry-date { color: var(--accent-red); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; margin-bottom: 0.5rem; display: block; }
         .entry-title { font-size: 2.2rem; margin: 0 0 1.5rem 0; line-height: 1.2; }
         
-        .entry-text p { font-size: 1.1rem; line-height: 1.8; color: #ddd; margin-bottom: 1.5rem; }
+        /* Text alignment set to justify */
+        .entry-text p { font-size: 1.1rem; line-height: 1.8; color: #ddd; margin-bottom: 1.5rem; text-align: justify; }
         
-        .entry-keywords { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #222; display: flex; flex-wrap: wrap; gap: 0.5rem; }
-        .keyword-tag { background: #111; color: #888; border: 1px solid #333; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+        /* Updated Keyword Styles */
+        .entry-keywords { margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+        
+        .keyword-tag { 
+            color: #888; 
+            font-size: 0.85rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            display: flex; 
+            align-items: center; 
+        }
+
+        /* Automatically adds a red / between keywords, but not after the last one */
+        .keyword-tag:not(:last-child)::after {
+            content: '/';
+            color: var(--accent-red);
+            margin-left: 0.5rem;
+            font-weight: bold;
+        }
 
         .no-results { text-align: center; padding: 4rem 0; color: #888; font-style: italic; font-size: 1.2rem; }
 
@@ -236,7 +258,6 @@
                 try {
                     const response = await fetch(`entry-${currentIndex}.txt`, { cache: 'no-store' });
                     
-                    // If file doesn't exist, break the loop
                     if (!response.ok) {
                         break; 
                     }
@@ -268,7 +289,6 @@
                                 }
                             }
                         } else {
-                            // Convert blank lines in the txt file into HTML paragraphs
                             if (line.trim() === '') {
                                 entry.textHtml += `</p><p>`;
                             } else {
@@ -277,7 +297,6 @@
                         }
                     });
 
-                    // Clean up trailing empty paragraphs
                     entry.textHtml = entry.textHtml.replace(/<p><\/p>/g, '');
                     
                     if (entry.title) allEntries.push(entry);
@@ -293,10 +312,8 @@
             if (allEntries.length === 0) {
                 feedContainer.innerHTML = '<div class="no-results">No journal entries found. Add your first entry as "entry-1.txt".</div>';
             } else {
-                // Sort by date (Newest first)
                 allEntries.sort((a, b) => new Date(b.date) - new Date(a.date));
                 
-                // Populate Year Dropdown
                 Array.from(uniqueYears).sort().reverse().forEach(year => {
                     yearSelect.innerHTML += `<option value="${year}">${year}</option>`;
                 });
@@ -314,7 +331,6 @@
                 }
 
                 entriesToRender.forEach(entry => {
-                    // Format date beautifully (e.g., "August 15, 2026")
                     const dateObj = new Date(entry.date);
                     const formattedDate = dateObj.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 
@@ -345,10 +361,7 @@
                 const selectedYear = yearSelect.value;
 
                 const filtered = allEntries.filter(entry => {
-                    // 1. Year Check
                     const matchesYear = selectedYear === 'all' || entry.date.startsWith(selectedYear);
-                    
-                    // 2. Search Term Check (Searches Title, Text, and Keywords)
                     const matchesSearch = searchTerm === '' || 
                         entry.title.toLowerCase().includes(searchTerm) || 
                         entry.textHtml.toLowerCase().includes(searchTerm) ||
