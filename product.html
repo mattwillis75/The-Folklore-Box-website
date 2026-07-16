@@ -38,21 +38,9 @@
         .product-container { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; padding: 2rem; }
         @media (max-width: 800px) { .product-container { grid-template-columns: 1fr; } }
         
-        /* New Gallery Styles */
         .product-gallery { display: flex; flex-direction: column; gap: 1.5rem; align-items: center; }
-        
         .product-image-container { width: 100%; max-width: 450px; }
-        
-        .product-image-container img { 
-            width: 100%; 
-            aspect-ratio: 4 / 3; 
-            object-fit: cover; 
-            border: 1px solid #333; 
-            border-radius: 4px; 
-            transition: opacity 0.3s ease; 
-            display: block; 
-            background: #111;
-        }
+        .product-image-container img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: 1px solid #333; border-radius: 4px; transition: opacity 0.3s ease; display: block; background: #111; }
         
         .gallery-thumbnails { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
         .gallery-thumbnails img { width: 80px; height: 80px; object-fit: cover; border: 2px solid transparent; border-radius: 4px; cursor: pointer; transition: all 0.3s ease; opacity: 0.6; }
@@ -62,13 +50,8 @@
         .product-info h1 { font-size: 2.5rem; margin-top: 0; }
         .product-description { font-size: 1.1rem; color: #ccc; margin-bottom: 2rem; }
         
-        /* Options & Price */
-        .options-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; color: #aaa; }
-        select { width: 100%; padding: 1rem; background: #111; color: #fff; border: 1px solid #333; border-radius: 3px; margin-bottom: 2rem; cursor: pointer; }
-        
         .price-breakdown { background: #0a0a0a; border: 1px solid #222; padding: 1.5rem; border-radius: 4px; margin-bottom: 2rem; }
-        .price-row { display: flex; justify-content: space-between; color: #aaa; margin-bottom: 0.5rem; }
-        .price-total { display: flex; justify-content: space-between; font-family: 'Spectral', serif; font-size: 1.8rem; color: var(--accent-red); border-top: 1px solid #333; margin-top: 1rem; padding-top: 1rem; }
+        .price-total { display: flex; justify-content: space-between; font-family: 'Spectral', serif; font-size: 1.8rem; color: var(--accent-red); }
         
         .btn { display: block; background: var(--accent-red); color: #fff; padding: 1.2rem; text-align: center; border: none; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; width: 100%; }
         
@@ -87,7 +70,14 @@
         .remove-btn { background: none; border: none; color: #888; cursor: pointer; font-size: 1.5rem; padding: 0 0 0 1rem; transition: color 0.2s; }
         .remove-btn:hover { color: var(--accent-red); }
         .cart-footer { border-top: 1px solid #333; padding-top: 1.5rem; }
-        .cart-total { font-size: 1.8rem; text-align: right; margin-bottom: 1.5rem; font-family: 'Spectral', serif; }
+        
+        /* New Cart Shipping Styles */
+        .cart-shipping-selector { margin-bottom: 1rem; border-bottom: 1px solid #222; padding-bottom: 1rem; }
+        .cart-shipping-selector label { display: block; color: #aaa; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
+        .cart-shipping-selector select { width: 100%; padding: 0.8rem; background: #111; color: #fff; border: 1px solid #333; border-radius: 3px; cursor: pointer; }
+        .cart-breakdown { margin-bottom: 1rem; color: #aaa; font-size: 1.1rem; }
+        .cart-row { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
+        .cart-total { font-size: 1.8rem; text-align: right; margin-bottom: 1.5rem; font-family: 'Spectral', serif; color: var(--accent-red); border-top: 1px solid #333; padding-top: 1rem; }
 
         footer { background: #000000; color: #ffffff; padding: 4rem 2rem; text-align: center; border-top: 1px solid #222; }
         footer a { color: #ffffff; text-decoration: none; margin: 0 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
@@ -121,6 +111,17 @@
         <div class="cart-header"><h2>Your Cart</h2><span class="close-cart" id="close-cart">&times;</span></div>
         <div class="cart-items-container" id="cart-items"></div>
         <div class="cart-footer">
+            <div class="cart-shipping-selector">
+                <label for="cart-destination">Deliver to:</label>
+                <select id="cart-destination">
+                    <option value="uk">United Kingdom</option>
+                    <option value="int">International</option>
+                </select>
+            </div>
+            <div class="cart-breakdown">
+                <div class="cart-row"><span>Items:</span><span id="cart-subtotal">£0.00</span></div>
+                <div class="cart-row"><span>Postage:</span><span id="cart-shipping-cost">£0.00</span></div>
+            </div>
             <div class="cart-total" id="cart-total">Total: £0.00</div>
             <div id="paypal-button-container"></div>
         </div>
@@ -147,8 +148,33 @@
             const urlParams = new URLSearchParams(window.location.search);
             const productId = urlParams.get('id');
             let foundProduct = null;
+            let postalRates = {};
 
-            // Fetch and Parse
+            // 1. Fetch Postal Rates
+            try {
+                const postalResponse = await fetch('postal.txt', { cache: 'no-store' });
+                const postalText = await postalResponse.text();
+                postalText.split('---').forEach(block => {
+                    if(!block.trim()) return;
+                    let currentClass = "";
+                    let rates = {};
+                    block.trim().split('\n').forEach(line => {
+                        const sepIndex = line.indexOf(':');
+                        if(sepIndex > -1) {
+                            const key = line.slice(0, sepIndex).trim().toLowerCase();
+                            const value = line.slice(sepIndex + 1).trim();
+                            if(key === 'class') currentClass = value;
+                            else if(key === 'uk base') rates.ukBase = parseFloat(value);
+                            else if(key === 'uk additional') rates.ukAdd = parseFloat(value);
+                            else if(key === 'int base') rates.intBase = parseFloat(value);
+                            else if(key === 'int additional') rates.intAdd = parseFloat(value);
+                        }
+                    });
+                    if(currentClass) postalRates[currentClass] = rates;
+                });
+            } catch(e) { console.error("Could not load postal rates."); }
+
+            // 2. Fetch and Parse Product
             try {
                 const response = await fetch('products.txt', { cache: 'no-store' });
                 const text = await response.text();
@@ -157,7 +183,7 @@
                 for (const rawItem of rawItems) {
                     if (rawItem.trim() === '') continue;
                     const lines = rawItem.trim().split('\n');
-                    let product = { shippingOptions: [], additionalImages: [] };
+                    let product = { additionalImages: [] };
                     
                     lines.forEach(line => {
                         const sepIndex = line.indexOf(':');
@@ -168,26 +194,16 @@
                             else if (key === 'main image' || key === 'image') product.mainImage = value;
                             else if (key === 'images') product.additionalImages = value.split(',').map(s => s.trim());
                             else if (key === 'description') product.description = value;
+                            else if (key === 'postal class') product.postalClass = value;
                             else if (key === 'item cost') product.basePrice = parseFloat(value);
-                            else if (key === 'uk standard delivery') product.shippingOptions.push({ label: 'UK Standard', cost: parseFloat(value) });
-                            else if (key === 'uk tracked & signed') product.shippingOptions.push({ label: 'UK Tracked & Signed', cost: parseFloat(value) });
-                            else if (key === 'international delivery') product.shippingOptions.push({ label: 'International', cost: parseFloat(value) });
                         }
                     });
                     if (product.id === productId) { foundProduct = product; break; }
                 }
 
                 if (foundProduct) {
-                    // 1. Build Shipping Options
-                    let shippingSelectHTML = `<select id="shipping-select">`;
-                    foundProduct.shippingOptions.forEach((opt, index) => { shippingSelectHTML += `<option value="${index}">${opt.label}</option>`; });
-                    shippingSelectHTML += `</select>`;
-
-                    // 2. Build Image Gallery
                     let allImages = [foundProduct.mainImage];
-                    if (foundProduct.additionalImages.length > 0) {
-                        allImages = allImages.concat(foundProduct.additionalImages);
-                    }
+                    if (foundProduct.additionalImages.length > 0) allImages = allImages.concat(foundProduct.additionalImages);
 
                     let galleryHTML = '';
                     if (allImages.length > 1) {
@@ -199,52 +215,28 @@
                         galleryHTML += `</div>`;
                     }
 
-                    // 3. Inject Layout
                     productContainer.innerHTML = `
                         <div class="product-gallery">
-                            <div class="product-image-container">
-                                <img id="main-product-image" src="${foundProduct.mainImage}" alt="${foundProduct.title}">
-                            </div>
+                            <div class="product-image-container"><img id="main-product-image" src="${foundProduct.mainImage}" alt="${foundProduct.title}"></div>
                             ${galleryHTML}
                         </div>
                         <div class="product-info">
                             <h1>${foundProduct.title}</h1>
                             <p class="product-description">${foundProduct.description}</p>
-                            <div class="options-group">
-                                <label for="shipping-select">Select Postal Option</label>
-                                ${shippingSelectHTML}
-                            </div>
                             <div class="price-breakdown">
-                                <div class="price-row"><span>Item Cost:</span><span>£${foundProduct.basePrice.toFixed(2)}</span></div>
-                                <div class="price-row"><span>Postage Cost:</span><span id="display-postage">£${foundProduct.shippingOptions[0].cost.toFixed(2)}</span></div>
-                                <div class="price-total"><span>Total:</span><span id="display-total">£${(foundProduct.basePrice + foundProduct.shippingOptions[0].cost).toFixed(2)}</span></div>
+                                <div class="price-total"><span>Price:</span><span>£${foundProduct.basePrice.toFixed(2)}</span></div>
                             </div>
                             <button class="btn" id="add-to-cart-btn">Add to Cart</button>
                         </div>
                     `;
 
-                    // 4. Interactive Scripts for generated elements
-                    const shippingSelect = document.getElementById('shipping-select');
-                    shippingSelect.addEventListener('change', (e) => {
-                        const selectedShipping = foundProduct.shippingOptions[e.target.value];
-                        document.getElementById('display-postage').textContent = `£${selectedShipping.cost.toFixed(2)}`;
-                        document.getElementById('display-total').textContent = `£${(foundProduct.basePrice + selectedShipping.cost).toFixed(2)}`;
-                    });
-
-                    // Gallery interactivity
                     if (allImages.length > 1) {
                         const thumbnails = document.querySelectorAll('.gallery-thumbnails .thumbnail');
                         const mainImage = document.getElementById('main-product-image');
-
                         thumbnails.forEach(thumb => {
                             thumb.addEventListener('click', (e) => {
-                                // Fade effect
                                 mainImage.style.opacity = 0.5;
-                                setTimeout(() => {
-                                    mainImage.src = e.target.dataset.src;
-                                    mainImage.style.opacity = 1;
-                                }, 150);
-                                
+                                setTimeout(() => { mainImage.src = e.target.dataset.src; mainImage.style.opacity = 1; }, 150);
                                 thumbnails.forEach(t => t.classList.remove('active'));
                                 e.target.classList.add('active');
                             });
@@ -260,6 +252,7 @@
             const cartOverlay = document.getElementById('cart-overlay');
             const cartToggle = document.getElementById('cart-toggle');
             const closeCartBtn = document.getElementById('close-cart');
+            const destSelect = document.getElementById('cart-destination');
 
             const openCart = () => { cartSidebar.classList.add('open'); cartOverlay.classList.add('active'); };
             const closeCart = () => { cartSidebar.classList.remove('open'); cartOverlay.classList.remove('active'); };
@@ -267,12 +260,11 @@
             cartToggle.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
             closeCartBtn.addEventListener('click', closeCart);
             cartOverlay.addEventListener('click', closeCart);
+            destSelect.addEventListener('change', updateCartUI);
 
             document.addEventListener('click', (e) => {
                 if (e.target && e.target.id === 'add-to-cart-btn') {
-                    const shippingSelect = document.getElementById('shipping-select');
-                    const selected = foundProduct.shippingOptions[shippingSelect.value];
-                    cart.push({ title: `${foundProduct.title} (${selected.label})`, price: foundProduct.basePrice + selected.cost });
+                    cart.push({ title: foundProduct.title, price: foundProduct.basePrice, postalClass: foundProduct.postalClass });
                     localStorage.setItem('folkloreCart', JSON.stringify(cart));
                     updateCartUI();
                     openCart();
@@ -282,33 +274,79 @@
             function updateCartUI() {
                 const container = document.getElementById('cart-items');
                 container.innerHTML = '';
-                let total = 0;
+                let itemsTotal = 0; let shippingTotal = 0; let finalTotal = 0;
+                
                 if (cart.length === 0) {
                     container.innerHTML = '<p style="color: #777; font-style: italic;">Your cart is currently empty.</p>';
-                } else {
-                    cart.forEach((item, index) => {
-                        total += item.price;
-                        container.innerHTML += `<div class="cart-item"><div class="cart-item-title">${item.title}</div><div>£${item.price.toFixed(2)}</div><button class="remove-btn" onclick="removeFromCart(${index})">&times;</button></div>`;
-                    });
+                    document.getElementById('cart-subtotal').textContent = `£0.00`;
+                    document.getElementById('cart-shipping-cost').textContent = `£0.00`;
+                    document.getElementById('cart-total').textContent = `Total: £0.00`;
+                    document.getElementById('cart-toggle').textContent = `Cart (0)`;
+                    return;
                 }
-                document.getElementById('cart-total').textContent = `Total: £${total.toFixed(2)}`;
+
+                const dest = destSelect.value;
+                let maxBase = 0; let maxBaseIndex = -1;
+
+                // Step 1: Find the heaviest base rate
+                cart.forEach((item, index) => {
+                    itemsTotal += item.price;
+                    container.innerHTML += `<div class="cart-item"><div class="cart-item-title">${item.title}</div><div>£${item.price.toFixed(2)}</div><button class="remove-btn" onclick="removeFromCart(${index})">&times;</button></div>`;
+                    
+                    const rates = postalRates[item.postalClass];
+                    if(rates) {
+                        const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                        if(baseRate > maxBase) { maxBase = baseRate; maxBaseIndex = index; }
+                    }
+                });
+
+                // Step 2: Apply base to max item, additional to the rest
+                cart.forEach((item, index) => {
+                    const rates = postalRates[item.postalClass];
+                    if(rates) {
+                        shippingTotal += (index === maxBaseIndex) ? 
+                            (dest === 'uk' ? rates.ukBase : rates.intBase) : 
+                            (dest === 'uk' ? rates.ukAdd : rates.intAdd);
+                    }
+                });
+
+                finalTotal = itemsTotal + shippingTotal;
+
+                document.getElementById('cart-subtotal').textContent = `£${itemsTotal.toFixed(2)}`;
+                document.getElementById('cart-shipping-cost').textContent = `£${shippingTotal.toFixed(2)}`;
+                document.getElementById('cart-total').textContent = `Total: £${finalTotal.toFixed(2)}`;
                 document.getElementById('cart-toggle').textContent = `Cart (${cart.length})`;
             }
+
             window.removeFromCart = (i) => { cart.splice(i, 1); localStorage.setItem('folkloreCart', JSON.stringify(cart)); updateCartUI(); };
             
-            // Mobile Menu
-            document.getElementById('mobile-toggle').addEventListener('click', () => {
-                document.getElementById('nav-list').classList.toggle('mobile-active');
-            });
+            document.getElementById('mobile-toggle').addEventListener('click', () => { document.getElementById('nav-list').classList.toggle('mobile-active'); });
             
             // --- PAYPAL INITIALIZATION ---
             paypal.Buttons({
                 style: { color: 'gold', shape: 'rect', label: 'checkout', layout: 'vertical' },
                 createOrder: function(data, actions) {
-                    let currentTotal = cart.reduce((sum, item) => sum + item.price, 0);
-                    if (currentTotal === 0) { alert("Your cart is empty!"); return; }
+                    let itemsTotal = 0; let shippingTotal = 0; let maxBase = 0; let maxBaseIndex = -1;
+                    const dest = destSelect.value;
+                    cart.forEach((item, index) => {
+                        itemsTotal += item.price;
+                        const rates = postalRates[item.postalClass];
+                        if(rates) {
+                            const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                            if(baseRate > maxBase) { maxBase = baseRate; maxBaseIndex = index; }
+                        }
+                    });
+                    cart.forEach((item, index) => {
+                        const rates = postalRates[item.postalClass];
+                        if(rates) {
+                            shippingTotal += (index === maxBaseIndex) ? (dest === 'uk' ? rates.ukBase : rates.intBase) : (dest === 'uk' ? rates.ukAdd : rates.intAdd);
+                        }
+                    });
+                    let finalTotal = itemsTotal + shippingTotal;
+
+                    if (finalTotal === 0) { alert("Your cart is empty!"); return; }
                     return actions.order.create({
-                        purchase_units: [{ amount: { currency_code: 'GBP', value: currentTotal.toFixed(2) } }],
+                        purchase_units: [{ amount: { currency_code: 'GBP', value: finalTotal.toFixed(2) } }],
                         application_context: { shipping_preference: 'GET_FROM_FILE' }
                     });
                 },
