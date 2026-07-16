@@ -385,6 +385,19 @@
 
             updateCartUI();
         });
+        // --- Header Scroll Effect ---
+            const header = document.getElementById('main-header');
+            if (header) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 50) {
+                        header.style.boxShadow = '0 2px 20px rgba(255, 0, 0, 0.1)';
+                        header.style.borderBottom = '1px solid var(--accent-red)';
+                    } else {
+                        header.style.boxShadow = 'none';
+                        header.style.borderBottom = '1px solid #333333';
+                    }
+                });
+            }
     </script>
 </body>
 </html>
