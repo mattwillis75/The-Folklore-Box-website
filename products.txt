@@ -1,17 +1,19 @@
-Title: SHUCK Zine - Issue 8 (Norfolk Fairies)
-Image: ./Home-7.png
-Description: The eighth issue of our collaborative folklore zine, focusing on the hidden world of Norfolk fairies and fey creatures. Contains 32 pages of original illustrations.
-Sections: Zines
-Item cost: 8.00
+Title: Fine Art Print - Black Shuck
+Main image: ./Home-4.png
+Images: ./shuck-8-page1.png, ./shuck-8-page2.png, ./shuck-8-back.png./Home-4.png
+Description: A high-quality fine art print featuring Black Shuck, the ghostly black dog said to roam the coastline and countryside of East Anglia.
+Sections: Prints
+Item cost: 15.00
 UK standard delivery: 2.00
 UK tracked & signed: 4.50
 International delivery: 8.50
 ---
-Title: Fine Art Print - Mari Lwyd
-Image: ./Home-4.png
-Description: A high-quality fine art print featuring the MAri Lwyd from Welsh Folklore.
-Sections: Prints
-Item cost: 15.00
+Title: SHUCK Zine - Issue 8 (Norfolk Fairies)
+Main image: ./Home-7.png
+Images: ./shuck-8-page1.png, ./shuck-8-page2.png, ./shuck-8-back.png
+Description: The eighth issue of our collaborative folklore zine, focusing on the hidden world of Norfolk fairies and fey creatures. Contains 32 pages of original illustrations.
+Sections: Zines, Folklore
+Item cost: 8.00
 UK standard delivery: 2.00
 UK tracked & signed: 4.50
 International delivery: 8.50
