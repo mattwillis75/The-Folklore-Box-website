@@ -669,7 +669,11 @@
                                 currency_code: 'GBP',
                                 value: currentTotal.toFixed(2)
                             }
-                        }]
+                        }],
+                        // THIS IS THE NEW ADDITION
+                        application_context: {
+                            shipping_preference: 'GET_FROM_FILE' // Forces PayPal to collect/confirm the delivery address
+                        }
                     });
                 },
                 onApprove: function(data, actions) {
