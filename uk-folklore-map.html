@@ -378,27 +378,59 @@
             closeCartBtn.addEventListener('click', closeCart);
             cartOverlay.addEventListener('click', closeCart);
 
+            // Adjust Quantities Logic
+            window.updateQuantity = function(index, delta) {
+                cart[index].quantity += delta;
+                if (cart[index].quantity <= 0) {
+                    cart.splice(index, 1);
+                }
+                localStorage.setItem('folkloreCart', JSON.stringify(cart));
+                updateCartUI();
+            };
+
+            window.removeFromCart = function(index) { 
+                cart.splice(index, 1); 
+                localStorage.setItem('folkloreCart', JSON.stringify(cart)); 
+                updateCartUI(); 
+            };
+
             const updateCartUI = () => {
                 cartItemsContainer.innerHTML = '';
-                let total = 0;
+                let itemsTotal = 0;
+                let cartItemCount = 0;
+                
                 if (cart.length === 0) {
                     cartItemsContainer.innerHTML = '<p style="color: #777; font-style: italic;">Your cart is currently empty.</p>';
                     cartTotalElement.textContent = 'Total: £0.00';
                     cartToggle.textContent = 'Cart (0)';
                     return;
                 }
+
                 cart.forEach((item, index) => {
-                    total += item.price;
+                    const qty = item.quantity || 1;
+                    const itemTotalCost = item.price * qty;
+                    itemsTotal += itemTotalCost;
+                    cartItemCount += qty;
+
                     cartItemsContainer.innerHTML += `
                         <div class="cart-item">
-                            <div class="cart-item-title">${item.title}</div>
-                            <div>£${item.price.toFixed(2)}</div>
+                            <div class="cart-item-title">
+                                ${item.title} <br>
+                                <span style="font-size:0.8rem; color:#888; font-weight:normal;">£${item.price.toFixed(2)} each</span>
+                            </div>
+                            <div class="cart-qty-controls">
+                                <button onclick="updateQuantity(${index}, -1)">-</button>
+                                <span>${qty}</span>
+                                <button onclick="updateQuantity(${index}, 1)">+</button>
+                            </div>
+                            <div class="cart-item-total">£${itemTotalCost.toFixed(2)}</div>
                             <button class="remove-btn" onclick="removeFromCart(${index})" title="Remove item">&times;</button>
                         </div>
                     `;
                 });
-                cartTotalElement.textContent = `Total: £${total.toFixed(2)}`;
-                cartToggle.textContent = `Cart (${cart.length})`;
+
+                cartTotalElement.textContent = `Total: £${itemsTotal.toFixed(2)}`;
+                cartToggle.textContent = `Cart (${cartItemCount})`;
             };
 
             window.removeFromCart = function(index) { 
