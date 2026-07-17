@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wholesale Portal | The Folklore Box</title>
+    <meta name="description" content="Wholesale ordering for The Folklore Box stockists.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;600&family=Spectral:wght@400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Base Colors & Typography */
+        :root { --bg-color: #000000; --text-color: #ffffff; --accent-red: #cc0000; --header-bg: rgba(0, 0, 0, 0.85); }
+        body { font-family: 'Lato', sans-serif; font-weight: 300; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 0; line-height: 1.6; overflow-x: hidden; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Spectral', serif; font-weight: 400; color: #ffffff; }
+
+        /* Fixed Header */
+        header { position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 3rem; background: var(--header-bg); border-bottom: 1px solid #333333; z-index: 1000; box-sizing: border-box; backdrop-filter: blur(8px); transition: all 0.3s ease; }
+        .logo img { max-width: 180px; height: auto; }
+
+        /* Navigation */
+        nav ul { list-style: none; display: flex; align-items: center; gap: 2rem; margin: 0; padding: 0; }
+        nav a { text-decoration: none; color: #ffffff; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; transition: color 0.3s ease; font-family: 'Lato', sans-serif; }
+        nav a:hover { color: var(--accent-red); }
+        .active-page { color: var(--accent-red) !important; }
+        #cart-toggle { color: var(--accent-red); border: 1px solid var(--accent-red); padding: 0.5rem 1rem; border-radius: 3px; }
+        #cart-toggle:hover { background: var(--accent-red); color: #ffffff; }
+
+        /* Dropdown */
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-content { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background-color: var(--accent-red); min-width: 180px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5); z-index: 1001; border-radius: 4px; flex-direction: column; margin-top: 1.5rem; padding: 0.5rem 0; }
+        .dropdown-content::before { content: ""; position: absolute; top: -1.5rem; left: 0; width: 100%; height: 1.5rem; }
+        .dropdown:hover .dropdown-content { display: flex; }
+        .dropdown-content a { padding: 10px 16px; display: block; color: #ffffff; text-align: center; }
+        .dropdown-content a:hover { background-color: #a30000; color: #ffffff; }
+        .dropdown-divider { height: 1px; background-color: #ffffff; margin: 0 15px; }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle { display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1005; }
+        .mobile-menu-toggle span { width: 25px; height: 3px; background-color: #ffffff; transition: all 0.3s ease; border-radius: 3px; }
+        @media (max-width: 850px) {
+            .mobile-menu-toggle { display: flex; }
+            nav ul { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background-color: rgba(0, 0, 0, 0.95); padding: 1rem 0; border-bottom: 1px solid #333; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+            nav ul.mobile-active { display: flex; }
+            nav ul li { width: 100%; text-align: center; padding: 0.8rem 0; }
+            .dropdown-content { position: static; transform: none; background-color: transparent; box-shadow: none; margin-top: 0; display: none; }
+            .dropdown-content::before { display: none; }
+            .mobile-menu-toggle.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .mobile-menu-toggle.open span:nth-child(2) { opacity: 0; }
+            .mobile-menu-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+        }
+
+        /* --- Password Overlay --- */
+        .password-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.98); z-index: 9999; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
+        .password-modal { background: #0a0a0a; border: 1px solid #333; padding: 4rem 3rem; border-radius: 4px; max-width: 450px; width: 90%; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.9); }
+        .password-modal h2 { font-size: 2.5rem; margin-top: 0; margin-bottom: 1rem; color: #fff; }
+        .password-modal p { color: #aaa; margin-bottom: 2rem; font-size: 1rem; line-height: 1.5; }
+        .password-modal input { width: 100%; padding: 1.2rem; background: #111; border: 1px solid #444; color: #fff; font-family: 'Lato', sans-serif; border-radius: 3px; box-sizing: border-box; margin-bottom: 1rem; font-size: 1.2rem; text-align: center; letter-spacing: 2px; }
+        .password-modal input:focus { outline: none; border-color: var(--accent-red); }
+        .error-msg { color: var(--accent-red) !important; display: none; margin-top: -0.5rem; margin-bottom: 1.5rem !important; font-size: 0.9rem !important; font-weight: bold; text-transform: uppercase; }
+        
+        .btn { display: inline-block; background: var(--accent-red); color: #fff; padding: 1.2rem 2rem; text-decoration: none; font-family: 'Lato', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border-radius: 3px; transition: background 0.3s ease, transform 0.2s ease; border: none; cursor: pointer; width: 100%; box-sizing: border-box; }
+        .btn:hover { background: #e60000; transform: translateY(-2px); }
+
+        /* Wholesale Banner & Shop Layout */
+        main { padding-top: 85px; min-height: 100vh; }
+        .wholesale-banner { background: var(--accent-red); color: #fff; text-align: center; padding: 0.8rem 2rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; margin-bottom: 1rem; }
+        .shop-header { text-align: center; padding: 1rem 2rem; }
+        .shop-header h1 { font-size: 3rem; margin-bottom: 0.5rem; margin-top: 0; }
+        .shop-header p { color: #888; font-style: italic; margin-top: 0; }
+
+        /* Filters */
+        .shop-filters { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; padding: 0 2rem 2rem; max-width: 1000px; margin: 0 auto; }
+        .filter-btn { background: transparent; color: #fff; border: 1px solid #444; padding: 0.6rem 1.5rem; border-radius: 30px; font-family: 'Lato', sans-serif; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: all 0.3s ease; }
+        .filter-btn:hover { border-color: var(--accent-red); }
+        .filter-btn.active { background: var(--accent-red); border-color: var(--accent-red); color: #fff; }
+
+        .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 2rem; padding: 0 4rem 6rem; max-width: 1400px; margin: 0 auto; }
+        @media (max-width: 600px) { .shop-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); padding: 0 1.5rem 4rem; gap: 1rem; } }
+
+        /* Product Cards */
+        .product-card { background: #111; border: 1px solid #333; border-radius: 4px; transition: border-color 0.3s ease, transform 0.3s ease; cursor: pointer; position: relative; }
+        .product-card:hover { border-color: var(--accent-red); transform: translateY(-5px); }
+        .product-card a { text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%; padding: 1rem; box-sizing: border-box; }
+        .product-image { width: 100%; aspect-ratio: 1 / 1; background: #000; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .product-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+        .product-card:hover .product-image img { transform: scale(1.05); }
+        .product-details { display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
+        .product-title { font-size: 1.15rem; margin: 0 0 0.8rem 0; line-height: 1.3; }
+        .product-prices { font-family: 'Lato', sans-serif; color: #999; }
+        .product-prices p { margin: 0; font-size: 1.1rem; color: #fff; font-weight: 600; }
+        
+        .wholesale-badge { position: absolute; top: 1rem; right: 1rem; background: var(--accent-red); color: #fff; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; padding: 0.3rem 0.6rem; border-radius: 3px; z-index: 10; letter-spacing: 1px; }
+
+        /* Slide-Out Cart */
+        .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 2001; display: none; backdrop-filter: blur(3px); }
+        .cart-overlay.active { display: block; }
+        .cart-sidebar { position: fixed; top: 0; right: -450px; width: 450px; max-width: 100vw; height: 100vh; background: #0a0a0a; border-left: 1px solid #222; z-index: 2002; transition: right 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); padding: 2rem; box-sizing: border-box; display: flex; flex-direction: column; }
+        .cart-sidebar.open { right: 0; }
+        .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 1rem; margin-bottom: 1.5rem; }
+        .cart-header h2 { margin: 0; font-size: 2rem; }
+        .close-cart { font-size: 2.5rem; cursor: pointer; color: #fff; line-height: 1; transition: color 0.3s; }
+        .close-cart:hover { color: var(--accent-red); }
+        .cart-items-container { flex-grow: 1; overflow-y: auto; margin-bottom: 1rem; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid #222; }
+        .cart-item-title { flex-grow: 1; padding-right: 1rem; font-weight: 600; }
+        .remove-btn { background: none; border: none; color: #888; cursor: pointer; font-size: 1.5rem; padding: 0 0 0 1rem; transition: color 0.2s; }
+        .remove-btn:hover { color: var(--accent-red); }
+        .cart-footer { border-top: 1px solid #333; padding-top: 1.5rem; }
+        
+        .cart-shipping-selector { margin-bottom: 1rem; border-bottom: 1px solid #222; padding-bottom: 1rem; }
+        .cart-shipping-selector label { display: block; color: #aaa; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
+        .cart-shipping-selector select { width: 100%; padding: 0.8rem; background: #111; color: #fff; border: 1px solid #333; border-radius: 3px; cursor: pointer; }
+        .cart-breakdown { margin-bottom: 1rem; color: #aaa; font-size: 1.1rem; }
+        .cart-row { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
+        .cart-total { font-size: 1.8rem; text-align: right; margin-bottom: 1.5rem; font-family: 'Spectral', serif; color: var(--accent-red); border-top: 1px solid #333; padding-top: 1rem; }
+
+        /* Minimum Spend Warning Banner */
+        .cart-warning { background: rgba(204, 0, 0, 0.1); border: 1px solid var(--accent-red); color: var(--accent-red); font-weight: bold; text-align: center; padding: 1rem; border-radius: 4px; margin-bottom: 1.5rem; font-size: 0.9rem; line-height: 1.4; display: none; }
+        
+        /* Disable PayPal when threshold isn't met */
+        .paypal-disabled { pointer-events: none; opacity: 0.4; filter: grayscale(100%); }
+
+        footer { background: #000000; color: #ffffff; padding: 4rem 2rem; text-align: center; border-top: 1px solid #222; }
+        footer a { color: #ffffff; text-decoration: none; margin: 0 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
+        footer a:hover { color: var(--accent-red); }
+        .social-links { margin-bottom: 2rem; }
+    </style>
+</head>
+<body>
+
+    <!-- Password Overlay Gate -->
+    <div class="password-overlay" id="password-overlay">
+        <div class="password-modal">
+            <h2>Wholesale Login</h2>
+            <p>Please enter the stockist password to view the discounted catalogue.</p>
+            <input type="password" id="wholesale-password" placeholder="Enter Password">
+            <p class="error-msg" id="password-error">Incorrect password. Please try again.</p>
+            <button id="submit-password" class="btn">Enter Portal</button>
+        </div>
+    </div>
+
+    <header id="main-header">
+        <div class="logo"><a href="index.html"><img src="./The-folklore-box-logo.png" alt="The Folklore Box Logo"></a></div>
+        <div class="mobile-menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
+        <nav>
+            <ul id="nav-list">
+                <li class="dropdown">
+                    <a href="index.html">Home</a>
+                    <div class="dropdown-content">
+                        <a href="index.html#collections">Goods & Wares</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="index.html#about">About the Artist</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="index.html#map-teaser">The Folklore Map</a>
+                    </div>
+                </li>
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="uk-folklore-map.html">UK Folklore Map</a></li>
+                <li><a href="journal.html">Journal</a></li>
+                <li><a href="wholesale.html" class="active-page">Wholesale</a></li>
+                <li><a href="#" id="cart-toggle">Cart (0)</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="wholesale-banner">
+            Minimum spend to allow the wholesale discount is £75.
+        </div>
+        <div class="shop-header">
+            <h1>Wholesale Portal</h1>
+            <p>All prices shown include a 60% wholesale discount.</p>
+        </div>
+        <div class="shop-filters" id="shop-filters"></div>
+        <section class="shop-grid" id="shop-grid">
+            <p style="color: #888; text-align: center; grid-column: 1 / -1;">Loading catalogue...</p>
+        </section>
+    </main>
+
+    <div class="cart-overlay" id="cart-overlay"></div>
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header"><h2>Wholesale Cart</h2><span class="close-cart" id="close-cart">&times;</span></div>
+        <div class="cart-items-container" id="cart-items"></div>
+        <div class="cart-footer">
+            
+            <div class="cart-warning" id="cart-warning">
+                Minimum wholesale spend is £75.00 before postage and packing is added. Add more items to unlock checkout.
+            </div>
+
+            <div class="cart-shipping-selector">
+                <label for="cart-destination">Deliver to:</label>
+                <select id="cart-destination">
+                    <option value="uk">United Kingdom</option>
+                    <option value="int">International</option>
+                </select>
+            </div>
+            <div class="cart-breakdown">
+                <div class="cart-row"><span>Items:</span><span id="cart-subtotal">£0.00</span></div>
+                <div class="cart-row"><span>Postage:</span><span id="cart-shipping-cost">£0.00</span></div>
+            </div>
+            <div class="cart-total" id="cart-total">Total: £0.00</div>
+            
+            <!-- PayPal Button Container -->
+            <div id="paypal-button-container"></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://instagram.com/the_folklore_box" target="_blank">Instagram: @the_folklore_box</a> | 
+            <a href="https://facebook.com/thefolklorebox" target="_blank">Facebook: @thefolklorebox</a>
+        </div>
+        <div style="margin-bottom: 2rem;">
+            <a href="shop.html">Shop</a>
+            <a href="wholesale.html">Wholesale Enquiries</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <p style="font-size: 0.8rem; color: #555; font-family: 'Lato', sans-serif;">&copy; 2026 The Folklore Box by Matt Willis. All rights reserved.</p>
+    </footer>
+
+    <script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID_HERE&currency=GBP"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+
+            // --- 1. PASSWORD GATE LOGIC ---
+            // Password is currently set to: wholesale26
+            const pwdOverlay = document.getElementById('password-overlay');
+            const pwdInput = document.getElementById('wholesale-password');
+            const pwdSubmit = document.getElementById('submit-password');
+            const pwdError = document.getElementById('password-error');
+
+            if (!sessionStorage.getItem('wholesaleAuthenticated')) {
+                pwdOverlay.style.display = 'flex';
+            } else {
+                pwdOverlay.style.display = 'none';
+            }
+
+            pwdSubmit.addEventListener('click', () => {
+                if (pwdInput.value === 'wholesale26') {
+                    sessionStorage.setItem('wholesaleAuthenticated', 'true');
+                    pwdOverlay.style.opacity = 0;
+                    setTimeout(() => pwdOverlay.style.display = 'none', 300);
+                } else {
+                    pwdError.style.display = 'block';
+                    pwdInput.style.borderColor = 'var(--accent-red)';
+                }
+            });
+
+            // Allow hitting "Enter" key on password field
+            pwdInput.addEventListener("keypress", function(event) {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    pwdSubmit.click();
+                }
+            });
+
+
+            // --- 2. HEADER SCROLL LOGIC ---
+            const header = document.getElementById('main-header');
+            if (header) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 50) {
+                        header.style.boxShadow = '0 2px 20px rgba(255, 0, 0, 0.1)';
+                        header.style.borderBottom = '1px solid var(--accent-red)';
+                    } else {
+                        header.style.boxShadow = 'none';
+                        header.style.borderBottom = '1px solid #333333';
+                    }
+                });
+            }
+
+            // --- 3. FETCH AND BUILD CATALOGUE ---
+            const shopGrid = document.getElementById('shop-grid');
+            const filtersContainer = document.getElementById('shop-filters');
+            let products = [];
+            let uniqueSections = new Set(); 
+            let postalRates = {};
+
+            try {
+                const postalResponse = await fetch('postal.txt', { cache: 'no-store' });
+                const postalText = await postalResponse.text();
+                postalText.split('---').forEach(block => {
+                    if(!block.trim()) return;
+                    let currentClass = "";
+                    let rates = {};
+                    block.trim().split('\n').forEach(line => {
+                        const sepIndex = line.indexOf(':');
+                        if(sepIndex > -1) {
+                            const key = line.slice(0, sepIndex).trim().toLowerCase();
+                            const value = line.slice(sepIndex + 1).trim();
+                            if(key === 'class') currentClass = value;
+                            else if(key === 'uk base') rates.ukBase = parseFloat(value);
+                            else if(key === 'uk additional') rates.ukAdd = parseFloat(value);
+                            else if(key === 'int base') rates.intBase = parseFloat(value);
+                            else if(key === 'int additional') rates.intAdd = parseFloat(value);
+                        }
+                    });
+                    if(currentClass) postalRates[currentClass] = rates;
+                });
+            } catch(e) { console.error("Could not load postal rates."); }
+
+            try {
+                const response = await fetch('products.txt', { cache: 'no-store' });
+                if (!response.ok) throw new Error("Could not find products.txt");
+                
+                const text = await response.text();
+                const rawItems = text.split('---');
+
+                rawItems.forEach(rawItem => {
+                    if (rawItem.trim() === '') return;
+                    
+                    const lines = rawItem.trim().split('\n');
+                    let product = { sections: [] };
+                    
+                    lines.forEach(line => {
+                        const sepIndex = line.indexOf(':');
+                        if (sepIndex > -1) {
+                            const key = line.slice(0, sepIndex).trim().toLowerCase();
+                            const value = line.slice(sepIndex + 1).trim();
+                            
+                            if (key === 'title') {
+                                product.title = value;
+                                product.id = value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+                            }
+                            else if (key === 'main image' || key === 'image') product.mainImage = value;
+                            else if (key === 'sections') product.sections = value.split(',').map(s => s.trim());
+                            else if (key === 'postal class') product.postalClass = value;
+                            
+                            // APPLY 60% WHOLESALE DISCOUNT
+                            else if (key === 'item cost') product.basePrice = parseFloat(value) * 0.40; 
+                        }
+                    });
+                    
+                    if (product.title) {
+                        products.push(product);
+                        product.sections.forEach(section => uniqueSections.add(section));
+                    }
+                });
+
+                if (uniqueSections.size > 0) {
+                    let filterHTML = `<button class="filter-btn active" data-filter="All">All Goods</button>`;
+                    Array.from(uniqueSections).sort().forEach(sec => {
+                        filterHTML += `<button class="filter-btn" data-filter="${sec}">${sec}</button>`;
+                    });
+                    filtersContainer.innerHTML = filterHTML;
+
+                    document.querySelectorAll('.filter-btn').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                            e.target.classList.add('active');
+                            renderGrid(e.target.dataset.filter);
+                        });
+                    });
+                }
+
+                function renderGrid(filterValue) {
+                    shopGrid.innerHTML = '';
+                    const filteredProducts = filterValue === 'All' ? products : products.filter(p => p.sections.includes(filterValue));
+
+                    if (filteredProducts.length === 0) {
+                        shopGrid.innerHTML = '<p style="color: #fff; grid-column: 1 / -1; text-align: center;">No products found in this section.</p>';
+                        return;
+                    }
+
+                    filteredProducts.forEach(product => {
+                        shopGrid.innerHTML += `
+                            <div class="product-card">
+                                <span class="wholesale-badge">Wholesale</span>
+                                <!-- NOTE: To make wholesale adding work seamlessly, we use an onclick function rather than linking to the retail product.html page -->
+                                <a href="#" onclick="event.preventDefault(); addToWholesaleCart('${product.id}', '${product.title}', ${product.basePrice}, '${product.postalClass}')">
+                                    <div class="product-image">
+                                        <img src="${product.mainImage}" alt="${product.title}">
+                                    </div>
+                                    <div class="product-details">
+                                        <h3 class="product-title">${product.title}</h3>
+                                        <div class="product-prices"><p>£${product.basePrice.toFixed(2)}</p></div>
+                                        <button class="btn" style="margin-top: 1rem; padding: 0.6rem; font-size: 0.8rem;">Add to Cart</button>
+                                    </div>
+                                </a>
+                            </div>
+                        `;
+                    });
+                }
+                renderGrid('All');
+
+            } catch (error) {
+                shopGrid.innerHTML = '<p style="color: #cc0000; grid-column: 1 / -1; text-align: center;">Error loading products database.</p>';
+            }
+
+            // --- 4. WHOLESALE CART LOGIC ---
+            // We use a different local storage key so wholesale items don't appear in the regular retail shop cart!
+            let cart = JSON.parse(localStorage.getItem('folkloreWholesaleCart')) || [];
+            
+            const cartSidebar = document.getElementById('cart-sidebar');
+            const cartOverlay = document.getElementById('cart-overlay');
+            const cartToggle = document.getElementById('cart-toggle');
+            const closeCartBtn = document.getElementById('close-cart');
+            const destSelect = document.getElementById('cart-destination');
+            const cartWarning = document.getElementById('cart-warning');
+            const paypalContainer = document.getElementById('paypal-button-container');
+
+            const openCart = () => { cartSidebar.classList.add('open'); cartOverlay.classList.add('active'); };
+            const closeCart = () => { cartSidebar.classList.remove('open'); cartOverlay.classList.remove('active'); };
+
+            cartToggle.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
+            closeCartBtn.addEventListener('click', closeCart);
+            cartOverlay.addEventListener('click', closeCart);
+            destSelect.addEventListener('change', updateCartUI);
+
+            // Adding item from the grid directly to the wholesale cart
+            window.addToWholesaleCart = function(id, title, price, postalClass) {
+                cart.push({ id, title, price, postalClass });
+                localStorage.setItem('folkloreWholesaleCart', JSON.stringify(cart));
+                updateCartUI();
+                openCart(); // Slide cart out to confirm addition
+            };
+
+            function updateCartUI() {
+                const container = document.getElementById('cart-items');
+                container.innerHTML = '';
+                let itemsTotal = 0; let shippingTotal = 0; let finalTotal = 0;
+                
+                if (cart.length === 0) {
+                    container.innerHTML = '<p style="color: #777; font-style: italic;">Your wholesale cart is currently empty.</p>';
+                    document.getElementById('cart-subtotal').textContent = `£0.00`;
+                    document.getElementById('cart-shipping-cost').textContent = `£0.00`;
+                    document.getElementById('cart-total').textContent = `Total: £0.00`;
+                    document.getElementById('cart-toggle').textContent = `Cart (0)`;
+                    cartWarning.style.display = 'block';
+                    paypalContainer.classList.add('paypal-disabled');
+                    return;
+                }
+
+                const dest = destSelect.value;
+                let maxBase = 0; let maxBaseIndex = -1;
+
+                cart.forEach((item, index) => {
+                    itemsTotal += item.price;
+                    container.innerHTML += `<div class="cart-item"><div class="cart-item-title">${item.title}</div><div>£${item.price.toFixed(2)}</div><button class="remove-btn" onclick="removeFromCart(${index})">&times;</button></div>`;
+                    
+                    const rates = postalRates[item.postalClass];
+                    if(rates) {
+                        const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                        if(baseRate > maxBase) { maxBase = baseRate; maxBaseIndex = index; }
+                    }
+                });
+
+                cart.forEach((item, index) => {
+                    const rates = postalRates[item.postalClass];
+                    if(rates) {
+                        shippingTotal += (index === maxBaseIndex) ? 
+                            (dest === 'uk' ? rates.ukBase : rates.intBase) : 
+                            (dest === 'uk' ? rates.ukAdd : rates.intAdd);
+                    }
+                });
+
+                finalTotal = itemsTotal + shippingTotal;
+
+                document.getElementById('cart-subtotal').textContent = `£${itemsTotal.toFixed(2)}`;
+                document.getElementById('cart-shipping-cost').textContent = `£${shippingTotal.toFixed(2)}`;
+                document.getElementById('cart-total').textContent = `Total: £${finalTotal.toFixed(2)}`;
+                document.getElementById('cart-toggle').textContent = `Cart (${cart.length})`;
+
+                // Validation for Wholesale Minimum Spend (£75)
+                if (itemsTotal >= 75) {
+                    cartWarning.style.display = 'none';
+                    paypalContainer.classList.remove('paypal-disabled');
+                } else {
+                    cartWarning.style.display = 'block';
+                    paypalContainer.classList.add('paypal-disabled');
+                }
+            }
+
+            window.removeFromCart = (i) => { cart.splice(i, 1); localStorage.setItem('folkloreWholesaleCart', JSON.stringify(cart)); updateCartUI(); };
+            
+            document.getElementById('mobile-toggle').addEventListener('click', () => { document.getElementById('nav-list').classList.toggle('mobile-active'); });
+
+            // Initialize UI
+            updateCartUI();
+
+            // --- 5. PAYPAL INITIALIZATION ---
+            try {
+                paypal.Buttons({
+                    style: { color: 'gold', shape: 'rect', label: 'checkout', layout: 'vertical' },
+                    createOrder: function(data, actions) {
+                        let itemsTotal = 0; let shippingTotal = 0; let maxBase = 0; let maxBaseIndex = -1;
+                        const dest = destSelect.value;
+                        cart.forEach((item, index) => {
+                            itemsTotal += item.price;
+                            const rates = postalRates[item.postalClass];
+                            if(rates) {
+                                const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                                if(baseRate > maxBase) { maxBase = baseRate; maxBaseIndex = index; }
+                            }
+                        });
+                        cart.forEach((item, index) => {
+                            const rates = postalRates[item.postalClass];
+                            if(rates) {
+                                shippingTotal += (index === maxBaseIndex) ? (dest === 'uk' ? rates.ukBase : rates.intBase) : (dest === 'uk' ? rates.ukAdd : rates.intAdd);
+                            }
+                        });
+                        
+                        // Failsafe check
+                        if (itemsTotal < 75) { alert("Minimum wholesale spend of £75 not met."); return; }
+
+                        let finalTotal = itemsTotal + shippingTotal;
+
+                        return actions.order.create({
+                            purchase_units: [{ amount: { currency_code: 'GBP', value: finalTotal.toFixed(2) } }],
+                            application_context: { shipping_preference: 'GET_FROM_FILE' }
+                        });
+                    },
+                    onApprove: function(data, actions) {
+                        return actions.order.capture().then(function(details) {
+                            alert('Wholesale Order successful! Thank you for your business, ' + details.payer.name.given_name + '.');
+                            cart = []; localStorage.setItem('folkloreWholesaleCart', JSON.stringify(cart)); updateCartUI(); closeCart();
+                        });
+                    },
+                    onError: function(err) { console.error('PayPal Checkout Error:', err); alert('There was an issue connecting to PayPal. Please try again.'); }
+                }).render('#paypal-button-container');
+            } catch (error) {
+                console.warn("PayPal SDK could not initialize. Ensure a valid Client ID is set.", error);
+            }
+        });
+    </script>
+</body>
+</html>
