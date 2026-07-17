@@ -53,7 +53,7 @@
         }
 
         /* --- Password Overlay --- */
-        .password-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.98); z-index: 9999; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
+        .password-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.98); z-index: 9999; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); transition: opacity 0.3s ease;}
         .password-modal { background: #0a0a0a; border: 1px solid #333; padding: 4rem 3rem; border-radius: 4px; max-width: 450px; width: 90%; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.9); }
         .password-modal h2 { font-size: 2.5rem; margin-top: 0; margin-bottom: 1rem; color: #fff; }
         .password-modal p { color: #aaa; margin-bottom: 2rem; font-size: 1rem; line-height: 1.5; }
@@ -237,7 +237,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
 
-            // --- 1. PASSWORD GATE LOGIC ---
+            // --- 1. PASSWORD GATE & SMART CART MERGER LOGIC ---
             const pwdOverlay = document.getElementById('password-overlay');
             const pwdInput = document.getElementById('wholesale-password');
             const pwdSubmit = document.getElementById('submit-password');
@@ -251,7 +251,49 @@
 
             pwdSubmit.addEventListener('click', () => {
                 if (pwdInput.value === 'wholesale26') {
+                    // Mark as Authenticated
                     sessionStorage.setItem('wholesaleAuthenticated', 'true');
+                    
+                    // --- CART MERGER LOGIC ---
+                    // Check if they left anything in the Retail Cart before logging in
+                    let retailCart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
+                    
+                    if (retailCart.length > 0) {
+                        let wholesaleCart = JSON.parse(localStorage.getItem('folkloreWholesaleCart')) || [];
+                        
+                        retailCart.forEach(retailItem => {
+                            // Match by ID (or generate one from title if it's an old cart format)
+                            let matchId = retailItem.id || retailItem.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+                            let existingItem = wholesaleCart.find(wItem => wItem.id === matchId);
+                            
+                            if (existingItem) {
+                                // Add quantities together
+                                existingItem.quantity += (retailItem.quantity || 1);
+                            } else {
+                                // Add to wholesale cart AND apply the 60% price reduction
+                                wholesaleCart.push({
+                                    id: matchId,
+                                    title: retailItem.title,
+                                    price: retailItem.price * 0.60, 
+                                    postalClass: retailItem.postalClass,
+                                    quantity: retailItem.quantity || 1
+                                });
+                            }
+                        });
+                        
+                        // Save the merged wholesale cart and empty the retail cart
+                        localStorage.setItem('folkloreWholesaleCart', JSON.stringify(wholesaleCart));
+                        localStorage.removeItem('folkloreCart');
+                        
+                        // Set a flag to slide the cart open after the page reloads
+                        sessionStorage.setItem('openCartOnLoad', 'true');
+                        
+                        // Reload the page so the entire UI resets flawlessly to the Wholesale Session
+                        window.location.reload();
+                        return;
+                    }
+
+                    // If no retail items to merge, simply fade the overlay and let them shop
                     pwdOverlay.style.opacity = 0;
                     setTimeout(() => pwdOverlay.style.display = 'none', 300);
                 } else {
@@ -400,7 +442,6 @@
             // --- 4. WHOLESALE CART LOGIC ---
             let cart = JSON.parse(localStorage.getItem('folkloreWholesaleCart')) || [];
             
-            // Retrofit existing carts to ensure they have a quantity property
             cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
 
             const cartSidebar = document.getElementById('cart-sidebar');
@@ -432,7 +473,7 @@
                 openCart();
             };
 
-            // Updates quantity up or down when using the cart buttons
+            // Updates quantity up or down
             window.updateQuantity = function(index, delta) {
                 cart[index].quantity += delta;
                 if (cart[index].quantity <= 0) {
@@ -535,24 +576,14 @@
             
             document.getElementById('mobile-toggle').addEventListener('click', () => { document.getElementById('nav-list').classList.toggle('mobile-active'); });
 
-           // --- BROWSER BACK BUTTON FIX ---
-            window.addEventListener('pageshow', (event) => {
-                // event.persisted is true if the browser loaded the page from its history cache
-                if (event.persisted) {
-                    // Re-fetch the live data from local storage
-                    const currentKey = typeof cartKey !== 'undefined' ? cartKey : 'folkloreCart';
-                    cart = JSON.parse(localStorage.getItem(currentKey)) || [];
-                    
-                    // Ensure the quantity property exists for the grouped logic
-                    cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
-                    
-                    // Force the cart UI to update to match the live data
-                    updateCartUI();
-                }
-            });
-            
             // Initialize UI
             updateCartUI();
+            
+            // Check if we need to auto-open the cart after a successful login merge
+            if (sessionStorage.getItem('openCartOnLoad') === 'true') {
+                sessionStorage.removeItem('openCartOnLoad');
+                openCart();
+            }
 
             // --- 5. PAYPAL INITIALIZATION ---
             try {
