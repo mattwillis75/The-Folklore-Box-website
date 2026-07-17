@@ -239,7 +239,7 @@
     <div class="cart-overlay" id="cart-overlay"></div>
     <div class="cart-sidebar" id="cart-sidebar">
         <div class="cart-header">
-            <h2>Your Cart</h2>
+            <h2 id="cart-title">Your Cart</h2>
             <span class="close-cart" id="close-cart">&times;</span>
         </div>
         <div class="cart-items-container" id="cart-items"></div>
@@ -361,8 +361,19 @@
 
             map.on('click', clearSidebar);
 
-            // --- UI & CART LOGIC ---
-            let cart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
+            // --- SMART CART & USER DETECTION LOGIC ---
+            const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
+            const cartKey = isWholesale ? 'folkloreWholesaleCart' : 'folkloreCart';
+            
+            if (isWholesale) {
+                const cartHeaderTitle = document.getElementById('cart-title');
+                if (cartHeaderTitle) cartHeaderTitle.textContent = 'Wholesale Cart';
+            }
+
+            let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+            
+            // Ensure the quantity property exists for the grouped logic
+            cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
             
             const cartSidebar = document.getElementById('cart-sidebar');
             const cartOverlay = document.getElementById('cart-overlay');
@@ -372,11 +383,11 @@
             const cartTotalElement = document.getElementById('cart-total');
 
             const openCart = () => { cartSidebar.classList.add('open'); cartOverlay.classList.add('active'); };
-            const closeCart = () => { cartSidebar.classList.remove('open'); cartOverlay.classList.remove('active'); };
+            const closeCartSidebar = () => { cartSidebar.classList.remove('open'); cartOverlay.classList.remove('active'); };
 
             cartToggle.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
-            closeCartBtn.addEventListener('click', closeCart);
-            cartOverlay.addEventListener('click', closeCart);
+            closeCartBtn.addEventListener('click', closeCartSidebar);
+            cartOverlay.addEventListener('click', closeCartSidebar);
 
             // Adjust Quantities Logic
             window.updateQuantity = function(index, delta) {
@@ -384,13 +395,13 @@
                 if (cart[index].quantity <= 0) {
                     cart.splice(index, 1);
                 }
-                localStorage.setItem('folkloreCart', JSON.stringify(cart));
+                localStorage.setItem(cartKey, JSON.stringify(cart));
                 updateCartUI();
             };
 
             window.removeFromCart = function(index) { 
                 cart.splice(index, 1); 
-                localStorage.setItem('folkloreCart', JSON.stringify(cart)); 
+                localStorage.setItem(cartKey, JSON.stringify(cart)); 
                 updateCartUI(); 
             };
 
@@ -400,7 +411,7 @@
                 let cartItemCount = 0;
                 
                 if (cart.length === 0) {
-                    cartItemsContainer.innerHTML = '<p style="color: #777; font-style: italic;">Your cart is currently empty.</p>';
+                    cartItemsContainer.innerHTML = `<p style="color: #777; font-style: italic;">Your ${isWholesale ? 'wholesale ' : ''}cart is currently empty.</p>`;
                     cartTotalElement.textContent = 'Total: £0.00';
                     cartToggle.textContent = 'Cart (0)';
                     return;
@@ -433,12 +444,6 @@
                 cartToggle.textContent = `Cart (${cartItemCount})`;
             };
 
-            window.removeFromCart = function(index) { 
-                cart.splice(index, 1); 
-                localStorage.setItem('folkloreCart', JSON.stringify(cart)); 
-                updateCartUI(); 
-            };
-
             // Mobile Menu Toggle
             const mobileToggle = document.getElementById('mobile-toggle');
             const navList = document.getElementById('nav-list');
@@ -448,37 +453,33 @@
                 });
             }
 
-           // --- BROWSER BACK BUTTON FIX ---
+            // --- BROWSER BACK BUTTON FIX ---
             window.addEventListener('pageshow', (event) => {
-                // event.persisted is true if the browser loaded the page from its history cache
                 if (event.persisted) {
-                    // Re-fetch the live data from local storage
                     const currentKey = typeof cartKey !== 'undefined' ? cartKey : 'folkloreCart';
                     cart = JSON.parse(localStorage.getItem(currentKey)) || [];
-                    
-                    // Ensure the quantity property exists for the grouped logic
                     cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
-                    
-                    // Force the cart UI to update to match the live data
                     updateCartUI();
                 }
             });
             
+            // Initialize UI
             updateCartUI();
         });
+
         // --- Header Scroll Effect ---
-            const header = document.getElementById('main-header');
-            if (header) {
-                window.addEventListener('scroll', () => {
-                    if (window.scrollY > 50) {
-                        header.style.boxShadow = '0 2px 20px rgba(255, 0, 0, 0.1)';
-                        header.style.borderBottom = '1px solid var(--accent-red)';
-                    } else {
-                        header.style.boxShadow = 'none';
-                        header.style.borderBottom = '1px solid #333333';
-                    }
-                });
-            }
+        const header = document.getElementById('main-header');
+        if (header) {
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.style.boxShadow = '0 2px 20px rgba(255, 0, 0, 0.1)';
+                    header.style.borderBottom = '1px solid var(--accent-red)';
+                } else {
+                    header.style.boxShadow = 'none';
+                    header.style.borderBottom = '1px solid #333333';
+                }
+            });
+        }
     </script>
 </body>
 </html>
