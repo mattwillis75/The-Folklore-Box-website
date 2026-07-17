@@ -47,6 +47,8 @@
 
         /* Product Page Layout */
         main { padding-top: 120px; min-height: 100vh; max-width: 1200px; margin: 0 auto; padding-bottom: 4rem; }
+        .wholesale-banner { background: #222; color: var(--accent-red); border-bottom: 1px solid #333; text-align: center; padding: 0.8rem 2rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; margin-bottom: 1rem; display: none; }
+        
         .product-container { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; padding: 2rem; }
         @media (max-width: 800px) { .product-container { grid-template-columns: 1fr; } }
         
@@ -65,31 +67,41 @@
         .price-breakdown { background: #0a0a0a; border: 1px solid #222; padding: 1.5rem; border-radius: 4px; margin-bottom: 2rem; }
         .price-total { display: flex; justify-content: space-between; font-family: 'Spectral', serif; font-size: 1.8rem; color: var(--accent-red); }
         
-        .btn { display: block; background: var(--accent-red); color: #fff; padding: 1.2rem; text-align: center; border: none; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; width: 100%; }
+        .btn { display: block; background: var(--accent-red); color: #fff; padding: 1.2rem; text-align: center; border: none; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; width: 100%; border-radius: 3px; transition: background 0.3s ease;}
+        .btn:hover { background: #e60000; }
         
         /* Slide-Out Cart */
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 1001; display: none; }
         .cart-overlay.active { display: block; }
-        .cart-sidebar { position: fixed; top: 0; right: -450px; width: 450px; max-width: 100vw; height: 100vh; background: #0a0a0a; border-left: 1px solid #222; z-index: 1002; transition: right 0.4s; padding: 2rem; display: flex; flex-direction: column; box-sizing: border-box; }
+        .cart-sidebar { position: fixed; top: 0; right: -500px; width: 500px; max-width: 100vw; height: 100vh; background: #0a0a0a; border-left: 1px solid #222; z-index: 1002; transition: right 0.4s; padding: 2rem; display: flex; flex-direction: column; box-sizing: border-box; }
         .cart-sidebar.open { right: 0; }
         .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 1rem; margin-bottom: 1.5rem; }
         .cart-header h2 { margin: 0; font-size: 2rem; }
         .close-cart { font-size: 2.5rem; cursor: pointer; color: #fff; line-height: 1; transition: color 0.3s; }
         .close-cart:hover { color: var(--accent-red); }
-        .cart-items-container { flex-grow: 1; overflow-y: auto; margin-bottom: 1rem; }
-        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid #222; }
-        .cart-item-title { flex-grow: 1; padding-right: 1rem; font-weight: 600; }
-        .remove-btn { background: none; border: none; color: #888; cursor: pointer; font-size: 1.5rem; padding: 0 0 0 1rem; transition: color 0.2s; }
-        .remove-btn:hover { color: var(--accent-red); }
-        .cart-footer { border-top: 1px solid #333; padding-top: 1.5rem; }
+        .cart-items-container { flex-grow: 1; overflow-y: auto; margin-bottom: 1rem; padding-right: 0.5rem;}
         
-        /* New Cart Shipping Styles */
+        /* Updated Cart Grouping Styles */
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid #222; gap: 0.8rem; }
+        .cart-item-title { flex-grow: 1; font-weight: 600; font-size: 0.95rem; line-height: 1.3; }
+        .cart-qty-controls { display: flex; align-items: center; gap: 0.5rem; background: #111; padding: 0.2rem 0.5rem; border-radius: 3px; border: 1px solid #333; }
+        .cart-qty-controls button { background: none; border: none; color: #fff; cursor: pointer; font-size: 1.2rem; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
+        .cart-qty-controls button:hover { color: var(--accent-red); }
+        .cart-item-total { font-weight: bold; min-width: 60px; text-align: right; }
+        .remove-btn { background: none; border: none; color: #666; cursor: pointer; font-size: 1.5rem; padding: 0 0 0 0.5rem; transition: color 0.2s; }
+        .remove-btn:hover { color: var(--accent-red); }
+        
+        .cart-footer { border-top: 1px solid #333; padding-top: 1.5rem; }
         .cart-shipping-selector { margin-bottom: 1rem; border-bottom: 1px solid #222; padding-bottom: 1rem; }
         .cart-shipping-selector label { display: block; color: #aaa; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
         .cart-shipping-selector select { width: 100%; padding: 0.8rem; background: #111; color: #fff; border: 1px solid #333; border-radius: 3px; cursor: pointer; }
         .cart-breakdown { margin-bottom: 1rem; color: #aaa; font-size: 1.1rem; }
         .cart-row { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
         .cart-total { font-size: 1.8rem; text-align: right; margin-bottom: 1.5rem; font-family: 'Spectral', serif; color: var(--accent-red); border-top: 1px solid #333; padding-top: 1rem; }
+
+        /* Wholesale Minimum Spend Warning Banner */
+        .cart-warning { background: rgba(204, 0, 0, 0.1); border: 1px solid var(--accent-red); color: var(--accent-red); font-weight: bold; text-align: center; padding: 1rem; border-radius: 4px; margin-bottom: 1.5rem; font-size: 0.9rem; line-height: 1.4; display: none; }
+        .paypal-disabled { pointer-events: none; opacity: 0.4; filter: grayscale(100%); }
 
         footer { background: #000000; color: #ffffff; padding: 4rem 2rem; text-align: center; border-top: 1px solid #222; }
         footer a { color: #ffffff; text-decoration: none; margin: 0 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
@@ -99,7 +111,7 @@
 </head>
 <body>
 
-   <header id="main-header">
+    <header id="main-header">
         <div class="logo"><a href="index.html"><img src="./The-folklore-box-logo.png" alt="The Folklore Box Logo"></a></div>
         <div class="mobile-menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
         <nav>
@@ -115,7 +127,7 @@
                     </div>
                 </li>
                 <li><a href="portfolio.html">Portfolio</a></li>
-                <li><a href="shop.html" class="active-page">Shop</a></li>
+                <li><a href="shop.html">Shop</a></li>
                 <li><a href="uk-folklore-map.html">UK Folklore Map</a></li>
                 <li><a href="journal.html">Journal</a></li>
                 <li><a href="wholesale.html">Wholesale</a></li>
@@ -125,6 +137,11 @@
     </header>
 
     <main>
+        <!-- Wholesale Banner (Revealed via JS if logged in) -->
+        <div class="wholesale-banner" id="wholesale-banner">
+            Wholesale Account Active: 60% Discount Applied. Minimum spend £75.
+        </div>
+
         <div class="product-container" id="product-container">
             <!-- Loading -->
         </div>
@@ -132,9 +149,14 @@
 
     <div class="cart-overlay" id="cart-overlay"></div>
     <div class="cart-sidebar" id="cart-sidebar">
-        <div class="cart-header"><h2>Your Cart</h2><span class="close-cart" id="close-cart">&times;</span></div>
+        <div class="cart-header"><h2 id="cart-title">Your Cart</h2><span class="close-cart" id="close-cart">&times;</span></div>
         <div class="cart-items-container" id="cart-items"></div>
         <div class="cart-footer">
+            
+            <div class="cart-warning" id="cart-warning">
+                Minimum wholesale spend is £75.00 before postage and packing is added. Add more items to unlock checkout.
+            </div>
+
             <div class="cart-shipping-selector">
                 <label for="cart-destination">Deliver to:</label>
                 <select id="cart-destination">
@@ -168,6 +190,16 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
+            
+            // --- DETECT USER TYPE ---
+            const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
+            const cartKey = isWholesale ? 'folkloreWholesaleCart' : 'folkloreCart';
+            
+            if (isWholesale) {
+                document.getElementById('wholesale-banner').style.display = 'block';
+                document.getElementById('cart-title').textContent = 'Wholesale Cart';
+            }
+
             const productContainer = document.getElementById('product-container');
             const urlParams = new URLSearchParams(window.location.search);
             const productId = urlParams.get('id');
@@ -219,7 +251,13 @@
                             else if (key === 'images') product.additionalImages = value.split(',').map(s => s.trim());
                             else if (key === 'description') product.description = value;
                             else if (key === 'postal class') product.postalClass = value;
-                            else if (key === 'item cost') product.basePrice = parseFloat(value);
+                            else if (key === 'item cost') {
+                                product.basePrice = parseFloat(value);
+                                // DYNAMICALLY APPLY DISCOUNT IF LOGGED IN
+                                if (isWholesale) {
+                                    product.basePrice = product.basePrice * 0.40;
+                                }
+                            }
                         }
                     });
                     if (product.id === productId) { foundProduct = product; break; }
@@ -269,123 +307,7 @@
                 }
             } catch (err) { productContainer.innerHTML = "Error loading product."; }
 
-            // --- CART LOGIC ---
-            let cart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
-            
-            const cartSidebar = document.getElementById('cart-sidebar');
-            const cartOverlay = document.getElementById('cart-overlay');
-            const cartToggle = document.getElementById('cart-toggle');
-            const closeCartBtn = document.getElementById('close-cart');
-            const destSelect = document.getElementById('cart-destination');
-
-            const openCart = () => { cartSidebar.classList.add('open'); cartOverlay.classList.add('active'); };
-            const closeCart = () => { cartSidebar.classList.remove('open'); cartOverlay.classList.remove('active'); };
-
-            cartToggle.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
-            closeCartBtn.addEventListener('click', closeCart);
-            cartOverlay.addEventListener('click', closeCart);
-            destSelect.addEventListener('change', updateCartUI);
-
-            document.addEventListener('click', (e) => {
-                if (e.target && e.target.id === 'add-to-cart-btn') {
-                    cart.push({ title: foundProduct.title, price: foundProduct.basePrice, postalClass: foundProduct.postalClass });
-                    localStorage.setItem('folkloreCart', JSON.stringify(cart));
-                    updateCartUI();
-                    openCart();
-                }
-            });
-
-            function updateCartUI() {
-                const container = document.getElementById('cart-items');
-                container.innerHTML = '';
-                let itemsTotal = 0; let shippingTotal = 0; let finalTotal = 0;
-                
-                if (cart.length === 0) {
-                    container.innerHTML = '<p style="color: #777; font-style: italic;">Your cart is currently empty.</p>';
-                    document.getElementById('cart-subtotal').textContent = `£0.00`;
-                    document.getElementById('cart-shipping-cost').textContent = `£0.00`;
-                    document.getElementById('cart-total').textContent = `Total: £0.00`;
-                    document.getElementById('cart-toggle').textContent = `Cart (0)`;
-                    return;
-                }
-
-                const dest = destSelect.value;
-                let maxBase = 0; let maxBaseIndex = -1;
-
-                // Step 1: Find the heaviest base rate
-                cart.forEach((item, index) => {
-                    itemsTotal += item.price;
-                    container.innerHTML += `<div class="cart-item"><div class="cart-item-title">${item.title}</div><div>£${item.price.toFixed(2)}</div><button class="remove-btn" onclick="removeFromCart(${index})">&times;</button></div>`;
-                    
-                    const rates = postalRates[item.postalClass];
-                    if(rates) {
-                        const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
-                        if(baseRate > maxBase) { maxBase = baseRate; maxBaseIndex = index; }
-                    }
-                });
-
-                // Step 2: Apply base to max item, additional to the rest
-                cart.forEach((item, index) => {
-                    const rates = postalRates[item.postalClass];
-                    if(rates) {
-                        shippingTotal += (index === maxBaseIndex) ? 
-                            (dest === 'uk' ? rates.ukBase : rates.intBase) : 
-                            (dest === 'uk' ? rates.ukAdd : rates.intAdd);
-                    }
-                });
-
-                finalTotal = itemsTotal + shippingTotal;
-
-                document.getElementById('cart-subtotal').textContent = `£${itemsTotal.toFixed(2)}`;
-                document.getElementById('cart-shipping-cost').textContent = `£${shippingTotal.toFixed(2)}`;
-                document.getElementById('cart-total').textContent = `Total: £${finalTotal.toFixed(2)}`;
-                document.getElementById('cart-toggle').textContent = `Cart (${cart.length})`;
-            }
-
-            window.removeFromCart = (i) => { cart.splice(i, 1); localStorage.setItem('folkloreCart', JSON.stringify(cart)); updateCartUI(); };
-            
-            document.getElementById('mobile-toggle').addEventListener('click', () => { document.getElementById('nav-list').classList.toggle('mobile-active'); });
-            
-            // --- PAYPAL INITIALIZATION ---
-            paypal.Buttons({
-                style: { color: 'gold', shape: 'rect', label: 'checkout', layout: 'vertical' },
-                createOrder: function(data, actions) {
-                    let itemsTotal = 0; let shippingTotal = 0; let maxBase = 0; let maxBaseIndex = -1;
-                    const dest = destSelect.value;
-                    cart.forEach((item, index) => {
-                        itemsTotal += item.price;
-                        const rates = postalRates[item.postalClass];
-                        if(rates) {
-                            const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
-                            if(baseRate > maxBase) { maxBase = baseRate; maxBaseIndex = index; }
-                        }
-                    });
-                    cart.forEach((item, index) => {
-                        const rates = postalRates[item.postalClass];
-                        if(rates) {
-                            shippingTotal += (index === maxBaseIndex) ? (dest === 'uk' ? rates.ukBase : rates.intBase) : (dest === 'uk' ? rates.ukAdd : rates.intAdd);
-                        }
-                    });
-                    let finalTotal = itemsTotal + shippingTotal;
-
-                    if (finalTotal === 0) { alert("Your cart is empty!"); return; }
-                    return actions.order.create({
-                        purchase_units: [{ amount: { currency_code: 'GBP', value: finalTotal.toFixed(2) } }],
-                        application_context: { shipping_preference: 'GET_FROM_FILE' }
-                    });
-                },
-                onApprove: function(data, actions) {
-                    return actions.order.capture().then(function(details) {
-                        alert('Payment successful! Thank you for your order, ' + details.payer.name.given_name + '.');
-                        cart = []; localStorage.setItem('folkloreCart', JSON.stringify(cart)); updateCartUI(); closeCart();
-                    });
-                },
-                onError: function(err) { console.error('PayPal Checkout Error:', err); alert('There was an issue connecting to PayPal. Please try again.'); }
-            }).render('#paypal-button-container');
-
-            updateCartUI();
-        });
-        // --- Header Scroll Effect ---
+            // --- HEADER SCROLL EFFECT ---
             const header = document.getElementById('main-header');
             if (header) {
                 window.addEventListener('scroll', () => {
@@ -398,6 +320,219 @@
                     }
                 });
             }
+
+            // --- MULTIPLE-ITEM SMART CART LOGIC ---
+            // Grabs the correct cart based on the user's session
+            let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+            cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
+            
+            const cartSidebar = document.getElementById('cart-sidebar');
+            const cartOverlay = document.getElementById('cart-overlay');
+            const cartToggle = document.getElementById('cart-toggle');
+            const closeCartBtn = document.getElementById('close-cart');
+            const destSelect = document.getElementById('cart-destination');
+            const cartWarning = document.getElementById('cart-warning');
+            const paypalContainer = document.getElementById('paypal-button-container');
+
+            const openCart = () => { cartSidebar.classList.add('open'); cartOverlay.classList.add('active'); };
+            const closeCart = () => { cartSidebar.classList.remove('open'); cartOverlay.classList.remove('active'); };
+
+            cartToggle.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
+            closeCartBtn.addEventListener('click', closeCart);
+            cartOverlay.addEventListener('click', closeCart);
+            destSelect.addEventListener('change', updateCartUI);
+
+            // Adding item logic via the product page button
+            document.addEventListener('click', (e) => {
+                if (e.target && e.target.id === 'add-to-cart-btn') {
+                    let existingItem = cart.find(item => item.id === foundProduct.id);
+                    if (existingItem) {
+                        existingItem.quantity += 1;
+                    } else {
+                        cart.push({ 
+                            id: foundProduct.id, 
+                            title: foundProduct.title, 
+                            price: foundProduct.basePrice, 
+                            postalClass: foundProduct.postalClass, 
+                            quantity: 1 
+                        });
+                    }
+                    localStorage.setItem(cartKey, JSON.stringify(cart));
+                    updateCartUI();
+                    openCart();
+                }
+            });
+
+            // Adjust Quantities Logic
+            window.updateQuantity = function(index, delta) {
+                cart[index].quantity += delta;
+                if (cart[index].quantity <= 0) {
+                    cart.splice(index, 1);
+                }
+                localStorage.setItem(cartKey, JSON.stringify(cart));
+                updateCartUI();
+            };
+
+            window.removeFromCart = function(index) { 
+                cart.splice(index, 1); 
+                localStorage.setItem(cartKey, JSON.stringify(cart)); 
+                updateCartUI(); 
+            };
+
+            function updateCartUI() {
+                const container = document.getElementById('cart-items');
+                container.innerHTML = '';
+                let itemsTotal = 0; let shippingTotal = 0; let finalTotal = 0;
+                let cartItemCount = 0;
+                
+                if (cart.length === 0) {
+                    container.innerHTML = `<p style="color: #777; font-style: italic;">Your ${isWholesale ? 'wholesale ' : ''}cart is currently empty.</p>`;
+                    document.getElementById('cart-subtotal').textContent = `£0.00`;
+                    document.getElementById('cart-shipping-cost').textContent = `£0.00`;
+                    document.getElementById('cart-total').textContent = `Total: £0.00`;
+                    document.getElementById('cart-toggle').textContent = `Cart (0)`;
+                    
+                    if (isWholesale) {
+                        cartWarning.style.display = 'block';
+                        paypalContainer.classList.add('paypal-disabled');
+                    }
+                    return;
+                }
+
+                const dest = destSelect.value;
+                let maxBase = 0; let maxBaseItem = null;
+
+                // Step 1: Render items & Find heaviest base shipping
+                cart.forEach((item, index) => {
+                    const qty = item.quantity || 1;
+                    const itemTotalCost = item.price * qty;
+                    itemsTotal += itemTotalCost;
+                    cartItemCount += qty;
+
+                    container.innerHTML += `
+                        <div class="cart-item">
+                            <div class="cart-item-title">
+                                ${item.title} <br>
+                                <span style="font-size:0.8rem; color:#888; font-weight:normal;">£${item.price.toFixed(2)} each</span>
+                            </div>
+                            <div class="cart-qty-controls">
+                                <button onclick="updateQuantity(${index}, -1)">-</button>
+                                <span>${qty}</span>
+                                <button onclick="updateQuantity(${index}, 1)">+</button>
+                            </div>
+                            <div class="cart-item-total">£${itemTotalCost.toFixed(2)}</div>
+                            <button class="remove-btn" onclick="removeFromCart(${index})" title="Remove item">&times;</button>
+                        </div>
+                    `;
+                    
+                    const rates = postalRates[item.postalClass];
+                    if(rates) {
+                        const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                        if(baseRate > maxBase) { maxBase = baseRate; maxBaseItem = item; }
+                    }
+                });
+
+                // Step 2: Calculate shipping correctly based on grouped quantities
+                let baseRateApplied = false;
+                cart.forEach((item) => {
+                    const rates = postalRates[item.postalClass];
+                    if(rates) {
+                        const qty = item.quantity || 1;
+                        const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                        const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
+
+                        if (item === maxBaseItem && !baseRateApplied) {
+                            shippingTotal += baseRate + (addRate * (qty - 1));
+                            baseRateApplied = true;
+                        } else {
+                            shippingTotal += addRate * qty;
+                        }
+                    }
+                });
+
+                finalTotal = itemsTotal + shippingTotal;
+
+                document.getElementById('cart-subtotal').textContent = `£${itemsTotal.toFixed(2)}`;
+                document.getElementById('cart-shipping-cost').textContent = `£${shippingTotal.toFixed(2)}`;
+                document.getElementById('cart-total').textContent = `Total: £${finalTotal.toFixed(2)}`;
+                document.getElementById('cart-toggle').textContent = `Cart (${cartItemCount})`;
+
+                // Wholesale Only: Validation for £75 Minimum Spend
+                if (isWholesale) {
+                    if (itemsTotal >= 75) {
+                        cartWarning.style.display = 'none';
+                        paypalContainer.classList.remove('paypal-disabled');
+                    } else {
+                        cartWarning.style.display = 'block';
+                        paypalContainer.classList.add('paypal-disabled');
+                    }
+                }
+            }
+
+            document.getElementById('mobile-toggle').addEventListener('click', () => { document.getElementById('nav-list').classList.toggle('mobile-active'); });
+            
+            updateCartUI();
+
+            // --- PAYPAL INITIALIZATION ---
+            try {
+                paypal.Buttons({
+                    style: { color: 'gold', shape: 'rect', label: 'checkout', layout: 'vertical' },
+                    createOrder: function(data, actions) {
+                        let itemsTotal = 0; let shippingTotal = 0; let maxBase = 0; let maxBaseItem = null;
+                        const dest = destSelect.value;
+                        
+                        cart.forEach(item => {
+                            const qty = item.quantity || 1;
+                            itemsTotal += item.price * qty;
+                            const rates = postalRates[item.postalClass];
+                            if(rates) {
+                                const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                                if(baseRate > maxBase) { maxBase = baseRate; maxBaseItem = item; }
+                            }
+                        });
+
+                        let baseRateApplied = false;
+                        cart.forEach(item => {
+                            const rates = postalRates[item.postalClass];
+                            if(rates) {
+                                const qty = item.quantity || 1;
+                                const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                                const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
+                                if (item === maxBaseItem && !baseRateApplied) {
+                                    shippingTotal += baseRate + (addRate * (qty - 1));
+                                    baseRateApplied = true;
+                                } else {
+                                    shippingTotal += addRate * qty;
+                                }
+                            }
+                        });
+                        
+                        // Failsafe limit check
+                        if (isWholesale && itemsTotal < 75) { 
+                            alert("Minimum wholesale spend of £75 not met."); 
+                            return; 
+                        }
+
+                        let finalTotal = itemsTotal + shippingTotal;
+
+                        if (finalTotal === 0) { alert("Your cart is empty!"); return; }
+                        return actions.order.create({
+                            purchase_units: [{ amount: { currency_code: 'GBP', value: finalTotal.toFixed(2) } }],
+                            application_context: { shipping_preference: 'GET_FROM_FILE' }
+                        });
+                    },
+                    onApprove: function(data, actions) {
+                        return actions.order.capture().then(function(details) {
+                            alert('Payment successful! Thank you for your order, ' + details.payer.name.given_name + '.');
+                            cart = []; localStorage.setItem(cartKey, JSON.stringify(cart)); updateCartUI(); closeCart();
+                        });
+                    },
+                    onError: function(err) { console.error('PayPal Checkout Error:', err); alert('There was an issue connecting to PayPal. Please try again.'); }
+                }).render('#paypal-button-container');
+            } catch (error) {
+                console.warn("PayPal SDK could not initialize. Please ensure a valid Client ID is set.", error);
+            }
+        });
     </script>
 </body>
 </html>
