@@ -376,14 +376,14 @@
                     filteredProducts.forEach(product => {
                         shopGrid.innerHTML += `
                             <div class="product-card">
-                                <a href="#" onclick="event.preventDefault(); addToWholesaleCart('${product.id}', '${product.title}', ${product.basePrice}, '${product.postalClass}')">
+                                <a href="product.html?id=${product.id}">
                                     <div class="product-image">
                                         <img src="${product.mainImage}" alt="${product.title}">
                                     </div>
                                     <div class="product-details">
                                         <h3 class="product-title">${product.title}</h3>
                                         <div class="product-prices"><p>£${product.basePrice.toFixed(2)}</p></div>
-                                        <button class="add-cart-btn">Add to Cart</button>
+                                        <button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); addToWholesaleCart('${product.id}', '${product.title}', ${product.basePrice}, '${product.postalClass}')">Add to Cart</button>
                                     </div>
                                 </a>
                             </div>
