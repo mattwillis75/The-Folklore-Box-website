@@ -119,11 +119,11 @@
             text-align: center;
             font-family: 'Lato', sans-serif;
             font-weight: 600;
-            font-size: 0.75rem; /* Reduced font size for better spacing */
+            font-size: 0.75rem; 
             text-transform: uppercase;
             letter-spacing: 1px;
             line-height: 1.4;
-            padding: 1.5rem; /* Increased padding to push text away from edges */
+            padding: 1.5rem; 
             box-sizing: border-box;
             box-shadow: 0 10px 30px rgba(204,0,0,0.4);
             z-index: 50;
@@ -244,8 +244,14 @@
         .commission-modal input:focus, .commission-modal textarea:focus { outline: none; border-color: var(--accent-red); }
         .submit-btn { background: var(--accent-red); color: #fff; border: none; padding: 1rem; font-family: 'Lato', sans-serif; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; cursor: pointer; border-radius: 3px; transition: background 0.3s ease; margin-top: 0.5rem; }
         .submit-btn:hover { background: #e60000; }
+        .submit-btn:disabled { background: #555; cursor: not-allowed; }
         .close-modal { position: absolute; top: 1rem; right: 1.5rem; font-size: 2rem; color: #888; cursor: pointer; transition: color 0.3s; line-height: 1; }
         .close-modal:hover { color: var(--accent-red); }
+
+        /* Success Message Container */
+        .form-success-message { display: none; text-align: center; padding: 2rem 0; }
+        .form-success-message h3 { color: var(--accent-red); font-size: 1.8rem; font-family: 'Spectral', serif; margin-top: 0; }
+        .form-success-message p { color: #ddd; font-size: 1rem; }
 
         /* --- Slide-Out Cart Styles --- */
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 2001; display: none; backdrop-filter: blur(3px); }
@@ -329,25 +335,36 @@
     <div class="commission-overlay" id="commission-overlay">
         <div class="commission-modal">
             <span class="close-modal" id="close-commission">&times;</span>
-            <h2>Commission Enquiry</h2>
-            <p>Please fill out the form below and I will get back to you to discuss your illustration requirements.</p>
             
-            <!-- FormSubmit Endpoint -->
-            <form action="https://formsubmit.co/thefolklorebox@gmail.com" method="POST">
-                <!-- Hidden Subject Line for your inbox -->
-                <input type="hidden" name="_subject" value="New Commission Enquiry from Portfolio!">
+            <!-- Success Message (Hidden by default) -->
+            <div id="form-success" class="form-success-message">
+                <h3>Thank You!</h3>
+                <p>Your enquiry has been sent successfully. I will be in touch shortly to discuss your ideas.</p>
+            </div>
+
+            <!-- Form -->
+            <div id="form-container">
+                <h2>Commission Enquiry</h2>
+                <p>Please fill out the form below and I will get back to you to discuss your illustration requirements.</p>
                 
-                <label for="name">Your Name</label>
-                <input type="text" id="name" name="name" required>
-                
-                <label for="email">Your Email Address</label>
-                <input type="email" id="email" name="email" required>
-                
-                <label for="description">Description of Requirements</label>
-                <textarea id="description" name="description" rows="5" required></textarea>
-                
-                <button type="submit" class="submit-btn">Send Enquiry</button>
-            </form>
+                <form id="commission-form" action="https://formsubmit.co/thefolklorebox@gmail.com" method="POST">
+                    <!-- Disables the Captcha -->
+                    <input type="hidden" name="_captcha" value="false">
+                    <!-- Hidden Subject Line for your inbox -->
+                    <input type="hidden" name="_subject" value="New Commission Enquiry from Portfolio!">
+                    
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" name="name" required>
+                    
+                    <label for="email">Your Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                    
+                    <label for="description">Description of Requirements</label>
+                    <textarea id="description" name="description" rows="5" required></textarea>
+                    
+                    <button type="submit" class="submit-btn" id="submit-btn">Send Enquiry</button>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -484,24 +501,72 @@
             window.addEventListener('resize', updateCarouselUI);
             setTimeout(() => selectItem(currentIndex), 50);
 
-            // --- COMMISSION MODAL LOGIC ---
+            // --- COMMISSION MODAL & AJAX FORM LOGIC ---
             const commissionOverlay = document.getElementById('commission-overlay');
             const commissionBtn = document.getElementById('commission-btn');
             const closeCommissionBtn = document.getElementById('close-commission');
+            const commissionForm = document.getElementById('commission-form');
+            const formContainer = document.getElementById('form-container');
+            const formSuccess = document.getElementById('form-success');
+            const submitBtn = document.getElementById('submit-btn');
 
+            // Open Modal
             commissionBtn.addEventListener('click', () => {
                 commissionOverlay.classList.add('active');
             });
 
-            closeCommissionBtn.addEventListener('click', () => {
+            // Close Modal Function (resets the form view silently)
+            const closeModal = () => {
                 commissionOverlay.classList.remove('active');
-            });
+                setTimeout(() => {
+                    commissionForm.reset();
+                    formContainer.style.display = 'block';
+                    formSuccess.style.display = 'none';
+                    submitBtn.textContent = 'Send Enquiry';
+                    submitBtn.disabled = false;
+                }, 400); // Wait for the fade out to finish before resetting
+            };
 
-            // Close modal if user clicks outside of the form
+            closeCommissionBtn.addEventListener('click', closeModal);
+
+            // Close modal if user clicks outside of it
             commissionOverlay.addEventListener('click', (e) => {
                 if (e.target === commissionOverlay) {
-                    commissionOverlay.classList.remove('active');
+                    closeModal();
                 }
+            });
+
+            // Handle the form submission in the background using Javascript
+            commissionForm.addEventListener('submit', function(e) {
+                e.preventDefault(); // Stop the page from reloading/redirecting
+                
+                submitBtn.textContent = 'Sending...';
+                submitBtn.disabled = true;
+
+                const formData = new FormData(commissionForm);
+
+                fetch(commissionForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        formContainer.style.display = 'none';
+                        formSuccess.style.display = 'block';
+                    } else {
+                        alert('Oops! There was a problem sending your enquiry. Please try again.');
+                        submitBtn.textContent = 'Send Enquiry';
+                        submitBtn.disabled = false;
+                    }
+                })
+                .catch(error => {
+                    alert('Oops! There was a problem connecting to the server. Please try again.');
+                    submitBtn.textContent = 'Send Enquiry';
+                    submitBtn.disabled = false;
+                });
             });
 
             // --- HEADER SCROLL EFFECT ---
