@@ -1,13 +1,105 @@
-Title: SHUCK Zine - Issue 8 (Norfolk Fairies)
-Main image: ./Home-7.png
-Description: The eighth issue of our collaborative folklore zine, focusing on the hidden world of Norfolk fairies and fey creatures. Contains 32 pages of original illustrations.
-Sections: Zines, Folklore
+Title: SHUCK Issue 1 - The Dark
+Main Image: ./shuck-issue1-1.jpg
+Images: ./shuck-issue1-2.jpg, ./shuck-issue1-3.jpg, ./shuck-issue1-4.jpg
+Sections: Zines
+Description: Shuck zine was a Kickstarter project initiated by three friends at the start of the pandemic. Overwhelmed by support, issue #1 sold like hot cakes and has been in print ever since. Each Shuck zine explores a different themes within Norfolk and British folklore, uncovering age-old, handed-down, dark and twisty tales rooted in truth? Who can tell.
+Written for adults, suitable for older teens, contains creepy and gory tales.
+Issue #1 - The Dark Issue#2 - Love Issue#3 - Cursed Issue#4 - Feasting Issue #5 - The Deep Issue - 6 - Beasts
+Issue#7 - Witches
+
+SHUCK #1 - THE DARK
+Size: A5
+Materials: Paper
 Postal Class: Large Letter
-Item cost: 8.00
+Item Cost: 7.50
 ---
-Title: Wooden Clock - Green Man
-Main image: ./Home-5.png
-Description: A handcrafted wooden clock featuring an intricate engraving of the Green Man.
-Sections: Wooden Wares, Homeware
-Postal Class: Small Parcel
-Item cost: 35.00
+Title: SHUCK Issue 2 - Love
+Main Image: ./shuck-issue2-1.jpg
+Images: ./shuck-issue2-2.jpg, ./shuck-issue2-3.jpg, ./shuck-issue2-4.jpg
+Sections: Zines
+Description: Shuck zine was a Kickstarter project initiated by three friends at the start of the pandemic. Overwhelmed by support, issue #1 sold like hot cakes and has been in print ever since. Each Shuck zine explores a different themes within Norfolk and British folklore, uncovering age-old, handed-down, dark and twisty tales rooted in truth? Who can tell.
+Written for adults, suitable for older teens, contains creepy and gory tales.
+Issue #1 - The Dark Issue#2 - Love Issue#3 - Cursed Issue#4 - Feasting Issue #5 - The Deep Issue - 6 - Beasts
+Issue#7 - Witches
+
+SHUCK #2 - LOVE - Articles include a feature about Norfolk's very own Jack Valentine (and his mischievous counterpart Snatch Valentine), some classic Norfolk ghost stories, a love spell, a divination board, the story of St Agnes and a Black Shuck paper doll and much more.
+Size: A5
+Materials: Paper
+Postal Class: Large Letter
+Item Cost: 7.50
+---
+Title: SHUCK Issue 3 - Cursed
+Main Image: ./shuck-issue3-1.jpg
+Images: ./shuck-issue3-2.jpg, ./shuck-issue3-3.jpg, ./shuck-issue3-4.jpg
+Sections: Zines
+Description: Shuck zine was a Kickstarter project initiated by three friends at the start of the pandemic. Overwhelmed by support, issue #1 sold like hot cakes and has been in print ever since. Each Shuck zine explores a different themes within Norfolk and British folklore, uncovering age-old, handed-down, dark and twisty tales rooted in truth? Who can tell.
+Written for adults, suitable for older teens, contains creepy and gory tales.
+Issue #1 - The Dark Issue#2 - Love Issue#3 - Cursed Issue#4 - Feasting Issue #5 - The Deep Issue - 6 - Beasts
+Issue#7 - Witches
+
+SHUCK #3 - CURSED - Inside you'll find tales of cursed mummies, stones and the infamous cursed goat's head of Strumpshaw Fen, as well as ways to protect yourself from curses and a map of cursed Norfolk.
+Size: A5
+Materials: Paper
+Postal Class: Large Letter
+Item Cost: 7.50
+---
+Title: SHUCK Issue 4 - Feasting
+Main Image: ./shuck-issue4-1.jpg
+Images: ./shuck-issue4-2.jpg, ./shuck-issue4-3.jpg, ./shuck-issue4-4.jpg
+Sections: Zines
+Description: Shuck zine was a Kickstarter project initiated by three friends at the start of the pandemic. Overwhelmed by support, issue #1 sold like hot cakes and has been in print ever since. Each Shuck zine explores a different themes within Norfolk and British folklore, uncovering age-old, handed-down, dark and twisty tales rooted in truth? Who can tell.
+Written for adults, suitable for older teens, contains creepy and gory tales.
+Issue #1 - The Dark Issue#2 - Love Issue#3 - Cursed Issue#4 - Feasting Issue #5 - The Deep Issue - 6 - Beasts
+Issue#7 - Witches
+
+SHUCK #4 - FEASTING - Inside you'll find, among other things, tales of a night the Devil paid a visit to a feast, a mysterious local secret society, a recipe to honour St Edmund and a spell for abundance.
+Size: A5
+Materials: Paper
+Postal Class: Large Letter
+Item Cost: 7.50
+---
+Title: SHUCK Issue 5 - The Deep
+Main Image: ./shuck-issue5-1.jpg
+Images: ./shuck-issue5-2.jpg, ./shuck-issue5-3.jpg
+Sections: Zines
+Description: Shuck zine was a Kickstarter project initiated by three friends at the start of the pandemic. Overwhelmed by support, issue #1 sold like hot cakes and has been in print ever since. Each Shuck zine explores a different themes within Norfolk and British folklore, uncovering age-old, handed-down, dark and twisty tales rooted in truth? Who can tell.
+Written for adults, suitable for older teens, contains creepy and gory tales.
+Issue #1 - The Dark Issue#2 - Love Issue#3 - Cursed Issue#4 - Feasting Issue #5 - The Deep Issue - 6 - Beasts
+Issue#7 - Witches
+
+SHUCK #5 - THE DEEP - Inside you'll find tales of lost villages, nearly decapitated smugglers, mermaids, lunar botanicals, and the Yow Yows.
+Size: A5
+Materials: Paper
+Postal Class: Large Letter
+Item Cost: 7.50
+---
+Title: SHUCK Issue 6 - Beasts
+Main Image: ./shuck-issue6-1.jpg
+Images: ./shuck-issue6-2.jpg, ./shuck-issue6-3.jpg
+Sections: Zines
+Description: Shuck zine was a Kickstarter project initiated by three friends at the start of the pandemic. Overwhelmed by support, issue #1 sold like hot cakes and has been in print ever since. Each Shuck zine explores a different themes within Norfolk and British folklore, uncovering age-old, handed-down, dark and twisty tales rooted in truth? Who can tell.
+Written for adults, suitable for older teens, contains creepy and gory tales.
+Issue #1 - The Dark Issue#2 - Love Issue#3 - Cursed Issue#4 - Feasting Issue #5 - The Deep Issue - 6 - Beasts
+Issue#7 - Witches
+
+SHUCK #6 - BEASTS
+Size: A5
+Materials: Paper
+Postal Class: Large Letter
+Item Cost: 7.50
+---
+Title: SHUCK Issue 7 - Witches
+Main Image: ./shuck-issue7-1.jpg
+Images: ./shuck-issue7-2.jpg, ./shuck-issue7-3.jpg, ./shuck-issue7-4.jpg
+Sections: Zines
+Description: Shuck zine was a Kickstarter project initiated by three friends at the start of the pandemic. Overwhelmed by support, issue #1 sold like hot cakes and has been in print ever since. Each Shuck zine explores a different themes within Norfolk and British folklore, uncovering age-old, handed-down, dark and twisty tales rooted in truth? Who can tell.
+Written for adults, suitable for older teens, contains creepy and gory tales.
+Issue #1 - The Dark Issue#2 - Love Issue#3 - Cursed Issue#4 - Feasting Issue #5 - The Deep Issue - 6 - Beasts
+Issue#7 - Witches
+
+SHUCK #7 - WITCHES - A BUMPER ISSUE. This issue includes stories of the Kittywitches of Great Yarmouth, A Witch Map of Norfolk, Monica English - Norfolk's High Priestess of the Grey Goose Coven along with stories of hagstones, spells and witch bottles.
+Size: A5 - 68 pages
+Materials: Paper
+Postal Class: Large Letter
+Item Cost: 9.00
+---
