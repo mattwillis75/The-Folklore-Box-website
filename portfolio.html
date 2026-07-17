@@ -55,30 +55,35 @@
 
         /* --- PORTFOLIO GALLERY LAYOUT --- */
         main { 
-            padding-top: 100px; 
-            min-height: 100vh; 
+            padding-top: 85px; /* Offset for header */
+            height: 100vh; /* Locks layout to screen height */
+            box-sizing: border-box;
             display: flex; 
             flex-direction: column; 
         }
 
-        .portfolio-header { text-align: center; padding: 2rem 2rem 1rem; }
-        .portfolio-header h1 { font-size: 3rem; margin: 0; }
+        .portfolio-header { 
+            text-align: center; 
+            padding: 1rem; 
+            flex-shrink: 0; 
+        }
+        .portfolio-header h1 { font-size: 2.2rem; margin: 0; }
 
         /* Large Viewer Section */
         .viewer-container {
-            flex-grow: 1;
+            flex-grow: 1; /* Automatically takes remaining screen space */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 55vh;
-            padding: 1rem 2rem;
+            min-height: 0; /* Critical for letting the image shrink on small screens */
+            padding: 0 2rem;
             position: relative;
         }
 
         #main-viewer {
             max-width: 100%;
-            max-height: 55vh;
+            max-height: calc(100% - 40px); /* Leaves space for the title below */
             object-fit: contain;
             box-shadow: 0 20px 50px rgba(0,0,0,0.8);
             border: 1px solid #222;
@@ -87,18 +92,72 @@
 
         .artwork-title {
             font-family: 'Spectral', serif;
-            font-size: 1.6rem;
-            margin-top: 1.5rem;
+            font-size: 1.4rem;
+            margin-top: 1rem;
             color: #ddd;
             text-align: center;
             letter-spacing: 1px;
             transition: opacity 0.4s ease;
+            height: 30px; /* Fixed height stops layout from jumping */
+        }
+
+        /* --- Commission Roundel --- */
+        .commission-roundel {
+            position: absolute;
+            left: 3rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 120px;
+            height: 120px;
+            background-color: var(--accent-red);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            text-decoration: none;
+            font-family: 'Lato', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            line-height: 1.3;
+            padding: 1rem;
+            box-sizing: border-box;
+            box-shadow: 0 10px 30px rgba(204,0,0,0.4);
+            z-index: 50;
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .commission-roundel:hover {
+            transform: translateY(-50%) scale(1.08);
+            background-color: #e60000;
+            box-shadow: 0 10px 40px rgba(204,0,0,0.7);
+        }
+
+        /* Move roundel to bottom right on mobile so it doesn't block art */
+        @media (max-width: 900px) {
+            .commission-roundel {
+                position: fixed;
+                bottom: 160px;
+                right: 1rem;
+                left: auto;
+                top: auto;
+                transform: none;
+                width: 90px;
+                height: 90px;
+                font-size: 0.75rem;
+                padding: 0.5rem;
+            }
+            .commission-roundel:hover { transform: scale(1.08); }
         }
 
         /* Thumbnails Carousel Section */
         .carousel-wrapper {
+            flex-shrink: 0; /* Stops the carousel from being crushed */
             position: relative;
-            padding: 3rem 0;
+            padding: 1.5rem 0;
             width: 100%;
             overflow: hidden;
             display: flex;
@@ -113,13 +172,13 @@
             gap: 1.5rem;
             transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
             will-change: transform;
-            padding: 0 50vw; /* Allows the first and last items to reach the exact center */
+            padding: 0 50vw; 
         }
 
         .thumb-wrapper {
             position: relative;
-            width: 120px;
-            height: 120px;
+            width: 100px; /* Slightly smaller to save vertical space */
+            height: 100px;
             flex-shrink: 0;
             transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.6s ease, filter 0.6s ease;
             cursor: pointer;
@@ -146,10 +205,10 @@
             background: rgba(0, 0, 0, 0.8);
             color: #fff;
             border: 1px solid #444;
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             cursor: pointer;
             z-index: 20;
             transition: all 0.3s ease;
@@ -164,11 +223,11 @@
             box-shadow: 0 0 15px rgba(204,0,0,0.4);
         }
 
-        .prev-btn { left: 2rem; }
-        .next-btn { right: 2rem; }
+        .prev-btn { left: 1rem; }
+        .next-btn { right: 1rem; }
 
         @media (max-width: 600px) {
-            .thumb-wrapper { width: 80px; height: 80px; }
+            .thumb-wrapper { width: 70px; height: 70px; }
             .prev-btn { left: 0.5rem; }
             .next-btn { right: 0.5rem; }
         }
@@ -232,6 +291,11 @@
 
         <!-- Large Viewer Section -->
         <div class="viewer-container">
+            <!-- Email Roundel Button -->
+            <a href="mailto:thefolklorebox@gmail.com?subject=Illustration%20Commission%20Enquiry" class="commission-roundel">
+                Commission an illustration
+            </a>
+
             <img id="main-viewer" src="" alt="Portfolio Artwork">
             <div id="main-title" class="artwork-title"></div>
         </div>
@@ -306,11 +370,9 @@
             const mainViewer = document.getElementById('main-viewer');
             const mainTitle = document.getElementById('main-title');
             
-            // Pick a random image on load
             let currentIndex = Math.floor(Math.random() * portfolioItems.length);
             let thumbElements = [];
 
-            // 1. Build the Track
             portfolioItems.forEach((item, i) => {
                 const wrapper = document.createElement('div');
                 wrapper.className = 'thumb-wrapper';
@@ -320,7 +382,6 @@
                 thumbElements.push(wrapper);
             });
 
-            // 2. The Logic to scale and center
             function updateCarouselUI() {
                 thumbElements.forEach((el, i) => {
                     const distance = Math.abs(i - currentIndex);
@@ -347,7 +408,6 @@
                     el.style.zIndex = zIndex - distance;
                 });
 
-                // Calculate center to slide the track perfectly
                 const containerCenter = document.querySelector('.carousel-wrapper').offsetWidth / 2;
                 const itemCenter = thumbElements[currentIndex].offsetLeft + (thumbElements[currentIndex].offsetWidth / 2);
                 const translateX = containerCenter - itemCenter;
@@ -355,19 +415,16 @@
                 track.style.transform = `translateX(${translateX}px)`;
             }
 
-            // 3. Select Item & Fade Animation
             function selectItem(index) {
                 if (index < 0) index = portfolioItems.length - 1;
                 if (index >= portfolioItems.length) index = 0;
                 
                 currentIndex = index;
                 
-                // Animate Out
                 mainViewer.style.opacity = 0;
                 mainTitle.style.opacity = 0;
                 mainViewer.style.transform = 'scale(0.98)';
                 
-                // Animate In
                 setTimeout(() => {
                     mainViewer.src = portfolioItems[index].src;
                     mainTitle.textContent = portfolioItems[index].title;
@@ -379,29 +436,29 @@
                 updateCarouselUI();
             }
 
-            // Global arrow function for buttons
             window.slideCarousel = function(direction) {
                 selectItem(currentIndex + direction);
             }
 
-            // Listen for window resize to fix centering
             window.addEventListener('resize', updateCarouselUI);
 
-            // Initialize
-            selectItem(currentIndex);
+            // Give the browser a split second to paint the layout before centering
+            setTimeout(() => selectItem(currentIndex), 50);
 
 
             // --- HEADER SCROLL EFFECT ---
             const header = document.getElementById('main-header');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    header.style.boxShadow = '0 2px 20px rgba(255, 0, 0, 0.1)';
-                    header.style.borderBottom = '1px solid var(--accent-red)';
-                } else {
-                    header.style.boxShadow = 'none';
-                    header.style.borderBottom = '1px solid #333333';
-                }
-            });
+            if (header) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 50) {
+                        header.style.boxShadow = '0 2px 20px rgba(255, 0, 0, 0.1)';
+                        header.style.borderBottom = '1px solid var(--accent-red)';
+                    } else {
+                        header.style.boxShadow = 'none';
+                        header.style.borderBottom = '1px solid #333333';
+                    }
+                });
+            }
 
             // --- MOBILE MENU LOGIC ---
             const mobileToggle = document.getElementById('mobile-toggle');
