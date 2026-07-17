@@ -62,7 +62,12 @@
         .gallery-thumbnails img.active { border-color: var(--accent-red); opacity: 1; }
 
         .product-info h1 { font-size: 2.5rem; margin-top: 0; }
-        .product-description { font-size: 1.1rem; color: #ccc; margin-bottom: 2rem; }
+        .product-description { font-size: 1.1rem; color: #ccc; margin-bottom: 1.5rem; }
+        
+        /* NEW: Size & Material Styles */
+        .product-meta { font-size: 0.9rem; color: #aaa; margin: 0.2rem 0; text-transform: uppercase; letter-spacing: 1px; font-family: 'Lato', sans-serif; }
+        .product-meta strong { color: #fff; font-weight: 600; margin-right: 0.5rem; }
+        .product-specs { margin-bottom: 2.5rem; padding-top: 1rem; border-top: 1px solid #222; }
         
         .price-breakdown { background: #0a0a0a; border: 1px solid #222; padding: 1.5rem; border-radius: 4px; margin-bottom: 2rem; }
         .price-total { display: flex; justify-content: space-between; font-family: 'Spectral', serif; font-size: 1.8rem; color: var(--accent-red); }
@@ -251,6 +256,11 @@
                             else if (key === 'images') product.additionalImages = value.split(',').map(s => s.trim());
                             else if (key === 'description') product.description = value;
                             else if (key === 'postal class') product.postalClass = value;
+                            
+                            // NEW: Extract Size and Materials
+                            else if (key === 'size') product.size = value;
+                            else if (key === 'material' || key === 'materials') product.materials = value;
+                            
                             else if (key === 'item cost') {
                                 product.basePrice = parseFloat(value);
                                 // DYNAMICALLY APPLY DISCOUNT IF LOGGED IN
@@ -277,6 +287,15 @@
                         galleryHTML += `</div>`;
                     }
 
+                    // Dynamically build the Size and Materials text block if they exist
+                    let specsHtml = '';
+                    if (foundProduct.size || foundProduct.materials) {
+                        specsHtml += `<div class="product-specs">`;
+                        if (foundProduct.size) specsHtml += `<p class="product-meta"><strong>Size:</strong> ${foundProduct.size}</p>`;
+                        if (foundProduct.materials) specsHtml += `<p class="product-meta"><strong>Materials:</strong> ${foundProduct.materials}</p>`;
+                        specsHtml += `</div>`;
+                    }
+
                     productContainer.innerHTML = `
                         <div class="product-gallery">
                             <div class="product-image-container"><img id="main-product-image" src="${foundProduct.mainImage}" alt="${foundProduct.title}"></div>
@@ -284,7 +303,10 @@
                         </div>
                         <div class="product-info">
                             <h1>${foundProduct.title}</h1>
-                            <p class="product-description">${foundProduct.description}</p>
+                            <p class="product-description">${foundProduct.description || ''}</p>
+                            
+                            ${specsHtml}
+                            
                             <div class="price-breakdown">
                                 <div class="price-total"><span>Price:</span><span>£${foundProduct.basePrice.toFixed(2)}</span></div>
                             </div>
@@ -322,7 +344,6 @@
             }
 
             // --- MULTIPLE-ITEM SMART CART LOGIC ---
-            // Grabs the correct cart based on the user's session
             let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
             cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
             
@@ -473,20 +494,14 @@
             
             // --- BROWSER BACK BUTTON FIX ---
             window.addEventListener('pageshow', (event) => {
-                // event.persisted is true if the browser loaded the page from its history cache
                 if (event.persisted) {
-                    // Re-fetch the live data from local storage
                     const currentKey = typeof cartKey !== 'undefined' ? cartKey : 'folkloreCart';
                     cart = JSON.parse(localStorage.getItem(currentKey)) || [];
-                    
-                    // Ensure the quantity property exists for the grouped logic
                     cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
-                    
-                    // Force the cart UI to update to match the live data
                     updateCartUI();
                 }
             });
-            
+
             updateCartUI();
 
             // --- PAYPAL INITIALIZATION ---
