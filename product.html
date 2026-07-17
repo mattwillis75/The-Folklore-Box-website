@@ -139,7 +139,7 @@
     <main>
         <!-- Wholesale Banner (Revealed via JS if logged in) -->
         <div class="wholesale-banner" id="wholesale-banner">
-            Wholesale Account Active: 60% Discount Applied. Minimum spend £75.
+            Wholesale Account Active: Prices are 60% of standard retail. Minimum spend £75.
         </div>
 
         <div class="product-container" id="product-container">
@@ -255,7 +255,7 @@
                                 product.basePrice = parseFloat(value);
                                 // DYNAMICALLY APPLY DISCOUNT IF LOGGED IN
                                 if (isWholesale) {
-                                    product.basePrice = product.basePrice * 0.40;
+                                    product.basePrice = product.basePrice * 0.60;
                                 }
                             }
                         }
