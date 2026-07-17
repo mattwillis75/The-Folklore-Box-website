@@ -508,6 +508,13 @@
             try {
                 paypal.Buttons({
                     style: { color: 'gold', shape: 'rect', label: 'checkout', layout: 'vertical' },
+                    // NEW: Auto-scroll when the PayPal button is clicked
+                    onClick: function() {
+                        setTimeout(() => {
+                            const sidebar = document.getElementById('cart-sidebar');
+                            sidebar.scrollTo({ top: sidebar.scrollHeight, behavior: 'smooth' });
+                        }, 600);
+                    },
                     createOrder: function(data, actions) {
                         let itemsTotal = 0; let shippingTotal = 0; let maxBase = 0; let maxBaseItem = null;
                         const dest = destSelect.value;
