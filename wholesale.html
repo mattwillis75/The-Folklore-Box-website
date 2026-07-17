@@ -66,7 +66,7 @@
 
         /* Wholesale Banner & Shop Layout */
         main { padding-top: 85px; min-height: 100vh; }
-        .wholesale-banner { background: var(--accent-red); color: #fff; text-align: center; padding: 0.8rem 2rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; margin-bottom: 1rem; }
+        .wholesale-banner { background: #222; color: var(--accent-red); border-bottom: 1px solid #333; text-align: center; padding: 0.8rem 2rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; margin-bottom: 1rem; }
         .shop-header { text-align: center; padding: 1rem 2rem; }
         .shop-header h1 { font-size: 3rem; margin-bottom: 0.5rem; margin-top: 0; }
         .shop-header p { color: #888; font-style: italic; margin-top: 0; }
@@ -92,24 +92,34 @@
         .product-prices { font-family: 'Lato', sans-serif; color: #999; }
         .product-prices p { margin: 0; font-size: 1.1rem; color: #fff; font-weight: 600; }
         
-        .wholesale-badge { position: absolute; top: 1rem; right: 1rem; background: var(--accent-red); color: #fff; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; padding: 0.3rem 0.6rem; border-radius: 3px; z-index: 10; letter-spacing: 1px; }
+        /* Grey Add to Cart Button */
+        .add-cart-btn { background: #444; color: #fff; border: none; padding: 0.8rem; font-family: 'Lato', sans-serif; text-transform: uppercase; font-weight: bold; font-size: 0.85rem; letter-spacing: 1px; border-radius: 3px; cursor: pointer; transition: background 0.3s ease; margin-top: 1rem; width: 100%; box-sizing: border-box; }
+        .add-cart-btn:hover { background: var(--accent-red); }
 
         /* Slide-Out Cart */
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 2001; display: none; backdrop-filter: blur(3px); }
         .cart-overlay.active { display: block; }
-        .cart-sidebar { position: fixed; top: 0; right: -450px; width: 450px; max-width: 100vw; height: 100vh; background: #0a0a0a; border-left: 1px solid #222; z-index: 2002; transition: right 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); padding: 2rem; box-sizing: border-box; display: flex; flex-direction: column; }
+        .cart-sidebar { position: fixed; top: 0; right: -500px; width: 500px; max-width: 100vw; height: 100vh; background: #0a0a0a; border-left: 1px solid #222; z-index: 2002; transition: right 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); padding: 2rem; box-sizing: border-box; display: flex; flex-direction: column; }
         .cart-sidebar.open { right: 0; }
         .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 1rem; margin-bottom: 1.5rem; }
         .cart-header h2 { margin: 0; font-size: 2rem; }
         .close-cart { font-size: 2.5rem; cursor: pointer; color: #fff; line-height: 1; transition: color 0.3s; }
         .close-cart:hover { color: var(--accent-red); }
-        .cart-items-container { flex-grow: 1; overflow-y: auto; margin-bottom: 1rem; }
-        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid #222; }
-        .cart-item-title { flex-grow: 1; padding-right: 1rem; font-weight: 600; }
-        .remove-btn { background: none; border: none; color: #888; cursor: pointer; font-size: 1.5rem; padding: 0 0 0 1rem; transition: color 0.2s; }
-        .remove-btn:hover { color: var(--accent-red); }
-        .cart-footer { border-top: 1px solid #333; padding-top: 1.5rem; }
+        .cart-items-container { flex-grow: 1; overflow-y: auto; margin-bottom: 1rem; padding-right: 0.5rem;}
         
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid #222; gap: 0.8rem; }
+        .cart-item-title { flex-grow: 1; font-weight: 600; font-size: 0.95rem; line-height: 1.3; }
+        
+        .cart-qty-controls { display: flex; align-items: center; gap: 0.5rem; background: #111; padding: 0.2rem 0.5rem; border-radius: 3px; border: 1px solid #333; }
+        .cart-qty-controls button { background: none; border: none; color: #fff; cursor: pointer; font-size: 1.2rem; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
+        .cart-qty-controls button:hover { color: var(--accent-red); }
+        
+        .cart-item-total { font-weight: bold; min-width: 60px; text-align: right; }
+        
+        .remove-btn { background: none; border: none; color: #666; cursor: pointer; font-size: 1.5rem; padding: 0 0 0 0.5rem; transition: color 0.2s; }
+        .remove-btn:hover { color: var(--accent-red); }
+        
+        .cart-footer { border-top: 1px solid #333; padding-top: 1.5rem; }
         .cart-shipping-selector { margin-bottom: 1rem; border-bottom: 1px solid #222; padding-bottom: 1rem; }
         .cart-shipping-selector label { display: block; color: #aaa; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
         .cart-shipping-selector select { width: 100%; padding: 0.8rem; background: #111; color: #fff; border: 1px solid #333; border-radius: 3px; cursor: pointer; }
@@ -228,7 +238,6 @@
         document.addEventListener("DOMContentLoaded", async () => {
 
             // --- 1. PASSWORD GATE LOGIC ---
-            // Password is currently set to: wholesale26
             const pwdOverlay = document.getElementById('password-overlay');
             const pwdInput = document.getElementById('wholesale-password');
             const pwdSubmit = document.getElementById('submit-password');
@@ -251,14 +260,12 @@
                 }
             });
 
-            // Allow hitting "Enter" key on password field
             pwdInput.addEventListener("keypress", function(event) {
                 if (event.key === "Enter") {
                     event.preventDefault();
                     pwdSubmit.click();
                 }
             });
-
 
             // --- 2. HEADER SCROLL LOGIC ---
             const header = document.getElementById('main-header');
@@ -330,7 +337,6 @@
                             else if (key === 'main image' || key === 'image') product.mainImage = value;
                             else if (key === 'sections') product.sections = value.split(',').map(s => s.trim());
                             else if (key === 'postal class') product.postalClass = value;
-                            
                             // APPLY 60% WHOLESALE DISCOUNT
                             else if (key === 'item cost') product.basePrice = parseFloat(value) * 0.40; 
                         }
@@ -370,8 +376,6 @@
                     filteredProducts.forEach(product => {
                         shopGrid.innerHTML += `
                             <div class="product-card">
-                                <span class="wholesale-badge">Wholesale</span>
-                                <!-- NOTE: To make wholesale adding work seamlessly, we use an onclick function rather than linking to the retail product.html page -->
                                 <a href="#" onclick="event.preventDefault(); addToWholesaleCart('${product.id}', '${product.title}', ${product.basePrice}, '${product.postalClass}')">
                                     <div class="product-image">
                                         <img src="${product.mainImage}" alt="${product.title}">
@@ -379,7 +383,7 @@
                                     <div class="product-details">
                                         <h3 class="product-title">${product.title}</h3>
                                         <div class="product-prices"><p>£${product.basePrice.toFixed(2)}</p></div>
-                                        <button class="btn" style="margin-top: 1rem; padding: 0.6rem; font-size: 0.8rem;">Add to Cart</button>
+                                        <button class="add-cart-btn">Add to Cart</button>
                                     </div>
                                 </a>
                             </div>
@@ -393,9 +397,11 @@
             }
 
             // --- 4. WHOLESALE CART LOGIC ---
-            // We use a different local storage key so wholesale items don't appear in the regular retail shop cart!
             let cart = JSON.parse(localStorage.getItem('folkloreWholesaleCart')) || [];
             
+            // Retrofit existing carts to ensure they have a quantity property
+            cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
+
             const cartSidebar = document.getElementById('cart-sidebar');
             const cartOverlay = document.getElementById('cart-overlay');
             const cartToggle = document.getElementById('cart-toggle');
@@ -412,18 +418,40 @@
             cartOverlay.addEventListener('click', closeCart);
             destSelect.addEventListener('change', updateCartUI);
 
-            // Adding item from the grid directly to the wholesale cart
+            // Adding item logic (Now groups duplicate items by incrementing quantity)
             window.addToWholesaleCart = function(id, title, price, postalClass) {
-                cart.push({ id, title, price, postalClass });
+                let existingItem = cart.find(item => item.id === id);
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({ id, title, price, postalClass, quantity: 1 });
+                }
                 localStorage.setItem('folkloreWholesaleCart', JSON.stringify(cart));
                 updateCartUI();
-                openCart(); // Slide cart out to confirm addition
+                openCart();
+            };
+
+            // Updates quantity up or down when using the cart buttons
+            window.updateQuantity = function(index, delta) {
+                cart[index].quantity += delta;
+                if (cart[index].quantity <= 0) {
+                    cart.splice(index, 1);
+                }
+                localStorage.setItem('folkloreWholesaleCart', JSON.stringify(cart));
+                updateCartUI();
+            };
+
+            window.removeFromCart = function(index) { 
+                cart.splice(index, 1); 
+                localStorage.setItem('folkloreWholesaleCart', JSON.stringify(cart)); 
+                updateCartUI(); 
             };
 
             function updateCartUI() {
                 const container = document.getElementById('cart-items');
                 container.innerHTML = '';
                 let itemsTotal = 0; let shippingTotal = 0; let finalTotal = 0;
+                let cartItemCount = 0;
                 
                 if (cart.length === 0) {
                     container.innerHTML = '<p style="color: #777; font-style: italic;">Your wholesale cart is currently empty.</p>';
@@ -437,25 +465,53 @@
                 }
 
                 const dest = destSelect.value;
-                let maxBase = 0; let maxBaseIndex = -1;
+                let maxBase = 0; let maxBaseItem = null;
 
+                // Step 1: Render items, calculate subtotal, and find the item with the heaviest base shipping rate
                 cart.forEach((item, index) => {
-                    itemsTotal += item.price;
-                    container.innerHTML += `<div class="cart-item"><div class="cart-item-title">${item.title}</div><div>£${item.price.toFixed(2)}</div><button class="remove-btn" onclick="removeFromCart(${index})">&times;</button></div>`;
+                    const qty = item.quantity || 1;
+                    const itemTotalCost = item.price * qty;
+                    itemsTotal += itemTotalCost;
+                    cartItemCount += qty;
+
+                    container.innerHTML += `
+                        <div class="cart-item">
+                            <div class="cart-item-title">
+                                ${item.title} <br>
+                                <span style="font-size:0.8rem; color:#888; font-weight:normal;">£${item.price.toFixed(2)} each</span>
+                            </div>
+                            <div class="cart-qty-controls">
+                                <button onclick="updateQuantity(${index}, -1)">-</button>
+                                <span>${qty}</span>
+                                <button onclick="updateQuantity(${index}, 1)">+</button>
+                            </div>
+                            <div class="cart-item-total">£${itemTotalCost.toFixed(2)}</div>
+                            <button class="remove-btn" onclick="removeFromCart(${index})" title="Remove item">&times;</button>
+                        </div>
+                    `;
                     
                     const rates = postalRates[item.postalClass];
                     if(rates) {
                         const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
-                        if(baseRate > maxBase) { maxBase = baseRate; maxBaseIndex = index; }
+                        if(baseRate > maxBase) { maxBase = baseRate; maxBaseItem = item; }
                     }
                 });
 
-                cart.forEach((item, index) => {
+                // Step 2: Calculate shipping correctly based on quantities
+                let baseRateApplied = false;
+                cart.forEach((item) => {
                     const rates = postalRates[item.postalClass];
                     if(rates) {
-                        shippingTotal += (index === maxBaseIndex) ? 
-                            (dest === 'uk' ? rates.ukBase : rates.intBase) : 
-                            (dest === 'uk' ? rates.ukAdd : rates.intAdd);
+                        const qty = item.quantity || 1;
+                        const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                        const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
+
+                        if (item === maxBaseItem && !baseRateApplied) {
+                            shippingTotal += baseRate + (addRate * (qty - 1));
+                            baseRateApplied = true;
+                        } else {
+                            shippingTotal += addRate * qty;
+                        }
                     }
                 });
 
@@ -464,7 +520,7 @@
                 document.getElementById('cart-subtotal').textContent = `£${itemsTotal.toFixed(2)}`;
                 document.getElementById('cart-shipping-cost').textContent = `£${shippingTotal.toFixed(2)}`;
                 document.getElementById('cart-total').textContent = `Total: £${finalTotal.toFixed(2)}`;
-                document.getElementById('cart-toggle').textContent = `Cart (${cart.length})`;
+                document.getElementById('cart-toggle').textContent = `Cart (${cartItemCount})`;
 
                 // Validation for Wholesale Minimum Spend (£75)
                 if (itemsTotal >= 75) {
@@ -475,8 +531,6 @@
                     paypalContainer.classList.add('paypal-disabled');
                 }
             }
-
-            window.removeFromCart = (i) => { cart.splice(i, 1); localStorage.setItem('folkloreWholesaleCart', JSON.stringify(cart)); updateCartUI(); };
             
             document.getElementById('mobile-toggle').addEventListener('click', () => { document.getElementById('nav-list').classList.toggle('mobile-active'); });
 
@@ -488,20 +542,32 @@
                 paypal.Buttons({
                     style: { color: 'gold', shape: 'rect', label: 'checkout', layout: 'vertical' },
                     createOrder: function(data, actions) {
-                        let itemsTotal = 0; let shippingTotal = 0; let maxBase = 0; let maxBaseIndex = -1;
+                        let itemsTotal = 0; let shippingTotal = 0; let maxBase = 0; let maxBaseItem = null;
                         const dest = destSelect.value;
-                        cart.forEach((item, index) => {
-                            itemsTotal += item.price;
+                        
+                        cart.forEach(item => {
+                            const qty = item.quantity || 1;
+                            itemsTotal += item.price * qty;
                             const rates = postalRates[item.postalClass];
                             if(rates) {
                                 const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
-                                if(baseRate > maxBase) { maxBase = baseRate; maxBaseIndex = index; }
+                                if(baseRate > maxBase) { maxBase = baseRate; maxBaseItem = item; }
                             }
                         });
-                        cart.forEach((item, index) => {
+
+                        let baseRateApplied = false;
+                        cart.forEach(item => {
                             const rates = postalRates[item.postalClass];
                             if(rates) {
-                                shippingTotal += (index === maxBaseIndex) ? (dest === 'uk' ? rates.ukBase : rates.intBase) : (dest === 'uk' ? rates.ukAdd : rates.intAdd);
+                                const qty = item.quantity || 1;
+                                const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                                const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
+                                if (item === maxBaseItem && !baseRateApplied) {
+                                    shippingTotal += baseRate + (addRate * (qty - 1));
+                                    baseRateApplied = true;
+                                } else {
+                                    shippingTotal += addRate * qty;
+                                }
                             }
                         });
                         
