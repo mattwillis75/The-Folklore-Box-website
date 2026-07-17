@@ -83,7 +83,7 @@
 
         #main-viewer {
             max-width: 100%;
-            max-height: calc(100% - 40px); 
+            max-height: calc(100% - 70px); /* Increased to leave more room for the title and margins */
             object-fit: contain;
             box-shadow: 0 20px 50px rgba(0,0,0,0.8);
             border: 1px solid #222;
@@ -94,11 +94,12 @@
             font-family: 'Spectral', serif;
             font-size: 1.4rem;
             margin-top: 1rem;
+            margin-bottom: 0.5rem; /* Added margin to push the carousel down slightly */
             color: #ddd;
             text-align: center;
             letter-spacing: 1px;
             transition: opacity 0.4s ease;
-            height: 30px; 
+            height: 40px; /* Increased height to accommodate font descenders */
         }
 
         /* --- Commission Roundel --- */
