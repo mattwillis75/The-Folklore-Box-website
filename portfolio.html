@@ -83,7 +83,7 @@
 
         #main-viewer {
             max-width: 100%;
-            max-height: calc(100% - 70px); /* Increased to leave more room for the title and margins */
+            max-height: calc(100% - 70px); 
             object-fit: contain;
             box-shadow: 0 20px 50px rgba(0,0,0,0.8);
             border: 1px solid #222;
@@ -94,12 +94,12 @@
             font-family: 'Spectral', serif;
             font-size: 1.4rem;
             margin-top: 1rem;
-            margin-bottom: 0.5rem; /* Added margin to push the carousel down slightly */
+            margin-bottom: 0.5rem; 
             color: #ddd;
             text-align: center;
             letter-spacing: 1px;
             transition: opacity 0.4s ease;
-            height: 40px; /* Increased height to accommodate font descenders */
+            height: 40px; 
         }
 
         /* --- Commission Roundel --- */
@@ -379,7 +379,10 @@
     <!-- Slide-Out Shopping Cart -->
     <div class="cart-overlay" id="cart-overlay"></div>
     <div class="cart-sidebar" id="cart-sidebar">
-        <div class="cart-header"><h2>Your Cart</h2><span class="close-cart" id="close-cart">&times;</span></div>
+        <div class="cart-header">
+            <h2 id="cart-title">Your Cart</h2>
+            <span class="close-cart" id="close-cart">&times;</span>
+        </div>
         <div class="cart-items-container" id="cart-items"></div>
         <div class="cart-footer">
             <div class="cart-total" id="cart-total">Total: £0.00</div>
@@ -518,12 +521,10 @@
             const formSuccess = document.getElementById('form-success');
             const submitBtn = document.getElementById('submit-btn');
 
-            // Open Modal
             commissionBtn.addEventListener('click', () => {
                 commissionOverlay.classList.add('active');
             });
 
-            // Close Modal Function (resets the form view silently)
             const closeModal = () => {
                 commissionOverlay.classList.remove('active');
                 setTimeout(() => {
@@ -532,21 +533,19 @@
                     formSuccess.style.display = 'none';
                     submitBtn.textContent = 'Send Enquiry';
                     submitBtn.disabled = false;
-                }, 400); // Wait for the fade out to finish before resetting
+                }, 400); 
             };
 
             closeCommissionBtn.addEventListener('click', closeModal);
 
-            // Close modal if user clicks outside of it
             commissionOverlay.addEventListener('click', (e) => {
                 if (e.target === commissionOverlay) {
                     closeModal();
                 }
             });
 
-            // Handle the form submission in the background using Javascript
             commissionForm.addEventListener('submit', function(e) {
-                e.preventDefault(); // Stop the page from reloading/redirecting
+                e.preventDefault(); 
                 
                 submitBtn.textContent = 'Sending...';
                 submitBtn.disabled = true;
@@ -601,8 +600,18 @@
                 });
             }
 
-            // --- CART LOGIC ---
-            let cart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
+            // --- SMART CART & USER DETECTION LOGIC ---
+            const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
+            const cartKey = isWholesale ? 'folkloreWholesaleCart' : 'folkloreCart';
+            
+            if (isWholesale) {
+                const cartHeaderTitle = document.getElementById('cart-title');
+                if (cartHeaderTitle) cartHeaderTitle.textContent = 'Wholesale Cart';
+            }
+
+            let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+            cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
+            
             const cartSidebar = document.getElementById('cart-sidebar');
             const cartOverlay = document.getElementById('cart-overlay');
             const cartToggle = document.getElementById('cart-toggle');
@@ -623,13 +632,13 @@
                 if (cart[index].quantity <= 0) {
                     cart.splice(index, 1);
                 }
-                localStorage.setItem('folkloreCart', JSON.stringify(cart));
+                localStorage.setItem(cartKey, JSON.stringify(cart));
                 updateCartUI();
             };
 
             window.removeFromCart = function(index) { 
                 cart.splice(index, 1); 
-                localStorage.setItem('folkloreCart', JSON.stringify(cart)); 
+                localStorage.setItem(cartKey, JSON.stringify(cart)); 
                 updateCartUI(); 
             };
 
@@ -639,7 +648,7 @@
                 let cartItemCount = 0;
                 
                 if (cart.length === 0) {
-                    cartItemsContainer.innerHTML = '<p style="color: #777; font-style: italic;">Your cart is currently empty.</p>';
+                    cartItemsContainer.innerHTML = `<p style="color: #777; font-style: italic;">Your ${isWholesale ? 'wholesale ' : ''}cart is currently empty.</p>`;
                     cartTotalElement.textContent = 'Total: £0.00';
                     cartToggle.textContent = 'Cart (0)';
                     return;
@@ -672,28 +681,16 @@
                 cartToggle.textContent = `Cart (${cartItemCount})`;
             };
 
-            window.removeFromCart = function(index) { 
-                cart.splice(index, 1); 
-                localStorage.setItem('folkloreCart', JSON.stringify(cart)); 
-                updateCartUI(); 
-            };
-
-// --- BROWSER BACK BUTTON FIX ---
+            // --- BROWSER BACK BUTTON FIX ---
             window.addEventListener('pageshow', (event) => {
-                // event.persisted is true if the browser loaded the page from its history cache
                 if (event.persisted) {
-                    // Re-fetch the live data from local storage
                     const currentKey = typeof cartKey !== 'undefined' ? cartKey : 'folkloreCart';
                     cart = JSON.parse(localStorage.getItem(currentKey)) || [];
-                    
-                    // Ensure the quantity property exists for the grouped logic
                     cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
-                    
-                    // Force the cart UI to update to match the live data
                     updateCartUI();
                 }
             });
-            
+
             updateCartUI();
         });
     </script>
