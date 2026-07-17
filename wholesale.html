@@ -183,7 +183,7 @@
         </div>
         <div class="shop-header">
             <h1>Wholesale Portal</h1>
-            <p>All prices shown include a 60% wholesale discount.</p>
+            <p>All prices shown are calculated at 60% of the standard retail price.</p>
         </div>
         <div class="shop-filters" id="shop-filters"></div>
         <section class="shop-grid" id="shop-grid">
@@ -337,8 +337,9 @@
                             else if (key === 'main image' || key === 'image') product.mainImage = value;
                             else if (key === 'sections') product.sections = value.split(',').map(s => s.trim());
                             else if (key === 'postal class') product.postalClass = value;
-                            // APPLY 60% WHOLESALE DISCOUNT
-                            else if (key === 'item cost') product.basePrice = parseFloat(value) * 0.40; 
+                            
+                            // APPLY 60% WHOLESALE PRICING
+                            else if (key === 'item cost') product.basePrice = parseFloat(value) * 0.60; 
                         }
                     });
                     
@@ -418,7 +419,7 @@
             cartOverlay.addEventListener('click', closeCart);
             destSelect.addEventListener('change', updateCartUI);
 
-            // Adding item logic (Now groups duplicate items by incrementing quantity)
+            // Adding item logic
             window.addToWholesaleCart = function(id, title, price, postalClass) {
                 let existingItem = cart.find(item => item.id === id);
                 if (existingItem) {
@@ -467,7 +468,7 @@
                 const dest = destSelect.value;
                 let maxBase = 0; let maxBaseItem = null;
 
-                // Step 1: Render items, calculate subtotal, and find the item with the heaviest base shipping rate
+                // Render items
                 cart.forEach((item, index) => {
                     const qty = item.quantity || 1;
                     const itemTotalCost = item.price * qty;
@@ -497,7 +498,7 @@
                     }
                 });
 
-                // Step 2: Calculate shipping correctly based on quantities
+                // Calculate shipping
                 let baseRateApplied = false;
                 cart.forEach((item) => {
                     const rates = postalRates[item.postalClass];
