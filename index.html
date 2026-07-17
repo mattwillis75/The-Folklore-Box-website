@@ -418,7 +418,7 @@
     <div class="cart-overlay" id="cart-overlay"></div>
     <div class="cart-sidebar" id="cart-sidebar">
         <div class="cart-header">
-            <h2>Your Cart</h2>
+            <h2 id="cart-title">Your Cart</h2>
             <span class="close-cart" id="close-cart">&times;</span>
         </div>
         <div class="cart-items-container" id="cart-items"></div>
@@ -521,8 +521,16 @@
                 });
             }
 
-            // --- Cart Logic ---
-            let cart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
+            // --- Smart Cart Detection Logic ---
+            const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
+            const cartKey = isWholesale ? 'folkloreWholesaleCart' : 'folkloreCart';
+            
+            if (isWholesale) {
+                const cartHeaderTitle = document.getElementById('cart-title');
+                if (cartHeaderTitle) cartHeaderTitle.textContent = 'Wholesale Cart';
+            }
+
+            let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
             
             // Ensure the quantity property exists for the grouped logic
             cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
@@ -547,13 +555,13 @@
                 if (cart[index].quantity <= 0) {
                     cart.splice(index, 1);
                 }
-                localStorage.setItem('folkloreCart', JSON.stringify(cart));
+                localStorage.setItem(cartKey, JSON.stringify(cart));
                 updateCartUI();
             };
 
             window.removeFromCart = function(index) { 
                 cart.splice(index, 1); 
-                localStorage.setItem('folkloreCart', JSON.stringify(cart)); 
+                localStorage.setItem(cartKey, JSON.stringify(cart)); 
                 updateCartUI(); 
             };
 
@@ -563,7 +571,7 @@
                 let cartItemCount = 0;
                 
                 if (cart.length === 0) {
-                    cartItemsContainer.innerHTML = '<p style="color: #777; font-style: italic;">Your cart is currently empty.</p>';
+                    cartItemsContainer.innerHTML = `<p style="color: #777; font-style: italic;">Your ${isWholesale ? 'wholesale ' : ''}cart is currently empty.</p>`;
                     cartTotalElement.textContent = 'Total: £0.00';
                     cartToggle.textContent = 'Cart (0)';
                     return;
