@@ -471,6 +471,22 @@
 
             document.getElementById('mobile-toggle').addEventListener('click', () => { document.getElementById('nav-list').classList.toggle('mobile-active'); });
             
+            // --- BROWSER BACK BUTTON FIX ---
+            window.addEventListener('pageshow', (event) => {
+                // event.persisted is true if the browser loaded the page from its history cache
+                if (event.persisted) {
+                    // Re-fetch the live data from local storage
+                    const currentKey = typeof cartKey !== 'undefined' ? cartKey : 'folkloreCart';
+                    cart = JSON.parse(localStorage.getItem(currentKey)) || [];
+                    
+                    // Ensure the quantity property exists for the grouped logic
+                    cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
+                    
+                    // Force the cart UI to update to match the live data
+                    updateCartUI();
+                }
+            });
+            
             updateCartUI();
 
             // --- PAYPAL INITIALIZATION ---
