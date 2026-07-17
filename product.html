@@ -503,7 +503,7 @@
             
             updateCartUI();
 
-            // --- PAYPAL INITIALIZATION ---
+            // --- 5. PAYPAL INITIALIZATION ---
             try {
                 paypal.Buttons({
                     style: { color: 'gold', shape: 'rect', label: 'checkout', layout: 'vertical' },
@@ -518,8 +518,9 @@
 
                     createOrder: function(data, actions) {
                         let itemsTotal = 0; let shippingTotal = 0; let maxBase = 0; let maxBaseItem = null;
-                        const dest = destSelect.value;
+                        const dest = document.getElementById('cart-destination').value;
                         
+                        // 1. Calculate items and find heaviest shipping base
                         cart.forEach(item => {
                             const qty = item.quantity || 1;
                             itemsTotal += item.price * qty;
@@ -530,6 +531,7 @@
                             }
                         });
 
+                        // 2. Calculate accurate grouped shipping
                         let baseRateApplied = false;
                         cart.forEach(item => {
                             const rates = postalRates[item.postalClass];
@@ -546,24 +548,63 @@
                             }
                         });
                         
-                        // Failsafe limit check
-                        if (isWholesale && itemsTotal < 75) { 
+                        // 3. Build the Itemized Array for PayPal
+                        const paypalItems = cart.map(item => {
+                            return {
+                                name: item.title,
+                                unit_amount: {
+                                    currency_code: 'GBP',
+                                    value: item.price.toFixed(2)
+                                },
+                                quantity: (item.quantity || 1).toString()
+                            };
+                        });
+                        
+                        // 4. Failsafe limit check
+                        const isWholesaleCheck = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
+                        if (isWholesaleCheck && itemsTotal < 75) { 
                             alert("Minimum wholesale spend of £75 not met."); 
                             return; 
                         }
 
                         let finalTotal = itemsTotal + shippingTotal;
-
                         if (finalTotal === 0) { alert("Your cart is empty!"); return; }
+
+                        // 5. Send the detailed breakdown to PayPal
                         return actions.order.create({
-                            purchase_units: [{ amount: { currency_code: 'GBP', value: finalTotal.toFixed(2) } }],
+                            purchase_units: [{ 
+                                amount: { 
+                                    currency_code: 'GBP', 
+                                    value: finalTotal.toFixed(2),
+                                    breakdown: {
+                                        item_total: {
+                                            currency_code: 'GBP',
+                                            value: itemsTotal.toFixed(2)
+                                        },
+                                        shipping: {
+                                            currency_code: 'GBP',
+                                            value: shippingTotal.toFixed(2)
+                                        }
+                                    }
+                                },
+                                items: paypalItems
+                            }],
                             application_context: { shipping_preference: 'GET_FROM_FILE' }
                         });
                     },
                     onApprove: function(data, actions) {
                         return actions.order.capture().then(function(details) {
                             alert('Payment successful! Thank you for your order, ' + details.payer.name.given_name + '.');
-                            cart = []; localStorage.setItem(cartKey, JSON.stringify(cart)); updateCartUI(); closeCart();
+                            
+                            // Empty cart and update UI
+                            cart = []; 
+                            const currentKey = sessionStorage.getItem('wholesaleAuthenticated') === 'true' ? 'folkloreWholesaleCart' : 'folkloreCart';
+                            localStorage.setItem(currentKey, JSON.stringify(cart)); 
+                            updateCartUI(); 
+                            
+                            // Close the cart sidebar safely
+                            document.getElementById('cart-sidebar').classList.remove('open'); 
+                            document.getElementById('cart-overlay').classList.remove('active');
                         });
                     },
                     onError: function(err) { console.error('PayPal Checkout Error:', err); alert('There was an issue connecting to PayPal. Please try again.'); }
