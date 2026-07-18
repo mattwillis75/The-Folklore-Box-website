@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -57,8 +57,29 @@
         .product-image-container { width: 100%; max-width: 450px; }
         .product-image-container img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: 1px solid #333; border-radius: 4px; transition: opacity 0.3s ease; display: block; background: #111; }
         
-        .gallery-thumbnails { display: flex; justify-content: space-between; gap: 1rem; width: 100%; max-width: 450px; box-sizing: border-box; }
-        .gallery-thumbnails img { flex: 1; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border: 2px solid transparent; border-radius: 4px; cursor: pointer; transition: all 0.3s ease; opacity: 0.6; }
+        /* Container for the thumbnails */
+        .gallery-thumbnails { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); /* Forces exactly 4 equal columns */
+            gap: 1rem; /* Adjust this for the space between the thumbnails */
+            width: 100%; 
+            max-width: 450px; /* Perfectly matches your main image container width */
+            box-sizing: border-box; 
+        }
+
+        /* Individual thumbnail styling */
+        .gallery-thumbnails img { 
+            width: 100%; 
+            height: auto; 
+            aspect-ratio: 4 / 3; /* Matches the ratio of the main image */
+            object-fit: cover; 
+            border: 2px solid transparent; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            opacity: 0.6; 
+        }
+
         .gallery-thumbnails img:hover { opacity: 1; border-color: #555; }
         .gallery-thumbnails img.active { border-color: var(--accent-red); opacity: 1; }
 
