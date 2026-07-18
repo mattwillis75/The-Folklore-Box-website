@@ -448,8 +448,9 @@
                 // Dynamically create the thumbnail filename by replacing '.png' with '-thumb.png'
                 const thumbSrc = item.src.replace('.png', '-thumb.png');
                 
-                // Use the new thumbSrc for the carousel images
-                wrapper.innerHTML = `<img src="${thumbSrc}" alt="${item.title} thumbnail">`;
+                
+                // Updated with width, height, and lazy loading
+                wrapper.innerHTML = `<img src="${thumbSrc}" width="100" height="100" loading="lazy" alt="${item.title} thumbnail">`;
                 
                 wrapper.onclick = () => selectItem(i);
                 track.appendChild(wrapper);
