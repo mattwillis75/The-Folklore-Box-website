@@ -484,8 +484,15 @@
             const townsLayerGroup = L.layerGroup();
 
             townRegistry.forEach(town => {
-                const pixelX = (town.lng + 0.15) * 1066;
-                const pixelY = (town.lat - 52.22) * 1573;
+                // Calculate base pixel coordinates from real-world Lat/Lng
+                let pixelX = (town.lng + 0.15) * 1066;
+                let pixelY = (town.lat - 52.22) * 1573;
+                
+                // --- ALIGNMENT NUDGE ---
+                // Shifts the GPS grid to perfectly align with your hand-drawn roads
+                pixelX += 135; // Nudges right
+                pixelY -= 90;  // Nudges down
+
                 const iconHtml = `<div class="town-label"><span class="town-dot"></span>${town.title}</div>`;
                 const textIcon = L.divIcon({ html: iconHtml, className: '', iconSize: [120, 20], iconAnchor: [4, 10] });
                 const marker = L.marker([pixelY, pixelX], { icon: textIcon, zIndexOffset: -50 });
