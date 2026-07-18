@@ -255,78 +255,119 @@
         <p style="font-size: 0.8rem; color: #555; font-family: 'Lato', sans-serif;">&copy; 2026 The Folklore Box by Matt Willis. All rights reserved.</p>
     </footer>
 
+    <!-- Password Request Pop-up Modal -->
+    <div class="request-overlay" id="request-overlay">
+        <div class="request-modal">
+            <span class="close-modal" id="close-request">&times;</span>
+            
+            <!-- Success Message (Hidden by default) -->
+            <div id="request-success" class="form-success-message">
+                <h3>Request Sent</h3>
+                <p>Thank you for your interest! I will review your details and be in touch shortly with your wholesale password.</p>
+            </div>
+
+            <!-- Form -->
+            <div id="request-form-container">
+                <h2>Request a Password</h2>
+                <p>Enter your shop details below to apply for wholesale access.</p>
+                
+                <form id="request-form" action="https://formsubmit.co/thefolklorebox@gmail.com" method="POST">
+                    <!-- Disables the Captcha -->
+                    <input type="hidden" name="_captcha" value="false">
+                    <!-- Hidden Subject Line for your inbox -->
+                    <input type="hidden" name="_subject" value="New Wholesale Password Request!">
+                    
+                    <label for="shop-name">Shop Name / Business</label>
+                    <input type="text" id="shop-name" name="shop_name" required>
+                    
+                    <label for="contact-name">Contact Name</label>
+                    <input type="text" id="contact-name" name="contact_name" required>
+                    
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                    
+                    <label for="website">Website or Social Media Link</label>
+                    <input type="url" id="website" name="website" placeholder="https://" required>
+                    
+                    <button type="submit" class="btn" id="request-submit-btn" style="margin-top: 1rem;">Send Request</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- DON'T FORGET YOUR CLIENT ID HERE -->
     <script src="https://www.paypal.com/sdk/js?client-id=BAAyFEECFHCgIYSVAcx3GUqT0FI1rHhhU_mwYJxRf6ngeAPN3zYdx3W4a1tCIEHivTFLxU7oFEeDD1NIIs&currency=GBP&locale=en_GB"></script>
 
     <script>
-        // --- WHOLESALE PASSWORD REQUEST MODAL LOGIC ---
-const requestOverlay = document.getElementById('request-overlay');
-const openRequestBtn = document.getElementById('open-request-btn');
-const closeRequestBtn = document.getElementById('close-request');
-const requestForm = document.getElementById('request-form');
-const requestFormContainer = document.getElementById('request-form-container');
-const requestSuccess = document.getElementById('request-success');
-const requestSubmitBtn = document.getElementById('request-submit-btn');
-
-// Open the modal
-openRequestBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    requestOverlay.classList.add('active');
-});
-
-// Close and reset the modal
-const closeRequestModal = () => {
-    requestOverlay.classList.remove('active');
-    setTimeout(() => {
-        requestForm.reset();
-        requestFormContainer.style.display = 'block';
-        requestSuccess.style.display = 'none';
-        requestSubmitBtn.textContent = 'Send Request';
-        requestSubmitBtn.disabled = false;
-    }, 400); 
-};
-
-// Close listeners
-closeRequestBtn.addEventListener('click', closeRequestModal);
-requestOverlay.addEventListener('click', (e) => {
-    if (e.target === requestOverlay) {
-        closeRequestModal();
-    }
-});
-
-// AJAX Form Submission
-requestForm.addEventListener('submit', function(e) {
-    e.preventDefault(); 
-    
-    requestSubmitBtn.textContent = 'Sending...';
-    requestSubmitBtn.disabled = true;
-
-    const formData = new FormData(requestForm);
-
-    fetch(requestForm.action, {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => {
-        if (response.ok) {
-            requestFormContainer.style.display = 'none';
-            requestSuccess.style.display = 'block';
-        } else {
-            alert('Oops! There was a problem sending your request. Please try again.');
-            requestSubmitBtn.textContent = 'Send Request';
-            requestSubmitBtn.disabled = false;
-        }
-    })
-    .catch(error => {
-        alert('Oops! There was a problem connecting to the server. Please try again.');
-        requestSubmitBtn.textContent = 'Send Request';
-        requestSubmitBtn.disabled = false;
-    });
-});
         document.addEventListener("DOMContentLoaded", async () => {
+            
+            // --- WHOLESALE PASSWORD REQUEST MODAL LOGIC ---
+            const requestOverlay = document.getElementById('request-overlay');
+            const openRequestBtn = document.getElementById('open-request-btn');
+            const closeRequestBtn = document.getElementById('close-request');
+            const requestForm = document.getElementById('request-form');
+            const requestFormContainer = document.getElementById('request-form-container');
+            const requestSuccess = document.getElementById('request-success');
+            const requestSubmitBtn = document.getElementById('request-submit-btn');
+
+            // Open the modal
+            openRequestBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                requestOverlay.classList.add('active');
+            });
+
+            // Close and reset the modal
+            const closeRequestModal = () => {
+                requestOverlay.classList.remove('active');
+                setTimeout(() => {
+                    requestForm.reset();
+                    requestFormContainer.style.display = 'block';
+                    requestSuccess.style.display = 'none';
+                    requestSubmitBtn.textContent = 'Send Request';
+                    requestSubmitBtn.disabled = false;
+                }, 400); 
+            };
+
+            // Close listeners
+            closeRequestBtn.addEventListener('click', closeRequestModal);
+            requestOverlay.addEventListener('click', (e) => {
+                if (e.target === requestOverlay) {
+                    closeRequestModal();
+                }
+            });
+
+            // AJAX Form Submission
+            requestForm.addEventListener('submit', function(e) {
+                e.preventDefault(); 
+                
+                requestSubmitBtn.textContent = 'Sending...';
+                requestSubmitBtn.disabled = true;
+
+                const formData = new FormData(requestForm);
+
+                fetch(requestForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        requestFormContainer.style.display = 'none';
+                        requestSuccess.style.display = 'block';
+                    } else {
+                        alert('Oops! There was a problem sending your request. Please try again.');
+                        requestSubmitBtn.textContent = 'Send Request';
+                        requestSubmitBtn.disabled = false;
+                    }
+                })
+                .catch(error => {
+                    alert('Oops! There was a problem connecting to the server. Please try again.');
+                    requestSubmitBtn.textContent = 'Send Request';
+                    requestSubmitBtn.disabled = false;
+                });
+            });
 
             // --- 1. PASSWORD GATE & SMART CART MERGER LOGIC ---
             const pwdOverlay = document.getElementById('password-overlay');
@@ -799,44 +840,5 @@ requestForm.addEventListener('submit', function(e) {
             }
         });
     </script>
-    <!-- Password Request Pop-up Modal -->
-<div class="request-overlay" id="request-overlay">
-    <div class="request-modal">
-        <span class="close-modal" id="close-request">&times;</span>
-        
-        <!-- Success Message (Hidden by default) -->
-        <div id="request-success" class="form-success-message">
-            <h3>Request Sent</h3>
-            <p>Thank you for your interest! I will review your details and be in touch shortly with your wholesale password.</p>
-        </div>
-
-        <!-- Form -->
-        <div id="request-form-container">
-            <h2>Request a Password</h2>
-            <p>Enter your shop details below to apply for wholesale access.</p>
-            
-            <form id="request-form" action="https://formsubmit.co/thefolklorebox@gmail.com" method="POST">
-                <!-- Disables the Captcha -->
-                <input type="hidden" name="_captcha" value="false">
-                <!-- Hidden Subject Line for your inbox -->
-                <input type="hidden" name="_subject" value="New Wholesale Password Request!">
-                
-                <label for="shop-name">Shop Name / Business</label>
-                <input type="text" id="shop-name" name="shop_name" required>
-                
-                <label for="contact-name">Contact Name</label>
-                <input type="text" id="contact-name" name="contact_name" required>
-                
-                <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" required>
-                
-                <label for="website">Website or Social Media Link</label>
-                <input type="url" id="website" name="website" placeholder="https://" required>
-                
-                <button type="submit" class="btn" id="request-submit-btn" style="margin-top: 1rem;">Send Request</button>
-            </form>
-        </div>
-    </div>
-</div>
 </body>
 </html>
