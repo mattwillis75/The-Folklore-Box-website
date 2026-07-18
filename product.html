@@ -289,6 +289,22 @@
                 }
 
                 if (foundProduct) {
+                    // --- DYNAMIC SEO UPDATE ---
+// Update the page title
+document.title = `${foundProduct.title} | The Folklore Box`;
+
+// Update or create the meta description
+let metaDesc = document.querySelector('meta[name="description"]');
+if (!metaDesc) {
+    metaDesc = document.createElement('meta');
+    metaDesc.name = "description";
+    document.head.appendChild(metaDesc);
+}
+// Strip HTML tags from the product description and limit to 155 characters for Google
+let cleanDesc = foundProduct.description.replace(/<[^>]*>?/gm, '');
+metaDesc.content = cleanDesc.length > 155 ? cleanDesc.substring(0, 152) + '...' : cleanDesc;
+// --------------------------
+                    
                     let allImages = [foundProduct.mainImage];
                     if (foundProduct.additionalImages.length > 0) allImages = allImages.concat(foundProduct.additionalImages);
 
