@@ -415,19 +415,20 @@
                 crs: L.CRS.Simple, 
                 minZoom: -4, 
                 maxZoom: 2,
-                zoomSnap: 0, // Restored perfect smooth zooming!
+                zoomSnap: 0,
                 attributionControl: false 
             });
             
-            // NEW Image Dimensions
-            const mapWidth = 2326;
-            const mapHeight = 1434; 
+            // NEW Image Dimensions (Matches your perfect 1.77 ratio!)
+            const mapWidth = 2400;
+            const mapHeight = 1352; 
             const bounds = [[0, 0], [mapHeight, mapWidth]];
 
+            // Make sure this filename matches your newly uploaded map file!
             L.imageOverlay('norfolk-map.jpg', bounds).addTo(map);
             map.setMaxBounds(bounds);
 
-            // Restored auto-fit bounds function
+            // Reverted to your original auto-fit bounds function since the ratio is fixed!
             function fitAndLockZoom() {
                 map.setMinZoom(-4); 
                 map.fitBounds(bounds, { padding: [0, 0] });
@@ -455,17 +456,16 @@
 
             pinCollection.forEach((pin, index) => { 
                 // --- DYNAMIC SCALING LOGIC ---
-                // Translates coordinates from your old 1200px admin tool to the new 2326px map
                 let scaledLat = pin.lat;
                 let scaledLng = pin.lng;
 
-                // If the coordinate is from the old smaller map, apply the math multiplier
+                // Because your new map is exactly double the old 1200px map, 
+                // we just multiply the old coordinates by 2!
                 if (pin.lng <= 1200) {
-                    scaledLng = pin.lng * (2326 / 1200);
-                    scaledLat = pin.lat * (1434 / 675.6);
+                    scaledLng = pin.lng * 2;
+                    scaledLat = pin.lat * 2;
                 }
                 
-                // Pass the newly scaled data to the renderer
                 const renderedPinData = { ...pin, lat: scaledLat, lng: scaledLng };
                 renderPin(renderedPinData, index); 
             });
