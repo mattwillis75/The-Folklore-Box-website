@@ -335,8 +335,10 @@ if (allImages.length > 1) {
     allImages.forEach((imgSrc, index) => {
         const activeClass = index === 0 ? 'active' : '';
         
-        // 1. Generate the thumbnail filename
-        const thumbSrc = imgSrc.replace('.jpg', '-thumb.jpg');
+        // 1. Generate the thumbnail filename for .png, .jpg, AND .jpeg files
+        const thumbSrc = imgSrc.replace('.png', '-thumb.png')
+                               .replace('.jpg', '-thumb.jpg')
+                               .replace('.jpeg', '-thumb.jpeg');
         
         // 2. Put thumbSrc in the src attribute, but keep imgSrc in the data-src attribute!
         galleryHTML += `<img src="${thumbSrc}" class="thumbnail ${activeClass}" data-src="${imgSrc}" loading="lazy" alt="${foundProduct.title} thumbnail ${index + 1}">`;
