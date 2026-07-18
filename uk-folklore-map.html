@@ -379,6 +379,69 @@
 
             pinCollection.forEach((pin, index) => { renderPin(pin, index); });
 
+            // --- SEMANTIC ZOOM: TOWN LABELS & PIXEL TRANSLATOR ---
+            
+            // 1. Town Registry (Real-world Lat/Long coordinates)
+            const townRegistry = [
+                { title: "Norwich", lat: 52.63, lng: 1.29, minZoom: -2 },
+                { title: "King's Lynn", lat: 52.75, lng: 0.39, minZoom: -1 },
+                { title: "Great Yarmouth", lat: 52.60, lng: 1.72, minZoom: -1 },
+                { title: "Cromer", lat: 52.93, lng: 1.30, minZoom: 0 },
+                { title: "Thetford", lat: 52.41, lng: 0.74, minZoom: 0 },
+                { title: "Walsingham", lat: 52.89, lng: 0.87, minZoom: 1 },
+                { title: "Blakeney", lat: 52.95, lng: 1.02, minZoom: 1 }
+            ];
+
+            const townsLayerGroup = L.layerGroup();
+
+            // 2. The Pixel Translator & Marker Generator
+            townRegistry.forEach(town => {
+                // The new mathematical formula based on 2326x1434 boundaries
+                // Note: Longitude + 0.06 accounts for the negative starting coordinate (-0.06E)
+                const pixelX = (town.lng + 0.06) * 1038.39;
+                const pixelY = (53.09 - town.lat) * 1707.14;
+
+                const iconHtml = `<div class="town-label"><span class="town-dot"></span>${town.title}</div>`;
+                
+                const textIcon = L.divIcon({
+                    html: iconHtml,
+                    className: '', 
+                    iconSize: [120, 20], 
+                    iconAnchor: [4, 10] // Centers the red dot precisely on the coordinate
+                });
+
+                // Leaflet CRS.Simple requires [Y, X] format
+                const marker = L.marker([pixelY, pixelX], { 
+                    icon: textIcon,
+                    zIndexOffset: -1000 // Keep them behind your interactive folklore pins
+                });
+
+                // Attach the target zoom level to the marker object
+                marker.targetMinZoom = town.minZoom;
+                marker.addTo(townsLayerGroup);
+            });
+
+            // 3. The Zoom Listener
+            map.on('zoomend', function() {
+                const currentZoom = map.getZoom();
+                
+                // Only show towns if their specific minZoom requirement is met
+                townsLayerGroup.eachLayer(function(marker) {
+                    if (currentZoom >= marker.targetMinZoom) {
+                        if (!map.hasLayer(marker)) {
+                            marker.addTo(map);
+                        }
+                    } else {
+                        if (map.hasLayer(marker)) {
+                            marker.remove();
+                        }
+                    }
+                });
+            });
+
+            // Force an initial check when the page loads
+            map.fire('zoomend');
+
             // Mobile Modal Controls
             const infoSidebar = document.getElementById('info-sidebar');
             const mapModalOverlay = document.getElementById('map-modal-overlay');
