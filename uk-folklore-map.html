@@ -3,26 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UK Folklore Map</title>
+    <title>UK Folklore Map | The Folklore Box</title>
+    <meta name="description" content="Explore the local legends, black dogs, and ancient tales haunting the British landscape with our interactive folklore map by Matt Willis.">
+    
+    <!-- Google Fonts: Lato Light (300) and Spectral Regular (400) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;600&family=Spectral:wght@400;600&display=swap" rel="stylesheet">
     
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <!-- Spectral Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;600&display=swap" rel="stylesheet">
-    
+
     <style>
-        :root {
-            --accent-red: #cc0000;
+        /* ========================================== */
+        /* BASE & HEADER STYLES (From Index)          */
+        /* ========================================== */
+        :root { --bg-color: #000000; --text-color: #ffffff; --accent-red: #cc0000; --header-bg: rgba(0, 0, 0, 0.85); }
+        body { font-family: 'Lato', sans-serif; font-weight: 300; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 0; line-height: 1.6; overflow-x: hidden; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Spectral', serif; font-weight: 400; color: #ffffff; }
+
+        /* Fixed Header */
+        header { position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 3rem; background: var(--header-bg); border-bottom: 1px solid #333333; z-index: 1000; box-sizing: border-box; backdrop-filter: blur(8px); transition: all 0.3s ease; }
+        .logo img { max-width: 180px; height: auto; }
+
+        /* Navigation */
+        nav ul { list-style: none; display: flex; align-items: center; gap: 2rem; margin: 0; padding: 0; }
+        nav a { text-decoration: none; color: #ffffff; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; transition: color 0.3s ease; font-family: 'Lato', sans-serif; white-space: nowrap; }
+        nav a:hover { color: var(--accent-red); }
+        .active-page { color: var(--accent-red) !important; }
+        #cart-toggle { color: var(--accent-red); border: 1px solid var(--accent-red); padding: 0.5rem 1rem; border-radius: 3px; }
+        #cart-toggle:hover { background: var(--accent-red); color: #ffffff; }
+
+        /* Dropdown */
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-content { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background-color: var(--accent-red); min-width: 180px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5); z-index: 1001; border-radius: 4px; flex-direction: column; margin-top: 1.5rem; padding: 0.5rem 0; }
+        .dropdown-content::before { content: ""; position: absolute; top: -1.5rem; left: 0; width: 100%; height: 1.5rem; }
+        .dropdown:hover .dropdown-content { display: flex; }
+        .dropdown-content a { padding: 10px 16px; display: block; color: #ffffff; text-align: center; }
+        .dropdown-content a:hover { background-color: #a30000; color: #ffffff; }
+        .dropdown-divider { height: 1px; background-color: #ffffff; margin: 0 15px; }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle { display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1005; }
+        .mobile-menu-toggle span { width: 25px; height: 3px; background-color: #ffffff; transition: all 0.3s ease; border-radius: 3px; }
+        
+        @media (max-width: 1100px) {
+            .mobile-menu-toggle { display: flex; }
+            nav ul { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background-color: rgba(0, 0, 0, 0.95); padding: 1rem 0; border-bottom: 1px solid #333; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+            nav ul.mobile-active { display: flex; }
+            nav ul li { width: 100%; text-align: center; padding: 0.8rem 0; }
+            .dropdown-content { position: static; transform: none; background-color: transparent; box-shadow: none; margin-top: 0; display: none; }
+            .dropdown-content::before { display: none; }
+            .mobile-menu-toggle.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .mobile-menu-toggle.open span:nth-child(2) { opacity: 0; }
+            .mobile-menu-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
         }
 
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #000;
+        /* --- Slide-Out Cart Styles --- */
+        .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 2001; display: none; backdrop-filter: blur(3px); }
+        .cart-overlay.active { display: block; }
+        .cart-sidebar { position: fixed; top: 0; right: -500px; width: 500px; max-width: 100vw; height: 100vh; background: #0a0a0a; border-left: 1px solid #222; z-index: 2002; transition: right 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); padding: 2rem; box-sizing: border-box; display: flex; flex-direction: column; overflow-y: auto; }
+        .cart-sidebar.open { right: 0; }
+        .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 1rem; margin-bottom: 1.5rem; flex-shrink: 0; }
+        .cart-header h2 { margin: 0; font-size: 2rem; }
+        .close-cart { font-size: 2.5rem; cursor: pointer; color: #fff; line-height: 1; transition: color 0.3s; }
+        .close-cart:hover { color: var(--accent-red); }
+        .cart-items-container { flex-grow: 1; margin-bottom: 1rem; padding-right: 0.5rem; overflow-y: visible; }
+        
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid #222; gap: 0.8rem; }
+        .cart-item-title { flex-grow: 1; font-weight: 600; font-size: 0.95rem; line-height: 1.3; }
+        .cart-qty-controls { display: flex; align-items: center; gap: 0.5rem; background: #111; padding: 0.2rem 0.5rem; border-radius: 3px; border: 1px solid #333; }
+        .cart-qty-controls button { background: none; border: none; color: #fff; cursor: pointer; font-size: 1.2rem; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
+        .cart-qty-controls button:hover { color: var(--accent-red); }
+        .cart-item-total { font-weight: bold; min-width: 60px; text-align: right; }
+        .remove-btn { background: none; border: none; color: #888; cursor: pointer; font-size: 1.5rem; padding: 0 0 0 0.5rem; transition: color 0.2s; }
+        .remove-btn:hover { color: var(--accent-red); }
+        
+        .cart-footer { border-top: 1px solid #333; padding-top: 1.5rem; flex-shrink: 0; }
+        .cart-total { font-size: 1.8rem; text-align: right; margin-bottom: 1.5rem; font-family: 'Spectral', serif; color: var(--accent-red); }
+
+        /* Footer */
+        footer { background: #000000; color: #ffffff; padding: 4rem 2rem; text-align: center; border-top: 1px solid #222; }
+        footer a { color: #ffffff; text-decoration: none; margin: 0 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
+        footer a:hover { color: var(--accent-red); }
+        .social-links { margin-bottom: 2rem; }
+
+        /* ========================================== */
+        /* MAP SPECIFIC STYLES                        */
+        /* ========================================== */
+        
+        main {
+            padding-top: 120px; /* Pushes the map down so the fixed header doesn't hide it */
+            padding-bottom: 4rem;
+            min-height: calc(100vh - 120px);
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
         }
 
         /* Main Container framing the border graphic */
@@ -30,7 +106,8 @@
             position: relative;
             width: 100%;
             max-width: 1600px;
-            aspect-ratio: 1600 / 675.6; /* Reverted to the border graphic's proportions */
+            margin: 0 auto; 
+            aspect-ratio: 1600 / 675.6; 
             background: #000;
         }
 
@@ -41,20 +118,20 @@
             left: 2.1%;
             width: 74.8%;
             height: 91.4%;
-            background-color: #ffffff; /* White base layer */
+            background-color: #ffffff; 
             z-index: 1;
         }
 
         /* --- Map Town Labels --- */
         .town-label {
-            color: #000000; /* Black text for readability */
+            color: #000000; 
             font-family: 'Spectral', serif;
             font-size: 16px;
             font-weight: 600; 
             display: flex;
             align-items: center;
             gap: 6px;
-            white-space: nowrap; /* Prevents text from breaking lines on resize */
+            white-space: nowrap; 
             pointer-events: none; 
         }
         
@@ -67,119 +144,286 @@
             box-shadow: 0 0 8px rgba(204, 0, 0, 0.8);
             flex-shrink: 0;
         }
-
-        /* Mobile Breakpoint Fix */
-        @media (max-width: 1100px) {
-            /* Add any specific mobile UI adjustments here */
-        }
     </style>
 </head>
 <body>
 
-    <div id="app-container">
-        <!-- The interactive map window -->
-        <div id="map"></div>
-        
-        <!-- Assuming you have an image element for the outer border here -->
-        <!-- <img src="border.png" class="map-border" alt="Map Border" style="position: absolute; top: 0; left: 0; width: 100%; pointer-events: none; z-index: 10;"> -->
+    <!-- Header & Navigation (Fixed) -->
+    <header id="main-header">
+        <div class="logo"><a href="index.html"><img src="./The-folklore-box-logo.png" alt="The Folklore Box Logo"></a></div>
+        <div class="mobile-menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
+        <nav>
+            <ul id="nav-list">
+                <li class="dropdown">
+                    <a href="index.html">Home</a>
+                    <div class="dropdown-content">
+                        <a href="index.html#collections">Goods & Wares</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="index.html#about">About the Artist</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="index.html#map-teaser">The Folklore Map</a>
+                    </div>
+                </li>
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <!-- The active class is correctly applied here -->
+                <li><a href="uk-folklore-map.html" class="active-page">UK Folklore Map</a></li>
+                <li><a href="journal.html">Journal</a></li>
+                <li><a href="wholesale.html">Wholesale</a></li>
+                <li><a href="#" id="cart-toggle">Cart (0)</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div id="app-container">
+            <!-- The interactive map window -->
+            <div id="map"></div>
+            
+            <!-- Replace this comment with your map border image tag if it's external to the map layer -->
+            <!-- <img src="border.png" class="map-border" alt="Map Border" style="position: absolute; top: 0; left: 0; width: 100%; pointer-events: none; z-index: 10;"> -->
+        </div>
+    </main>
+
+    <!-- Slide-Out Shopping Cart -->
+    <div class="cart-overlay" id="cart-overlay"></div>
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h2 id="cart-title">Your Cart</h2>
+            <span class="close-cart" id="close-cart">&times;</span>
+        </div>
+        <div class="cart-items-container" id="cart-items"></div>
+        <div class="cart-footer">
+            <div class="cart-total" id="cart-total">Total: £0.00</div>
+            <p style="text-align: center; color: #888; font-size: 0.9rem;">Checkout is completed securely via the Shop.</p>
+            <a href="shop.html" style="display: block; background: var(--accent-red); color: #fff; padding: 1rem; text-align: center; text-decoration: none; text-transform: uppercase; font-weight: bold; margin-top: 1rem;">Go to Shop</a>
+        </div>
     </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="https://instagram.com/the_folklore_box" target="_blank">Instagram: @the_folklore_box</a> | 
+            <a href="https://facebook.com/thefolklorebox" target="_blank">Facebook: @thefolklorebox</a>
+        </div>
+        <div style="margin-bottom: 2rem;">
+            <a href="shop.html">Shop</a>
+            <a href="wholesale.html">Wholesale Enquiries</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <p style="font-size: 0.8rem; color: #555; font-family: 'Lato', sans-serif;">
+            &copy; 2026 The Folklore Box by Matt Willis. All rights reserved.
+        </p>
+    </footer>
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     
+    <!-- Custom Interaction & Map Scripts -->
     <script>
-        // 1. Initialize the map using CRS.Simple for a flat image coordinate system
-        const map = L.map('map', {
-            crs: L.CRS.Simple,
-            minZoom: -3,
-            maxZoom: 2,
-            zoomControl: true
-        });
-
-        // 2. New Map Image Dimensions
-        const mapWidth = 2326;
-        const mapHeight = 1434; 
-        const bounds = [[0, 0], [mapHeight, mapWidth]];
-
-        // Attach the image. Ensure 'norfolk-map_2.jpg' matches your local filename exactly
-        L.imageOverlay('norfolk-map_2.jpg', bounds).addTo(map);
-        map.setMaxBounds(bounds);
-        map.fitBounds(bounds);
-
-        // ==========================================
-        // INSERT YOUR FOLKLORE PINS HERE
-        // ==========================================
-        /* Example:
-        const pinCollection = [ { title: "Black Shuck", ... } ];
-        pinCollection.forEach((pin, index) => { 
-            renderPin(pin, index); 
-        });
-        */
-
-
-        // ==========================================
-        // SEMANTIC ZOOM: TOWN LABELS & PIXEL TRANSLATOR
-        // ==========================================
-        
-        // 1. Town Registry (Real-world Lat/Long coordinates)
-        const townRegistry = [
-            { title: "Norwich", lat: 52.63, lng: 1.29, minZoom: -2 },
-            { title: "King's Lynn", lat: 52.75, lng: 0.39, minZoom: -1 },
-            { title: "Great Yarmouth", lat: 52.60, lng: 1.72, minZoom: -1 },
-            { title: "Cromer", lat: 52.93, lng: 1.30, minZoom: 0 },
-            { title: "Thetford", lat: 52.41, lng: 0.74, minZoom: 0 },
-            { title: "Walsingham", lat: 52.89, lng: 0.87, minZoom: 1 },
-            { title: "Blakeney", lat: 52.95, lng: 1.02, minZoom: 1 }
-        ];
-
-        const townsLayerGroup = L.layerGroup();
-
-        // 2. The CORRECTED Pixel Translator & Marker Generator
-        townRegistry.forEach(town => {
-            // Calibrated against the Norwich purple dot
-            const pixelX = (town.lng + 0.15) * 1066;
-            const pixelY = (town.lat - 52.22) * 1573;
-
-            const iconHtml = `<div class="town-label"><span class="town-dot"></span>${town.title}</div>`;
+        document.addEventListener("DOMContentLoaded", () => {
             
-            const textIcon = L.divIcon({
-                html: iconHtml,
-                className: '', 
-                iconSize: [120, 20], 
-                iconAnchor: [4, 10] // Centers the red dot precisely on the coordinate
-            });
+            // ==========================================
+            // UI SCRIPTS: Header, Nav, and Cart Logic
+            // ==========================================
 
-            // Leaflet CRS.Simple requires [Y, X] format
-            const marker = L.marker([pixelY, pixelX], { 
-                icon: textIcon,
-                zIndexOffset: -50 // Safely between the map background and the folklore pins
-            });
-
-            // Attach the target zoom level to the marker object
-            marker.targetMinZoom = town.minZoom;
-            marker.addTo(townsLayerGroup);
-        });
-
-        // 3. The Zoom Listener
-        map.on('zoomend', function() {
-            const currentZoom = map.getZoom();
-            
-            // Only show towns if their specific minZoom requirement is met
-            townsLayerGroup.eachLayer(function(marker) {
-                if (currentZoom >= marker.targetMinZoom) {
-                    if (!map.hasLayer(marker)) {
-                        marker.addTo(map);
-                    }
+            // --- Header Scroll Effect ---
+            const header = document.getElementById('main-header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.style.boxShadow = '0 2px 20px rgba(255, 0, 0, 0.1)';
+                    header.style.borderBottom = '1px solid var(--accent-red)';
                 } else {
-                    if (map.hasLayer(marker)) {
-                        marker.remove();
-                    }
+                    header.style.boxShadow = 'none';
+                    header.style.borderBottom = '1px solid #333333';
                 }
             });
-        });
 
-        // Force an initial check when the page loads
-        map.fire('zoomend');
+            // --- Mobile Menu Toggle Script ---
+            const mobileToggle = document.getElementById('mobile-toggle');
+            const navList = document.getElementById('nav-list');
+            if (mobileToggle && navList) {
+                mobileToggle.addEventListener('click', () => {
+                    navList.classList.toggle('mobile-active');
+                    mobileToggle.classList.toggle('open');
+                });
+            }
+
+            // --- Smart Cart Detection Logic ---
+            const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
+            const cartKey = isWholesale ? 'folkloreWholesaleCart' : 'folkloreCart';
+            
+            if (isWholesale) {
+                const cartHeaderTitle = document.getElementById('cart-title');
+                if (cartHeaderTitle) cartHeaderTitle.textContent = 'Wholesale Cart';
+            }
+
+            let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+            cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
+            
+            const cartSidebar = document.getElementById('cart-sidebar');
+            const cartOverlay = document.getElementById('cart-overlay');
+            const cartToggle = document.getElementById('cart-toggle');
+            const closeCartBtn = document.getElementById('close-cart');
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartTotalElement = document.getElementById('cart-total');
+
+            const openCart = () => { cartSidebar.classList.add('open'); cartOverlay.classList.add('active'); };
+            const closeCartSidebar = () => { cartSidebar.classList.remove('open'); cartOverlay.classList.remove('active'); };
+
+            cartToggle.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
+            closeCartBtn.addEventListener('click', closeCartSidebar);
+            cartOverlay.addEventListener('click', closeCartSidebar);
+
+            window.updateQuantity = function(index, delta) {
+                cart[index].quantity += delta;
+                if (cart[index].quantity <= 0) {
+                    cart.splice(index, 1);
+                }
+                localStorage.setItem(cartKey, JSON.stringify(cart));
+                updateCartUI();
+            };
+
+            window.removeFromCart = function(index) { 
+                cart.splice(index, 1); 
+                localStorage.setItem(cartKey, JSON.stringify(cart)); 
+                updateCartUI(); 
+            };
+
+            const updateCartUI = () => {
+                cartItemsContainer.innerHTML = '';
+                let itemsTotal = 0;
+                let cartItemCount = 0;
+                
+                if (cart.length === 0) {
+                    cartItemsContainer.innerHTML = `<p style="color: #777; font-style: italic;">Your ${isWholesale ? 'wholesale ' : ''}cart is currently empty.</p>`;
+                    cartTotalElement.textContent = 'Total: £0.00';
+                    cartToggle.textContent = 'Cart (0)';
+                    return;
+                }
+
+                cart.forEach((item, index) => {
+                    const qty = item.quantity || 1;
+                    const itemTotalCost = item.price * qty;
+                    itemsTotal += itemTotalCost;
+                    cartItemCount += qty;
+
+                    cartItemsContainer.innerHTML += `
+                        <div class="cart-item">
+                            <div class="cart-item-title">
+                                ${item.title} <br>
+                                <span style="font-size:0.8rem; color:#888; font-weight:normal;">£${item.price.toFixed(2)} each</span>
+                            </div>
+                            <div class="cart-qty-controls">
+                                <button onclick="updateQuantity(${index}, -1)">-</button>
+                                <span>${qty}</span>
+                                <button onclick="updateQuantity(${index}, 1)">+</button>
+                            </div>
+                            <div class="cart-item-total">£${itemTotalCost.toFixed(2)}</div>
+                            <button class="remove-btn" onclick="removeFromCart(${index})" title="Remove item">&times;</button>
+                        </div>
+                    `;
+                });
+
+                cartTotalElement.textContent = `Total: £${itemsTotal.toFixed(2)}`;
+                cartToggle.textContent = `Cart (${cartItemCount})`;
+            };
+
+            window.addEventListener('pageshow', (event) => {
+                if (event.persisted) {
+                    const currentKey = typeof cartKey !== 'undefined' ? cartKey : 'folkloreCart';
+                    cart = JSON.parse(localStorage.getItem(currentKey)) || [];
+                    cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
+                    updateCartUI();
+                }
+            });
+            
+            updateCartUI();
+
+            // ==========================================
+            // MAP SCRIPTS: Leaflet Initialization
+            // ==========================================
+
+            const map = L.map('map', {
+                crs: L.CRS.Simple,
+                minZoom: -3,
+                maxZoom: 2,
+                zoomControl: true
+            });
+
+            const mapWidth = 2326;
+            const mapHeight = 1434; 
+            const bounds = [[0, 0], [mapHeight, mapWidth]];
+
+            // Note: Double check that 'norfolk-map_2.jpg' is the exact name in your folder!
+            L.imageOverlay('norfolk-map_2.jpg', bounds).addTo(map);
+            map.setMaxBounds(bounds);
+            map.fitBounds(bounds);
+
+            // --- INSERT YOUR FOLKLORE PINS HERE ---
+            /*
+            const pinCollection = [ { title: "Black Shuck", ... } ];
+            pinCollection.forEach((pin, index) => { 
+                renderPin(pin, index); 
+            });
+            */
+
+            // --- SEMANTIC ZOOM: TOWN LABELS & PIXEL TRANSLATOR ---
+            
+            const townRegistry = [
+                { title: "Norwich", lat: 52.63, lng: 1.29, minZoom: -2 },
+                { title: "King's Lynn", lat: 52.75, lng: 0.39, minZoom: -1 },
+                { title: "Great Yarmouth", lat: 52.60, lng: 1.72, minZoom: -1 },
+                { title: "Cromer", lat: 52.93, lng: 1.30, minZoom: 0 },
+                { title: "Thetford", lat: 52.41, lng: 0.74, minZoom: 0 },
+                { title: "Walsingham", lat: 52.89, lng: 0.87, minZoom: 1 },
+                { title: "Blakeney", lat: 52.95, lng: 1.02, minZoom: 1 }
+            ];
+
+            const townsLayerGroup = L.layerGroup();
+
+            townRegistry.forEach(town => {
+                const pixelX = (town.lng + 0.15) * 1066;
+                const pixelY = (town.lat - 52.22) * 1573;
+
+                const iconHtml = `<div class="town-label"><span class="town-dot"></span>${town.title}</div>`;
+                
+                const textIcon = L.divIcon({
+                    html: iconHtml,
+                    className: '', 
+                    iconSize: [120, 20], 
+                    iconAnchor: [4, 10] 
+                });
+
+                const marker = L.marker([pixelY, pixelX], { 
+                    icon: textIcon,
+                    zIndexOffset: -50 
+                });
+
+                marker.targetMinZoom = town.minZoom;
+                marker.addTo(townsLayerGroup);
+            });
+
+            map.on('zoomend', function() {
+                const currentZoom = map.getZoom();
+                
+                townsLayerGroup.eachLayer(function(marker) {
+                    if (currentZoom >= marker.targetMinZoom) {
+                        if (!map.hasLayer(marker)) {
+                            marker.addTo(map);
+                        }
+                    } else {
+                        if (map.hasLayer(marker)) {
+                            marker.remove();
+                        }
+                    }
+                });
+            });
+
+            // Force an initial check when the page loads
+            map.fire('zoomend');
+            
+        });
     </script>
 </body>
 </html>
