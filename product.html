@@ -330,18 +330,19 @@ metaDesc.content = cleanDesc.length > 155 ? cleanDesc.substring(0, 152) + '...' 
                     if (foundProduct.additionalImages.length > 0) allImages = allImages.concat(foundProduct.additionalImages);
 
                     let galleryHTML = '';
-                    if (allImages.length > 1) {
-                        galleryHTML = `<div class="gallery-thumbnails">`;
-                        allImages.forEach((imgSrc, index) => {
-                            const activeClass = index === 0 ? 'active' : '';
-                            // Generate the thumbnail filename
-                            const thumbSrc = imgSrc.replace('.png', '-thumb.png');
-                            
-                            // Inject the thumbnail image, but save the full 'imgSrc' in data-src for the click event
-                            galleryHTML += `<img src="${thumbSrc}" class="thumbnail ${activeClass}" data-src="${imgSrc}" loading="lazy" alt="${foundProduct.title} thumbnail ${index + 1}">`;
-                        });
-                        galleryHTML += `</div>`;
-                    }
+if (allImages.length > 1) {
+    galleryHTML = `<div class="gallery-thumbnails">`;
+    allImages.forEach((imgSrc, index) => {
+        const activeClass = index === 0 ? 'active' : '';
+        
+        // 1. Generate the thumbnail filename
+        const thumbSrc = imgSrc.replace('.jpg', '-thumb.jpg');
+        
+        // 2. Put thumbSrc in the src attribute, but keep imgSrc in the data-src attribute!
+        galleryHTML += `<img src="${thumbSrc}" class="thumbnail ${activeClass}" data-src="${imgSrc}" loading="lazy" alt="${foundProduct.title} thumbnail ${index + 1}">`;
+    });
+    galleryHTML += `</div>`;
+}
 
                     let specsHtml = '';
                     if (foundProduct.size || foundProduct.materials) {
