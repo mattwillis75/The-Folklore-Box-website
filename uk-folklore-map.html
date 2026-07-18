@@ -93,7 +93,7 @@
         /* ========================================== */
         
         main {
-            padding-top: 120px; /* Pushes the map down so the fixed header doesn't hide it */
+            padding-top: 120px; 
             padding-bottom: 4rem;
             min-height: calc(100vh - 120px);
             display: flex;
@@ -166,7 +166,6 @@
                 </li>
                 <li><a href="portfolio.html">Portfolio</a></li>
                 <li><a href="shop.html">Shop</a></li>
-                <!-- The active class is correctly applied here -->
                 <li><a href="uk-folklore-map.html" class="active-page">UK Folklore Map</a></li>
                 <li><a href="journal.html">Journal</a></li>
                 <li><a href="wholesale.html">Wholesale</a></li>
@@ -180,8 +179,8 @@
             <!-- The interactive map window -->
             <div id="map"></div>
             
-            <!-- Replace this comment with your map border image tag if it's external to the map layer -->
-            <!-- <img src="border.png" class="map-border" alt="Map Border" style="position: absolute; top: 0; left: 0; width: 100%; pointer-events: none; z-index: 10;"> -->
+            <!-- THE HAND DRAWN BORDER: Now active! Make sure the filename perfectly matches your image file. -->
+            <img src="./border.png" class="map-border" alt="Map Border" style="position: absolute; top: 0; left: 0; width: 100%; pointer-events: none; z-index: 10;">
         </div>
     </main>
 
@@ -355,8 +354,8 @@
             const mapHeight = 1434; 
             const bounds = [[0, 0], [mapHeight, mapWidth]];
 
-            // Note: Double check that 'norfolk-map_2.jpg' is the exact name in your folder!
-            L.imageOverlay('norfolk-map_2.jpg', bounds).addTo(map);
+            // CORRECTED: Pointing back to your correct local filename!
+            L.imageOverlay('./norfolk-map.jpg', bounds).addTo(map);
             map.setMaxBounds(bounds);
             map.fitBounds(bounds);
 
