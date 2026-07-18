@@ -49,7 +49,6 @@
         main { padding-top: 120px; min-height: 100vh; max-width: 1200px; margin: 0 auto; padding-bottom: 4rem; }
         .wholesale-banner { background: #222; color: var(--accent-red); border-bottom: 1px solid #333; text-align: center; padding: 0.8rem 2rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; margin-bottom: 1rem; display: none; }
         
-        /* Fixed Grid alignment to allow the right column to expand naturally */
         .product-container { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; padding: 2rem; align-items: start; }
         @media (max-width: 800px) { .product-container { grid-template-columns: 1fr; } }
         
@@ -62,7 +61,11 @@
         .gallery-thumbnails img:hover { opacity: 1; border-color: #555; }
         .gallery-thumbnails img.active { border-color: var(--accent-red); opacity: 1; }
 
-        /* Added height: auto and overflow: visible to ensure full text display */
+        /* Back to Shop Link */
+        .back-to-shop { display: inline-flex; align-items: center; gap: 0.5rem; color: #888; text-decoration: none; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; margin-bottom: 1.5rem; }
+        .back-to-shop:hover { color: var(--accent-red); }
+        .back-to-shop span { font-size: 1.2rem; line-height: 1; padding-bottom: 2px; }
+
         .product-info { height: auto; overflow: visible; }
         .product-info h1 { font-size: 2.5rem; margin-top: 0; }
         .product-description { font-size: 1.1rem; color: #ccc; margin-bottom: 1.5rem; height: auto; overflow: visible; }
@@ -78,7 +81,7 @@
         .btn { display: block; background: var(--accent-red); color: #fff; padding: 1.2rem; text-align: center; border: none; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; width: 100%; border-radius: 3px; transition: background 0.3s ease;}
         .btn:hover { background: #e60000; }
         
-        /* --- Updated Slide-Out Cart Styles with Scrolling Fix --- */
+        /* --- Slide-Out Cart Styles --- */
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 1001; display: none; }
         .cart-overlay.active { display: block; }
         .cart-sidebar { position: fixed; top: 0; right: -500px; width: 500px; max-width: 100vw; height: 100vh; background: #0a0a0a; border-left: 1px solid #222; z-index: 1002; transition: right 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); padding: 2rem; box-sizing: border-box; display: flex; flex-direction: column; overflow-y: auto; }
@@ -89,7 +92,6 @@
         .close-cart:hover { color: var(--accent-red); }
         .cart-items-container { flex-grow: 1; margin-bottom: 1rem; padding-right: 0.5rem; overflow-y: visible; }
         
-        /* Updated Cart Grouping Styles */
         .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid #222; gap: 0.8rem; }
         .cart-item-title { flex-grow: 1; font-weight: 600; font-size: 0.95rem; line-height: 1.3; }
         .cart-qty-controls { display: flex; align-items: center; gap: 0.5rem; background: #111; padding: 0.2rem 0.5rem; border-radius: 3px; border: 1px solid #333; }
@@ -107,7 +109,6 @@
         .cart-row { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
         .cart-total { font-size: 1.8rem; text-align: right; margin-bottom: 1.5rem; font-family: 'Spectral', serif; color: var(--accent-red); border-top: 1px solid #333; padding-top: 1rem; }
 
-        /* Wholesale Minimum Spend Warning Banner */
         .cart-warning { background: rgba(204, 0, 0, 0.1); border: 1px solid var(--accent-red); color: var(--accent-red); font-weight: bold; text-align: center; padding: 1rem; border-radius: 4px; margin-bottom: 1.5rem; font-size: 0.9rem; line-height: 1.4; display: none; }
         .paypal-disabled { pointer-events: none; opacity: 0.4; filter: grayscale(100%); }
 
@@ -145,7 +146,6 @@
     </header>
 
     <main>
-        <!-- Wholesale Banner (Revealed via JS if logged in) -->
         <div class="wholesale-banner" id="wholesale-banner">
             Wholesale Account Active: Prices are 60% of standard retail. Minimum spend £75.
         </div>
@@ -160,7 +160,6 @@
         <div class="cart-header"><h2 id="cart-title">Your Cart</h2><span class="close-cart" id="close-cart">&times;</span></div>
         <div class="cart-items-container" id="cart-items"></div>
         
-        <!-- Restored full Cart Footer -->
         <div class="cart-footer">
             <div class="cart-warning" id="cart-warning">
                 Minimum wholesale spend is £75.00 before postage and packing is added. Add more items to unlock checkout.
@@ -197,7 +196,6 @@
         <p style="font-size: 0.8rem; color: #555; font-family: 'Lato', sans-serif;">&copy; 2026 The Folklore Box by Matt Willis. All rights reserved.</p>
     </footer>
 
-    <!-- DON'T FORGET YOUR CLIENT ID HERE -->
     <script src="https://www.paypal.com/sdk/js?client-id=BAAyFEECFHCgIYSVAcx3GUqT0FI1rHhhU_mwYJxRf6ngeAPN3zYdx3W4a1tCIEHivTFLxU7oFEeDD1NIIs&currency=GBP&locale=en_GB"></script>
 
     <script>
@@ -242,7 +240,7 @@
                 });
             } catch(e) { console.error("Could not load postal rates."); }
 
-            // 2. Fetch and Parse Product
+            // 2. Fetch and Parse Product (UPDATED PARSER)
             try {
                 const response = await fetch('products.txt', { cache: 'no-store' });
                 const text = await response.text();
@@ -251,25 +249,38 @@
                 for (const rawItem of rawItems) {
                     if (rawItem.trim() === '') continue;
                     const lines = rawItem.trim().split('\n');
-                    let product = { additionalImages: [] };
+                    let product = { additionalImages: [], description: '' };
+                    let isParsingDesc = false;
                     
+                    const validKeys = ['title', 'main image', 'image', 'images', 'description', 'postal class', 'size', 'material', 'materials', 'item cost'];
+
                     lines.forEach(line => {
                         const sepIndex = line.indexOf(':');
-                        if (sepIndex > -1) {
-                            const key = line.slice(0, sepIndex).trim().toLowerCase();
+                        const possibleKey = sepIndex > -1 ? line.slice(0, sepIndex).trim().toLowerCase() : '';
+                        
+                        // If the line starts with a valid data key
+                        if (validKeys.includes(possibleKey)) {
+                            isParsingDesc = (possibleKey === 'description');
                             const value = line.slice(sepIndex + 1).trim();
-                            if (key === 'title') { product.title = value; product.id = value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, ''); }
-                            else if (key === 'main image' || key === 'image') product.mainImage = value;
-                            else if (key === 'images') product.additionalImages = value.split(',').map(s => s.trim());
-                            else if (key === 'description') product.description = value;
-                            else if (key === 'postal class') product.postalClass = value;
-                            else if (key === 'size') product.size = value;
-                            else if (key === 'material' || key === 'materials') product.materials = value;
-                            else if (key === 'item cost') {
+                            
+                            if (possibleKey === 'title') { product.title = value; product.id = value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, ''); }
+                            else if (possibleKey === 'main image' || possibleKey === 'image') product.mainImage = value;
+                            else if (possibleKey === 'images') product.additionalImages = value.split(',').map(s => s.trim());
+                            else if (possibleKey === 'description') product.description = value;
+                            else if (possibleKey === 'postal class') product.postalClass = value;
+                            else if (possibleKey === 'size') product.size = value;
+                            else if (possibleKey === 'material' || possibleKey === 'materials') product.materials = value;
+                            else if (possibleKey === 'item cost') {
                                 product.basePrice = parseFloat(value);
                                 if (isWholesale) {
                                     product.basePrice = product.basePrice * 0.60;
                                 }
+                            }
+                        } else {
+                            // If it doesn't have a valid key, but we are currently parsing the description,
+                            // treat it as a new paragraph and attach it safely!
+                            if (isParsingDesc && line.trim() !== '') {
+                                product.description += '<br><br>' + line.trim();
                             }
                         }
                     });
@@ -304,6 +315,7 @@
                             ${galleryHTML}
                         </div>
                         <div class="product-info">
+                            <a href="shop.html" class="back-to-shop"><span>&larr;</span> Back to Shop</a>
                             <h1>${foundProduct.title}</h1>
                             <p class="product-description">${foundProduct.description || ''}</p>
                             
