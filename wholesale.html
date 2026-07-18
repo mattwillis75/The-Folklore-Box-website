@@ -53,7 +53,7 @@
         }
 
         /* --- Password Overlay --- */
-        .password-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.98); z-index: 9999; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); transition: opacity 0.3s ease;}
+        .password-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.98); z-index: 999; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); transition: opacity 0.3s ease; padding-top: 85px; box-sizing: border-box; }
         .password-modal { background: #0a0a0a; border: 1px solid #333; padding: 4rem 3rem; border-radius: 4px; max-width: 450px; width: 90%; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.9); }
         .password-modal h2 { font-size: 2.5rem; margin-top: 0; margin-bottom: 1rem; color: #fff; }
         .password-modal p { color: #aaa; margin-bottom: 2rem; font-size: 1rem; line-height: 1.5; }
@@ -61,8 +61,12 @@
         .password-modal input:focus { outline: none; border-color: var(--accent-red); }
         .error-msg { color: var(--accent-red) !important; display: none; margin-top: -0.5rem; margin-bottom: 1.5rem !important; font-size: 0.9rem !important; font-weight: bold; text-transform: uppercase; }
         
-        .btn { display: inline-block; background: var(--accent-red); color: #fff; padding: 1.2rem 2rem; text-decoration: none; font-family: 'Lato', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border-radius: 3px; transition: background 0.3s ease, transform 0.2s ease; border: none; cursor: pointer; width: 100%; box-sizing: border-box; }
+        .btn { display: inline-block; background: var(--accent-red); color: #fff; padding: 1.2rem 2rem; text-decoration: none; font-family: 'Lato', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border-radius: 3px; transition: background 0.3s ease, transform 0.2s ease; border: none; cursor: pointer; width: 100%; box-sizing: border-box; text-align: center;}
         .btn:hover { background: #e60000; transform: translateY(-2px); }
+        
+        /* New Secondary Button Style */
+        .secondary-btn { background: transparent; color: #aaa; border: 1px solid #444; margin-top: 1rem; }
+        .secondary-btn:hover { color: #ffffff; border-color: var(--accent-red); background: transparent; }
 
         /* Wholesale Banner & Shop Layout */
         main { padding-top: 85px; min-height: 100vh; }
@@ -145,10 +149,11 @@
     <div class="password-overlay" id="password-overlay">
         <div class="password-modal">
             <h2>Wholesale Login</h2>
-            <p>Please enter the stockist password to view the discounted catalogue.</p>
+            <p>Please enter your stockist password to view the discounted catalogue.</p>
             <input type="password" id="wholesale-password" placeholder="Enter Password">
             <p class="error-msg" id="password-error">Incorrect password. Please try again.</p>
             <button id="submit-password" class="btn">Enter Portal</button>
+            <a href="mailto:thefolklorebox@gmail.com?subject=Wholesale%20Password%20Request" class="btn secondary-btn">Request a Password</a>
         </div>
     </div>
 
@@ -250,48 +255,59 @@
                 pwdOverlay.style.display = 'none';
             }
 
-            pwdSubmit.addEventListener('click', () => {
-                if (pwdInput.value === 'wholesale26') {
-                    // Mark as Authenticated
-                    sessionStorage.setItem('wholesaleAuthenticated', 'true');
+            pwdSubmit.addEventListener('click', async () => {
+                try {
+                    // Fetch the passwords from your text file
+                    const response = await fetch('passwords.txt', { cache: 'no-store' });
+                    const text = await response.text();
                     
-                    // --- CART MERGER LOGIC ---
-                    // Check if they left anything in the Retail Cart before logging in
-                    let retailCart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
-                    
-                    if (retailCart.length > 0) {
-                        let wholesaleCart = JSON.parse(localStorage.getItem('folkloreWholesaleCart')) || [];
-                        
-                        retailCart.forEach(retailItem => {
-                            // Match by ID
-                            let matchId = retailItem.id || retailItem.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
-                            let existingItem = wholesaleCart.find(wItem => wItem.id === matchId);
-                            
-                            if (existingItem) {
-                                existingItem.quantity += (retailItem.quantity || 1);
-                            } else {
-                                wholesaleCart.push({
-                                    id: matchId,
-                                    title: retailItem.title,
-                                    price: retailItem.price * 0.60, 
-                                    postalClass: retailItem.postalClass,
-                                    quantity: retailItem.quantity || 1
-                                });
-                            }
-                        });
-                        
-                        localStorage.setItem('folkloreWholesaleCart', JSON.stringify(wholesaleCart));
-                        localStorage.removeItem('folkloreCart');
-                        sessionStorage.setItem('openCartOnLoad', 'true');
-                        window.location.reload();
-                        return;
-                    }
+                    // Split the file into an array of passwords, removing extra spaces and blank lines
+                    const validPasswords = text.split('\n').map(pwd => pwd.trim()).filter(pwd => pwd !== '');
 
-                    pwdOverlay.style.opacity = 0;
-                    setTimeout(() => pwdOverlay.style.display = 'none', 300);
-                } else {
+                    if (validPasswords.includes(pwdInput.value)) {
+                        // Mark as Authenticated
+                        sessionStorage.setItem('wholesaleAuthenticated', 'true');
+                        
+                        // --- CART MERGER LOGIC ---
+                        let retailCart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
+                        
+                        if (retailCart.length > 0) {
+                            let wholesaleCart = JSON.parse(localStorage.getItem('folkloreWholesaleCart')) || [];
+                            
+                            retailCart.forEach(retailItem => {
+                                let matchId = retailItem.id || retailItem.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+                                let existingItem = wholesaleCart.find(wItem => wItem.id === matchId);
+                                
+                                if (existingItem) {
+                                    existingItem.quantity += (retailItem.quantity || 1);
+                                } else {
+                                    wholesaleCart.push({
+                                        id: matchId,
+                                        title: retailItem.title,
+                                        price: retailItem.price * 0.60, 
+                                        postalClass: retailItem.postalClass,
+                                        quantity: retailItem.quantity || 1
+                                    });
+                                }
+                            });
+                            
+                            localStorage.setItem('folkloreWholesaleCart', JSON.stringify(wholesaleCart));
+                            localStorage.removeItem('folkloreCart');
+                            sessionStorage.setItem('openCartOnLoad', 'true');
+                            window.location.reload();
+                            return;
+                        }
+
+                        pwdOverlay.style.opacity = 0;
+                        setTimeout(() => pwdOverlay.style.display = 'none', 300);
+                    } else {
+                        pwdError.style.display = 'block';
+                        pwdInput.style.borderColor = 'var(--accent-red)';
+                    }
+                } catch (error) {
+                    console.error("Could not load passwords file.");
+                    pwdError.textContent = "System error verifying password.";
                     pwdError.style.display = 'block';
-                    pwdInput.style.borderColor = 'var(--accent-red)';
                 }
             });
 
