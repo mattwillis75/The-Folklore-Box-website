@@ -161,6 +161,29 @@
         #sidebar-cat { font-size: 0.9vw; color: var(--accent-red); margin: 0 0 20px 0; display: none; text-transform: uppercase; letter-spacing: 1px;}
         #sidebar-desc { font-size: 0.85vw; line-height: 1.6; display: none; color: #ddd; }
 
+        /* --- Map Town Labels --- */
+        .town-label {
+            color: #000000; 
+            font-family: 'Spectral', serif;
+            font-size: 16px;
+            font-weight: 600; 
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            pointer-events: none; 
+        }
+        
+        .town-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-red);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px rgba(204, 0, 0, 0.8);
+            flex-shrink: 0;
+        }
+
 
         /* --- RESPONSIVE MOBILE MAP FIXES --- */
         @media (max-width: 850px) {
@@ -413,7 +436,7 @@
                 // Leaflet CRS.Simple requires [Y, X] format
                 const marker = L.marker([pixelY, pixelX], { 
                     icon: textIcon,
-                    zIndexOffset: -1000 // Keep them behind your interactive folklore pins
+                    zIndexOffset: -50 // Changed from -1000 so it sits above the map image!
                 });
 
                 // Attach the target zoom level to the marker object
