@@ -343,10 +343,12 @@
             // MAP SCRIPTS: Leaflet Initialization
             // ==========================================
 
+            // 1. Initialize the map
             const map = L.map('map', {
                 crs: L.CRS.Simple,
-                minZoom: -3,
+                minZoom: -2, // Prevents the user from zooming out into the white abyss
                 maxZoom: 2,
+                zoomSnap: 0.1, // Allows fractional zooming for a perfect edge-to-edge fit!
                 zoomControl: true
             });
 
