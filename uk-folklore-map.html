@@ -472,13 +472,21 @@
 
             // --- SEMANTIC ZOOM: TOWN LABELS ---
             const townRegistry = [
+                // Original Towns
                 { title: "Norwich", lat: 52.63, lng: 1.29, minZoom: -2 },
                 { title: "King's Lynn", lat: 52.75, lng: 0.39, minZoom: -1 },
                 { title: "Great Yarmouth", lat: 52.60, lng: 1.72, minZoom: -1 },
                 { title: "Cromer", lat: 52.93, lng: 1.30, minZoom: 0 },
                 { title: "Thetford", lat: 52.41, lng: 0.74, minZoom: 0 },
                 { title: "Walsingham", lat: 52.89, lng: 0.87, minZoom: 1 },
-                { title: "Blakeney", lat: 52.95, lng: 1.02, minZoom: 1 }
+                { title: "Blakeney", lat: 52.95, lng: 1.02, minZoom: 1 },
+                
+                // New Test Towns 
+                { title: "Bungay", lat: 52.45, lng: 1.44, minZoom: 0 },
+                { title: "Swaffham", lat: 52.64, lng: 0.68, minZoom: 0 },
+                { title: "Dereham", lat: 52.68, lng: 0.94, minZoom: 0 },
+                { title: "Hunstanton", lat: 52.93, lng: 0.49, minZoom: 1 },
+                { title: "Diss", lat: 52.37, lng: 1.10, minZoom: 1 }
             ];
 
             const townsLayerGroup = L.layerGroup();
@@ -489,9 +497,9 @@
                 let pixelY = (town.lat - 52.22) * 1573;
                 
                 // --- ALIGNMENT NUDGE ---
-                // Shifts the GPS grid to perfectly align with your hand-drawn roads
-                pixelX += 130; // Nudges right
-                pixelY -= 70;  // Nudges down
+                // Your fine-tuned pixel offsets!
+                pixelX += 130; 
+                pixelY -= 70;  
 
                 const iconHtml = `<div class="town-label"><span class="town-dot"></span>${town.title}</div>`;
                 const textIcon = L.divIcon({ html: iconHtml, className: '', iconSize: [120, 20], iconAnchor: [4, 10] });
