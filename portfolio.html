@@ -138,20 +138,25 @@
             box-shadow: 0 10px 40px rgba(204,0,0,0.7);
         }
 
+        /* Responsive Mobile Update: Converts Roundel to a Top Bar */
         @media (max-width: 900px) {
             .commission-roundel {
-                position: fixed;
-                bottom: 160px;
-                right: 1rem;
-                left: auto;
+                position: relative;
                 top: auto;
+                left: auto;
                 transform: none;
-                width: 90px;
-                height: 90px;
-                font-size: 0.65rem;
+                width: 100%;
+                height: auto;
+                border-radius: 3px;
+                font-size: 0.85rem;
                 padding: 1rem;
+                margin-bottom: 1rem;
+                box-shadow: 0 4px 15px rgba(204,0,0,0.3);
             }
-            .commission-roundel:hover { transform: scale(1.08); }
+            .commission-roundel:hover { 
+                transform: translateY(-2px); 
+                background-color: #e60000;
+            }
         }
 
         /* Thumbnails Carousel Section */
@@ -279,10 +284,20 @@
         .cart-total { font-size: 1.8rem; text-align: right; margin-bottom: 1.5rem; font-family: 'Spectral', serif; color: var(--accent-red); }
 
         /* --- Footer --- */
-        footer { background: #000000; color: #ffffff; padding: 4rem 2rem; text-align: center; border-top: 1px solid #222; }
-        footer a { color: #ffffff; text-decoration: none; margin: 0 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
-        footer a:hover { color: var(--accent-red); }
-        .social-links { margin-bottom: 2rem; }
+        <footer>
+            <div class="social-links">
+                <a href="https://instagram.com/the_folklore_box" target="_blank">Instagram: @the_folklore_box</a> | 
+                <a href="https://facebook.com/thefolklorebox" target="_blank">Facebook: @thefolklorebox</a>
+            </div>
+            <div style="margin-bottom: 2rem;">
+                <a href="shop.html">Shop</a>
+                <a href="wholesale.html">Wholesale Enquiries</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <p style="font-size: 0.8rem; color: #555; font-family: 'Lato', sans-serif;">
+                &copy; 2026 The Folklore Box by Matt Willis. All rights reserved.
+            </p>
+        </footer>
     </style>
 </head>
 <body>
@@ -320,7 +335,7 @@
 
         <!-- Large Viewer Section -->
         <div class="viewer-container">
-            <!-- Modal Trigger Roundel -->
+            <!-- Modal Trigger Roundel (Turns into bar on mobile) -->
             <button id="commission-btn" class="commission-roundel">
                 Commission an illustration
             </button>
@@ -390,22 +405,6 @@
             <a href="shop.html" style="display: block; background: var(--accent-red); color: #fff; padding: 1rem; text-align: center; text-decoration: none; text-transform: uppercase; font-weight: bold; margin-top: 1rem;">Go to Shop</a>
         </div>
     </div>
-
-    <!-- Footer -->
-    <footer>
-        <div class="social-links">
-            <a href="https://instagram.com/the_folklore_box" target="_blank">Instagram: @the_folklore_box</a> | 
-            <a href="https://facebook.com/thefolklorebox" target="_blank">Facebook: @thefolklorebox</a>
-        </div>
-        <div style="margin-bottom: 2rem;">
-            <a href="shop.html">Shop</a>
-            <a href="wholesale.html">Wholesale Enquiries</a>
-            <a href="contact.html">Contact</a>
-        </div>
-        <p style="font-size: 0.8rem; color: #555; font-family: 'Lato', sans-serif;">
-            &copy; 2026 The Folklore Box by Matt Willis. All rights reserved.
-        </p>
-    </footer>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
