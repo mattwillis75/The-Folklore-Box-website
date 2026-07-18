@@ -444,7 +444,13 @@
             portfolioItems.forEach((item, i) => {
                 const wrapper = document.createElement('div');
                 wrapper.className = 'thumb-wrapper';
-                wrapper.innerHTML = `<img src="${item.src}" alt="${item.title}">`;
+                
+                // Dynamically create the thumbnail filename by replacing '.png' with '-thumb.png'
+                const thumbSrc = item.src.replace('.png', '-thumb.png');
+                
+                // Use the new thumbSrc for the carousel images
+                wrapper.innerHTML = `<img src="${thumbSrc}" alt="${item.title} thumbnail">`;
+                
                 wrapper.onclick = () => selectItem(i);
                 track.appendChild(wrapper);
                 thumbElements.push(wrapper);
