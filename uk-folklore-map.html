@@ -120,11 +120,11 @@
 
         /* Semantic Zoom Town Labels */
         .town-label {
-            color: #ffffff; /* Switched text to white */
-            background-color: rgba(60, 60, 60, 0.85); /* Transparent dark gray background */
-            padding: 4px 10px 4px 6px; /* Creates the background box shape */
-            border-radius: 20px; /* Rounds the edges into a neat pill shape */
-            border: 1px solid rgba(255, 255, 255, 0.15); /* A very faint border to help it pop */
+            color: #ffffff; 
+            background-color: rgba(60, 60, 60, 0.85); 
+            padding: 2px 8px 2px 4px; /* Reduced top/bottom padding */
+            border-radius: 20px; 
+            border: 1px solid rgba(255, 255, 255, 0.15); 
             font-family: 'Spectral', serif;
             font-size: 16px;
             font-weight: 600; 
@@ -133,6 +133,7 @@
             gap: 6px;
             white-space: nowrap; 
             pointer-events: none; 
+            width: max-content; /* Forces the box to shrink-wrap the text */
         }
         
         .town-dot {
@@ -588,7 +589,8 @@
 
             townRegistry.forEach(town => {
                 const iconHtml = `<div class="town-label"><span class="town-dot"></span>${town.title}</div>`;
-                const textIcon = L.divIcon({ html: iconHtml, className: '', iconSize: [120, 20], iconAnchor: [4, 10] });
+                // Setting iconSize to null tells Leaflet to adapt to the exact width of your text
+                const textIcon = L.divIcon({ html: iconHtml, className: '', iconSize: null, iconAnchor: [4, 12] });
                 
                 const marker = L.marker([town.lat, town.lng], { icon: textIcon, zIndexOffset: -50 });
                 marker.targetMinZoom = town.minZoom || -4;
