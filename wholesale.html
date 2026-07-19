@@ -69,7 +69,43 @@
 
         /* Wholesale Banner & Shop Layout */
         main { padding-top: 85px; min-height: 100vh; }
-        .wholesale-banner { background: #222; color: var(--accent-red); border-bottom: 1px solid #333; text-align: center; padding: 0.8rem 2rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; margin-bottom: 1rem; }
+        
+        /* Updated Banner Styles to accommodate the button */
+        .wholesale-banner { 
+            background: #222; 
+            color: var(--accent-red); 
+            border-bottom: 1px solid #333; 
+            text-align: center; 
+            padding: 0.8rem 2rem; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            font-size: 0.9rem; 
+            margin-bottom: 1rem; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 15px; 
+            flex-wrap: wrap; 
+        }
+        
+        .exit-wholesale-btn { 
+            background: transparent; 
+            color: #fff; 
+            border: 1px solid var(--accent-red); 
+            padding: 0.4rem 1rem; 
+            font-family: 'Lato', sans-serif; 
+            font-size: 0.8rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            cursor: pointer; 
+            border-radius: 3px; 
+            transition: all 0.3s ease; 
+        }
+        .exit-wholesale-btn:hover { 
+            background: var(--accent-red); 
+        }
+
         .shop-header { text-align: center; padding: 1rem 2rem; }
         .shop-header h1 { font-size: 3rem; margin-bottom: 0.5rem; margin-top: 0; }
         .shop-header p { color: #888; font-style: italic; margin-top: 0; }
@@ -95,13 +131,14 @@
         .product-prices { font-family: 'Lato', sans-serif; color: #999; }
         .product-prices p { margin: 0; font-size: 1.1rem; color: #fff; font-weight: 600; }
         
+        /* Grey Add to Cart Button */
         .add-cart-btn { background: #444; color: #fff; border: none; padding: 0.8rem; font-family: 'Lato', sans-serif; text-transform: uppercase; font-weight: bold; font-size: 0.85rem; letter-spacing: 1px; border-radius: 3px; cursor: pointer; transition: background 0.3s ease; margin-top: 1rem; width: 100%; box-sizing: border-box; }
         .add-cart-btn:hover { background: var(--accent-red); }
 
         /* Slide-Out Cart */
-        .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 3001; display: none; backdrop-filter: blur(3px); }
+        .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 2001; display: none; backdrop-filter: blur(3px); }
         .cart-overlay.active { display: block; }
-        .cart-sidebar { position: fixed; top: 0; right: -500px; width: 500px; max-width: 100vw; height: 100vh; background: #0a0a0a; border-left: 1px solid #222; z-index: 3002; transition: right 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); padding: 2rem; box-sizing: border-box; display: flex; flex-direction: column; overflow-y: auto; }
+        .cart-sidebar { position: fixed; top: 0; right: -500px; width: 500px; max-width: 100vw; height: 100vh; background: #0a0a0a; border-left: 1px solid #222; z-index: 2002; transition: right 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); padding: 2rem; box-sizing: border-box; display: flex; flex-direction: column; overflow-y: auto; }
         .cart-sidebar.open { right: 0; }
         .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 1rem; margin-bottom: 1.5rem; flex-shrink: 0; }
         .cart-header h2 { margin: 0; font-size: 2rem; }
@@ -111,9 +148,11 @@
         
         .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid #222; gap: 0.8rem; }
         .cart-item-title { flex-grow: 1; font-weight: 600; font-size: 0.95rem; line-height: 1.3; }
+        
         .cart-qty-controls { display: flex; align-items: center; gap: 0.5rem; background: #111; padding: 0.2rem 0.5rem; border-radius: 3px; border: 1px solid #333; }
         .cart-qty-controls button { background: none; border: none; color: #fff; cursor: pointer; font-size: 1.2rem; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
         .cart-qty-controls button:hover { color: var(--accent-red); }
+        
         .cart-item-total { font-weight: bold; min-width: 60px; text-align: right; }
         
         .remove-btn { background: none; border: none; color: #666; cursor: pointer; font-size: 1.5rem; padding: 0 0 0 0.5rem; transition: color 0.2s; }
@@ -129,6 +168,8 @@
 
         /* Minimum Spend Warning Banner */
         .cart-warning { background: rgba(204, 0, 0, 0.1); border: 1px solid var(--accent-red); color: var(--accent-red); font-weight: bold; text-align: center; padding: 1rem; border-radius: 4px; margin-bottom: 1.5rem; font-size: 0.9rem; line-height: 1.4; display: none; }
+        
+        /* Disable PayPal when threshold isn't met */
         .paypal-disabled { pointer-events: none; opacity: 0.4; filter: grayscale(100%); }
 
         footer { background: #000000; color: #ffffff; padding: 4rem 2rem; text-align: center; border-top: 1px solid #222; }
@@ -149,6 +190,7 @@
         .close-modal { position: absolute; top: 1rem; right: 1.5rem; font-size: 2rem; color: #888; cursor: pointer; transition: color 0.3s; line-height: 1; }
         .close-modal:hover { color: var(--accent-red); }
 
+        /* Success Message */
         .form-success-message { display: none; text-align: center; padding: 2rem 0; }
         .form-success-message h3 { color: var(--accent-red); font-size: 1.8rem; font-family: 'Spectral', serif; margin-top: 0; }
         .form-success-message p { color: #ddd; font-size: 1rem; text-align: center; }
@@ -168,7 +210,6 @@
         </div>
     </div>
 
-    <!-- Header & Navigation -->
     <header id="main-header">
         <div class="logo"><a href="index.html"><img src="./The-folklore-box-logo.png" alt="The Folklore Box Logo"></a></div>
         <div class="mobile-menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
@@ -189,21 +230,15 @@
                 <li><a href="uk-folklore-map.html">Folklore Map</a></li>
                 <li><a href="journal.html">Journal</a></li>
                 <li><a href="wholesale.html" class="active-page">Wholesale</a></li>
-                
-                <!-- EXIT WHOLESALE BUTTON -->
-                <li id="wholesale-logout-item" style="display: none;">
-                    <a href="#" id="wholesale-logout-btn" style="color: var(--accent-red); border-bottom: 1px solid var(--accent-red);">Exit Wholesale</a>
-                </li>
-
                 <li><a href="#" id="cart-toggle">Cart (0)</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Main Content -->
     <main>
         <div class="wholesale-banner">
-            Minimum spend to allow the wholesale discount is £75.
+            <span>Minimum spend to allow the wholesale discount is £75.</span>
+            <button id="wholesale-logout-btn" class="exit-wholesale-btn" style="display: none;">Exit Wholesale</button>
         </div>
         <div class="shop-header">
             <h1>Wholesale Portal</h1>
@@ -215,15 +250,12 @@
         </section>
     </main>
 
-    <!-- Slide-Out Shopping Cart -->
     <div class="cart-overlay" id="cart-overlay"></div>
     <div class="cart-sidebar" id="cart-sidebar">
-        <div class="cart-header">
-            <h2 id="cart-title">Wholesale Cart</h2>
-            <span class="close-cart" id="close-cart">&times;</span>
-        </div>
+        <div class="cart-header"><h2>Wholesale Cart</h2><span class="close-cart" id="close-cart">&times;</span></div>
         <div class="cart-items-container" id="cart-items"></div>
         <div class="cart-footer">
+            
             <div class="cart-warning" id="cart-warning">
                 Minimum wholesale spend is £75.00 before postage and packing is added. Add more items to unlock checkout.
             </div>
@@ -241,41 +273,11 @@
             </div>
             <div class="cart-total" id="cart-total">Total: £0.00</div>
             
+            <!-- PayPal Button Container -->
             <div id="paypal-button-container"></div>
         </div>
     </div>
 
-    <!-- Password Request Pop-up Modal -->
-    <div class="request-overlay" id="request-overlay">
-        <div class="request-modal">
-            <span class="close-modal" id="close-request">&times;</span>
-            
-            <div id="request-success" class="form-success-message">
-                <h3>Request Sent</h3>
-                <p>Thank you for your interest! I will review your details and be in touch shortly with your wholesale password.</p>
-            </div>
-
-            <div id="request-form-container">
-                <h2>Request a Password</h2>
-                <p>Enter your shop details below to apply for wholesale access.</p>
-                <form id="request-form" action="https://formsubmit.co/thefolklorebox@gmail.com" method="POST">
-                    <input type="hidden" name="_captcha" value="false">
-                    <input type="hidden" name="_subject" value="New Wholesale Password Request!">
-                    <label for="shop-name">Shop Name / Business</label>
-                    <input type="text" id="shop-name" name="shop_name" required>
-                    <label for="contact-name">Contact Name</label>
-                    <input type="text" id="contact-name" name="contact_name" required>
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" required>
-                    <label for="website">Website or Social Media Link</label>
-                    <input type="url" id="website" name="website" placeholder="https://" required>
-                    <button type="submit" class="btn" id="request-submit-btn" style="margin-top: 1rem;">Send Request</button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
     <footer>
         <div class="social-links">
             <a href="https://instagram.com/the_folklore_box" target="_blank">Instagram: @the_folklore_box</a> | 
@@ -289,15 +291,56 @@
         <p style="font-size: 0.8rem; color: #555; font-family: 'Lato', sans-serif;">&copy; 2026 The Folklore Box by Matt Willis. All rights reserved.</p>
     </footer>
 
-    <!-- Scripts -->
+    <!-- Password Request Pop-up Modal -->
+    <div class="request-overlay" id="request-overlay">
+        <div class="request-modal">
+            <span class="close-modal" id="close-request">&times;</span>
+            
+            <!-- Success Message (Hidden by default) -->
+            <div id="request-success" class="form-success-message">
+                <h3>Request Sent</h3>
+                <p>Thank you for your interest! I will review your details and be in touch shortly with your wholesale password.</p>
+            </div>
+
+            <!-- Form -->
+            <div id="request-form-container">
+                <h2>Request a Password</h2>
+                <p>Enter your shop details below to apply for wholesale access.</p>
+                
+                <form id="request-form" action="https://formsubmit.co/thefolklorebox@gmail.com" method="POST">
+                    <!-- Disables the Captcha -->
+                    <input type="hidden" name="_captcha" value="false">
+                    <!-- Hidden Subject Line for your inbox -->
+                    <input type="hidden" name="_subject" value="New Wholesale Password Request!">
+                    
+                    <label for="shop-name">Shop Name / Business</label>
+                    <input type="text" id="shop-name" name="shop_name" required>
+                    
+                    <label for="contact-name">Contact Name</label>
+                    <input type="text" id="contact-name" name="contact_name" required>
+                    
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                    
+                    <label for="website">Website or Social Media Link</label>
+                    <input type="url" id="website" name="website" placeholder="https://" required>
+                    
+                    <button type="submit" class="btn" id="request-submit-btn" style="margin-top: 1rem;">Send Request</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- DON'T FORGET YOUR CLIENT ID HERE -->
     <script src="https://www.paypal.com/sdk/js?client-id=BAAyFEECFHCgIYSVAcx3GUqT0FI1rHhhU_mwYJxRf6ngeAPN3zYdx3W4a1tCIEHivTFLxU7oFEeDD1NIIs&currency=GBP&locale=en_GB"></script>
 
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
             
             // ==========================================
-            // UI SCRIPTS: Header & Nav Logic
+            // UI SCRIPTS: Header, Nav, and Cart Logic
             // ==========================================
+
             const header = document.getElementById('main-header');
             if (header) {
                 window.addEventListener('scroll', () => {
@@ -321,96 +364,31 @@
             }
 
             // --- Determine Active Mode ---
-            let isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
-            let cartKey = isWholesale ? 'folkloreWholesaleCart' : 'folkloreCart';
+            const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
+            const cartKey = isWholesale ? 'folkloreWholesaleCart' : 'folkloreCart';
+            
+            if (isWholesale) {
+                const cartHeaderTitle = document.getElementById('cart-title');
+                if (cartHeaderTitle) cartHeaderTitle.textContent = 'Wholesale Cart';
+            }
 
             // ==========================================
-            // WHOLESALE LOGOUT LOGIC
+            // WHOLESALE LOGOUT LOGIC (Moved to Banner)
             // ==========================================
-            const logoutItem = document.getElementById('wholesale-logout-item');
             const logoutBtn = document.getElementById('wholesale-logout-btn');
 
-            if (isWholesale && logoutItem && logoutBtn) {
-                logoutItem.style.display = 'block'; 
+            if (logoutBtn) {
+                if (isWholesale) {
+                    logoutBtn.style.display = 'inline-block'; 
+                } else {
+                    logoutBtn.style.display = 'none';
+                }
+                
                 logoutBtn.addEventListener('click', (e) => {
                     e.preventDefault();
                     sessionStorage.removeItem('wholesaleAuthenticated');
                     alert("You have exited Wholesale Mode. Returning to the standard retail shop.");
                     window.location.href = 'shop.html';
-                });
-            }
-
-            // ==========================================
-            // 1. PASSWORD GATE & SMART CART MERGER LOGIC
-            // ==========================================
-            const pwdOverlay = document.getElementById('password-overlay');
-            const pwdInput = document.getElementById('wholesale-password');
-            const pwdSubmit = document.getElementById('submit-password');
-            const pwdError = document.getElementById('password-error');
-
-            if (!isWholesale) {
-                pwdOverlay.style.display = 'flex';
-            } else {
-                pwdOverlay.style.display = 'none';
-            }
-
-            if (pwdSubmit) {
-                pwdSubmit.addEventListener('click', async () => {
-                    try {
-                        const response = await fetch('passwords.txt', { cache: 'no-store' });
-                        const text = await response.text();
-                        const validPasswords = text.split('\n').map(pwd => pwd.trim()).filter(pwd => pwd !== '');
-
-                        if (validPasswords.includes(pwdInput.value)) {
-                            sessionStorage.setItem('wholesaleAuthenticated', 'true');
-                            
-                            // --- CART MERGER LOGIC ---
-                            let retailCart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
-                            
-                            if (retailCart.length > 0) {
-                                let wholesaleCart = JSON.parse(localStorage.getItem('folkloreWholesaleCart')) || [];
-                                
-                                retailCart.forEach(retailItem => {
-                                    let matchId = retailItem.id || retailItem.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
-                                    let existingItem = wholesaleCart.find(wItem => wItem.id === matchId);
-                                    
-                                    if (existingItem) {
-                                        existingItem.quantity += (retailItem.quantity || 1);
-                                    } else {
-                                        wholesaleCart.push({
-                                            id: matchId,
-                                            title: retailItem.title,
-                                            price: retailItem.price * 0.60, 
-                                            postalClass: retailItem.postalClass,
-                                            quantity: retailItem.quantity || 1
-                                        });
-                                    }
-                                });
-                                
-                                localStorage.setItem('folkloreWholesaleCart', JSON.stringify(wholesaleCart));
-                                localStorage.removeItem('folkloreCart');
-                                sessionStorage.setItem('openCartOnLoad', 'true');
-                            }
-                            
-                            window.location.reload(); // Reload to initialize whole page in wholesale mode
-                        } else {
-                            pwdError.style.display = 'block';
-                            pwdInput.style.borderColor = 'var(--accent-red)';
-                        }
-                    } catch (error) {
-                        console.error("Could not load passwords file.", error);
-                        pwdError.textContent = "System error verifying password.";
-                        pwdError.style.display = 'block';
-                    }
-                });
-            }
-
-            if (pwdInput) {
-                pwdInput.addEventListener("keypress", function(event) {
-                    if (event.key === "Enter") {
-                        event.preventDefault();
-                        pwdSubmit.click();
-                    }
                 });
             }
 
@@ -448,7 +426,9 @@
                     fetch(requestForm.action, {
                         method: 'POST',
                         body: formData,
-                        headers: { 'Accept': 'application/json' }
+                        headers: {
+                            'Accept': 'application/json'
+                        }
                     })
                     .then(response => {
                         if (response.ok) {
@@ -469,7 +449,92 @@
             }
 
             // ==========================================
-            // 3. FETCH AND BUILD CATALOGUE (Only if logged in)
+            // 1. PASSWORD GATE & SMART CART MERGER LOGIC
+            // ==========================================
+            const pwdOverlay = document.getElementById('password-overlay');
+            const pwdInput = document.getElementById('wholesale-password');
+            const pwdSubmit = document.getElementById('submit-password');
+            const pwdError = document.getElementById('password-error');
+
+            if (!sessionStorage.getItem('wholesaleAuthenticated')) {
+                pwdOverlay.style.display = 'flex';
+            } else {
+                pwdOverlay.style.display = 'none';
+            }
+
+            pwdSubmit.addEventListener('click', async () => {
+                try {
+                    // Fetch the passwords from your text file
+                    const response = await fetch('passwords.txt', { cache: 'no-store' });
+                    const text = await response.text();
+                    
+                    // Split the file into an array of passwords, removing extra spaces and blank lines
+                    const validPasswords = text.split('\n').map(pwd => pwd.trim()).filter(pwd => pwd !== '');
+
+                    if (validPasswords.includes(pwdInput.value)) {
+                        // Mark as Authenticated
+                        sessionStorage.setItem('wholesaleAuthenticated', 'true');
+                        
+                        // --- CART MERGER LOGIC ---
+                        let retailCart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
+                        
+                        if (retailCart.length > 0) {
+                            let wholesaleCart = JSON.parse(localStorage.getItem('folkloreWholesaleCart')) || [];
+                            
+                            retailCart.forEach(retailItem => {
+                                let matchId = retailItem.id || retailItem.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+                                let existingItem = wholesaleCart.find(wItem => wItem.id === matchId);
+                                
+                                if (existingItem) {
+                                    existingItem.quantity += (retailItem.quantity || 1);
+                                } else {
+                                    wholesaleCart.push({
+                                        id: matchId,
+                                        title: retailItem.title,
+                                        price: retailItem.price * 0.60, 
+                                        postalClass: retailItem.postalClass,
+                                        quantity: retailItem.quantity || 1
+                                    });
+                                }
+                            });
+                            
+                            localStorage.setItem('folkloreWholesaleCart', JSON.stringify(wholesaleCart));
+                            localStorage.removeItem('folkloreCart');
+                            sessionStorage.setItem('openCartOnLoad', 'true');
+                            window.location.reload();
+                            return;
+                        }
+
+                        pwdOverlay.style.opacity = 0;
+                        setTimeout(() => pwdOverlay.style.display = 'none', 300);
+                        
+                        // Force button to show if they stay on page
+                        if(logoutBtn) logoutBtn.style.display = 'inline-block';
+                        
+                        // Initialize products now that they are logged in
+                        initializeProducts();
+                        
+                    } else {
+                        pwdError.style.display = 'block';
+                        pwdInput.style.borderColor = 'var(--accent-red)';
+                    }
+                } catch (error) {
+                    console.error("Could not load passwords file.");
+                    pwdError.textContent = "System error verifying password.";
+                    pwdError.style.display = 'block';
+                }
+            });
+
+            pwdInput.addEventListener("keypress", function(event) {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    pwdSubmit.click();
+                }
+            });
+
+
+            // ==========================================
+            // 3. FETCH AND BUILD CATALOGUE 
             // ==========================================
             const shopGrid = document.getElementById('shop-grid');
             const filtersContainer = document.getElementById('shop-filters');
@@ -477,7 +542,7 @@
             let uniqueSections = new Set(); 
             let postalRates = {};
 
-            if (isWholesale && shopGrid) {
+            async function initializeProducts() {
                 try {
                     const postalResponse = await fetch('postal.txt', { cache: 'no-store' });
                     const postalText = await postalResponse.text();
@@ -527,6 +592,7 @@
                                 else if (key === 'main image' || key === 'image') product.mainImage = value;
                                 else if (key === 'sections') product.sections = value.split(',').map(s => s.trim());
                                 else if (key === 'postal class') product.postalClass = value;
+                                
                                 // APPLY 60% WHOLESALE PRICING
                                 else if (key === 'item cost') product.basePrice = parseFloat(value) * 0.60; 
                             }
@@ -554,37 +620,43 @@
                         });
                     }
 
-                    function renderGrid(filterValue) {
-                        shopGrid.innerHTML = '';
-                        const filteredProducts = filterValue === 'All' ? products : products.filter(p => p.sections.includes(filterValue));
-
-                        if (filteredProducts.length === 0) {
-                            shopGrid.innerHTML = '<p style="color: #fff; grid-column: 1 / -1; text-align: center;">No products found in this section.</p>';
-                            return;
-                        }
-
-                        filteredProducts.forEach(product => {
-                            shopGrid.innerHTML += `
-                                <div class="product-card">
-                                    <a href="product.html?id=${product.id}">
-                                        <div class="product-image">
-                                            <img src="${product.mainImage}" alt="${product.title}">
-                                        </div>
-                                        <div class="product-details">
-                                            <h3 class="product-title">${product.title}</h3>
-                                            <div class="product-prices"><p>£${product.basePrice.toFixed(2)}</p></div>
-                                            <button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); addToCart('${product.id}', '${product.title}', ${product.basePrice}, '${product.postalClass}')">Add to Cart</button>
-                                        </div>
-                                    </a>
-                                </div>
-                            `;
-                        });
-                    }
                     renderGrid('All');
 
                 } catch (error) {
                     shopGrid.innerHTML = '<p style="color: #cc0000; grid-column: 1 / -1; text-align: center;">Error loading products database.</p>';
                 }
+            }
+            
+            function renderGrid(filterValue) {
+                shopGrid.innerHTML = '';
+                const filteredProducts = filterValue === 'All' ? products : products.filter(p => p.sections.includes(filterValue));
+
+                if (filteredProducts.length === 0) {
+                    shopGrid.innerHTML = '<p style="color: #fff; grid-column: 1 / -1; text-align: center;">No products found in this section.</p>';
+                    return;
+                }
+
+                filteredProducts.forEach(product => {
+                    shopGrid.innerHTML += `
+                        <div class="product-card">
+                            <a href="product.html?id=${product.id}">
+                                <div class="product-image">
+                                    <img src="${product.mainImage}" alt="${product.title}">
+                                </div>
+                                <div class="product-details">
+                                    <h3 class="product-title">${product.title}</h3>
+                                    <div class="product-prices"><p>£${product.basePrice.toFixed(2)}</p></div>
+                                    <button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); addToCart('${product.id}', '${product.title}', ${product.basePrice}, '${product.postalClass}')">Add to Cart</button>
+                                </div>
+                            </a>
+                        </div>
+                    `;
+                });
+            }
+
+            // Only initialize products immediately if they are already logged in
+            if (isWholesale) {
+                initializeProducts();
             }
 
             // ==========================================
@@ -624,7 +696,9 @@
 
             window.updateQuantity = function(index, delta) {
                 cart[index].quantity += delta;
-                if (cart[index].quantity <= 0) cart.splice(index, 1);
+                if (cart[index].quantity <= 0) {
+                    cart.splice(index, 1);
+                }
                 localStorage.setItem(cartKey, JSON.stringify(cart));
                 updateCartUI();
             };
@@ -636,24 +710,23 @@
             };
 
             function updateCartUI() {
-                if (!cartItemsContainer) return; 
-                cartItemsContainer.innerHTML = '';
-                
+                const container = document.getElementById('cart-items');
+                container.innerHTML = '';
                 let itemsTotal = 0; let shippingTotal = 0; let finalTotal = 0;
                 let cartItemCount = 0;
                 
                 if (cart.length === 0) {
-                    cartItemsContainer.innerHTML = `<p style="color: #777; font-style: italic;">Your ${isWholesale ? 'wholesale ' : ''}cart is currently empty.</p>`;
+                    container.innerHTML = '<p style="color: #777; font-style: italic;">Your wholesale cart is currently empty.</p>';
                     document.getElementById('cart-subtotal').textContent = `£0.00`;
                     document.getElementById('cart-shipping-cost').textContent = `£0.00`;
                     document.getElementById('cart-total').textContent = `Total: £0.00`;
-                    if (cartToggle) cartToggle.textContent = `Cart (0)`;
-                    if (cartWarning) cartWarning.style.display = 'block';
-                    if (paypalContainer) paypalContainer.classList.add('paypal-disabled');
+                    document.getElementById('cart-toggle').textContent = `Cart (0)`;
+                    cartWarning.style.display = 'block';
+                    paypalContainer.classList.add('paypal-disabled');
                     return;
                 }
 
-                const dest = destSelect ? destSelect.value : 'uk';
+                const dest = destSelect.value;
                 let maxBase = 0; let maxBaseItem = null;
 
                 // Render items
@@ -663,7 +736,7 @@
                     itemsTotal += itemTotalCost;
                     cartItemCount += qty;
 
-                    cartItemsContainer.innerHTML += `
+                    container.innerHTML += `
                         <div class="cart-item">
                             <div class="cart-item-title">
                                 ${item.title} <br>
@@ -709,22 +782,22 @@
                 document.getElementById('cart-subtotal').textContent = `£${itemsTotal.toFixed(2)}`;
                 document.getElementById('cart-shipping-cost').textContent = `£${shippingTotal.toFixed(2)}`;
                 document.getElementById('cart-total').textContent = `Total: £${finalTotal.toFixed(2)}`;
-                if (cartToggle) cartToggle.textContent = `Cart (${cartItemCount})`;
+                document.getElementById('cart-toggle').textContent = `Cart (${cartItemCount})`;
 
                 // Validation for Wholesale Minimum Spend (£75)
-                if (isWholesale && itemsTotal >= 75) {
-                    if (cartWarning) cartWarning.style.display = 'none';
-                    if (paypalContainer) paypalContainer.classList.remove('paypal-disabled');
-                } else if (isWholesale) {
-                    if (cartWarning) cartWarning.style.display = 'block';
-                    if (paypalContainer) paypalContainer.classList.add('paypal-disabled');
+                if (itemsTotal >= 75) {
+                    cartWarning.style.display = 'none';
+                    paypalContainer.classList.remove('paypal-disabled');
+                } else {
+                    cartWarning.style.display = 'block';
+                    paypalContainer.classList.add('paypal-disabled');
                 }
             }
 
             // --- BROWSER BACK BUTTON FIX ---
             window.addEventListener('pageshow', (event) => {
                 if (event.persisted) {
-                    cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+                    cart = JSON.parse(localStorage.getItem('folkloreWholesaleCart')) || [];
                     cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
                     updateCartUI();
                 }
@@ -740,102 +813,103 @@
             // ==========================================
             // 5. PAYPAL INITIALIZATION
             // ==========================================
-            if (paypalContainer) {
-                try {
-                    paypal.Buttons({
-                        style: { color: 'gold', shape: 'rect', label: 'checkout', layout: 'vertical' },
+            try {
+                paypal.Buttons({
+                    style: { color: 'gold', shape: 'rect', label: 'checkout', layout: 'vertical' },
+                    
+                    onClick: function() {
+                        setTimeout(() => {
+                            const sidebar = document.getElementById('cart-sidebar');
+                            sidebar.scrollTo({ top: sidebar.scrollHeight, behavior: 'smooth' });
+                        }, 600);
+                    },
+
+                    createOrder: function(data, actions) {
+                        let itemsTotal = 0; let shippingTotal = 0; let maxBase = 0; let maxBaseItem = null;
+                        const dest = destSelect.value;
                         
-                        onClick: function() {
-                            setTimeout(() => {
-                                const sidebar = document.getElementById('cart-sidebar');
-                                sidebar.scrollTo({ top: sidebar.scrollHeight, behavior: 'smooth' });
-                            }, 600);
-                        },
-
-                        createOrder: function(data, actions) {
-                            let itemsTotal = 0; let shippingTotal = 0; let maxBase = 0; let maxBaseItem = null;
-                            const dest = destSelect ? destSelect.value : 'uk';
-                            
-                            // 1. Calculate items and find heaviest shipping base
-                            cart.forEach(item => {
-                                const qty = item.quantity || 1;
-                                itemsTotal += item.price * qty;
-                                const rates = postalRates[item.postalClass];
-                                if(rates) {
-                                    const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
-                                    if(baseRate > maxBase) { maxBase = baseRate; maxBaseItem = item; }
-                                }
-                            });
-
-                            // 2. Calculate accurate grouped shipping
-                            let baseRateApplied = false;
-                            cart.forEach(item => {
-                                const rates = postalRates[item.postalClass];
-                                if(rates) {
-                                    const qty = item.quantity || 1;
-                                    const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
-                                    const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
-                                    if (item === maxBaseItem && !baseRateApplied) {
-                                        shippingTotal += baseRate + (addRate * (qty - 1));
-                                        baseRateApplied = true;
-                                    } else {
-                                        shippingTotal += addRate * qty;
-                                    }
-                                }
-                            });
-                            
-                            // 3. Build the Itemized Array for PayPal
-                            const paypalItems = cart.map(item => {
-                                return {
-                                    name: item.title,
-                                    unit_amount: { currency_code: 'GBP', value: item.price.toFixed(2) },
-                                    quantity: (item.quantity || 1).toString()
-                                };
-                            });
-                            
-                            // 4. Failsafe limit check
-                            if (isWholesale && itemsTotal < 75) { 
-                                alert("Minimum wholesale spend of £75 not met."); 
-                                return; 
+                        // 1. Calculate items and find heaviest shipping base
+                        cart.forEach(item => {
+                            const qty = item.quantity || 1;
+                            itemsTotal += item.price * qty;
+                            const rates = postalRates[item.postalClass];
+                            if(rates) {
+                                const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                                if(baseRate > maxBase) { maxBase = baseRate; maxBaseItem = item; }
                             }
+                        });
 
-                            let finalTotal = itemsTotal + shippingTotal;
-                            if (finalTotal === 0) { alert("Your cart is empty!"); return; }
+                        // 2. Calculate accurate grouped shipping
+                        let baseRateApplied = false;
+                        cart.forEach(item => {
+                            const rates = postalRates[item.postalClass];
+                            if(rates) {
+                                const qty = item.quantity || 1;
+                                const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                                const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
+                                if (item === maxBaseItem && !baseRateApplied) {
+                                    shippingTotal += baseRate + (addRate * (qty - 1));
+                                    baseRateApplied = true;
+                                } else {
+                                    shippingTotal += addRate * qty;
+                                }
+                            }
+                        });
+                        
+                        // 3. Build the Itemized Array for PayPal
+                        const paypalItems = cart.map(item => {
+                            return {
+                                name: item.title,
+                                unit_amount: { currency_code: 'GBP', value: item.price.toFixed(2) },
+                                quantity: (item.quantity || 1).toString()
+                            };
+                        });
+                        
+                        // 4. Failsafe limit check
+                        const isWholesaleCheck = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
+                        if (isWholesaleCheck && itemsTotal < 75) { 
+                            alert("Minimum wholesale spend of £75 not met."); 
+                            return; 
+                        }
 
-                            // 5. Send the detailed breakdown to PayPal
-                            return actions.order.create({
-                                purchase_units: [{ 
-                                    amount: { 
-                                        currency_code: 'GBP', 
-                                        value: finalTotal.toFixed(2),
-                                        breakdown: {
-                                            item_total: { currency_code: 'GBP', value: itemsTotal.toFixed(2) },
-                                            shipping: { currency_code: 'GBP', value: shippingTotal.toFixed(2) }
-                                        }
-                                    },
-                                    items: paypalItems
-                                }],
-                                application_context: { shipping_preference: 'GET_FROM_FILE' }
-                            });
-                        },
-                        onApprove: function(data, actions) {
-                            return actions.order.capture().then(function(details) {
-                                alert('Payment successful! Thank you for your order, ' + details.payer.name.given_name + '.');
-                                
-                                // Empty cart and update UI
-                                cart = []; 
-                                localStorage.setItem(cartKey, JSON.stringify(cart)); 
-                                updateCartUI(); 
-                                
-                                // Close the cart sidebar safely
-                                closeCart();
-                            });
-                        },
-                        onError: function(err) { console.error('PayPal Checkout Error:', err); alert('There was an issue connecting to PayPal. Please try again.'); }
-                    }).render('#paypal-button-container');
-                } catch (error) {
-                    console.warn("PayPal SDK could not initialize. Please ensure a valid Client ID is set.", error);
-                }
+                        let finalTotal = itemsTotal + shippingTotal;
+                        if (finalTotal === 0) { alert("Your cart is empty!"); return; }
+
+                        // 5. Send the detailed breakdown to PayPal
+                        return actions.order.create({
+                            purchase_units: [{ 
+                                amount: { 
+                                    currency_code: 'GBP', 
+                                    value: finalTotal.toFixed(2),
+                                    breakdown: {
+                                        item_total: { currency_code: 'GBP', value: itemsTotal.toFixed(2) },
+                                        shipping: { currency_code: 'GBP', value: shippingTotal.toFixed(2) }
+                                    }
+                                },
+                                items: paypalItems
+                            }],
+                            application_context: { shipping_preference: 'GET_FROM_FILE' }
+                        });
+                    },
+                    onApprove: function(data, actions) {
+                        return actions.order.capture().then(function(details) {
+                            alert('Payment successful! Thank you for your order, ' + details.payer.name.given_name + '.');
+                            
+                            // Empty cart and update UI
+                            cart = []; 
+                            const currentKey = sessionStorage.getItem('wholesaleAuthenticated') === 'true' ? 'folkloreWholesaleCart' : 'folkloreCart';
+                            localStorage.setItem(currentKey, JSON.stringify(cart)); 
+                            updateCartUI(); 
+                            
+                            // Close the cart sidebar safely
+                            document.getElementById('cart-sidebar').classList.remove('open'); 
+                            document.getElementById('cart-overlay').classList.remove('active');
+                        });
+                    },
+                    onError: function(err) { console.error('PayPal Checkout Error:', err); alert('There was an issue connecting to PayPal. Please try again.'); }
+                }).render('#paypal-button-container');
+            } catch (error) {
+                console.warn("PayPal SDK could not initialize. Please ensure a valid Client ID is set.", error);
             }
         });
     </script>
