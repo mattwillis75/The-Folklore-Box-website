@@ -107,5 +107,11 @@ const savedTowns = [
     "lng": 2005.9499482121105,
     "title": "Acle",
     "minZoom": -1
+  },
+  {
+    "lat": 481.99295537682315,
+    "lng": 2021.9678978937618,
+    "title": "Reedham",
+    "minZoom": 0
   }
 ];
