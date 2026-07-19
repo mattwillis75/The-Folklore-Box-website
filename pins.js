@@ -14,6 +14,14 @@ const savedPins = [
     "category": "Cryptid",
     "image": "",
     "desc": "In English folklore, Black Shuck, Old Shuck, Old Shock or simply Shuck is the name given to a ghostly black dog which is said to roam the coastline and countryside of East Anglia, one of many such black dogs recorded in folklore across the British Isles. \n\nAccounts of Black Shuck form part of the folklore of Norfolk, Suffolk, the Cambridgeshire Fens and Essex, and descriptions of the creature's appearance and nature vary considerably; it is sometimes recorded as an omen of death, but, in other instances, is described as companionable.\n\nAccording to the Oxford English Dictionary, the name Shuck derives from the Old English word scucca 'devil, fiend', perhaps from the root skuh 'to terrify'. The first mention in print of \"Black Shuck\" is by Reverend E. S. Taylor in an 1850 edition of the journal Notes and Queries which describes \"Shuck the Dog-fiend\"; \"This phantom I have heard many persons in East Norfolk, and even Cambridgeshire, describe as having seen as a black shaggy dog, with fiery eyes and of immense size, and who visits churchyards at midnight.\"\n\nAbraham Fleming's account of the appearance of A strange, and terrible wunder in 1577 at Bungay, Suffolk is a famous account of the beast. Images of sinister black dogs have become part of the iconography of the area and have appeared in popular culture.[7] Writing in 1877, Walter Rye stated that Shuck was \"the most curious of our local apparitions, as they are no doubt varieties of the same animal.\""
+  },
+  {
+    "lat": 483.1499887564216,
+    "lng": 2019.823345340214,
+    "title": "The Spectre of Bern",
+    "category": "Haunting",
+    "image": "",
+    "desc": "\"As for the credulous at Reedham, they will tell you that at midnight on the 21st of each August the spectre of Bern dashes headlong down the village street, its face terrible to behold, and on its heels the Saxon archers thirsting for its ghostly blood. A pretty story.\"\n\nThe above quote is taken from Broadland Adventure by J Wentworth Day published in 1951.\n\nThe Bern referred to is from the story of King Edmund and the Danish King, Ragnar Lodbrog."
   }
 ];
 
@@ -115,4 +123,3 @@ const savedTowns = [
     "minZoom": 0
   }
 ];
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" width="2400" height="1352" viewBox="0 0 2400 1352" fill="#ffffff">
