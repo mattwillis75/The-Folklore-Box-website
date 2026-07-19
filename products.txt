@@ -272,7 +272,6 @@ Materials: Birch wood, metal, rubber
 Postal Class: Large Letter
 Item Cost: 6.00
 ---
----
 Title: Toadstools Birch Plywood Pin Badge
 Main Image: badge-toadstools-1.jpg
 Images: badge-cottage-with-moon-2.jpg, badge-cottage-with-moon-3.jpg, badge-cottage-with-moon-4.jpg
