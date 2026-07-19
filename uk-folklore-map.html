@@ -80,7 +80,7 @@
         .map-header h1 { font-size: 3rem; margin-bottom: 0.5rem; }
         .map-header p { color: #aaa; font-style: italic; max-width: 800px; margin: 0 auto 2rem; }
 
-        /* Master Layout Container (Integrated) */
+        /* Master Layout Container */
         .map-wrapper {
             width: 100%;
             max-width: 1600px; 
@@ -113,7 +113,7 @@
         #map { 
             position: absolute; 
             top: 4.3%; bottom: 4.88%; left: 2.1%; right: 20%; 
-            background: #000000; /* This changes the gap color from white to black */
+            background: #000000; 
             z-index: 1;
         }
 
@@ -153,12 +153,11 @@
             font-family: 'Georgia', serif; 
         }
 
-        /* Custom Dark Scrollbar */
         #info-sidebar::-webkit-scrollbar { width: 6px; }
         #info-sidebar::-webkit-scrollbar-track { background: transparent; }
         #info-sidebar::-webkit-scrollbar-thumb { background: #333; border-radius: 0px; }
 
-        /* Sidebar Content Styling */
+        /* Sidebar Content */
         #empty-state { text-align: center; color: #666; margin-top: 50px; font-style: italic; }
         #sidebar-img { width: 100%; height: auto; margin-bottom: 20px; display: none; border-radius: 2px; }
         #sidebar-title { font-size: 1.8vw; margin: 0 0 5px 0; font-weight: normal; display: none; font-family: 'Spectral', serif; color: #fff;}
@@ -419,16 +418,14 @@
                 attributionControl: false 
             });
             
-            // NEW Image Dimensions (Matches your perfect 1.77 ratio!)
+            // Image Dimensions
             const mapWidth = 2400;
             const mapHeight = 1352; 
             const bounds = [[0, 0], [mapHeight, mapWidth]];
 
-            // Make sure this filename matches your newly uploaded map file!
             L.imageOverlay('norfolk-map.jpg', bounds).addTo(map);
             map.setMaxBounds(bounds);
 
-            // Reverted to your original auto-fit bounds function since the ratio is fixed!
             function fitAndLockZoom() {
                 map.setMinZoom(-4); 
                 map.fitBounds(bounds, { padding: [0, 0] });
@@ -450,61 +447,25 @@
                 'UFO': L.icon({ iconUrl: 'ufo-marker.svg', iconSize: [32, 42], iconAnchor: [16, 42] })
             };
 
-            // Load pins from external file
-            let pinCollection = (typeof savedPins !== 'undefined') ? savedPins : [];
-            let pinLayerGroup = L.layerGroup().addTo(map);
+            // --- LOAD DATA FROM PINS.JS ---
+            const pinCollection = (typeof savedPins !== 'undefined') ? savedPins : [];
+            const pinLayerGroup = L.layerGroup().addTo(map);
 
             pinCollection.forEach((pin, index) => { 
-                // --- DYNAMIC SCALING LOGIC ---
-                let scaledLat = pin.lat;
-                let scaledLng = pin.lng;
-
-                // Because your new map is exactly double the old 1200px map, 
-                // we just multiply the old coordinates by 2!
-                if (pin.lng <= 1200) {
-                    scaledLng = pin.lng * 2;
-                    scaledLat = pin.lat * 2;
-                }
-                
-                const renderedPinData = { ...pin, lat: scaledLat, lng: scaledLng };
-                renderPin(renderedPinData, index); 
+                renderPin(pin, index); 
             });
 
             // --- SEMANTIC ZOOM: TOWN LABELS ---
-            const townRegistry = [
-                // Original Towns
-                { title: "Norwich", lat: 52.63, lng: 1.29, minZoom: -5 },
-                { title: "King's Lynn", lat: 52.75, lng: 0.39, minZoom: -5 },
-                { title: "Great Yarmouth", lat: 52.60, lng: 1.72, minZoom: -5 },
-                { title: "Cromer", lat: 52.93, lng: 1.30, minZoom: -5 },
-                { title: "Thetford", lat: 52.41, lng: 0.74, minZoom: -5 },
-                { title: "Walsingham", lat: 52.89, lng: 0.87, minZoom: -5 },
-                { title: "Blakeney", lat: 52.95, lng: 1.02, minZoom: -5 },
-                
-                // New Test Towns 
-                { title: "Bungay", lat: 52.45, lng: 1.44, minZoom: -5 },
-                { title: "Swaffham", lat: 52.64, lng: 0.68, minZoom: -5 },
-                { title: "Dereham", lat: 52.68, lng: 0.94, minZoom: -5 },
-                { title: "Hunstanton", lat: 52.93, lng: 0.49, minZoom: -5 },
-                { title: "Diss", lat: 52.37, lng: 1.10, minZoom: -5 }
-            ];
-
+            const townRegistry = (typeof savedTowns !== 'undefined') ? savedTowns : [];
             const townsLayerGroup = L.layerGroup();
 
             townRegistry.forEach(town => {
-                // Calculate base pixel coordinates from real-world Lat/Lng
-                let pixelX = (town.lng + 0.15) * 1066;
-                let pixelY = (town.lat - 52.22) * 1573;
-                
-                // --- ALIGNMENT NUDGE ---
-                // Your fine-tuned pixel offsets!
-                pixelX += 130; 
-                pixelY -= 70;  
-
                 const iconHtml = `<div class="town-label"><span class="town-dot"></span>${town.title}</div>`;
                 const textIcon = L.divIcon({ html: iconHtml, className: '', iconSize: [120, 20], iconAnchor: [4, 10] });
-                const marker = L.marker([pixelY, pixelX], { icon: textIcon, zIndexOffset: -50 });
-                marker.targetMinZoom = town.minZoom;
+                
+                // Uses the direct pixel coordinates established by your Admin Tool
+                const marker = L.marker([town.lat, town.lng], { icon: textIcon, zIndexOffset: -50 });
+                marker.targetMinZoom = town.minZoom || -4;
                 marker.addTo(townsLayerGroup);
             });
 
