@@ -44,11 +44,23 @@
 
         /* Semantic Zoom Town Labels (Styled for Admin visibility) */
         .town-label {
-            color: #000000; 
-            font-family: 'Spectral', serif; font-size: 16px; font-weight: 600; 
-            display: flex; align-items: center; gap: 6px; white-space: nowrap; 
-            /* Pointer events enabled here so you can click them to edit! */
+            color: #ffffff; 
+            background-color: rgba(60, 60, 60, 0.85); 
+            padding: 2px 8px 2px 4px;
+            border-radius: 20px; 
+            border: 1px solid rgba(255, 255, 255, 0.15); 
+            font-family: 'Spectral', serif;
+            font-size: 16px;
+            font-weight: 600; 
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap; 
+            
+            /* Pointer events remain active here so you can click to edit! */
             cursor: pointer;
+            width: max-content; 
+        }
         }
         .town-dot {
             width: 8px; height: 8px; background-color: #cc0000; border-radius: 50%;
@@ -440,7 +452,9 @@
 
         function renderTown(data, index) {
             const iconHtml = `<div class="town-label"><span class="town-dot"></span>${data.title}</div>`;
-            const textIcon = L.divIcon({ html: iconHtml, className: '', iconSize: [120, 20], iconAnchor: [4, 10] });
+            
+            // Set iconSize to null so it perfectly hugs the text
+            const textIcon = L.divIcon({ html: iconHtml, className: '', iconSize: null, iconAnchor: [4, 12] });
             const marker = L.marker([data.lat, data.lng], { icon: textIcon, zIndexOffset: -50 }).addTo(layerGroup);
             
             marker.on('click', function(e) {
