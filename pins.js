@@ -115,3 +115,4 @@ const savedTowns = [
     "minZoom": 0
   }
 ];
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" width="2400" height="1352" viewBox="0 0 2400 1352" fill="#ffffff">
