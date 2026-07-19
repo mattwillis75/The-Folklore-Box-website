@@ -332,6 +332,33 @@
                     requestSubmitBtn.textContent = 'Send Request';
                     requestSubmitBtn.disabled = false;
                 }, 400); 
+                // ==========================================
+// WHOLESALE LOGOUT LOGIC
+// ==========================================
+const logoutItem = document.getElementById('wholesale-logout-item');
+const logoutBtn = document.getElementById('wholesale-logout-btn');
+
+// isWholesale is already defined in your cart logic, but if not, define it:
+// const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
+
+if (isWholesale && logoutItem && logoutBtn) {
+    // 1. Reveal the logout button in the navigation
+    logoutItem.style.display = 'block';
+    
+    // 2. Handle the click event
+    logoutBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        // Remove the wholesale authentication flag
+        sessionStorage.removeItem('wholesaleAuthenticated');
+        
+        // Optional: Alert the user so they know what happened
+        alert("You have exited Wholesale Mode. Returning to the standard retail shop.");
+        
+        // Redirect them to the main shop page (or reload if already there)
+        window.location.href = 'shop.html';
+    });
+}
             };
 
             // Close listeners
