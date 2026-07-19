@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon | The Folklore Box</title>
+    <meta name="description" content="The Folklore Box is brewing up something new. Original British folklore artwork, prints, and wooden wares.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;600&family=Spectral:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --accent-red: #cc0000;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            font-weight: 300;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            background-image: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+        }
+
+        .logo-container {
+            margin-bottom: 2rem;
+        }
+
+        .logo-container img {
+            max-width: 250px;
+            height: auto;
+        }
+
+        h1 {
+            font-family: 'Spectral', serif;
+            font-size: 3.5rem;
+            font-weight: 400;
+            margin: 0 0 1rem 0;
+            letter-spacing: 1px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            line-height: 1.6;
+            margin: 0 auto 3rem auto;
+            color: #dddddd;
+            padding: 0 2rem;
+        }
+
+        .divider {
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent-red);
+            margin: 0 auto 2rem auto;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-red);
+            transform: translateY(-2px);
+        }
+
+        /* Gentle fade-in animation */
+        .fade-in {
+            animation: fadeIn 2s ease-in forwards;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2.5rem; }
+            p { font-size: 1.1rem; }
+            .social-links { flex-direction: column; gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="fade-in">
+        <div class="logo-container">
+            <!-- Ensure this path points to your actual logo image -->
+            <img src="./The-folklore-box-logo.png" alt="The Folklore Box Logo">
+        </div>
+
+        <h1>Something is stirring...</h1>
+        
+        <div class="divider"></div>
+
+        <p>A new home for myths, legends, and the dark history of the British Isles is currently under construction. Check back soon for original artwork, wooden wares, and interactive tales.</p>
+
+        <div class="social-links">
+            <a href="https://instagram.com/the_folklore_box" target="_blank">Instagram</a>
+            <a href="https://facebook.com/thefolklorebox" target="_blank">Facebook</a>
+        </div>
+    </div>
+
+</body>
+</html>
