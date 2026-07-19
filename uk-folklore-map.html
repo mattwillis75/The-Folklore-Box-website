@@ -585,29 +585,48 @@
 
             // --- SEMANTIC ZOOM: TOWN LABELS ---
             const townRegistry = (typeof savedTowns !== 'undefined') ? savedTowns : [];
-            const townsLayerGroup = L.layerGroup();
+            
+            // 1. Create the LayerGroup and immediately attach it to the map
+            const townsLayerGroup = L.layerGroup().addTo(map);
+            
+            // 2. A clean array to hold our logic
+            const semanticTowns = [];
 
             townRegistry.forEach(town => {
                 const iconHtml = `<div class="town-label"><span class="town-dot"></span>${town.title}</div>`;
-                // Setting iconSize to null tells Leaflet to adapt to the exact width of your text
                 const textIcon = L.divIcon({ html: iconHtml, className: '', iconSize: null, iconAnchor: [4, 12] });
                 
                 const marker = L.marker([town.lat, town.lng], { icon: textIcon, zIndexOffset: -50 });
-                marker.targetMinZoom = town.minZoom || -4;
-                marker.addTo(townsLayerGroup);
+                
+                // Bulletproof number casting (Fixes the Javascript "0 is false" bug)
+                const requiredZoom = (town.minZoom !== undefined && town.minZoom !== null) ? Number(town.minZoom) : -4;
+                
+                semanticTowns.push({ marker: marker, minZoom: requiredZoom });
             });
 
-            map.on('zoomend', function() {
+            function updateSemanticZoom() {
                 const currentZoom = map.getZoom();
-                townsLayerGroup.eachLayer(function(marker) {
-                    if (currentZoom >= marker.targetMinZoom) {
-                        if (!map.hasLayer(marker)) marker.addTo(map);
+                
+                semanticTowns.forEach(item => {
+                    // If the current zoom is deep enough, ensure the marker is visible
+                    if (currentZoom >= item.minZoom) {
+                        if (!townsLayerGroup.hasLayer(item.marker)) {
+                            townsLayerGroup.addLayer(item.marker);
+                        }
                     } else {
-                        if (map.hasLayer(marker)) marker.remove();
+                        // If we are zoomed out too far, hide the marker
+                        if (townsLayerGroup.hasLayer(item.marker)) {
+                            townsLayerGroup.removeLayer(item.marker);
+                        }
                     }
                 });
-            });
-            map.fire('zoomend');
+            }
+
+            // Run the check every time the user zooms
+            map.on('zoomend', updateSemanticZoom);
+            
+            // Run the check immediately on initial load
+            updateSemanticZoom();
 
 
             // --- SIDEBAR LOGIC ---
