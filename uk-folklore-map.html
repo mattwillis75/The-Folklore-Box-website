@@ -83,7 +83,7 @@
         /* Master Layout Container */
         .map-wrapper {
             width: 100%;
-            max-width: 1600px; 
+            /* Removed the 1600px max-width so it can grow massive on large screens */
             padding: 0 2rem 4rem; 
             box-sizing: border-box;
             display: flex;
@@ -94,6 +94,9 @@
             position: relative;
             width: 100%;
             aspect-ratio: 1600 / 675.6; 
+            /* Scales the map up to fit the screen height perfectly, just like the admin */
+            max-height: 80vh; 
+            max-width: calc(80vh * (1600 / 675.6)); 
             background: #000;
             transition: all 0.3s ease;
         }
@@ -479,7 +482,7 @@
             const map = L.map('map', { 
                 crs: L.CRS.Simple, 
                 minZoom: -4, 
-                maxZoom: 2,
+                maxZoom: 3, // Increased from 2 to allow enough depth for Level -1 and 0 markers
                 zoomSnap: 0,
                 attributionControl: false 
             });
@@ -494,7 +497,8 @@
 
             function fitAndLockZoom() {
                 map.setMinZoom(-4); 
-                map.fitBounds(bounds, { padding: [0, 0] });
+                // Adding animate: false stops the load glitch!
+                map.fitBounds(bounds, { padding: [0, 0], animate: false }); 
                 const perfectlyFittedZoom = map.getZoom();
                 map.setMinZoom(perfectlyFittedZoom);
             }
@@ -604,20 +608,19 @@
 
             function updateSemanticZoom() {
                 const currentZoom = map.getZoom();
-                const baseZoom = map.getMinZoom(); // The perfectly fitted, fully zoomed-out starting point
+                // This grabs the perfect mathematical baseline immediately 
+                const baseZoom = map.getBoundsZoom(bounds); 
                 
-                // Calculate exactly how many 'clicks' the user has zoomed in
                 const zoomStepsIn = currentZoom - baseZoom;
                 
                 semanticTowns.forEach(item => {
-                    // Translate your saved dropdown values into relative "zoom clicks"
-                    let requiredSteps = 0; // -4 = Always visible (0 clicks in)
-                    if (item.minZoom === -2) requiredSteps = 1; // 1st Zoom Level (1 click in)
-                    if (item.minZoom === -1) requiredSteps = 2; // 2nd Zoom Level (2 clicks in)
-                    if (item.minZoom >= 0) requiredSteps = 3;   // 3rd Zoom Level (3 clicks in)
+                    let requiredSteps = 0; 
+                    // Marginally lowered thresholds to guarantee they trigger
+                    if (item.minZoom === -2) requiredSteps = 0.8; // Triggers just before 1st zoom finishes
+                    if (item.minZoom === -1) requiredSteps = 1.6; // Triggers just before 2nd zoom finishes
+                    if (item.minZoom >= 0) requiredSteps = 2.4;   // Triggers just before 3rd zoom finishes
 
-                    // Using a 0.1 buffer to prevent floating-point math rounding errors
-                    if (zoomStepsIn >= requiredSteps - 0.1) {
+                    if (zoomStepsIn >= requiredSteps) {
                         if (!townsLayerGroup.hasLayer(item.marker)) {
                             townsLayerGroup.addLayer(item.marker);
                         }
