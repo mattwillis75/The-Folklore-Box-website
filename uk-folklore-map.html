@@ -76,14 +76,13 @@
         /* --- MAP SPECIFIC STYLES --- */
         main { padding-top: 20px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
         
-        .map-header { text-align: center; padding: 3rem 2rem 0; } /* Zeroed out the bottom padding */
-        .map-header h1 { font-size: 3rem; margin-bottom: 0; } /* Removed the 0.5rem bottom margin */
+        .map-header { text-align: center; padding: 3rem 2rem 0; } 
+        .map-header h1 { font-size: 3rem; margin-bottom: 0; } 
         .map-header p { color: #aaa; font-style: italic; max-width: 800px; margin: 0 auto 0.5rem; }
 
         /* Master Layout Container */
         .map-wrapper {
             width: 100%;
-            /* Removed the 1600px max-width so it can grow massive on large screens */
             padding: 0 2rem 4rem; 
             box-sizing: border-box;
             display: flex;
@@ -94,7 +93,6 @@
             position: relative;
             width: 100%;
             aspect-ratio: 1600 / 675.6; 
-            /* Scales the map up to fit the screen height perfectly, just like the admin */
             max-height: 80vh; 
             max-width: calc(80vh * (1600 / 675.6)); 
             background: #000;
@@ -125,7 +123,7 @@
         .town-label {
             color: #ffffff; 
             background-color: rgba(60, 60, 60, 0.85); 
-            padding: 2px 8px 2px 4px; /* Reduced top/bottom padding */
+            padding: 2px 8px 2px 4px; 
             border-radius: 20px; 
             border: 1px solid rgba(255, 255, 255, 0.15); 
             font-family: 'Spectral', serif;
@@ -135,8 +133,8 @@
             align-items: center;
             gap: 6px;
             white-space: nowrap; 
-            pointer-events: none; 
-            width: max-content; /* Forces the box to shrink-wrap the text */
+            cursor: pointer; /* Restored pointer cursor so it can be clicked */
+            width: max-content; 
         }
 
         /* Hides the SVG sub-pixel bleed on the outer edges */
@@ -215,9 +213,7 @@
         .social-links { margin-bottom: 2rem; }
 
         /* --- FULL SCREEN / MOBILE OPTIMIZATION --- */
-        body.map-is-fullscreen {
-            overflow: hidden; 
-        }
+        body.map-is-fullscreen { overflow: hidden; }
         
         body.map-is-fullscreen header,
         body.map-is-fullscreen .map-header,
@@ -271,7 +267,7 @@
         }
         
         .custom-fs-btn:hover { 
-            background: #a30000; /* Slightly darker red on hover */
+            background: #a30000; 
         }
     </style>
 </head>
@@ -314,7 +310,6 @@
     <main>
         <div class="map-header">
             <h1>The Folklore Map</h1>
-           
         </div>
 
         <!-- Integrated Map Container -->
@@ -488,7 +483,7 @@
             const map = L.map('map', { 
                 crs: L.CRS.Simple, 
                 minZoom: -4, 
-                maxZoom: 5, // Increased to 5 to give plenty of zoom depth
+                maxZoom: 5, 
                 zoomSnap: 0,
                 attributionControl: false 
             });
@@ -503,7 +498,6 @@
 
             function fitAndLockZoom() {
                 map.setMinZoom(-4); 
-                // Adding animate: false stops the load glitch!
                 map.fitBounds(bounds, { padding: [0, 0], animate: false }); 
                 const perfectlyFittedZoom = map.getZoom();
                 map.setMinZoom(perfectlyFittedZoom);
@@ -517,7 +511,7 @@
             });
             resizeObserver.observe(document.getElementById('app-container'));
             
-// --- FULL SCREEN CONTROL ---
+            // --- FULL SCREEN CONTROL ---
             let isFullscreen = false;
 
             L.Control.FullscreenButton = L.Control.extend({
@@ -602,15 +596,25 @@
             // 2. A clean array to hold our logic
             const semanticTowns = [];
 
-            townRegistry.forEach(town => {
-                const iconHtml = `<div class="town-label"><span class="town-dot"></span>${town.title}</div>`;
+            // REBUILT RENDER TOWN FUNCTION
+            townRegistry.forEach((town, index) => {
+                renderTown(town, index);
+            });
+
+            function renderTown(data, index) {
+                const iconHtml = `<div class="town-label"><span class="town-dot"></span>${data.title}</div>`;
                 const textIcon = L.divIcon({ html: iconHtml, className: '', iconSize: null, iconAnchor: [4, 12] });
                 
-                const marker = L.marker([town.lat, town.lng], { icon: textIcon, zIndexOffset: -50 });
-                const requiredZoom = (town.minZoom !== undefined && town.minZoom !== null) ? Number(town.minZoom) : -4;
+                const marker = L.marker([data.lat, data.lng], { icon: textIcon, zIndexOffset: -50 });
                 
+                marker.on('click', function(e) {
+                    L.DomEvent.stopPropagation(e);
+                    populateSidebar(data);
+                });
+                
+                const requiredZoom = (data.minZoom !== undefined && data.minZoom !== null) ? Number(data.minZoom) : -4;
                 semanticTowns.push({ marker: marker, minZoom: requiredZoom });
-            });
+            }
 
             function updateSemanticZoom() {
                 const currentZoom = map.getZoom();
@@ -622,12 +626,13 @@
                 semanticTowns.forEach(item => {
                     let requiredSteps = 0; 
                     
-                    // Lowered thresholds to guarantee they trigger earlier in the scroll
-                    if (item.minZoom === -2) requiredSteps = 0.5; 
-                    if (item.minZoom === -1) requiredSteps = 1.2; 
-                    if (item.minZoom >= 0) requiredSteps = 2.2;   
+                    // FIXED: Threshold set to 0 so top-level towns appear immediately on load
+                    if (item.minZoom === -2) requiredSteps = 0; 
+                    if (item.minZoom === -1) requiredSteps = 1; 
+                    if (item.minZoom >= 0) requiredSteps = 2;   
 
-                    if (zoomStepsIn >= requiredSteps) {
+                    // Tiny 0.1 buffer included to prevent math rounding errors hiding markers
+                    if (zoomStepsIn >= requiredSteps - 0.1) {
                         if (!townsLayerGroup.hasLayer(item.marker)) {
                             townsLayerGroup.addLayer(item.marker);
                         }
