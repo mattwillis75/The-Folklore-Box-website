@@ -2,276 +2,232 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Map Admin - The Folklore Box</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Folklore Map Creator</title>
     
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;600&family=Spectral:wght@400;600&display=swap" rel="stylesheet">
-    
-    <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
-    <!-- Load your saved data -->
-    <script src="pins.js"></script>
-    
     <style>
-        /* --- GLOBAL & LAYOUT STYLES --- */
-        :root {
-            --bg-color: #000000;
-            --text-color: #ffffff;
-            --accent-red: #cc0000;
-        }
-
         body { 
-            background-color: var(--bg-color); 
-            color: var(--text-color); 
-            margin: 0; 
-            padding: 0; 
+            margin: 0; padding: 0; 
+            font-family: 'Georgia', serif; 
+            background: #000; color: #fff; 
             display: flex; 
-            align-items: center; 
-            justify-content: center;
+            justify-content: center; 
+            align-items: center;
             height: 100vh;
-            font-family: 'Lato', sans-serif;
+            width: 100vw;
             overflow: hidden; 
         }
-
+        
         /* Master Layout Container */
-        .map-wrapper {
-            width: 100%;
-            max-width: 1600px; 
-            padding: 0 2rem; 
-            box-sizing: border-box;
-            display: flex;
-            justify-content: center;
-        }
-
         #app-container {
             position: relative;
             width: 100%;
+            max-height: 100vh;
+            max-width: 236.82vh;
             aspect-ratio: 1600 / 675.6; 
             background: #000;
         }
 
-        /* The Unified Border Overlay */
         #border-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('border.png');
-            background-size: 100% 100%;
-            background-position: center;
-            background-repeat: no-repeat;
-            pointer-events: none; 
-            z-index: 998; 
+            background-size: 100% 100%; background-position: center; background-repeat: no-repeat;
+            pointer-events: none; z-index: 998; 
         }
 
-        /* Map Area */
         #map { 
-            position: absolute; 
-            top: 4.3%; bottom: 4.88%; left: 2.1%; right: 22.08%; 
-            background: #000000; 
-            z-index: 1;
+            position: absolute; top: 4.3%; bottom: 4.88%; left: 2.1%; right: 22.08%; 
+            background: #000; z-index: 1;
         }
 
-        /* Admin Sidebar Area (Placed exactly where the live info-sidebar goes) */
-        #info-sidebar { 
-            position: absolute; 
-            top: 4.3%; bottom: 5.8%; left: 79%; right: 3.2%; 
-            padding: 1.5% 2%; 
-            box-sizing: border-box; 
-            display: flex; flex-direction: column; 
-            z-index: 1000; 
-            background: rgba(15, 15, 15, 0.95); /* Slight dark background so form inputs pop */
-            overflow-y: auto; 
-            border-radius: 4px;
-        }
-
-        #info-sidebar::-webkit-scrollbar { width: 6px; }
-        #info-sidebar::-webkit-scrollbar-track { background: transparent; }
-        #info-sidebar::-webkit-scrollbar-thumb { background: #444; border-radius: 0px; }
-
-        /* --- ADMIN FORM STYLES --- */
-        h2 { font-family: 'Spectral', serif; font-size: 1.5rem; margin: 0 0 10px 0; font-weight: 400; color: #fff; }
-        p.help-text { font-size: 0.8rem; color: #888; margin-top: 0; margin-bottom: 15px; line-height: 1.4; }
-        
-        label { display: block; margin-top: 10px; font-size: 0.85rem; color: #ccc; font-weight: 600;}
-        input, select, textarea { width: 100%; padding: 8px; margin-top: 4px; box-sizing: border-box; font-family: 'Lato', sans-serif; background: #222; border: 1px solid #444; color: #fff; border-radius: 3px; font-size: 0.9rem;}
-        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent-red); }
-        
-        button { background: var(--accent-red); color: white; border: none; cursor: pointer; font-weight: 600; margin-top: 15px; padding: 10px; border-radius: 3px; font-family: 'Lato', sans-serif; transition: background 0.2s;}
-        button:hover { background: #a30000; }
-        .secondary-btn { background: #444; }
-        .secondary-btn:hover { background: #333; }
-        .export-btn { background: #28a745; margin-top: auto; }
-        .export-btn:hover { background: #218838; }
-
-        hr { border: none; border-top: 1px solid #333; margin: 20px 0; }
-
-        /* --- MARKER STYLES --- */
+        /* Semantic Zoom Town Labels (Styled for Admin visibility & pill shape) */
         .town-label {
             color: #ffffff; 
             background-color: rgba(60, 60, 60, 0.85); 
             padding: 2px 8px 2px 4px;
             border-radius: 20px; 
             border: 1px solid rgba(255, 255, 255, 0.15); 
-            font-family: 'Spectral', serif;
-            font-size: 16px;
+            font-family: 'Spectral', serif; 
+            font-size: 16px; 
             font-weight: 600; 
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            display: flex; 
+            align-items: center; 
+            gap: 6px; 
             white-space: nowrap; 
-            cursor: pointer; 
-            width: max-content; 
+            /* Pointer events enabled here so you can click them to edit! */
+            cursor: pointer;
+            width: max-content;
         }
-        .town-dot { width: 8px; height: 8px; background: var(--accent-red); border-radius: 50%; display: inline-block; box-shadow: 0 0 8px rgba(204, 0, 0, 0.8); flex-shrink: 0;}
-        
-        .custom-pin { width: 20px; height: 20px; background: var(--accent-red); border-radius: 50%; border: 2px solid #fff; cursor: pointer; }
+        .town-dot {
+            width: 8px; height: 8px; background-color: #cc0000; border-radius: 50%;
+            display: inline-block; box-shadow: 0 0 8px rgba(204, 0, 0, 0.8); flex-shrink: 0;
+        }
 
+        /* Sidebar Area */
+        #info-sidebar { 
+            position: absolute; top: 4.3%; bottom: 5.8%; left: 77.5%; right: 3.2%; 
+            padding: 1.5% 2% 2% 2%; box-sizing: border-box; 
+            display: flex; flex-direction: column; z-index: 999; 
+            background: transparent; overflow-y: auto; 
+        }
+
+        #info-sidebar::-webkit-scrollbar { width: 6px; }
+        #info-sidebar::-webkit-scrollbar-track { background: transparent; }
+        #info-sidebar::-webkit-scrollbar-thumb { background: #333; border-radius: 0px; }
+
+        /* Sidebar Content */
+        #empty-state { text-align: center; color: #666; margin-top: 50px; font-style: italic; }
+        #sidebar-img { width: 100%; height: auto; margin-bottom: 20px; display: none; }
+        #sidebar-title { font-size: 2vw; margin: 0 0 5px 0; font-weight: normal; display: none; }
+        #sidebar-cat { font-size: 1vw; color: #aaa; margin: 0 0 20px 0; display: none; }
+        #sidebar-desc { font-size: 0.8vw; line-height: 1.6; display: none; }
+        
+        #sidebar-actions { display: none; margin-top: 15px; gap: 10px; }
+        .sidebar-btn { background: #222; color: #fff; border: 1px solid #444; padding: 8px; cursor: pointer; font-family: 'Georgia', serif; flex: 1; border-radius: 3px; }
+        .sidebar-btn:hover { background: #444; }
+
+        /* Input Modal */
+        #input-modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #111; border: 2px solid #fff; padding: 20px; z-index: 2000; width: 350px; box-shadow: 0 0 20px rgba(255,255,255,0.2); }
+        #input-modal input, #input-modal select, #input-modal textarea { width: 100%; margin-bottom: 10px; padding: 8px; background: #222; color: #fff; border: 1px solid #444; box-sizing: border-box; font-family: 'Georgia', serif; }
+        #input-modal button { background: #fff; color: #000; border: none; padding: 10px; font-weight: bold; cursor: pointer; width: 100%; font-family: 'Georgia', serif;}
+        #modal-backdrop { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.7); z-index: 1999; }
+        
+        .custom-add-btn { background: #fff; color: #000; font-family: 'Georgia', serif; font-weight: bold; padding: 5px 10px; cursor: pointer; border: 2px solid rgba(0,0,0,0.2); border-radius: 4px; background-clip: padding-box; margin-bottom: 5px; text-align: center; }
+        .custom-add-btn:hover { background: #eee; }
     </style>
 </head>
 <body>
 
-    <main class="map-wrapper">
-        <div id="app-container">
-            <div id="border-overlay"></div>
-            <div id="map"></div>
+    <div id="app-container">
+        <div id="border-overlay"></div>
+        <div id="map"></div>
+    
+        <div id="info-sidebar">
+            <div id="empty-state">Click a marker on the map to view details.</div>
+            <img id="sidebar-img" src="" alt="Location Media">
+            <h2 id="sidebar-title"></h2>
+            <div id="sidebar-cat"></div>
+            <div id="sidebar-desc"></div>
             
-            <!-- Admin Form overlaying the right side -->
-            <div id="info-sidebar">
-                <h2>Map Admin</h2>
-                <p class="help-text">Click map to plot, or select a marker to edit.</p>
-                
-                <form id="editForm">
-                    <input type="hidden" id="editIndex">
-                    <input type="hidden" id="editType"> 
-                    
-                    <label>Marker Type</label>
-                    <select id="itemType">
-                        <option value="pin">Cryptid / Haunting (Pin)</option>
-                        <option value="town">Town / Label</option>
-                    </select>
-
-                    <label>Title</label>
-                    <input type="text" id="title" required>
-                    
-                    <div id="descContainer">
-                        <label>Description</label>
-                        <textarea id="description" rows="3"></textarea>
-                    </div>
-
-                    <div id="zoomContainer" style="display:none;">
-                        <label>Semantic Zoom Visibility</label>
-                        <select id="minZoom">
-                            <option value="-4">-4 (Always Visible)</option>
-                            <option value="-2">-2 (Zoom Level 1)</option>
-                            <option value="-1">-1 (Zoom Level 2)</option>
-                            <option value="0">0 (Zoom Level 3)</option>
-                        </select>
-                    </div>
-
-                    <div style="display: flex; gap: 10px;">
-                        <div style="flex: 1;">
-                            <label>Latitude</label>
-                            <input type="text" id="lat" required readonly style="background: #111; color: #888;">
-                        </div>
-                        <div style="flex: 1;">
-                            <label>Longitude</label>
-                            <input type="text" id="lng" required readonly style="background: #111; color: #888;">
-                        </div>
-                    </div>
-
-                    <button type="submit" id="saveBtn">Save to Map</button>
-                    <button type="button" id="deleteBtn" class="secondary-btn" style="display:none;">Delete Marker</button>
-                    <button type="button" id="cancelBtn" class="secondary-btn">Clear Form</button>
-                </form>
-                
-                <hr>
-                <button type="button" id="exportBtn" class="export-btn">Download pins.js</button>
+            <div id="sidebar-actions">
+                <button class="sidebar-btn" onclick="openEditPinModal()">Edit Details</button>
+                <button class="sidebar-btn" onclick="deleteActivePin()" style="color: #ff6b6b; border-color: #ff6b6b;">Delete</button>
             </div>
         </div>
-    </main>
+    </div>
 
-    <!-- Leaflet JS -->
+    <div id="modal-backdrop"></div>
+
+    <div id="input-modal">
+        <h3 id="modal-title">Add New Marker</h3>
+        
+        <label>Marker Type</label>
+        <select id="marker-type" onchange="toggleModalFields()">
+            <option value="pin">Folklore Pin</option>
+            <option value="town">Town / City Label</option>
+        </select>
+
+        <label>Title</label>
+        <input type="text" id="pin-title" placeholder="e.g., Black Shuck or Norwich">
+        
+        <!-- Folklore Specific Fields -->
+        <div id="pin-fields">
+            <label>Category</label>
+            <select id="pin-category">
+                <option value="Cryptid">Cryptid</option>
+                <option value="Haunting">Haunting</option>
+                <option value="UFO">UFO</option>
+            </select>
+
+            <label>Image Filename/URL</label>
+            <input type="text" id="pin-image" placeholder="e.g., Maps/blackshuck.jpg">
+
+            <label>Description</label>
+            <textarea id="pin-desc" style="height:80px;" placeholder="Write the details here..."></textarea>
+        </div>
+
+        <!-- Town Specific Fields -->
+        <div id="town-fields" style="display:none;">
+            <label>Minimum Zoom Level (Visibility)</label>
+            <select id="town-zoom">
+                <option value="-4">-4 (Always Visible)</option>
+                <option value="-2">-2 (Zoomed out)</option>
+                <option value="-1">-1 (Mid Zoom)</option>
+                <option value="0">0 (Zoomed in)</option>
+            </select>
+        </div>
+        
+        <button onclick="saveNewPin()">Commit Marker</button>
+    </div>
+
+    <script src="pins.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
     <script>
-        // Prevent clicks in the sidebar from passing through to the map
-        const sidebar = document.getElementById('info-sidebar');
-        L.DomEvent.disableClickPropagation(sidebar);
-        L.DomEvent.disableScrollPropagation(sidebar);
+        let activeClickCoords = null;
+        let tempRedDot = null; 
+        
+        let activeSidebarIndex = null; 
+        let activeSidebarType = null; // 'pin' or 'town'
+        let editingIndex = null;
+        let editingType = null;
 
-        // --- 1. DATA INITIALIZATION ---
-        let localPins = (typeof savedPins !== 'undefined') ? savedPins : [];
-        let localTowns = (typeof savedTowns !== 'undefined') ? savedTowns : [];
-
-        // --- 2. MAP SETUP ---
-        const map = L.map('map', {
-            crs: L.CRS.Simple,
-            minZoom: -4,
-            maxZoom: 2,
-            zoomSnap: 0, 
-            zoomControl: true,
+        // Map Initialization
+        const map = L.map('map', { 
+            crs: L.CRS.Simple, 
+            minZoom: -4, maxZoom: 2, zoomSnap: 0,
             attributionControl: false 
         });
-
-        // Map Dimensions (Matching Live Site)
+        
         const mapWidth = 2400;
-        const mapHeight = 1352;
+        const mapHeight = 1352; 
         const bounds = [[0, 0], [mapHeight, mapWidth]];
 
         L.imageOverlay('norfolk-map.jpg', bounds).addTo(map);
-        map.fitBounds(bounds);
+        map.setMaxBounds(bounds);
 
-        // Resize observer to maintain framing
-        const resizeObserver = new ResizeObserver(() => {
+        function fitAndLockZoom() {
+            map.setMinZoom(-4); 
+            map.fitBounds(bounds, { padding: [0, 0] });
+            const perfectlyFittedZoom = map.getZoom();
+            map.setMinZoom(perfectlyFittedZoom);
+        }
+
+        fitAndLockZoom();
+
+        window.addEventListener('resize', function() {
             map.invalidateSize(); 
-            map.fitBounds(bounds);
+            fitAndLockZoom();
         });
-        resizeObserver.observe(document.getElementById('app-container'));
 
-        // Layer Groups
-        const pinsLayerGroup = L.layerGroup().addTo(map);
-        const townsLayerGroup = L.layerGroup().addTo(map);
-        let semanticTowns = [];
+        const customIcons = {
+            'Cryptid': L.icon({ iconUrl: 'cryptid-marker.svg', iconSize: [32, 42], iconAnchor: [16, 42] }),
+            'Haunting': L.icon({ iconUrl: 'ghost-marker.svg', iconSize: [32, 42], iconAnchor: [16, 42] }),
+            'UFO': L.icon({ iconUrl: 'ufo-marker.svg', iconSize: [32, 42], iconAnchor: [16, 42] })
+        };
 
-        // --- 3. RENDER LOGIC ---
-        function renderPins() {
-            pinsLayerGroup.clearLayers();
-            localPins.forEach((data, index) => {
-                const icon = L.divIcon({ className: 'custom-pin', iconSize: [20, 20], iconAnchor: [10, 10] });
-                const marker = L.marker([data.lat, data.lng], { icon: icon }).addTo(pinsLayerGroup);
-                
-                marker.on('click', (e) => {
-                    L.DomEvent.stopPropagation(e);
-                    populateSidebar(data, index, 'pin');
-                });
-            });
-        }
+        // Load data from pins.js gracefully
+        let pinCollection = (typeof savedPins !== 'undefined') ? savedPins : [];
+        let townCollection = (typeof savedTowns !== 'undefined') ? savedTowns : [];
+        
+        let layerGroup = L.layerGroup().addTo(map);
+        let townsLayerGroup = L.layerGroup().addTo(map); // Separated for semantic zoom
+        let semanticTowns = []; // Clean array to hold semantic logic
 
-        function renderTowns() {
+        function refreshAllMarkers() {
+            layerGroup.clearLayers();
             townsLayerGroup.clearLayers();
-            semanticTowns = []; 
+            semanticTowns = []; // Reset semantic tracking
             
-            localTowns.forEach((data, index) => {
-                const iconHtml = `<div class="town-label"><span class="town-dot"></span>${data.title}</div>`;
-                const textIcon = L.divIcon({ html: iconHtml, className: '', iconSize: null, iconAnchor: [4, 12] });
-                
-                const marker = L.marker([data.lat, data.lng], { icon: textIcon, zIndexOffset: -50 });
-                
-                marker.on('click', (e) => {
-                    L.DomEvent.stopPropagation(e);
-                    populateSidebar(data, index, 'town');
-                });
-
-                const requiredZoom = (data.minZoom !== undefined && data.minZoom !== null) ? Number(data.minZoom) : -4;
-                semanticTowns.push({ marker: marker, minZoom: requiredZoom });
-            });
+            pinCollection.forEach((pin, index) => renderPin(pin, index));
+            townCollection.forEach((town, index) => renderTown(town, index));
             
-            updateSemanticZoom();
+            updateSemanticZoom(); // Trigger zoom evaluation immediately
         }
-
-        // --- 4. SEMANTIC ZOOM ENGINE (with Bounds logic fix) ---
+        
+        // --- SEMANTIC ZOOM ENGINE ---
         function updateSemanticZoom() {
             const currentZoom = map.getZoom();
             const baseZoom = map.getBoundsZoom(bounds); 
@@ -294,124 +250,264 @@
                 }
             });
         }
+
         map.on('zoomend', updateSemanticZoom);
+        
+        refreshAllMarkers();
 
-        // --- 5. SIDEBAR & FORM LOGIC ---
-        const form = document.getElementById('editForm');
-        const deleteBtn = document.getElementById('deleteBtn');
-        const cancelBtn = document.getElementById('cancelBtn');
-        const itemTypeSelect = document.getElementById('itemType');
-
-        itemTypeSelect.addEventListener('change', (e) => {
-            document.getElementById('editType').value = e.target.value;
-            if(e.target.value === 'town') {
-                document.getElementById('descContainer').style.display = 'none';
-                document.getElementById('zoomContainer').style.display = 'block';
-            } else {
-                document.getElementById('descContainer').style.display = 'block';
-                document.getElementById('zoomContainer').style.display = 'none';
+        // Control Buttons
+        L.Control.AddMarkerButton = L.Control.extend({
+            onAdd: function(map) {
+                const btn = L.DomUtil.create('div', 'custom-add-btn');
+                btn.innerHTML = 'Add Marker';
+                btn.title = 'Place a marker at the red dot';
+                L.DomEvent.disableClickPropagation(btn);
+                
+                btn.onclick = function() {
+                    if (!activeClickCoords || !tempRedDot) {
+                        alert("Please click anywhere on the map first to place a red target dot.");
+                        return;
+                    }
+                    editingIndex = null; 
+                    editingType = null;
+                    document.getElementById('modal-title').innerText = 'Add New Marker';
+                    document.getElementById('marker-type').disabled = false;
+                    
+                    document.getElementById('pin-title').value = '';
+                    document.getElementById('pin-category').value = 'Cryptid';
+                    document.getElementById('pin-image').value = '';
+                    document.getElementById('pin-desc').value = '';
+                    document.getElementById('town-zoom').value = '-4';
+                    
+                    toggleModalFields();
+                    document.getElementById('modal-backdrop').style.display = 'block';
+                    document.getElementById('input-modal').style.display = 'block';
+                };
+                return btn;
             }
         });
 
-        // Click map to get coordinates
-        map.on('click', (e) => {
-            resetSidebar();
-            document.getElementById('lat').value = e.latlng.lat;
-            document.getElementById('lng').value = e.latlng.lng;
+        L.Control.DownloadButton = L.Control.extend({
+            onAdd: function(map) {
+                const btn = L.DomUtil.create('div', 'custom-add-btn');
+                btn.innerHTML = 'Download pins.js';
+                btn.title = 'Save your map data to a file';
+                L.DomEvent.disableClickPropagation(btn);
+                
+                btn.onclick = function() {
+                    const fileContent = 
+                        "const savedPins = " + JSON.stringify(pinCollection, null, 2) + ";\n\n" +
+                        "const savedTowns = " + JSON.stringify(townCollection, null, 2) + ";";
+                        
+                    const blob = new Blob([fileContent], { type: "text/javascript" });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    a.href = url;
+                    a.download = "pins.js";
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                };
+                return btn;
+            }
         });
+
+        new L.Control.AddMarkerButton({ position: 'topleft' }).addTo(map);
+        new L.Control.DownloadButton({ position: 'topleft' }).addTo(map);
+
+        map.on('click', function(e) {
+            activeClickCoords = e.latlng;
+            if (tempRedDot) {
+                tempRedDot.setLatLng(activeClickCoords);
+            } else {
+                tempRedDot = L.circleMarker(activeClickCoords, {
+                    color: 'red', fillColor: '#ff0000', fillOpacity: 1, radius: 5, weight: 2
+                }).addTo(map);
+            }
+        });
+
+        function toggleModalFields() {
+            const type = document.getElementById('marker-type').value;
+            if (type === 'pin') {
+                document.getElementById('pin-fields').style.display = 'block';
+                document.getElementById('town-fields').style.display = 'none';
+            } else {
+                document.getElementById('pin-fields').style.display = 'none';
+                document.getElementById('town-fields').style.display = 'block';
+            }
+        }
+
+        function saveNewPin() {
+            const type = document.getElementById('marker-type').value;
+            const title = document.getElementById('pin-title').value;
+            
+            if(!title) { alert("Please provide a title."); return; }
+
+            if (editingIndex !== null) {
+                // Editing existing
+                if (editingType === 'pin') {
+                    pinCollection[editingIndex].title = title;
+                    pinCollection[editingIndex].category = document.getElementById('pin-category').value;
+                    pinCollection[editingIndex].image = document.getElementById('pin-image').value;
+                    pinCollection[editingIndex].desc = document.getElementById('pin-desc').value;
+                    populateSidebar(pinCollection[editingIndex], editingIndex, 'pin');
+                } else {
+                    townCollection[editingIndex].title = title;
+                    townCollection[editingIndex].minZoom = parseInt(document.getElementById('town-zoom').value);
+                    populateSidebar(townCollection[editingIndex], editingIndex, 'town');
+                }
+            } else {
+                // Saving new
+                if (type === 'pin') {
+                    const pinData = {
+                        lat: activeClickCoords.lat, lng: activeClickCoords.lng,
+                        title: title,
+                        category: document.getElementById('pin-category').value,
+                        image: document.getElementById('pin-image').value,
+                        desc: document.getElementById('pin-desc').value
+                    };
+                    pinCollection.push(pinData);
+                    populateSidebar(pinData, pinCollection.length - 1, 'pin');
+                } else {
+                    const townData = {
+                        lat: activeClickCoords.lat, lng: activeClickCoords.lng,
+                        title: title,
+                        minZoom: parseInt(document.getElementById('town-zoom').value)
+                    };
+                    townCollection.push(townData);
+                    populateSidebar(townData, townCollection.length - 1, 'town');
+                }
+            }
+
+            refreshAllMarkers();
+            
+            if (tempRedDot) {
+                map.removeLayer(tempRedDot);
+                tempRedDot = null;
+                activeClickCoords = null; 
+            }
+
+            closeInputModal();
+        }
 
         function populateSidebar(data, index, type) {
-            document.getElementById('editIndex').value = index;
-            document.getElementById('editType').value = type;
-            document.getElementById('itemType').value = type;
-            document.getElementById('title').value = data.title;
-            document.getElementById('lat').value = data.lat;
-            document.getElementById('lng').value = data.lng;
+            activeSidebarIndex = index;
+            activeSidebarType = type;
             
-            if(type === 'pin') {
-                document.getElementById('description').value = data.description || '';
-            } else {
-                document.getElementById('minZoom').value = data.minZoom || '-4';
-            }
+            document.getElementById('empty-state').style.display = 'none';
             
-            document.getElementById('itemType').dispatchEvent(new Event('change'));
-            deleteBtn.style.display = 'block';
-        }
+            const imgEl = document.getElementById('sidebar-img');
+            const titleEl = document.getElementById('sidebar-title');
+            const catEl = document.getElementById('sidebar-cat');
+            const descEl = document.getElementById('sidebar-desc');
 
-        function resetSidebar() {
-            form.reset();
-            document.getElementById('editIndex').value = '';
-            document.getElementById('editType').value = document.getElementById('itemType').value;
-            deleteBtn.style.display = 'none';
-            document.getElementById('itemType').dispatchEvent(new Event('change'));
-        }
-        
-        cancelBtn.addEventListener('click', resetSidebar);
-
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const index = document.getElementById('editIndex').value;
-            const type = document.getElementById('editType').value;
-            
-            const newData = {
-                title: document.getElementById('title').value,
-                lat: parseFloat(document.getElementById('lat').value),
-                lng: parseFloat(document.getElementById('lng').value)
-            };
+            titleEl.innerText = data.title;
+            titleEl.style.display = 'block';
 
             if (type === 'pin') {
-                newData.description = document.getElementById('description').value;
-                // Note: The admin currently defaults to simple pins. If you want to preview
-                // 'Cryptid', 'UFO', etc. icons here eventually, add a category dropdown to this form!
-                if (index !== '') {
-                    localPins[index] = newData;
-                } else {
-                    localPins.push(newData);
-                }
-                renderPins();
+                if(data.image) { imgEl.src = data.image; imgEl.style.display = 'block'; } 
+                else { imgEl.style.display = 'none'; }
+                
+                catEl.innerText = data.category;
+                catEl.style.display = 'block';
+                descEl.innerText = data.desc;
+                descEl.style.display = 'block';
             } else {
-                newData.minZoom = parseInt(document.getElementById('minZoom').value);
-                if (index !== '') {
-                    localTowns[index] = newData;
-                } else {
-                    localTowns.push(newData);
-                }
-                renderTowns();
+                imgEl.style.display = 'none';
+                catEl.innerText = `Town / City (Zoom: ${data.minZoom})`;
+                catEl.style.display = 'block';
+                descEl.style.display = 'none';
             }
-            resetSidebar();
-        });
 
-        deleteBtn.addEventListener('click', () => {
-            const index = document.getElementById('editIndex').value;
-            const type = document.getElementById('editType').value;
-            if (index !== '') {
-                if (type === 'pin') {
-                    localPins.splice(index, 1);
-                    renderPins();
-                } else {
-                    localTowns.splice(index, 1);
-                    renderTowns();
+            document.getElementById('sidebar-actions').style.display = 'flex';
+        }
+
+        function clearSidebar() {
+            activeSidebarIndex = null;
+            activeSidebarType = null;
+            document.getElementById('empty-state').style.display = 'block';
+            document.getElementById('sidebar-img').style.display = 'none';
+            document.getElementById('sidebar-title').style.display = 'none';
+            document.getElementById('sidebar-cat').style.display = 'none';
+            document.getElementById('sidebar-desc').style.display = 'none';
+            document.getElementById('sidebar-actions').style.display = 'none';
+        }
+
+        function deleteActivePin() {
+            if (activeSidebarIndex !== null) {
+                const collection = activeSidebarType === 'pin' ? pinCollection : townCollection;
+                if(confirm(`Are you sure you want to delete "${collection[activeSidebarIndex].title}"?`)) {
+                    collection.splice(activeSidebarIndex, 1);
+                    clearSidebar();
+                    refreshAllMarkers();
                 }
-                resetSidebar();
             }
-        });
+        }
 
-        // --- 6. EXPORT DATA ---
-        document.getElementById('exportBtn').addEventListener('click', () => {
-            const jsContent = `const savedPins = ${JSON.stringify(localPins, null, 4)};\n\nconst savedTowns = ${JSON.stringify(localTowns, null, 4)};`;
-            const blob = new Blob([jsContent], { type: 'text/javascript' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'pins.js';
-            a.click();
-            URL.revokeObjectURL(url);
-        });
+        function openEditPinModal() {
+            if (activeSidebarIndex === null) return;
+            
+            editingIndex = activeSidebarIndex; 
+            editingType = activeSidebarType;
+            
+            document.getElementById('marker-type').value = editingType;
+            document.getElementById('marker-type').disabled = true; // Prevent changing type during edit
+            toggleModalFields();
 
-        // Initial Boot
-        renderPins();
-        renderTowns();
-        document.getElementById('itemType').dispatchEvent(new Event('change'));
+            if (editingType === 'pin') {
+                const data = pinCollection[editingIndex];
+                document.getElementById('pin-title').value = data.title;
+                document.getElementById('pin-category').value = data.category;
+                document.getElementById('pin-image').value = data.image || '';
+                document.getElementById('pin-desc').value = data.desc;
+            } else {
+                const data = townCollection[editingIndex];
+                document.getElementById('pin-title').value = data.title;
+                document.getElementById('town-zoom').value = data.minZoom;
+            }
+            
+            document.getElementById('modal-title').innerText = 'Edit Marker';
+            document.getElementById('modal-backdrop').style.display = 'block';
+            document.getElementById('input-modal').style.display = 'block';
+        }
+
+        function renderPin(data, index) {
+            const selectedIcon = customIcons[data.category];
+            const marker = L.marker([data.lat, data.lng], { icon: selectedIcon }).addTo(layerGroup);
+            marker.on('click', function(e) {
+                L.DomEvent.stopPropagation(e);
+                populateSidebar(data, index, 'pin');
+            });
+        }
+
+        function renderTown(data, index) {
+            const iconHtml = `<div class="town-label"><span class="town-dot"></span>${data.title}</div>`;
+            
+            // Fixed iconSize to null so it shrink-wraps correctly
+            const textIcon = L.divIcon({ html: iconHtml, className: '', iconSize: null, iconAnchor: [4, 12] });
+            
+            const marker = L.marker([data.lat, data.lng], { icon: textIcon, zIndexOffset: -50 });
+            
+            marker.on('click', function(e) {
+                L.DomEvent.stopPropagation(e);
+                populateSidebar(data, index, 'town');
+            });
+            
+            // Push to semantic logic instead of adding directly to layerGroup
+            const requiredZoom = (data.minZoom !== undefined && data.minZoom !== null) ? Number(data.minZoom) : -4;
+            semanticTowns.push({ marker: marker, minZoom: requiredZoom });
+        }
+
+        function closeInputModal() {
+            document.getElementById('modal-backdrop').style.display = 'none';
+            document.getElementById('input-modal').style.display = 'none';
+            editingIndex = null;
+            editingType = null;
+        }
+
+        document.getElementById('modal-backdrop').addEventListener('click', closeInputModal);
+        map.on('click', clearSidebar);
     </script>
 </body>
 </html>
