@@ -305,60 +305,157 @@
     <script src="https://www.paypal.com/sdk/js?client-id=BAAyFEECFHCgIYSVAcx3GUqT0FI1rHhhU_mwYJxRf6ngeAPN3zYdx3W4a1tCIEHivTFLxU7oFEeDD1NIIs&currency=GBP&locale=en_GB"></script>
 
     <script>
-        document.addEventListener("DOMContentLoaded", async () => {
+        document.addEventListener("DOMContentLoaded", () => {
             
-            // --- WHOLESALE PASSWORD REQUEST MODAL LOGIC ---
-            const requestOverlay = document.getElementById('request-overlay');
-            const openRequestBtn = document.getElementById('open-request-btn');
-            const closeRequestBtn = document.getElementById('close-request');
-            const requestForm = document.getElementById('request-form');
-            const requestFormContainer = document.getElementById('request-form-container');
-            const requestSuccess = document.getElementById('request-success');
-            const requestSubmitBtn = document.getElementById('request-submit-btn');
+    // ==========================================
+    // UI SCRIPTS: Header, Nav, and Cart Logic
+    // ==========================================
 
-            // Open the modal
-            openRequestBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                requestOverlay.classList.add('active');
-            });
+    const header = document.getElementById('main-header');
+    if (header) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.style.boxShadow = '0 2px 20px rgba(255, 0, 0, 0.1)';
+                header.style.borderBottom = '1px solid var(--accent-red)';
+            } else {
+                header.style.boxShadow = 'none';
+                header.style.borderBottom = '1px solid #333333';
+            }
+        });
+    }
 
-            // Close and reset the modal
-            const closeRequestModal = () => {
-                requestOverlay.classList.remove('active');
-                setTimeout(() => {
-                    requestForm.reset();
-                    requestFormContainer.style.display = 'block';
-                    requestSuccess.style.display = 'none';
-                    requestSubmitBtn.textContent = 'Send Request';
-                    requestSubmitBtn.disabled = false;
-                }, 400); 
-                // ==========================================
-// WHOLESALE LOGOUT LOGIC
-// ==========================================
-const logoutItem = document.getElementById('wholesale-logout-item');
-const logoutBtn = document.getElementById('wholesale-logout-btn');
+    const mobileToggle = document.getElementById('mobile-toggle');
+    const navList = document.getElementById('nav-list');
+    if (mobileToggle && navList) {
+        mobileToggle.addEventListener('click', () => { 
+            navList.classList.toggle('mobile-active'); 
+            mobileToggle.classList.toggle('open');
+        });
+    }
 
-// isWholesale is already defined in your cart logic, but if not, define it:
-// const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
-
-if (isWholesale && logoutItem && logoutBtn) {
-    // 1. Reveal the logout button in the navigation
-    logoutItem.style.display = 'block';
+    // --- Determine Active Mode ---
+    const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
+    const cartKey = isWholesale ? 'folkloreWholesaleCart' : 'folkloreCart';
     
-    // 2. Handle the click event
-    logoutBtn.addEventListener('click', (e) => {
-        e.preventDefault();
+    if (isWholesale) {
+        const cartHeaderTitle = document.getElementById('cart-title');
+        if (cartHeaderTitle) cartHeaderTitle.textContent = 'Wholesale Cart';
+    }
+
+    // ==========================================
+    // WHOLESALE LOGOUT LOGIC
+    // ==========================================
+    const logoutItem = document.getElementById('wholesale-logout-item');
+    const logoutBtn = document.getElementById('wholesale-logout-btn');
+
+    if (isWholesale && logoutItem && logoutBtn) {
+        logoutItem.style.display = 'block'; // Reveal the button in nav
         
-        // Remove the wholesale authentication flag
-        sessionStorage.removeItem('wholesaleAuthenticated');
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            sessionStorage.removeItem('wholesaleAuthenticated');
+            alert("You have exited Wholesale Mode. Returning to the standard retail shop.");
+            window.location.href = 'shop.html';
+        });
+    }
+
+    // ==========================================
+    // SLIDE-OUT CART LOGIC
+    // ==========================================
+    let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+    cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
+    
+    const cartSidebar = document.getElementById('cart-sidebar');
+    const cartOverlay = document.getElementById('cart-overlay');
+    const cartToggle = document.getElementById('cart-toggle');
+    const closeCartBtn = document.getElementById('close-cart');
+    const cartItemsContainer = document.getElementById('cart-items');
+    const cartTotalElement = document.getElementById('cart-total');
+
+    const openCart = () => { 
+        if (cartSidebar) cartSidebar.classList.add('open'); 
+        if (cartOverlay) cartOverlay.classList.add('active'); 
+    };
+    const closeCartSidebar = () => { 
+        if (cartSidebar) cartSidebar.classList.remove('open'); 
+        if (cartOverlay) cartOverlay.classList.remove('active'); 
+    };
+
+    if (cartToggle) cartToggle.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
+    if (closeCartBtn) closeCartBtn.addEventListener('click', closeCartSidebar);
+    if (cartOverlay) cartOverlay.addEventListener('click', closeCartSidebar);
+
+    window.updateQuantity = function(index, delta) {
+        cart[index].quantity += delta;
+        if (cart[index].quantity <= 0) cart.splice(index, 1);
+        localStorage.setItem(cartKey, JSON.stringify(cart));
+        updateCartUI();
+    };
+
+    window.removeFromCart = function(index) { 
+        cart.splice(index, 1); 
+        localStorage.setItem(cartKey, JSON.stringify(cart)); 
+        updateCartUI(); 
+    };
+
+    const updateCartUI = () => {
+        if (!cartItemsContainer) return; // Skip if no cart HTML exists on this page
         
-        // Optional: Alert the user so they know what happened
-        alert("You have exited Wholesale Mode. Returning to the standard retail shop.");
+        cartItemsContainer.innerHTML = '';
+        let itemsTotal = 0;
+        let cartItemCount = 0;
         
-        // Redirect them to the main shop page (or reload if already there)
-        window.location.href = 'shop.html';
+        if (cart.length === 0) {
+            cartItemsContainer.innerHTML = `<p style="color: #777; font-style: italic;">Your ${isWholesale ? 'wholesale ' : ''}cart is currently empty.</p>`;
+            if (cartTotalElement) cartTotalElement.textContent = 'Total: £0.00';
+            if (cartToggle) cartToggle.textContent = 'Cart (0)';
+            return;
+        }
+
+        cart.forEach((item, index) => {
+            const qty = item.quantity || 1;
+            const itemTotalCost = item.price * qty;
+            itemsTotal += itemTotalCost;
+            cartItemCount += qty;
+
+            cartItemsContainer.innerHTML += `
+                <div class="cart-item">
+                    <div class="cart-item-title">
+                        ${item.title} <br>
+                        <span style="font-size:0.8rem; color:#888; font-weight:normal;">£${item.price.toFixed(2)} each</span>
+                    </div>
+                    <div class="cart-qty-controls">
+                        <button onclick="updateQuantity(${index}, -1)">-</button>
+                        <span>${qty}</span>
+                        <button onclick="updateQuantity(${index}, 1)">+</button>
+                    </div>
+                    <div class="cart-item-total">£${itemTotalCost.toFixed(2)}</div>
+                    <button class="remove-btn" onclick="removeFromCart(${index})" title="Remove item">&times;</button>
+                </div>
+            `;
+        });
+        
+        if (cartTotalElement) cartTotalElement.textContent = `Total: £${itemsTotal.toFixed(2)}`;
+        if (cartToggle) cartToggle.textContent = `Cart (${cartItemCount})`;
+    };
+
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted) {
+            const currentKey = typeof cartKey !== 'undefined' ? cartKey : 'folkloreCart';
+            cart = JSON.parse(localStorage.getItem(currentKey)) || [];
+            cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
+            updateCartUI();
+        }
     });
-}
+    
+    updateCartUI();
+
+    // ==========================================
+    // MAP LOGIC GOES HERE (If applicable to the page)
+    // ==========================================
+    // (Paste your Leaflet map configuration below this line for uk-folklore-map.html)
+
+});
             };
 
             // Close listeners
