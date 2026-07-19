@@ -96,7 +96,7 @@
             aspect-ratio: 1600 / 675.6; 
             /* Scales the map up to fit the screen height perfectly, just like the admin */
             max-height: 80vh; 
-            max-width: calc(80vh * (1600 / 676.5)); 
+            max-width: calc(80vh * (1600 / 675.6)); 
             background: #000;
             transition: all 0.3s ease;
         }
@@ -137,6 +137,12 @@
             white-space: nowrap; 
             pointer-events: none; 
             width: max-content; /* Forces the box to shrink-wrap the text */
+        }
+
+        /* Hides the SVG sub-pixel bleed on the outer edges */
+        .leaflet-image-layer {
+            outline: 2px solid #000000;
+            outline-offset: -1px;
         }
         
         .town-dot {
