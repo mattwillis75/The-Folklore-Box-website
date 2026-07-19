@@ -482,7 +482,7 @@
             const map = L.map('map', { 
                 crs: L.CRS.Simple, 
                 minZoom: -4, 
-                maxZoom: 3, // Increased from 2 to allow enough depth for Level -1 and 0 markers
+                maxZoom: 5, // Increased to 5 to give plenty of zoom depth
                 zoomSnap: 0,
                 attributionControl: false 
             });
@@ -615,10 +615,11 @@
                 
                 semanticTowns.forEach(item => {
                     let requiredSteps = 0; 
-                    // Marginally lowered thresholds to guarantee they trigger
-                    if (item.minZoom === -2) requiredSteps = 0.8; // Triggers just before 1st zoom finishes
-                    if (item.minZoom === -1) requiredSteps = 1.6; // Triggers just before 2nd zoom finishes
-                    if (item.minZoom >= 0) requiredSteps = 2.4;   // Triggers just before 3rd zoom finishes
+                    
+                    // Lowered thresholds to guarantee they trigger earlier in the scroll
+                    if (item.minZoom === -2) requiredSteps = 0.5; 
+                    if (item.minZoom === -1) requiredSteps = 1.2; 
+                    if (item.minZoom >= 0) requiredSteps = 1.9;   
 
                     if (zoomStepsIn >= requiredSteps) {
                         if (!townsLayerGroup.hasLayer(item.marker)) {
