@@ -101,5 +101,11 @@ const savedTowns = [
     "lng": 2116.4751044896907,
     "title": "Hemsby",
     "minZoom": -2
+  },
+  {
+    "lat": 598.3214672240731,
+    "lng": 2005.9499482121105,
+    "title": "Acle",
+    "minZoom": -1
   }
 ];
