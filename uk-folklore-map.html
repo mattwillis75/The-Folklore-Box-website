@@ -597,8 +597,6 @@
                 const textIcon = L.divIcon({ html: iconHtml, className: '', iconSize: null, iconAnchor: [4, 12] });
                 
                 const marker = L.marker([town.lat, town.lng], { icon: textIcon, zIndexOffset: -50 });
-                
-                // Bulletproof number casting (Fixes the Javascript "0 is false" bug)
                 const requiredZoom = (town.minZoom !== undefined && town.minZoom !== null) ? Number(town.minZoom) : -4;
                 
                 semanticTowns.push({ marker: marker, minZoom: requiredZoom });
@@ -606,15 +604,24 @@
 
             function updateSemanticZoom() {
                 const currentZoom = map.getZoom();
+                const baseZoom = map.getMinZoom(); // The perfectly fitted, fully zoomed-out starting point
+                
+                // Calculate exactly how many 'clicks' the user has zoomed in
+                const zoomStepsIn = currentZoom - baseZoom;
                 
                 semanticTowns.forEach(item => {
-                    // If the current zoom is deep enough, ensure the marker is visible
-                    if (currentZoom >= item.minZoom) {
+                    // Translate your saved dropdown values into relative "zoom clicks"
+                    let requiredSteps = 0; // -4 = Always visible (0 clicks in)
+                    if (item.minZoom === -2) requiredSteps = 1; // 1st Zoom Level (1 click in)
+                    if (item.minZoom === -1) requiredSteps = 2; // 2nd Zoom Level (2 clicks in)
+                    if (item.minZoom >= 0) requiredSteps = 3;   // 3rd Zoom Level (3 clicks in)
+
+                    // Using a 0.1 buffer to prevent floating-point math rounding errors
+                    if (zoomStepsIn >= requiredSteps - 0.1) {
                         if (!townsLayerGroup.hasLayer(item.marker)) {
                             townsLayerGroup.addLayer(item.marker);
                         }
                     } else {
-                        // If we are zoomed out too far, hide the marker
                         if (townsLayerGroup.hasLayer(item.marker)) {
                             townsLayerGroup.removeLayer(item.marker);
                         }
