@@ -5,29 +5,110 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Map Admin - The Folklore Box</title>
     
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;600&family=Spectral:wght@400;600&display=swap" rel="stylesheet">
+    
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <!-- Spectral Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;600&display=swap" rel="stylesheet">
     
     <!-- Load your saved data -->
     <script src="pins.js"></script>
     
     <style>
-        body { margin: 0; padding: 0; display: flex; font-family: 'Spectral', serif; height: 100vh; overflow: hidden; background: #1a1a1a; color: #fff; }
-        #sidebar { width: 350px; background: #2a2a2a; padding: 20px; box-sizing: border-box; overflow-y: auto; border-right: 1px solid #444; }
-        #map-container { flex: 1; position: relative; }
-        #map { width: 100%; height: 100%; background-color: #e5e3df; } 
+        /* --- GLOBAL & LAYOUT STYLES --- */
+        :root {
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --accent-red: #cc0000;
+        }
+
+        body { 
+            background-color: var(--bg-color); 
+            color: var(--text-color); 
+            margin: 0; 
+            padding: 0; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            height: 100vh;
+            font-family: 'Lato', sans-serif;
+            overflow: hidden; 
+        }
+
+        /* Master Layout Container */
+        .map-wrapper {
+            width: 100%;
+            max-width: 1600px; 
+            padding: 0 2rem; 
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+        }
+
+        #app-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1600 / 675.6; 
+            background: #000;
+        }
+
+        /* The Unified Border Overlay */
+        #border-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('border.png');
+            background-size: 100% 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            pointer-events: none; 
+            z-index: 998; 
+        }
+
+        /* Map Area */
+        #map { 
+            position: absolute; 
+            top: 4.3%; bottom: 4.88%; left: 2.1%; right: 22.08%; 
+            background: #000000; 
+            z-index: 1;
+        }
+
+        /* Admin Sidebar Area (Placed exactly where the live info-sidebar goes) */
+        #info-sidebar { 
+            position: absolute; 
+            top: 4.3%; bottom: 5.8%; left: 79%; right: 3.2%; 
+            padding: 1.5% 2%; 
+            box-sizing: border-box; 
+            display: flex; flex-direction: column; 
+            z-index: 1000; 
+            background: rgba(15, 15, 15, 0.95); /* Slight dark background so form inputs pop */
+            overflow-y: auto; 
+            border-radius: 4px;
+        }
+
+        #info-sidebar::-webkit-scrollbar { width: 6px; }
+        #info-sidebar::-webkit-scrollbar-track { background: transparent; }
+        #info-sidebar::-webkit-scrollbar-thumb { background: #444; border-radius: 0px; }
+
+        /* --- ADMIN FORM STYLES --- */
+        h2 { font-family: 'Spectral', serif; font-size: 1.5rem; margin: 0 0 10px 0; font-weight: 400; color: #fff; }
+        p.help-text { font-size: 0.8rem; color: #888; margin-top: 0; margin-bottom: 15px; line-height: 1.4; }
         
-        h2, h3 { margin-top: 0; }
-        label { display: block; margin-top: 10px; font-size: 14px; color: #ccc; }
-        input, select, textarea, button { width: 100%; padding: 8px; margin-top: 4px; box-sizing: border-box; font-family: inherit; }
-        button { background: #d9381e; color: white; border: none; cursor: pointer; font-weight: 600; margin-top: 15px; border-radius: 4px; }
-        button:hover { background: #b02a15; }
-        .secondary-btn { background: #555; }
+        label { display: block; margin-top: 10px; font-size: 0.85rem; color: #ccc; font-weight: 600;}
+        input, select, textarea { width: 100%; padding: 8px; margin-top: 4px; box-sizing: border-box; font-family: 'Lato', sans-serif; background: #222; border: 1px solid #444; color: #fff; border-radius: 3px; font-size: 0.9rem;}
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent-red); }
+        
+        button { background: var(--accent-red); color: white; border: none; cursor: pointer; font-weight: 600; margin-top: 15px; padding: 10px; border-radius: 3px; font-family: 'Lato', sans-serif; transition: background 0.2s;}
+        button:hover { background: #a30000; }
+        .secondary-btn { background: #444; }
         .secondary-btn:hover { background: #333; }
-        
-        /* Semantic Zoom Town Labels (Styled for Admin visibility & interaction) */
+        .export-btn { background: #28a745; margin-top: auto; }
+        .export-btn:hover { background: #218838; }
+
+        hr { border: none; border-top: 1px solid #333; margin: 20px 0; }
+
+        /* --- MARKER STYLES --- */
         .town-label {
             color: #ffffff; 
             background-color: rgba(60, 60, 60, 0.85); 
@@ -41,79 +122,85 @@
             align-items: center;
             gap: 6px;
             white-space: nowrap; 
-            cursor: pointer; /* Keeps labels clickable in admin view */
+            cursor: pointer; 
             width: max-content; 
         }
-        .town-dot { width: 8px; height: 8px; background: #d9381e; border-radius: 50%; display: inline-block; }
+        .town-dot { width: 8px; height: 8px; background: var(--accent-red); border-radius: 50%; display: inline-block; box-shadow: 0 0 8px rgba(204, 0, 0, 0.8); flex-shrink: 0;}
+        
+        .custom-pin { width: 20px; height: 20px; background: var(--accent-red); border-radius: 50%; border: 2px solid #fff; cursor: pointer; }
 
-        /* Default pin styling (for cryptids/hauntings) */
-        .custom-pin {
-            width: 20px; height: 20px; background: #d9381e; border-radius: 50%; border: 2px solid #fff; cursor: pointer;
-        }
-
-        /* Custom Mobile Expand Button */
-        .leaflet-control-expand {
-            background: #d9381e; width: 34px; height: 34px; border-radius: 4px; cursor: pointer; border: 2px solid rgba(0,0,0,0.2); 
-            background-image: url('data:image/svg+xml;utf8,<svg fill="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>'); 
-            background-size: 20px; background-position: center; background-repeat: no-repeat;
-        }
     </style>
 </head>
 <body>
-    <div id="sidebar">
-        <h2>Map Admin</h2>
-        <p style="font-size: 14px; color: #aaa;">Click on the map to add a new location, or click an existing marker to edit it.</p>
-        
-        <form id="editForm">
-            <input type="hidden" id="editIndex">
-            <input type="hidden" id="editType"> 
-            
-            <label>Marker Type</label>
-            <select id="itemType">
-                <option value="pin">Cryptid / Haunting (Pin)</option>
-                <option value="town">Town / Label</option>
-            </select>
 
-            <label>Title</label>
-            <input type="text" id="title" required>
+    <main class="map-wrapper">
+        <div id="app-container">
+            <div id="border-overlay"></div>
+            <div id="map"></div>
             
-            <div id="descContainer">
-                <label>Description (Pins only)</label>
-                <textarea id="description" rows="3"></textarea>
+            <!-- Admin Form overlaying the right side -->
+            <div id="info-sidebar">
+                <h2>Map Admin</h2>
+                <p class="help-text">Click map to plot, or select a marker to edit.</p>
+                
+                <form id="editForm">
+                    <input type="hidden" id="editIndex">
+                    <input type="hidden" id="editType"> 
+                    
+                    <label>Marker Type</label>
+                    <select id="itemType">
+                        <option value="pin">Cryptid / Haunting (Pin)</option>
+                        <option value="town">Town / Label</option>
+                    </select>
+
+                    <label>Title</label>
+                    <input type="text" id="title" required>
+                    
+                    <div id="descContainer">
+                        <label>Description</label>
+                        <textarea id="description" rows="3"></textarea>
+                    </div>
+
+                    <div id="zoomContainer" style="display:none;">
+                        <label>Semantic Zoom Visibility</label>
+                        <select id="minZoom">
+                            <option value="-4">-4 (Always Visible)</option>
+                            <option value="-2">-2 (Zoom Level 1)</option>
+                            <option value="-1">-1 (Zoom Level 2)</option>
+                            <option value="0">0 (Zoom Level 3)</option>
+                        </select>
+                    </div>
+
+                    <div style="display: flex; gap: 10px;">
+                        <div style="flex: 1;">
+                            <label>Latitude</label>
+                            <input type="text" id="lat" required readonly style="background: #111; color: #888;">
+                        </div>
+                        <div style="flex: 1;">
+                            <label>Longitude</label>
+                            <input type="text" id="lng" required readonly style="background: #111; color: #888;">
+                        </div>
+                    </div>
+
+                    <button type="submit" id="saveBtn">Save to Map</button>
+                    <button type="button" id="deleteBtn" class="secondary-btn" style="display:none;">Delete Marker</button>
+                    <button type="button" id="cancelBtn" class="secondary-btn">Clear Form</button>
+                </form>
+                
+                <hr>
+                <button type="button" id="exportBtn" class="export-btn">Download pins.js</button>
             </div>
-
-            <div id="zoomContainer" style="display:none;">
-                <label>Zoom Level (Towns only)</label>
-                <select id="minZoom">
-                    <option value="-4">-4 (Always Visible)</option>
-                    <option value="-2">-2 (Zoom Level 1)</option>
-                    <option value="-1">-1 (Zoom Level 2)</option>
-                    <option value="0">0 (Zoom Level 3)</option>
-                </select>
-            </div>
-
-            <label>Latitude</label>
-            <input type="text" id="lat" required readonly style="background: #333; border: 1px solid #555; color: #aaa;">
-            
-            <label>Longitude</label>
-            <input type="text" id="lng" required readonly style="background: #333; border: 1px solid #555; color: #aaa;">
-
-            <button type="submit" id="saveBtn">Save to Map</button>
-            <button type="button" id="deleteBtn" class="secondary-btn" style="display:none;">Delete Marker</button>
-            <button type="button" id="cancelBtn" class="secondary-btn">Cancel / Clear Form</button>
-        </form>
-        
-        <hr style="border-color: #444; margin: 20px 0;">
-        <button type="button" id="exportBtn" style="background: #28a745;">Generate & Download pins.js</button>
-    </div>
-
-    <div id="map-container">
-        <div id="map"></div>
-    </div>
+        </div>
+    </main>
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
+        // Prevent clicks in the sidebar from passing through to the map
+        const sidebar = document.getElementById('info-sidebar');
+        L.DomEvent.disableClickPropagation(sidebar);
+        L.DomEvent.disableScrollPropagation(sidebar);
+
         // --- 1. DATA INITIALIZATION ---
         let localPins = (typeof savedPins !== 'undefined') ? savedPins : [];
         let localTowns = (typeof savedTowns !== 'undefined') ? savedTowns : [];
@@ -122,45 +209,33 @@
         const map = L.map('map', {
             crs: L.CRS.Simple,
             minZoom: -4,
-            maxZoom: 1,
+            maxZoom: 2,
             zoomSnap: 0, 
-            zoomControl: true
+            zoomControl: true,
+            attributionControl: false 
         });
 
-        // Map Dimensions
+        // Map Dimensions (Matching Live Site)
         const mapWidth = 2400;
         const mapHeight = 1352;
         const bounds = [[0, 0], [mapHeight, mapWidth]];
 
-        // *** BE SURE TO UPDATE THIS TO YOUR ACTUAL MAP IMAGE FILENAME ***
-        L.imageOverlay('map-image.jpg', bounds).addTo(map);
+        L.imageOverlay('norfolk-map.jpg', bounds).addTo(map);
         map.fitBounds(bounds);
+
+        // Resize observer to maintain framing
+        const resizeObserver = new ResizeObserver(() => {
+            map.invalidateSize(); 
+            map.fitBounds(bounds);
+        });
+        resizeObserver.observe(document.getElementById('app-container'));
 
         // Layer Groups
         const pinsLayerGroup = L.layerGroup().addTo(map);
         const townsLayerGroup = L.layerGroup().addTo(map);
         let semanticTowns = [];
 
-        // --- 3. CUSTOM EXPAND BUTTON ---
-        const ExpandControl = L.Control.extend({
-            options: { position: 'topright' },
-            onAdd: function () {
-                const btn = L.DomUtil.create('div', 'leaflet-control-expand leaflet-bar');
-                btn.title = "Force Landscape (Mobile)";
-                L.DomEvent.on(btn, 'click', function(e) {
-                    L.DomEvent.stopPropagation(e);
-                    if(screen.orientation && screen.orientation.lock) {
-                        screen.orientation.lock('landscape').catch(err => console.log('Orientation lock not supported'));
-                    } else {
-                        alert("Mobile expand trigger clicked!");
-                    }
-                });
-                return btn;
-            }
-        });
-        map.addControl(new ExpandControl());
-
-        // --- 4. RENDER LOGIC ---
+        // --- 3. RENDER LOGIC ---
         function renderPins() {
             pinsLayerGroup.clearLayers();
             localPins.forEach((data, index) => {
@@ -196,10 +271,10 @@
             updateSemanticZoom();
         }
 
-        // --- 5. SEMANTIC ZOOM ENGINE ---
+        // --- 4. SEMANTIC ZOOM ENGINE (with Bounds logic fix) ---
         function updateSemanticZoom() {
             const currentZoom = map.getZoom();
-            const baseZoom = map.getMinZoom(); 
+            const baseZoom = map.getBoundsZoom(bounds); 
             const zoomStepsIn = currentZoom - baseZoom;
             
             semanticTowns.forEach(item => {
@@ -221,7 +296,7 @@
         }
         map.on('zoomend', updateSemanticZoom);
 
-        // --- 6. SIDEBAR & FORM LOGIC ---
+        // --- 5. SIDEBAR & FORM LOGIC ---
         const form = document.getElementById('editForm');
         const deleteBtn = document.getElementById('deleteBtn');
         const cancelBtn = document.getElementById('cancelBtn');
@@ -238,6 +313,7 @@
             }
         });
 
+        // Click map to get coordinates
         map.on('click', (e) => {
             resetSidebar();
             document.getElementById('lat').value = e.latlng.lat;
@@ -285,6 +361,8 @@
 
             if (type === 'pin') {
                 newData.description = document.getElementById('description').value;
+                // Note: The admin currently defaults to simple pins. If you want to preview
+                // 'Cryptid', 'UFO', etc. icons here eventually, add a category dropdown to this form!
                 if (index !== '') {
                     localPins[index] = newData;
                 } else {
@@ -318,7 +396,7 @@
             }
         });
 
-        // --- 7. EXPORT DATA ---
+        // --- 6. EXPORT DATA ---
         document.getElementById('exportBtn').addEventListener('click', () => {
             const jsContent = `const savedPins = ${JSON.stringify(localPins, null, 4)};\n\nconst savedTowns = ${JSON.stringify(localTowns, null, 4)};`;
             const blob = new Blob([jsContent], { type: 'text/javascript' });
