@@ -83,5 +83,23 @@ const savedTowns = [
     "lng": 1496.8171042834733,
     "title": "Wymondham",
     "minZoom": -4
+  },
+  {
+    "lat": 602.0644495189742,
+    "lng": 1864.8438043624853,
+    "title": "Brundall",
+    "minZoom": -2
+  },
+  {
+    "lat": 565.3509507147478,
+    "lng": 2255.0400968451977,
+    "title": "Caister-on-Sea",
+    "minZoom": -2
+  },
+  {
+    "lat": 854.6983235027157,
+    "lng": 2116.4751044896907,
+    "title": "Hemsby",
+    "minZoom": -2
   }
 ];
