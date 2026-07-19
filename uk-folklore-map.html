@@ -235,24 +235,30 @@
             max-width: calc(100dvh * (1600 / 675.6));
         }
 
+        /* The custom Leaflet Expand button styling (Updated to Icon Only) */
         .custom-fs-btn {
-            background: #ffffff;
-            color: #000000;
-            font-family: 'Lato', sans-serif;
-            font-weight: 600;
-            padding: 8px 12px;
+            background: var(--accent-red);
+            color: #ffffff;
+            width: 34px;
+            height: 34px;
             cursor: pointer;
             border: 2px solid rgba(0,0,0,0.2);
             border-radius: 4px;
             background-clip: padding-box;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             margin-top: 10px !important; 
             margin-left: 10px !important;
             transition: all 0.3s ease;
+            line-height: 1;
+            padding: 0;
         }
-        .custom-fs-btn:hover { background: #eeeeee; }
+        
+        .custom-fs-btn:hover { 
+            background: #a30000; /* Slightly darker red on hover */
+        }
     </style>
 </head>
 <body>
@@ -496,13 +502,13 @@
             });
             resizeObserver.observe(document.getElementById('app-container'));
             
-            // --- FULL SCREEN CONTROL ---
+// --- FULL SCREEN CONTROL ---
             let isFullscreen = false;
 
             L.Control.FullscreenButton = L.Control.extend({
                 onAdd: function(map) {
                     const btn = L.DomUtil.create('button', 'custom-fs-btn');
-                    btn.innerHTML = '⛶ Expand Map';
+                    btn.innerHTML = '⛶'; // Icon only
                     btn.title = 'View map in full screen';
                     
                     L.DomEvent.disableClickPropagation(btn); 
@@ -525,10 +531,7 @@
                 if (!isFullscreen) {
                     // ENTER FULLSCREEN
                     body.classList.add('map-is-fullscreen');
-                    btn.innerHTML = '✕ Close';
-                    btn.style.backgroundColor = 'var(--accent-red)';
-                    btn.style.color = '#ffffff';
-                    btn.style.borderColor = 'var(--accent-red)';
+                    btn.innerHTML = '✕'; // Swap to Close icon
                     isFullscreen = true;
                     
                     if (appContainer.requestFullscreen) {
@@ -541,10 +544,7 @@
                 } else {
                     // EXIT FULLSCREEN
                     body.classList.remove('map-is-fullscreen');
-                    btn.innerHTML = '⛶ Expand Map';
-                    btn.style.backgroundColor = '#ffffff';
-                    btn.style.color = '#000000';
-                    btn.style.borderColor = 'rgba(0,0,0,0.2)';
+                    btn.innerHTML = '⛶'; // Swap back to Expand icon
                     isFullscreen = false;
                     
                     if (document.fullscreenElement) {
