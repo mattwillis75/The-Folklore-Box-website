@@ -45,7 +45,7 @@ Item Cost: 7.50
 ---
 Title: SHUCK Issue 4 - Feasting
 Main Image: ./shuck-issue4-1.jpg
-Images: ./shuck-issue4-2.jpg, ./shuck-issue4-3.jpg, ./shuck-issue4-4.jpg
+Images: ./shuck-issue4-2.jpg, ./shuck-issue4-3.jpg
 Sections: Zines
 Description: Shuck zine was a Kickstarter project initiated by three friends at the start of the pandemic. Overwhelmed by support, issue #1 sold like hot cakes and has been in print ever since. Each Shuck zine explores a different themes within Norfolk and British folklore, uncovering age-old, handed-down, dark and twisty tales rooted in truth? Who can tell.
 Written for adults, suitable for older teens, contains creepy and gory tales.
