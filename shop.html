@@ -54,7 +54,43 @@
 
         /* Shop Layout */
         main { padding-top: 110px; min-height: 100vh; }
-        .wholesale-banner { background: #222; color: var(--accent-red); border-bottom: 1px solid #333; text-align: center; padding: 0.8rem 2rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; margin-bottom: 1rem; display: none; }
+        
+        /* Updated Banner Styles to accommodate the button */
+        .wholesale-banner { 
+            background: #222; 
+            color: var(--accent-red); 
+            border-bottom: 1px solid #333; 
+            text-align: center; 
+            padding: 0.8rem 2rem; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            font-size: 0.9rem; 
+            margin-bottom: 1rem; 
+            display: none; /* Changed via JS when active */
+            align-items: center; 
+            justify-content: center; 
+            gap: 15px; 
+            flex-wrap: wrap; 
+        }
+
+        .exit-wholesale-btn { 
+            background: transparent; 
+            color: #fff; 
+            border: 1px solid var(--accent-red); 
+            padding: 0.4rem 1rem; 
+            font-family: 'Lato', sans-serif; 
+            font-size: 0.8rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            cursor: pointer; 
+            border-radius: 3px; 
+            transition: all 0.3s ease; 
+        }
+        .exit-wholesale-btn:hover { 
+            background: var(--accent-red); 
+        }
+
         .shop-header { text-align: center; padding: 2rem 2rem 1rem; }
         .shop-header h1 { font-size: 3.5rem; margin: 0; }
 
@@ -153,7 +189,8 @@
 
     <main>
         <div class="wholesale-banner" id="wholesale-banner">
-            Wholesale Account Active: Prices are 60% of standard retail. Minimum spend £75.
+            <span>Wholesale Account Active: Prices are 60% of standard retail. Minimum spend £75.</span>
+            <button id="wholesale-logout-btn" class="exit-wholesale-btn">Exit Wholesale</button>
         </div>
         <div class="shop-header">
             <h1>Goods & Wares</h1>
@@ -222,10 +259,23 @@
             
             if (isWholesale) {
                 const banner = document.getElementById('wholesale-banner');
-                if (banner) banner.style.display = 'block';
+                if (banner) banner.style.display = 'flex'; // Changed to flex for button alignment
                 
                 const cartHeaderTitle = document.getElementById('cart-title');
                 if (cartHeaderTitle) cartHeaderTitle.textContent = 'Wholesale Cart';
+            }
+
+            // ==========================================
+            // WHOLESALE LOGOUT LOGIC
+            // ==========================================
+            const logoutBtn = document.getElementById('wholesale-logout-btn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    sessionStorage.removeItem('wholesaleAuthenticated');
+                    alert("You have exited Wholesale Mode. Returning to the standard retail shop.");
+                    window.location.reload(); // Instantly revert page to retail mode
+                });
             }
 
             // --- 2. HEADER SCROLL LOGIC ---
