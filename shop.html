@@ -252,7 +252,19 @@
             // ==========================================
             // 1. BULLETPROOF DOM & MEMORY INITIALIZATION
             // ==========================================
-            // Grab elements FIRST so the script can never throw a ReferenceError
+            const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
+            const cartKey = isWholesale ? 'folkloreWholesaleCart' : 'folkloreCart';
+            
+            // Pull the cart memory instantly so the script never crashes
+            let cart = [];
+            try {
+                cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+                cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
+            } catch(e) {
+                cart = [];
+            }
+
+            // Bind elements securely
             const banner = document.getElementById('wholesale-banner');
             const cartHeaderTitle = document.getElementById('cart-title');
             const logoutBtn = document.getElementById('wholesale-logout-btn');
@@ -271,119 +283,157 @@
             const mobileToggle = document.getElementById('mobile-toggle');
             const navList = document.getElementById('nav-list');
             
-            const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
-            const cartKey = isWholesale ? 'folkloreWholesaleCart' : 'folkloreCart';
-            
-            // Extract the cart
-            let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
-            cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
-
             if (isWholesale) {
                 if (banner) banner.style.display = 'flex'; 
                 if (cartHeaderTitle) cartHeaderTitle.textContent = 'Wholesale Cart';
             }
 
             // ==========================================
-            // 2. CORE CART UI FUNCTIONS
+            // 2. ROBUST WHOLESALE LOGOUT LOGIC
+            // ==========================================
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    let wCart = JSON.parse(localStorage.getItem('folkloreWholesaleCart')) || [];
+                    let rCart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
+                    
+                    // Securely merge and mathematically fix prices
+                    wCart.forEach(wItem => {
+                        let existingRItem = rCart.find(rItem => rItem.id === wItem.id);
+                        if (existingRItem) {
+                            existingRItem.quantity += (wItem.quantity || 1);
+                        } else {
+                            // Reverse the 60% discount back to full RRP safely
+                            let retailPrice = Math.round((wItem.price / 0.60) * 100) / 100;
+                            rCart.push({
+                                id: wItem.id,
+                                title: wItem.title,
+                                price: retailPrice,
+                                postalClass: wItem.postalClass,
+                                quantity: wItem.quantity || 1
+                            });
+                        }
+                    });
+
+                    // 1. Save retail cart
+                    localStorage.setItem('folkloreCart', JSON.stringify(rCart));
+                    
+                    // 2. OBLITERATE wholesale cart so ghost items NEVER resurrect
+                    cart = []; // Empty live array to prevent accidental re-saves
+                    localStorage.removeItem('folkloreWholesaleCart');
+                    
+                    // 3. OBLITERATE session
+                    sessionStorage.removeItem('wholesaleAuthenticated');
+                    
+                    alert("You have exited Wholesale Mode. Returning to the standard retail shop.");
+                    window.location.href = 'shop.html'; 
+                });
+            }
+
+            // ==========================================
+            // 3. CORE CART UI FUNCTIONS
             // ==========================================
             let postalRates = {}; // Populated during fetch
 
             function updateCartUI() {
-                if (!cartItemsContainer) return;
-                cartItemsContainer.innerHTML = '';
-                let itemsTotal = 0; let shippingTotal = 0; let finalTotal = 0;
-                let cartItemCount = 0;
-                
-                if (cart.length === 0) {
-                    cartItemsContainer.innerHTML = `<p style="color: #777; font-style: italic;">Your ${isWholesale ? 'wholesale ' : ''}cart is currently empty.</p>`;
-                    if(document.getElementById('cart-subtotal')) document.getElementById('cart-subtotal').textContent = `£0.00`;
-                    if(document.getElementById('cart-shipping-cost')) document.getElementById('cart-shipping-cost').textContent = `£0.00`;
-                    if(cartTotalElement) cartTotalElement.textContent = `Total: £0.00`;
-                    if(cartToggle) cartToggle.textContent = `Cart (0)`;
+                try {
+                    if (!cartItemsContainer) return;
+                    cartItemsContainer.innerHTML = '';
+                    let itemsTotal = 0; let shippingTotal = 0; let finalTotal = 0;
+                    let cartItemCount = 0;
                     
+                    if (cart.length === 0) {
+                        cartItemsContainer.innerHTML = `<p style="color: #777; font-style: italic;">Your ${isWholesale ? 'wholesale ' : ''}cart is currently empty.</p>`;
+                        if(document.getElementById('cart-subtotal')) document.getElementById('cart-subtotal').textContent = `£0.00`;
+                        if(document.getElementById('cart-shipping-cost')) document.getElementById('cart-shipping-cost').textContent = `£0.00`;
+                        if(cartTotalElement) cartTotalElement.textContent = `Total: £0.00`;
+                        if(cartToggle) cartToggle.textContent = `Cart (0)`;
+                        
+                        if (isWholesale && cartWarning) {
+                            cartWarning.style.display = 'block';
+                            if(paypalContainer) paypalContainer.classList.add('paypal-disabled');
+                        } else if (!isWholesale && cartWarning) {
+                            cartWarning.style.display = 'none';
+                            if(paypalContainer) paypalContainer.classList.remove('paypal-disabled');
+                        }
+                        return;
+                    }
+
+                    const dest = destSelect ? destSelect.value : 'uk';
+                    let maxBase = 0; let maxBaseItem = null;
+
+                    cart.forEach((item, index) => {
+                        const qty = item.quantity || 1;
+                        const itemTotalCost = item.price * qty;
+                        itemsTotal += itemTotalCost;
+                        cartItemCount += qty;
+
+                        cartItemsContainer.innerHTML += `
+                            <div class="cart-item">
+                                <div class="cart-item-title">
+                                    ${item.title} <br>
+                                    <span style="font-size:0.8rem; color:#888; font-weight:normal;">£${item.price.toFixed(2)} each</span>
+                                </div>
+                                <div class="cart-qty-controls">
+                                    <button onclick="updateQuantity(${index}, -1)">-</button>
+                                    <span>${qty}</span>
+                                    <button onclick="updateQuantity(${index}, 1)">+</button>
+                                </div>
+                                <div class="cart-item-total">£${itemTotalCost.toFixed(2)}</div>
+                                <button class="remove-btn" onclick="removeFromCart(${index})" title="Remove item">&times;</button>
+                            </div>
+                        `;
+                        
+                        const rates = postalRates[item.postalClass];
+                        if(rates) {
+                            const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                            if(baseRate > maxBase) { maxBase = baseRate; maxBaseItem = item; }
+                        }
+                    });
+
+                    let baseRateApplied = false;
+                    cart.forEach((item) => {
+                        const rates = postalRates[item.postalClass];
+                        if(rates) {
+                            const qty = item.quantity || 1;
+                            const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                            const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
+
+                            if (item === maxBaseItem && !baseRateApplied) {
+                                shippingTotal += baseRate + (addRate * (qty - 1));
+                                baseRateApplied = true;
+                            } else {
+                                shippingTotal += addRate * qty;
+                            }
+                        }
+                    });
+
+                    finalTotal = itemsTotal + shippingTotal;
+
+                    if(document.getElementById('cart-subtotal')) document.getElementById('cart-subtotal').textContent = `£${itemsTotal.toFixed(2)}`;
+                    if(document.getElementById('cart-shipping-cost')) document.getElementById('cart-shipping-cost').textContent = `£${shippingTotal.toFixed(2)}`;
+                    if(cartTotalElement) cartTotalElement.textContent = `Total: £${finalTotal.toFixed(2)}`;
+                    if(cartToggle) cartToggle.textContent = `Cart (${cartItemCount})`;
+
                     if (isWholesale && cartWarning) {
-                        cartWarning.style.display = 'block';
-                        if(paypalContainer) paypalContainer.classList.add('paypal-disabled');
+                        if (itemsTotal >= 75) {
+                            cartWarning.style.display = 'none';
+                            if(paypalContainer) paypalContainer.classList.remove('paypal-disabled');
+                        } else {
+                            cartWarning.style.display = 'block';
+                            if(paypalContainer) paypalContainer.classList.add('paypal-disabled');
+                        }
                     } else if (!isWholesale && cartWarning) {
                         cartWarning.style.display = 'none';
                         if(paypalContainer) paypalContainer.classList.remove('paypal-disabled');
                     }
-                    return;
-                }
-
-                const dest = destSelect ? destSelect.value : 'uk';
-                let maxBase = 0; let maxBaseItem = null;
-
-                cart.forEach((item, index) => {
-                    const qty = item.quantity || 1;
-                    const itemTotalCost = item.price * qty;
-                    itemsTotal += itemTotalCost;
-                    cartItemCount += qty;
-
-                    cartItemsContainer.innerHTML += `
-                        <div class="cart-item">
-                            <div class="cart-item-title">
-                                ${item.title} <br>
-                                <span style="font-size:0.8rem; color:#888; font-weight:normal;">£${item.price.toFixed(2)} each</span>
-                            </div>
-                            <div class="cart-qty-controls">
-                                <button onclick="updateQuantity(${index}, -1)">-</button>
-                                <span>${qty}</span>
-                                <button onclick="updateQuantity(${index}, 1)">+</button>
-                            </div>
-                            <div class="cart-item-total">£${itemTotalCost.toFixed(2)}</div>
-                            <button class="remove-btn" onclick="removeFromCart(${index})" title="Remove item">&times;</button>
-                        </div>
-                    `;
-                    
-                    const rates = postalRates[item.postalClass];
-                    if(rates) {
-                        const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
-                        if(baseRate > maxBase) { maxBase = baseRate; maxBaseItem = item; }
-                    }
-                });
-
-                let baseRateApplied = false;
-                cart.forEach((item) => {
-                    const rates = postalRates[item.postalClass];
-                    if(rates) {
-                        const qty = item.quantity || 1;
-                        const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
-                        const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
-
-                        if (item === maxBaseItem && !baseRateApplied) {
-                            shippingTotal += baseRate + (addRate * (qty - 1));
-                            baseRateApplied = true;
-                        } else {
-                            shippingTotal += addRate * qty;
-                        }
-                    }
-                });
-
-                finalTotal = itemsTotal + shippingTotal;
-
-                if(document.getElementById('cart-subtotal')) document.getElementById('cart-subtotal').textContent = `£${itemsTotal.toFixed(2)}`;
-                if(document.getElementById('cart-shipping-cost')) document.getElementById('cart-shipping-cost').textContent = `£${shippingTotal.toFixed(2)}`;
-                if(cartTotalElement) cartTotalElement.textContent = `Total: £${finalTotal.toFixed(2)}`;
-                if(cartToggle) cartToggle.textContent = `Cart (${cartItemCount})`;
-
-                if (isWholesale && cartWarning) {
-                    if (itemsTotal >= 75) {
-                        cartWarning.style.display = 'none';
-                        if(paypalContainer) paypalContainer.classList.remove('paypal-disabled');
-                    } else {
-                        cartWarning.style.display = 'block';
-                        if(paypalContainer) paypalContainer.classList.add('paypal-disabled');
-                    }
-                } else if (!isWholesale && cartWarning) {
-                    cartWarning.style.display = 'none';
-                    if(paypalContainer) paypalContainer.classList.remove('paypal-disabled');
+                } catch (e) {
+                    console.error("Cart UI Rendering Error:", e);
                 }
             }
 
-            // ==========================================
-            // 3. EVENT LISTENERS
-            // ==========================================
+            // --- 4. EVENT LISTENERS ---
             if (header) {
                 window.addEventListener('scroll', () => {
                     if (window.scrollY > 50) {
@@ -437,43 +487,7 @@
                 updateCartUI(); 
             };
 
-            // Wholesale Logout & Memory destruction (Double-click protected)
-            let isLoggingOut = false;
-            if (logoutBtn) {
-                logoutBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    if (isLoggingOut) return;
-                    isLoggingOut = true;
-                    
-                    let wCart = JSON.parse(localStorage.getItem('folkloreWholesaleCart')) || [];
-                    let rCart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
-                    
-                    wCart.forEach(wItem => {
-                        let existingRItem = rCart.find(rItem => rItem.id === wItem.id);
-                        if (existingRItem) {
-                            existingRItem.quantity += (wItem.quantity || 1);
-                        } else {
-                            // Reverse the 60% discount back to full RRP
-                            let retailPrice = Math.round((wItem.price / 0.60) * 100) / 100;
-                            rCart.push({ ...wItem, price: retailPrice });
-                        }
-                    });
-
-                    // Save the merged standard cart
-                    localStorage.setItem('folkloreCart', JSON.stringify(rCart));
-                    
-                    // PERMANENTLY DESTROY wholesale cart to prevent ghost items duplicating
-                    localStorage.removeItem('folkloreWholesaleCart');
-                    sessionStorage.removeItem('wholesaleAuthenticated');
-                    
-                    alert("You have exited Wholesale Mode. Returning to the standard retail shop.");
-                    window.location.reload(); 
-                });
-            }
-
-            // ==========================================
-            // 4. FETCH AND BUILD CATALOGUE
-            // ==========================================
+            // --- 5. FETCH AND BUILD CATALOGUE ---
             let products = [];
             let uniqueSections = new Set(); 
 
@@ -511,7 +525,7 @@
                     if (rawItem.trim() === '') return;
                     
                     const lines = rawItem.trim().split('\n');
-                    let product = { sections: [] };
+                    let product = { sections: [], basePrice: 0 };
                     
                     lines.forEach(line => {
                         const sepIndex = line.indexOf(':');
@@ -527,7 +541,9 @@
                             else if (key === 'sections') product.sections = value.split(',').map(s => s.trim());
                             else if (key === 'postal class') product.postalClass = value;
                             else if (key === 'item cost') {
-                                product.basePrice = parseFloat(value);
+                                // Strip accidental currency symbols before parsing to prevent database crashing
+                                let parsedPrice = parseFloat(value.replace(/[^0-9.]/g, ''));
+                                product.basePrice = isNaN(parsedPrice) ? 0 : parsedPrice;
                                 if (isWholesale) {
                                     product.basePrice = product.basePrice * 0.60;
                                 }
@@ -537,7 +553,9 @@
                     
                     if (product.title) {
                         products.push(product);
-                        product.sections.forEach(section => uniqueSections.add(section));
+                        if (product.sections) {
+                            product.sections.forEach(section => uniqueSections.add(section));
+                        }
                     }
                 });
 
@@ -560,7 +578,7 @@
                 function renderGrid(filterValue) {
                     if (!shopGrid) return;
                     shopGrid.innerHTML = '';
-                    const filteredProducts = filterValue === 'All' ? products : products.filter(p => p.sections.includes(filterValue));
+                    const filteredProducts = filterValue === 'All' ? products : products.filter(p => p.sections && p.sections.includes(filterValue));
 
                     if (filteredProducts.length === 0) {
                         shopGrid.innerHTML = '<p style="color: #fff; grid-column: 1 / -1; text-align: center; padding: 4rem 0;">No products found in this section.</p>';
@@ -586,18 +604,22 @@
                 }
                 renderGrid('All');
 
-                // Dynamic Price Sync (Catch any bugs left over from logout)
-                let updatedCart = false;
-                cart.forEach(cartItem => {
-                    let matchedProduct = products.find(p => p.id === cartItem.id);
-                    if (matchedProduct && cartItem.price !== matchedProduct.basePrice) {
-                        cartItem.price = matchedProduct.basePrice;
-                        updatedCart = true;
+                // Dynamic Price Sync (Safety Net)
+                try {
+                    let updatedCart = false;
+                    cart.forEach(cartItem => {
+                        let matchedProduct = products.find(p => p.id === cartItem.id);
+                        if (matchedProduct && cartItem.price !== matchedProduct.basePrice) {
+                            cartItem.price = matchedProduct.basePrice;
+                            updatedCart = true;
+                        }
+                    });
+                    
+                    if (updatedCart) {
+                        localStorage.setItem(cartKey, JSON.stringify(cart));
                     }
-                });
-                
-                if (updatedCart) {
-                    localStorage.setItem(cartKey, JSON.stringify(cart));
+                } catch(e) {
+                    console.error("Price sync error:", e);
                 }
 
                 // Render cart successfully now that variables are available!
@@ -620,9 +642,7 @@
                 }
             });
 
-            // ==========================================
-            // 5. PAYPAL INITIALIZATION
-            // ==========================================
+            // --- 6. PAYPAL INITIALIZATION ---
             try {
                 if(paypalContainer) {
                     paypal.Buttons({
@@ -672,8 +692,7 @@
                                 };
                             });
                             
-                            const isWholesaleCheck = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
-                            if (isWholesaleCheck && itemsTotal < 75) { 
+                            if (isWholesale && itemsTotal < 75) { 
                                 alert("Minimum wholesale spend of £75 not met."); 
                                 return; 
                             }
