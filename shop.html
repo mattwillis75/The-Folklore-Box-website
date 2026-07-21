@@ -67,7 +67,7 @@
             letter-spacing: 1px; 
             font-size: 0.9rem; 
             margin-bottom: 1rem; 
-            display: none; 
+            display: none; /* Changed via JS when active */
             align-items: center; 
             justify-content: center; 
             gap: 15px; 
@@ -259,7 +259,7 @@
             
             if (isWholesale) {
                 const banner = document.getElementById('wholesale-banner');
-                if (banner) banner.style.display = 'flex'; 
+                if (banner) banner.style.display = 'flex'; // Changed to flex for button alignment
                 
                 const cartHeaderTitle = document.getElementById('cart-title');
                 if (cartHeaderTitle) cartHeaderTitle.textContent = 'Wholesale Cart';
@@ -274,7 +274,7 @@
                     e.preventDefault();
                     sessionStorage.removeItem('wholesaleAuthenticated');
                     alert("You have exited Wholesale Mode. Returning to the standard retail shop.");
-                    window.location.reload(); 
+                    window.location.reload(); // Instantly revert page to retail mode
                 });
             }
 
@@ -292,7 +292,7 @@
                 });
             }
 
-            // --- 3. FETCH AND BUILD CATALOGUE WITH CUMULATIVE FILTERS ---
+            // --- 3. FETCH AND BUILD CATALOGUE ---
             const shopGrid = document.getElementById('shop-grid');
             const filtersContainer = document.getElementById('shop-filters');
             let products = [];
@@ -364,83 +364,48 @@
                 });
 
                 if (uniqueSections.size > 0) {
-                    let filterHTML = `<button class="filter-btn active" id="filter-all" data-filter="All">All Goods</button>`;
+                    let filterHTML = `<button class="filter-btn active" data-filter="All">All Goods</button>`;
                     Array.from(uniqueSections).sort().forEach(sec => {
-                        filterHTML += `<button class="filter-btn active" data-filter="${sec}">${sec}</button>`;
+                        filterHTML += `<button class="filter-btn" data-filter="${sec}">${sec}</button>`;
                     });
                     filtersContainer.innerHTML = filterHTML;
 
-                    // Initialize the state: All categories are active to start
-                    let activeFilters = Array.from(uniqueSections).sort();
-
                     document.querySelectorAll('.filter-btn').forEach(btn => {
                         btn.addEventListener('click', (e) => {
-                            const clickedFilter = e.target.dataset.filter;
-
-                            if (clickedFilter === 'All') {
-                                // Master reset: turn everything on
-                                activeFilters = Array.from(uniqueSections).sort();
-                                document.querySelectorAll('.filter-btn').forEach(b => b.classList.add('active'));
-                            } else {
-                                if (activeFilters.includes(clickedFilter)) {
-                                    // Turn off individual filter
-                                    activeFilters = activeFilters.filter(f => f !== clickedFilter);
-                                    e.target.classList.remove('active');
-                                    // Remove 'All Goods' highlight if it was active
-                                    document.getElementById('filter-all').classList.remove('active');
-                                } else {
-                                    // Turn on individual filter and push to the top of the array
-                                    activeFilters.unshift(clickedFilter);
-                                    e.target.classList.add('active');
-                                    
-                                    // Re-highlight 'All Goods' if everything is now active again
-                                    if (activeFilters.length === uniqueSections.size) {
-                                        document.getElementById('filter-all').classList.add('active');
-                                    }
-                                }
-                            }
-                            renderGrid();
+                            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                            e.target.classList.add('active');
+                            renderGrid(e.target.dataset.filter);
                         });
                     });
-                    
-                    function renderGrid() {
-                        shopGrid.innerHTML = '';
-                        
-                        if (activeFilters.length === 0) {
-                            shopGrid.innerHTML = '<p style="color: #fff; grid-column: 1 / -1; text-align: center; padding: 4rem 0;">No categories selected. Please select a category above to view products.</p>';
-                            return;
-                        }
-
-                        // Use a Set to track rendered product IDs so items in multiple categories don't duplicate
-                        let renderedProductIds = new Set();
-
-                        // Loop through activeFilters sequentially so the most recently clicked category renders first
-                        activeFilters.forEach(filter => {
-                            const filteredProducts = products.filter(p => p.sections.includes(filter) && !renderedProductIds.has(p.id));
-                            
-                            filteredProducts.forEach(product => {
-                                renderedProductIds.add(product.id);
-                                shopGrid.innerHTML += `
-                                    <div class="product-card">
-                                        <a href="product.html?id=${product.id}">
-                                            <div class="product-image">
-                                                <img src="${product.mainImage}" alt="${product.title}">
-                                            </div>
-                                            <div class="product-info">
-                                                <h3 class="product-title">${product.title}</h3>
-                                                <p class="product-price">£${product.basePrice.toFixed(2)}</p>
-                                                <button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); addToSmartCart('${product.id}', '${product.title}', ${product.basePrice}, '${product.postalClass}')">Add to Cart</button>
-                                            </div>
-                                        </a>
-                                    </div>
-                                `;
-                            });
-                        });
-                    }
-                    
-                    // Initial Render
-                    renderGrid();
                 }
+
+                function renderGrid(filterValue) {
+                    shopGrid.innerHTML = '';
+                    const filteredProducts = filterValue === 'All' ? products : products.filter(p => p.sections.includes(filterValue));
+
+                    if (filteredProducts.length === 0) {
+                        shopGrid.innerHTML = '<p style="color: #fff; grid-column: 1 / -1; text-align: center; padding: 4rem 0;">No products found in this section.</p>';
+                        return;
+                    }
+
+                    filteredProducts.forEach(product => {
+                        shopGrid.innerHTML += `
+                            <div class="product-card">
+                                <a href="product.html?id=${product.id}">
+                                    <div class="product-image">
+                                        <img src="${product.mainImage}" alt="${product.title}">
+                                    </div>
+                                    <div class="product-info">
+                                        <h3 class="product-title">${product.title}</h3>
+                                        <p class="product-price">£${product.basePrice.toFixed(2)}</p>
+                                        <button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); addToSmartCart('${product.id}', '${product.title}', ${product.basePrice}, '${product.postalClass}')">Add to Cart</button>
+                                    </div>
+                                </a>
+                            </div>
+                        `;
+                    });
+                }
+                renderGrid('All');
 
             } catch (error) {
                 shopGrid.innerHTML = '<p style="color: #cc0000; grid-column: 1 / -1; text-align: center; padding: 4rem 0;">Error loading products database.</p>';
