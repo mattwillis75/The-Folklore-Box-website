@@ -18,7 +18,8 @@ const savedPins = [
   {
     "lat": 483.1499887564216,
     "lng": 2019.823345340214,
-    "title": "The Spectre of Bern",
+    "title": "The Spectre 
+      of Bern",
     "category": "Haunting",
     "image": "",
     "desc": "\"As for the credulous at Reedham, they will tell you that at midnight on the 21st of each August the spectre of Bern dashes headlong down the village street, its face terrible to behold, and on its heels the Saxon archers thirsting for its ghostly blood. A pretty story.\"\n\nThe above quote is taken from Broadland Adventure by J Wentworth Day published in 1951.\n\nThe Bern referred to is from the story of King Edmund and the Danish King, Ragnar Lodbrog."
