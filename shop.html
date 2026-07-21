@@ -257,6 +257,10 @@
             const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
             const cartKey = isWholesale ? 'folkloreWholesaleCart' : 'folkloreCart';
             
+            // Move cart array to top level so sync function can read/write to it globally
+            let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+            cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
+            
             if (isWholesale) {
                 const banner = document.getElementById('wholesale-banner');
                 if (banner) banner.style.display = 'flex'; // Changed to flex for button alignment
@@ -266,35 +270,39 @@
             }
 
             // ==========================================
-            // WHOLESALE LOGOUT LOGIC (CART RETENTION)
+            // WHOLESALE LOGOUT LOGIC & CART MERGING
             // ==========================================
             const logoutBtn = document.getElementById('wholesale-logout-btn');
             if (logoutBtn) {
                 logoutBtn.addEventListener('click', (e) => {
                     e.preventDefault();
                     
-                    // Convert wholesale cart back to retail pricing
-                    let wholesaleCart = JSON.parse(localStorage.getItem('folkloreWholesaleCart')) || [];
-                    if (wholesaleCart.length > 0) {
-                        let retailCart = wholesaleCart.map(item => {
-                            // Reverse the 60% discount back to full RRP
-                            let originalPrice = Math.round((item.price / 0.60) * 100) / 100;
-                            return {
-                                ...item,
-                                price: originalPrice
-                            };
-                        });
-                        // Save to standard cart and delete wholesale cart
-                        localStorage.setItem('folkloreCart', JSON.stringify(retailCart));
-                        localStorage.removeItem('folkloreWholesaleCart');
-                        
-                        // Keep the cart open on reload to show them it successfully converted
+                    let wCart = JSON.parse(localStorage.getItem('folkloreWholesaleCart')) || [];
+                    let rCart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
+                    
+                    // Securely merge wholesale cart items into the retail cart
+                    wCart.forEach(wItem => {
+                        let existingRItem = rCart.find(rItem => rItem.id === wItem.id);
+                        if (existingRItem) {
+                            existingRItem.quantity += (wItem.quantity || 1);
+                        } else {
+                            rCart.push(wItem);
+                        }
+                    });
+
+                    // Save the merged retail cart
+                    localStorage.setItem('folkloreCart', JSON.stringify(rCart));
+                    
+                    // STRICTLY DELETE the wholesale cart from memory
+                    localStorage.removeItem('folkloreWholesaleCart');
+                    sessionStorage.removeItem('wholesaleAuthenticated');
+                    
+                    if (rCart.length > 0) {
                         sessionStorage.setItem('openCartOnLoad', 'true');
                     }
                     
-                    sessionStorage.removeItem('wholesaleAuthenticated');
                     alert("You have exited Wholesale Mode. Returning to the standard retail shop.");
-                    window.location.reload(); // Instantly revert page to retail mode
+                    window.location.reload(); 
                 });
             }
 
@@ -427,14 +435,30 @@
                 }
                 renderGrid('All');
 
+                // ==========================================
+                // NEW: DYNAMIC PRICE SYNC
+                // ==========================================
+                // Now that the true active prices are loaded from the database, loop through the cart
+                // and force all prices to match the shop database to fix any logout/login math bugs.
+                let updatedCart = false;
+                cart.forEach(cartItem => {
+                    let matchedProduct = products.find(p => p.id === cartItem.id);
+                    if (matchedProduct && cartItem.price !== matchedProduct.basePrice) {
+                        cartItem.price = matchedProduct.basePrice;
+                        updatedCart = true;
+                    }
+                });
+                
+                if (updatedCart) {
+                    localStorage.setItem(cartKey, JSON.stringify(cart));
+                    updateCartUI(); // Force visual refresh immediately
+                }
+
             } catch (error) {
                 shopGrid.innerHTML = '<p style="color: #cc0000; grid-column: 1 / -1; text-align: center; padding: 4rem 0;">Error loading products database.</p>';
             }
 
             // --- 4. SMART CART LOGIC ---
-            let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
-            cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
-            
             const cartSidebar = document.getElementById('cart-sidebar');
             const cartOverlay = document.getElementById('cart-overlay');
             const cartToggle = document.getElementById('cart-toggle');
