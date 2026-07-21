@@ -266,12 +266,32 @@
             }
 
             // ==========================================
-            // WHOLESALE LOGOUT LOGIC
+            // WHOLESALE LOGOUT LOGIC (CART RETENTION)
             // ==========================================
             const logoutBtn = document.getElementById('wholesale-logout-btn');
             if (logoutBtn) {
                 logoutBtn.addEventListener('click', (e) => {
                     e.preventDefault();
+                    
+                    // Convert wholesale cart back to retail pricing
+                    let wholesaleCart = JSON.parse(localStorage.getItem('folkloreWholesaleCart')) || [];
+                    if (wholesaleCart.length > 0) {
+                        let retailCart = wholesaleCart.map(item => {
+                            // Reverse the 60% discount back to full RRP
+                            let originalPrice = Math.round((item.price / 0.60) * 100) / 100;
+                            return {
+                                ...item,
+                                price: originalPrice
+                            };
+                        });
+                        // Save to standard cart and delete wholesale cart
+                        localStorage.setItem('folkloreCart', JSON.stringify(retailCart));
+                        localStorage.removeItem('folkloreWholesaleCart');
+                        
+                        // Keep the cart open on reload to show them it successfully converted
+                        sessionStorage.setItem('openCartOnLoad', 'true');
+                    }
+                    
                     sessionStorage.removeItem('wholesaleAuthenticated');
                     alert("You have exited Wholesale Mode. Returning to the standard retail shop.");
                     window.location.reload(); // Instantly revert page to retail mode
@@ -564,7 +584,13 @@
                     updateCartUI();
                 }
             });
-            
+
+            // Auto-open cart check
+            if (sessionStorage.getItem('openCartOnLoad') === 'true') {
+                sessionStorage.removeItem('openCartOnLoad');
+                openCart();
+            }
+
             updateCartUI();
 
             // --- 5. PAYPAL INITIALIZATION ---
