@@ -431,3 +431,17 @@ Materials: Birch wood, ribbon
 Postal Class: Large Letter
 Item Cost: 14.00
 ---
+Title: Snow Stone Hanging Decoration
+Main Image: hanging-dec-snow-stone-1.jpg
+Images: hanging-dec-snow-stone-2.jpg
+Sections: Hanging Decorations
+Description: This listing is for my Snow Stone hanging decoration, laser cut into black painted birch plywood from an original illustration. the front and back are both painted black and it comes with a red silk effect ribbon. The decoration measure approx 90x90mm (not including the ribbon).
+
+Each decoration also ships with a mini print measuring 90 x 90 mm of the original illustration while stocks last.
+
+Please be aware that there may be slight differences in colouring with each piece due to the processes used in production and occasionally some variance in colour or grain of the birch wood.
+Size: 60x110x3mm
+Materials: Birch wood, ribbon
+Postal Class: Large Letter
+Item Cost: 14.00
+---
