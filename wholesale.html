@@ -386,9 +386,36 @@
                 
                 logoutBtn.addEventListener('click', (e) => {
                     e.preventDefault();
+                    
+                    let wCart = JSON.parse(localStorage.getItem('folkloreWholesaleCart')) || [];
+                    let rCart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
+                    
+                    // Securely merge and mathematically fix prices
+                    wCart.forEach(wItem => {
+                        let existingRItem = rCart.find(rItem => rItem.id === wItem.id);
+                        if (existingRItem) {
+                            existingRItem.quantity += (wItem.quantity || 1);
+                        } else {
+                            let retailPrice = Math.round((wItem.price / 0.60) * 100) / 100;
+                            rCart.push({
+                                id: wItem.id,
+                                title: wItem.title,
+                                price: retailPrice,
+                                postalClass: wItem.postalClass,
+                                quantity: wItem.quantity || 1
+                            });
+                        }
+                    });
+
+                    // Save retail cart
+                    localStorage.setItem('folkloreCart', JSON.stringify(rCart));
+                    
+                    // OBLITERATE wholesale cart so ghost items NEVER resurrect
+                    localStorage.removeItem('folkloreWholesaleCart');
                     sessionStorage.removeItem('wholesaleAuthenticated');
+                    
                     alert("You have exited Wholesale Mode. Returning to the standard retail shop.");
-                    window.location.href = 'shop.html';
+                    window.location.href = 'shop.html'; 
                 });
             }
 
@@ -501,18 +528,10 @@
                             localStorage.setItem('folkloreWholesaleCart', JSON.stringify(wholesaleCart));
                             localStorage.removeItem('folkloreCart');
                             sessionStorage.setItem('openCartOnLoad', 'true');
-                            window.location.reload();
-                            return;
                         }
-
-                        pwdOverlay.style.opacity = 0;
-                        setTimeout(() => pwdOverlay.style.display = 'none', 300);
                         
-                        // Force button to show if they stay on page
-                        if(logoutBtn) logoutBtn.style.display = 'inline-block';
-                        
-                        // Initialize products now that they are logged in
-                        initializeProducts();
+                        // Force a hard reload no matter what so variables sync to Wholesale mode!
+                        window.location.reload();
                         
                     } else {
                         pwdError.style.display = 'block';
