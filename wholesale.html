@@ -195,6 +195,15 @@
         .form-success-message h3 { color: var(--accent-red); font-size: 1.8rem; font-family: 'Spectral', serif; margin-top: 0; }
         .form-success-message p { color: #ddd; font-size: 1rem; text-align: center; }
     </style>
+<!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+       (function(){
+          emailjs.init({
+            publicKey: "qI6ltlwzFXECV29P8",
+          });
+       })();
+    </script>
 </head>
 <body>
 
@@ -933,7 +942,7 @@
 
             // 3. Check if EmailJS loaded, then send
             if (typeof emailjs !== 'undefined') {
-                emailjs.send('service_zmm27cb', 'The Folklore Box', templateParams)
+                emailjs.send('service_zmm27cb', 'template_ld7uqbh', templateParams)
                     .then(function(response) {
                         console.log('Email sent successfully!', response.status, response.text);
                     }).catch(function(error) {
