@@ -11,7 +11,7 @@ SHUCK #1 - THE DARK
 Size: A5
 Materials: Paper
 Postal Class: Large Letter
-Item Cost: 0.50
+Item Cost: 0.10
 ---
 Title: SHUCK Issue 2 - Love
 Main Image: ./shuck-issue2-1.jpg
