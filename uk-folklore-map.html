@@ -675,6 +675,8 @@
                 map.fitBounds(bounds, { padding: [0, 0], animate: false }); 
                 const perfectlyFittedZoom = map.getZoom();
                 map.setMinZoom(perfectlyFittedZoom);
+                // Trigger the semantic zoom check right after resetting bounds
+                updateSemanticZoom();
             }
 
             fitAndLockZoom();
@@ -804,18 +806,28 @@
                 semanticTowns.push({ marker: marker, minZoom: requiredZoom });
             }
 
+            // Fixed updateSemanticZoom function using exact minZoom baseline 
             function updateSemanticZoom() {
                 const currentZoom = map.getZoom();
-                const baseZoom = map.getBoundsZoom(bounds); 
+                // getMinZoom is completely accurate to the fitted starting size, regardless of screen orientation
+                const baseZoom = map.getMinZoom(); 
                 const zoomStepsIn = currentZoom - baseZoom;
                 
                 semanticTowns.forEach(item => {
                     let requiredSteps = 0; 
-                    if (item.minZoom === -2) requiredSteps = 0; 
-                    if (item.minZoom === -1) requiredSteps = 1; 
-                    if (item.minZoom >= 0) requiredSteps = 2;   
+                    
+                    // Maps standard desktop minZooms (-2, -1, 0, 1) to continuous mobile zoom increments
+                    if (item.minZoom <= -2) {
+                        requiredSteps = 0;    // Shows immediately on initial map load
+                    } else if (item.minZoom === -1) {
+                        requiredSteps = 0.8;  // Shows on 1st zoom (+ a little bit of tolerance)
+                    } else if (item.minZoom === 0) {
+                        requiredSteps = 1.8;  // Shows on 2nd zoom
+                    } else if (item.minZoom >= 1) {
+                        requiredSteps = 2.8;  // Shows on 3rd zoom
+                    }
 
-                    if (zoomStepsIn >= requiredSteps - 0.1) {
+                    if (zoomStepsIn >= requiredSteps) {
                         if (!townsLayerGroup.hasLayer(item.marker)) {
                             townsLayerGroup.addLayer(item.marker);
                         }
@@ -827,6 +839,7 @@
                 });
             }
 
+            // Map event listeners
             map.on('zoomend', updateSemanticZoom);
             updateSemanticZoom();
 
