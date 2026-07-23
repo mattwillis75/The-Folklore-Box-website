@@ -133,84 +133,45 @@
             align-items: center;
             gap: 6px;
             white-space: nowrap; 
-            cursor: pointer; /* Restored pointer cursor so it can be clicked */
+            cursor: pointer;
             width: max-content; 
         }
-
-        /* Hides the SVG sub-pixel bleed on the outer edges */
-        .leaflet-image-layer {
-            outline: 2px solid #000000;
-            outline-offset: -1px;
-        }
-        
         .town-dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--accent-red);
-            border-radius: 50%;
-            display: inline-block;
-            box-shadow: 0 0 8px rgba(204, 0, 0, 0.8);
-            flex-shrink: 0;
+            width: 8px; height: 8px; background-color: var(--accent-red);
+            border-radius: 50%; display: inline-block;
+            box-shadow: 0 0 8px rgba(204, 0, 0, 0.8); flex-shrink: 0;
         }
+        .leaflet-image-layer { outline: 2px solid #000000; outline-offset: -1px; }
 
-        /* Sidebar Area */
+        /* --- DESKTOP SIDEBAR --- */
         #info-sidebar { 
             position: absolute; 
             top: 4.3%; bottom: 5.8%; left: 79%; right: 3.2%; 
             padding: 1.5% 2% 2% 2%; 
             box-sizing: border-box; 
-            display: flex; flex-direction: column; 
             z-index: 999; 
             background: transparent; 
             overflow-y: auto; 
             font-family: 'Georgia', serif; 
         }
-
         #info-sidebar::-webkit-scrollbar { width: 6px; }
         #info-sidebar::-webkit-scrollbar-track { background: transparent; }
         #info-sidebar::-webkit-scrollbar-thumb { background: #333; border-radius: 0px; }
 
-        /* Sidebar Content */
+        .modal-content { display: flex; flex-direction: column; height: 100%; }
         #empty-state { text-align: center; color: #666; margin-top: 50px; font-style: italic; }
-        #sidebar-img { width: 100%; height: auto; margin-bottom: 20px; display: none; border-radius: 2px; }
+        
+        .modal-image-col img { width: 100%; height: auto; margin-bottom: 20px; border-radius: 2px; display: none; }
         #sidebar-title { font-size: 1.8vw; margin: 0 0 5px 0; font-weight: normal; display: none; font-family: 'Spectral', serif; color: #fff;}
         #sidebar-cat { font-size: 0.9vw; color: var(--accent-red); margin: 0 0 20px 0; display: none; text-transform: uppercase; letter-spacing: 1px;}
         #sidebar-desc { font-size: 0.85vw; line-height: 1.6; display: none; color: #ddd; }
+        
+        #close-modal { display: none; }
 
-        @media (max-width: 800px) {
-            #sidebar-title { font-size: 3vw; }
-            #sidebar-cat { font-size: 1.5vw; }
-            #sidebar-desc { font-size: 1.5vw; }
+        /* --- MOBILE OVERLAY BUTTON --- */
+        #mobile-enter-overlay {
+            display: none;
         }
-
-        /* --- SLIDE OUT CART STYLES --- */
-        .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 3001; display: none; backdrop-filter: blur(3px); }
-        .cart-overlay.active { display: block; }
-        .cart-sidebar { position: fixed; top: 0; right: -500px; width: 500px; max-width: 100vw; height: 100vh; background: #0a0a0a; border-left: 1px solid #222; z-index: 3002; transition: right 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); padding: 2rem; box-sizing: border-box; display: flex; flex-direction: column; overflow-y: auto; }
-        .cart-sidebar.open { right: 0; }
-        .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 1rem; margin-bottom: 1.5rem; flex-shrink: 0; }
-        .cart-header h2 { margin: 0; font-size: 2rem; }
-        .close-cart { font-size: 2.5rem; cursor: pointer; color: #fff; line-height: 1; transition: color 0.3s; }
-        .close-cart:hover { color: var(--accent-red); }
-        .cart-items-container { flex-grow: 1; margin-bottom: 1rem; padding-right: 0.5rem; overflow-y: visible; }
-        
-        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid #222; gap: 0.8rem; }
-        .cart-item-title { flex-grow: 1; font-weight: 600; font-size: 0.95rem; line-height: 1.3; }
-        .cart-qty-controls { display: flex; align-items: center; gap: 0.5rem; background: #111; padding: 0.2rem 0.5rem; border-radius: 3px; border: 1px solid #333; }
-        .cart-qty-controls button { background: none; border: none; color: #fff; cursor: pointer; font-size: 1.2rem; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
-        .cart-qty-controls button:hover { color: var(--accent-red); }
-        .cart-item-total { font-weight: bold; min-width: 60px; text-align: right; }
-        .remove-btn { background: none; border: none; color: #888; cursor: pointer; font-size: 1.5rem; padding: 0 0 0 0.5rem; transition: color 0.2s; }
-        .remove-btn:hover { color: var(--accent-red); }
-        
-        .cart-footer { border-top: 1px solid #333; padding-top: 1.5rem; flex-shrink: 0; }
-        .cart-total { font-size: 1.8rem; text-align: right; margin-bottom: 1.5rem; font-family: 'Spectral', serif; color: var(--accent-red); }
-
-        /* Footer */
-        footer { background: #000000; color: #ffffff; padding: 4rem 2rem; text-align: center; border-top: 1px solid #222; }
-        footer a { color: #ffffff; text-decoration: none; margin: 0 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
-        footer a:hover { color: var(--accent-red); }
-        .social-links { margin-bottom: 2rem; }
 
         /* --- FULL SCREEN / MOBILE OPTIMIZATION --- */
         body.map-is-fullscreen { overflow: hidden; }
@@ -224,51 +185,150 @@
         body.map-is-fullscreen .map-wrapper {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            width: 100%;
-            height: 100%;
-            height: 100dvh; 
-            padding: 0;
-            margin: 0;
-            background: #000;
+            width: 100%; height: 100%; height: 100dvh; 
+            padding: 0; margin: 0; background: #000;
             z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            display: flex; justify-content: center; align-items: center;
             max-width: none;
         }
         
         body.map-is-fullscreen #app-container {
-            width: 100%;
-            height: auto;
-            max-height: 100%;
-            max-height: 100dvh;
+            width: 100%; height: auto;
+            max-height: 100%; max-height: 100dvh;
             max-width: calc(100dvh * (1600 / 675.6));
         }
 
-        /* The custom Leaflet Expand button styling (Updated to Icon Only) */
+        /* --- MOBILE RESPONSIVE LOGIC (Modal, New Border, Orientation Lock) --- */
+        @media (max-width: 800px) {
+            /* 1. Show the "Tap to Enter" overlay if not in fullscreen */
+            body:not(.map-is-fullscreen) #mobile-enter-overlay {
+                display: flex;
+                position: absolute;
+                top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0, 0, 0, 0.85);
+                z-index: 1500;
+                justify-content: center;
+                align-items: center;
+                backdrop-filter: blur(3px);
+            }
+            .enter-map-btn {
+                background: var(--accent-red);
+                color: #fff;
+                padding: 1rem 2rem;
+                border: none;
+                font-family: 'Lato', sans-serif;
+                font-size: 1.2rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                border-radius: 4px;
+                cursor: pointer;
+                box-shadow: 0 4px 15px rgba(204, 0, 0, 0.4);
+            }
+
+            /* 2. Swap border and adjust map area */
+            body.map-is-fullscreen #border-overlay {
+                background-image: url('map-border-mobile.png');
+            }
+            body.map-is-fullscreen #map {
+                /* IMPORTANT: You may need to tweak these % values so the map aligns perfectly with the transparent window of your new map-border-mobile.png */
+                top: 4%; bottom: 4%; left: 4%; right: 4%; 
+            }
+            body.map-is-fullscreen #app-container {
+                /* Ensures the container fills the screen properly in landscape */
+                max-width: none;
+                width: 100%; 
+                height: 100dvh;
+                aspect-ratio: unset;
+            }
+
+            /* 3. Transform Sidebar into a Pop-Up Modal (Proportional 1860x1020) */
+            body.map-is-fullscreen #info-sidebar {
+                position: fixed;
+                top: 50%; left: 50%;
+                transform: translate(-50%, -50%);
+                width: 90vw;
+                max-height: 90vh;
+                aspect-ratio: 186 / 102; /* Maintains the exact 1860x1020 ratio */
+                background: rgba(10, 10, 10, 0.96);
+                border: 2px solid #333;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+                border-radius: 6px;
+                z-index: 9999;
+                display: none; /* Hidden by default */
+                padding: 3%;
+                overflow-y: auto;
+            }
+            
+            body.map-is-fullscreen #info-sidebar.modal-active {
+                display: block; /* Shown when clicked */
+            }
+
+            /* Red Close 'X' */
+            #close-modal {
+                display: block;
+                position: absolute;
+                top: 10px; right: 20px;
+                color: var(--accent-red);
+                font-size: 2.5rem;
+                cursor: pointer;
+                line-height: 1;
+                z-index: 10000;
+            }
+
+            #empty-state { display: none !important; }
+
+            /* Restructure Modal Text Layout for Landscape */
+            .modal-content {
+                display: flex;
+                flex-direction: row; /* Puts image and text side-by-side */
+                align-items: center;
+                gap: 4%;
+                height: 100%;
+            }
+            .modal-image-col { flex: 0.45; }
+            .modal-text-col { flex: 0.55; display: flex; flex-direction: column; justify-content: center;}
+            
+            #sidebar-title { font-size: 3.5vh; }
+            #sidebar-cat { font-size: 2vh; }
+            #sidebar-desc { font-size: 2.2vh; }
+        }
+
+        /* Expand Button */
         .custom-fs-btn {
-            background: var(--accent-red);
-            color: #ffffff;
-            width: 34px;
-            height: 34px;
-            cursor: pointer;
-            border: 2px solid rgba(0,0,0,0.2);
-            border-radius: 4px;
-            background-clip: padding-box;
-            font-size: 1.2rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 10px !important; 
-            margin-left: 10px !important;
-            transition: all 0.3s ease;
-            line-height: 1;
-            padding: 0;
+            background: var(--accent-red); color: #ffffff; width: 34px; height: 34px;
+            cursor: pointer; border: 2px solid rgba(0,0,0,0.2); border-radius: 4px;
+            background-clip: padding-box; font-size: 1.2rem; display: flex;
+            justify-content: center; align-items: center; margin-top: 10px !important; 
+            margin-left: 10px !important; transition: all 0.3s ease; line-height: 1; padding: 0;
         }
-        
-        .custom-fs-btn:hover { 
-            background: #a30000; 
-        }
+        .custom-fs-btn:hover { background: #a30000; }
+
+        /* --- SLIDE OUT CART STYLES (Kept exactly as you had them) --- */
+        .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 3001; display: none; backdrop-filter: blur(3px); }
+        .cart-overlay.active { display: block; }
+        .cart-sidebar { position: fixed; top: 0; right: -500px; width: 500px; max-width: 100vw; height: 100vh; background: #0a0a0a; border-left: 1px solid #222; z-index: 3002; transition: right 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); padding: 2rem; box-sizing: border-box; display: flex; flex-direction: column; overflow-y: auto; }
+        .cart-sidebar.open { right: 0; }
+        .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 1rem; margin-bottom: 1.5rem; flex-shrink: 0; }
+        .cart-header h2 { margin: 0; font-size: 2rem; }
+        .close-cart { font-size: 2.5rem; cursor: pointer; color: #fff; line-height: 1; transition: color 0.3s; }
+        .close-cart:hover { color: var(--accent-red); }
+        .cart-items-container { flex-grow: 1; margin-bottom: 1rem; padding-right: 0.5rem; overflow-y: visible; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid #222; gap: 0.8rem; }
+        .cart-item-title { flex-grow: 1; font-weight: 600; font-size: 0.95rem; line-height: 1.3; }
+        .cart-qty-controls { display: flex; align-items: center; gap: 0.5rem; background: #111; padding: 0.2rem 0.5rem; border-radius: 3px; border: 1px solid #333; }
+        .cart-qty-controls button { background: none; border: none; color: #fff; cursor: pointer; font-size: 1.2rem; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
+        .cart-qty-controls button:hover { color: var(--accent-red); }
+        .cart-item-total { font-weight: bold; min-width: 60px; text-align: right; }
+        .remove-btn { background: none; border: none; color: #888; cursor: pointer; font-size: 1.5rem; padding: 0 0 0 0.5rem; transition: color 0.2s; }
+        .remove-btn:hover { color: var(--accent-red); }
+        .cart-footer { border-top: 1px solid #333; padding-top: 1.5rem; flex-shrink: 0; }
+        .cart-total { font-size: 1.8rem; text-align: right; margin-bottom: 1.5rem; font-family: 'Spectral', serif; color: var(--accent-red); }
+
+        /* Footer */
+        footer { background: #000000; color: #ffffff; padding: 4rem 2rem; text-align: center; border-top: 1px solid #222; }
+        footer a { color: #ffffff; text-decoration: none; margin: 0 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
+        footer a:hover { color: var(--accent-red); }
+        .social-links { margin-bottom: 2rem; }
     </style>
 </head>
 <body>
@@ -315,15 +375,28 @@
         <!-- Integrated Map Container -->
         <div class="map-wrapper">
             <div id="app-container">
+                <!-- Mobile overlay required to bypass browser security for fullscreen -->
+                <div id="mobile-enter-overlay">
+                    <button class="enter-map-btn" onclick="forceMobileMapStart()">Enter Interactive Map</button>
+                </div>
+                
                 <div id="border-overlay"></div>
                 <div id="map"></div>
             
                 <div id="info-sidebar">
+                    <div id="close-modal">&times;</div>
                     <div id="empty-state">Click a marker on the map to view details.</div>
-                    <img id="sidebar-img" src="" alt="Location Media">
-                    <h2 id="sidebar-title"></h2>
-                    <div id="sidebar-cat"></div>
-                    <div id="sidebar-desc"></div>
+                    
+                    <div class="modal-content" id="sidebar-content-area" style="display: none;">
+                        <div class="modal-image-col">
+                            <img id="sidebar-img" src="" alt="Location Media">
+                        </div>
+                        <div class="modal-text-col">
+                            <h2 id="sidebar-title"></h2>
+                            <div id="sidebar-cat"></div>
+                            <div id="sidebar-desc"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -365,12 +438,20 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
     <script>
+        // Define toggleFullscreen globally so the mobile button can trigger it
+        let toggleFullscreenGlobal = null;
+        
+        function forceMobileMapStart() {
+            if (toggleFullscreenGlobal) {
+                toggleFullscreenGlobal();
+            }
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
             
             // ==========================================
             // UI SCRIPTS: Header, Nav, and Cart Logic
             // ==========================================
-
             const header = document.getElementById('main-header');
             window.addEventListener('scroll', () => {
                 if (window.scrollY > 50) {
@@ -466,16 +547,7 @@
                 cartToggle.textContent = `Cart (${cartItemCount})`;
             };
 
-            window.addEventListener('pageshow', (event) => {
-                if (event.persisted) {
-                    const currentKey = typeof cartKey !== 'undefined' ? cartKey : 'folkloreCart';
-                    cart = JSON.parse(localStorage.getItem(currentKey)) || [];
-                    cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
-                    updateCartUI();
-                }
-            });
             updateCartUI();
-
 
             // ==========================================
             // MAP LOGIC
@@ -488,7 +560,6 @@
                 attributionControl: false 
             });
             
-            // Image Dimensions
             const mapWidth = 2400;
             const mapHeight = 1352; 
             const bounds = [[0, 0], [mapHeight, mapWidth]];
@@ -511,13 +582,13 @@
             });
             resizeObserver.observe(document.getElementById('app-container'));
             
-            // --- FULL SCREEN CONTROL ---
+            // --- FULL SCREEN & ORIENTATION CONTROL ---
             let isFullscreen = false;
 
             L.Control.FullscreenButton = L.Control.extend({
                 onAdd: function(map) {
                     const btn = L.DomUtil.create('button', 'custom-fs-btn');
-                    btn.innerHTML = '⛶'; // Icon only
+                    btn.innerHTML = '⛶'; 
                     btn.title = 'View map in full screen';
                     
                     L.DomEvent.disableClickPropagation(btn); 
@@ -540,22 +611,31 @@
                 if (!isFullscreen) {
                     // ENTER FULLSCREEN
                     body.classList.add('map-is-fullscreen');
-                    btn.innerHTML = '✕'; // Swap to Close icon
+                    btn.innerHTML = '✕'; 
                     isFullscreen = true;
                     
                     if (appContainer.requestFullscreen) {
                         appContainer.requestFullscreen().then(() => {
+                            // Automatically lock to landscape once fullscreen begins
                             if (screen.orientation && screen.orientation.lock) {
-                                screen.orientation.lock('landscape').catch(e => console.log("Orientation lock not supported"));
+                                screen.orientation.lock('landscape').catch(e => console.log("Orientation lock bypassed by device"));
                             }
                         }).catch(err => console.log(err));
                     }
                 } else {
                     // EXIT FULLSCREEN
                     body.classList.remove('map-is-fullscreen');
-                    btn.innerHTML = '⛶'; // Swap back to Expand icon
+                    btn.innerHTML = '⛶'; 
                     isFullscreen = false;
                     
+                    // Hide the modal if they exit fullscreen
+                    clearSidebar();
+                    
+                    // Unlock rotation
+                    if (screen.orientation && screen.orientation.unlock) {
+                        screen.orientation.unlock();
+                    }
+
                     if (document.fullscreenElement) {
                         document.exitFullscreen().catch(err => console.log(err));
                     }
@@ -567,19 +647,22 @@
                 }, 300);
             }
 
+            // Bind the toggle to the global scope for the mobile button
+            toggleFullscreenGlobal = toggleFullscreen;
+
             document.addEventListener('fullscreenchange', () => {
                 if (!document.fullscreenElement && isFullscreen) {
                     toggleFullscreen(); 
                 }
             });
 
+            // --- LOAD DATA FROM PINS.JS ---
             const customIcons = {
                 'Cryptid': L.icon({ iconUrl: 'cryptid-marker.svg', iconSize: [32, 42], iconAnchor: [16, 42] }),
                 'Haunting': L.icon({ iconUrl: 'ghost-marker.svg', iconSize: [32, 42], iconAnchor: [16, 42] }),
                 'UFO': L.icon({ iconUrl: 'ufo-marker.svg', iconSize: [32, 42], iconAnchor: [16, 42] })
             };
 
-            // --- LOAD DATA FROM PINS.JS ---
             const pinCollection = (typeof savedPins !== 'undefined') ? savedPins : [];
             const pinLayerGroup = L.layerGroup().addTo(map);
 
@@ -589,14 +672,9 @@
 
             // --- SEMANTIC ZOOM: TOWN LABELS ---
             const townRegistry = (typeof savedTowns !== 'undefined') ? savedTowns : [];
-            
-            // 1. Create the LayerGroup and immediately attach it to the map
             const townsLayerGroup = L.layerGroup().addTo(map);
-            
-            // 2. A clean array to hold our logic
             const semanticTowns = [];
 
-            // REBUILT RENDER TOWN FUNCTION
             townRegistry.forEach((town, index) => {
                 renderTown(town, index);
             });
@@ -618,20 +696,15 @@
 
             function updateSemanticZoom() {
                 const currentZoom = map.getZoom();
-                // This grabs the perfect mathematical baseline immediately 
                 const baseZoom = map.getBoundsZoom(bounds); 
-                
                 const zoomStepsIn = currentZoom - baseZoom;
                 
                 semanticTowns.forEach(item => {
                     let requiredSteps = 0; 
-                    
-                    // FIXED: Threshold set to 0 so top-level towns appear immediately on load
                     if (item.minZoom === -2) requiredSteps = 0; 
                     if (item.minZoom === -1) requiredSteps = 1; 
                     if (item.minZoom >= 0) requiredSteps = 2;   
 
-                    // Tiny 0.1 buffer included to prevent math rounding errors hiding markers
                     if (zoomStepsIn >= requiredSteps - 0.1) {
                         if (!townsLayerGroup.hasLayer(item.marker)) {
                             townsLayerGroup.addLayer(item.marker);
@@ -644,15 +717,14 @@
                 });
             }
 
-            // Run the check every time the user zooms
             map.on('zoomend', updateSemanticZoom);
-            
-            // Run the check immediately on initial load
             updateSemanticZoom();
 
-
-            // --- SIDEBAR LOGIC ---
+            // --- SIDEBAR / MODAL LOGIC ---
             function populateSidebar(data) {
+                // Show modal classes
+                document.getElementById('info-sidebar').classList.add('modal-active');
+                document.getElementById('sidebar-content-area').style.display = 'flex';
                 document.getElementById('empty-state').style.display = 'none';
                 
                 const imgEl = document.getElementById('sidebar-img');
@@ -677,11 +749,9 @@
             }
 
             function clearSidebar() {
+                document.getElementById('info-sidebar').classList.remove('modal-active');
+                document.getElementById('sidebar-content-area').style.display = 'none';
                 document.getElementById('empty-state').style.display = 'block';
-                document.getElementById('sidebar-img').style.display = 'none';
-                document.getElementById('sidebar-title').style.display = 'none';
-                document.getElementById('sidebar-cat').style.display = 'none';
-                document.getElementById('sidebar-desc').style.display = 'none';
             }
 
             function renderPin(data, index) {
@@ -695,6 +765,8 @@
                 });
             }
 
+            // Close button for mobile modal
+            document.getElementById('close-modal').addEventListener('click', clearSidebar);
             map.on('click', clearSidebar);
         });
     </script>
