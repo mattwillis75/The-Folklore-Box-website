@@ -6,6 +6,11 @@
     <title>UK Folklore Map | The Folklore Box</title>
     <meta name="description" content="Explore the myths, cryptids, and hauntings of Norfolk on our interactive folklore map.">
     
+    <!-- Apple iOS Fullscreen Web App Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Folklore Map">
+    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -185,23 +190,17 @@
         body.map-is-fullscreen .map-wrapper {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            width: 100%; height: 100%; height: 100dvh; 
+            width: 100vw; height: 100dvh; 
             padding: 0; margin: 0; background: #000;
             z-index: 9999;
             display: flex; justify-content: center; align-items: center;
             max-width: none;
         }
-        
-        body.map-is-fullscreen #app-container {
-            width: 100%; height: auto;
-            max-height: 100%; max-height: 100dvh;
-            max-width: calc(100dvh * (1600 / 675.6));
-        }
 
-        /* --- MOBILE & TABLET MODAL LOGIC (Orientation Specific) --- */
+        /* --- MOBILE & TABLET MODAL LOGIC --- */
         @media (max-width: 1100px) {
             
-            /* 1. Show the "Tap to Enter" overlay if not in fullscreen */
+            /* Show the "Tap to Enter" overlay if not in fullscreen */
             body:not(.map-is-fullscreen) #mobile-enter-overlay {
                 display: flex;
                 position: absolute;
@@ -226,25 +225,41 @@
                 box-shadow: 0 4px 15px rgba(204, 0, 0, 0.4);
             }
 
-            /* 2. Swap border and adjust map area */
+            /* Container and rotation mechanics */
+            body.map-is-fullscreen #app-container {
+                position: absolute;
+                top: 50%; left: 50%;
+                /* Standard Landscape mode */
+                width: calc(100vw - 30px);
+                height: calc(100dvh - 30px);
+                max-width: none;
+                max-height: none;
+                aspect-ratio: unset;
+                transform: translate(-50%, -50%);
+            }
+            
+            @media (orientation: portrait) {
+                body.map-is-fullscreen #app-container {
+                    /* Rotate 90 degrees and swap dimensions for portrait screens */
+                    width: calc(100dvh - 30px);
+                    height: calc(100vw - 30px);
+                    transform: translate(-50%, -50%) rotate(90deg);
+                    transform-origin: center center;
+                }
+            }
+
+            /* Border overlay tracks directly to the container */
             body.map-is-fullscreen #border-overlay {
                 background-image: url('map-border-mobile.png');
+                width: 100%; height: 100%;
+                top: 0; left: 0;
             }
-            body.map-is-fullscreen .map-wrapper {
-                padding: 15px; /* Creates the requested black space around the edge */
-                box-sizing: border-box;
-            }
+            
             body.map-is-fullscreen #map {
                 top: 4%; bottom: 4%; left: 4%; right: 4%; 
             }
-            body.map-is-fullscreen #app-container {
-                max-width: 100%;
-                width: 100%; 
-                height: 100%; 
-                aspect-ratio: unset;
-            }
 
-            /* 3. Transform Sidebar into a Pop-Up Modal */
+            /* Pop-Up Modal (Unified Landscape layout since container is always horizontal) */
             body.map-is-fullscreen #info-sidebar {
                 position: fixed;
                 top: 50%; left: 50%;
@@ -256,7 +271,9 @@
                 z-index: 9999;
                 display: none; 
                 padding: 0;
-                overflow: hidden; /* Locks modal overall size */
+                overflow: hidden; 
+                width: 96%;
+                height: 92%; 
             }
             
             body.map-is-fullscreen #info-sidebar.modal-active {
@@ -269,7 +286,7 @@
                 align-items: center;
                 justify-content: center;
                 position: absolute;
-                top: 20px; right: 20px; /* Aligned with top of the image */
+                top: 20px; right: 20px; 
                 width: 40px; height: 40px;
                 background: rgba(0,0,0,0.7);
                 border-radius: 50%;
@@ -286,88 +303,40 @@
             body.map-is-fullscreen #sidebar-content-area {
                 width: 100%; height: 100%;
                 box-sizing: border-box;
+                display: flex;
+                flex-direction: row; 
+                padding: 20px;
+                gap: 30px;
+                overflow: hidden; 
             }
-
-            /* === PORTRAIT ORIENTATION === */
-            @media (orientation: portrait) {
-                body.map-is-fullscreen #info-sidebar {
-                    width: 94vw;
-                    height: 94vh; 
-                    max-height: 94vh;
-                }
-                body.map-is-fullscreen #sidebar-content-area {
-                    display: flex;
-                    flex-direction: column;
-                    overflow: hidden; /* Stops entire window from scrolling */
-                    padding: 20px; 
-                }
-                .modal-image-col {
-                    width: 100%;
-                    flex-shrink: 0;
-                    display: flex; 
-                    justify-content: center;
-                    padding-bottom: 20px;
-                }
-                .modal-image-col img {
-                    width: 75%; 
-                    height: auto;
-                    max-height: 40vh; 
-                    object-fit: cover;
-                    border-radius: 4px;
-                }
-                .modal-text-col {
-                    width: 100%; 
-                    flex: 1; /* Allows text block to fill remaining height */
-                    overflow-y: auto; /* Makes only the text scrollable */
-                    padding-bottom: 20px;
-                    padding-right: 5px; /* Slight offset for native scrollbar */
-                }
-                #sidebar-title { font-size: 2rem; margin-top: 0; }
-                #sidebar-cat { font-size: 1rem; }
-                #sidebar-desc { font-size: 1.1rem; }
+            
+            .modal-image-col {
+                flex: 1; 
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden; 
             }
-
-            /* === LANDSCAPE ORIENTATION === */
-            @media (orientation: landscape) {
-                body.map-is-fullscreen #info-sidebar {
-                    width: 96vw;
-                    height: 92vh; 
-                }
-                body.map-is-fullscreen #sidebar-content-area {
-                    display: flex;
-                    flex-direction: row; 
-                    padding: 20px;
-                    gap: 30px;
-                    overflow: hidden; 
-                }
-                .modal-image-col {
-                    flex: 1; 
-                    height: 100%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    overflow: hidden; 
-                }
-                .modal-image-col img {
-                    max-width: 92%; /* Enlarged proportionally */
-                    max-height: 92%; /* Enlarged proportionally */
-                    object-fit: contain;
-                    border-radius: 4px;
-                }
-                .modal-text-col {
-                    flex: 1; 
-                    height: 100%;
-                    overflow-y: auto; 
-                    padding-right: 15px; 
-                    padding-top: 40px; 
-                    padding-bottom: 20px;
-                    max-width: 500px; 
-                    margin: 0 auto;
-                }
-                #sidebar-title { font-size: 2.2rem; margin-top: 0; }
-                #sidebar-cat { font-size: 1rem; }
-                #sidebar-desc { font-size: 1.1rem; }
+            .modal-image-col img {
+                max-width: 92%; 
+                max-height: 92%; 
+                object-fit: contain;
+                border-radius: 4px;
             }
+            .modal-text-col {
+                flex: 1; 
+                height: 100%;
+                overflow-y: auto; 
+                padding-right: 15px; 
+                padding-top: 40px; 
+                padding-bottom: 20px;
+                max-width: 500px; 
+                margin: 0 auto;
+            }
+            #sidebar-title { font-size: 2.2rem; margin-top: 0; }
+            #sidebar-cat { font-size: 1rem; }
+            #sidebar-desc { font-size: 1.1rem; }
         }
 
         /* Expand Button */
@@ -683,7 +652,9 @@
             function toggleFullscreen() {
                 const body = document.body;
                 const btn = document.querySelector('.custom-fs-btn');
-                const appContainer = document.getElementById('app-container');
+                
+                // Select documentElement to force native browser fullscreen
+                const docEl = document.documentElement; 
 
                 if (!isFullscreen) {
                     // ENTER FULLSCREEN
@@ -691,13 +662,21 @@
                     btn.innerHTML = '✕'; 
                     isFullscreen = true;
                     
-                    if (appContainer.requestFullscreen) {
-                        appContainer.requestFullscreen().then(() => {
+                    // Request native full screen if supported (hides URL/Tab bars completely)
+                    const requestFS = docEl.requestFullscreen || docEl.webkitRequestFullscreen || docEl.mozRequestFullScreen || docEl.msRequestFullscreen;
+                    
+                    if (requestFS) {
+                        requestFS.call(docEl).then(() => {
                             if (screen.orientation && screen.orientation.lock) {
                                 screen.orientation.lock('landscape').catch(e => console.log("Orientation lock bypassed by device"));
                             }
-                        }).catch(err => console.log(err));
+                        }).catch(err => console.log("Fullscreen request failed:", err));
                     }
+                    
+                    // iOS Safari workaround attempt to push URL bar offscreen
+                    window.scrollTo(0, 1);
+                    setTimeout(() => window.scrollTo(0, 1), 100);
+
                 } else {
                     // EXIT FULLSCREEN
                     body.classList.remove('map-is-fullscreen');
@@ -710,8 +689,10 @@
                         screen.orientation.unlock();
                     }
 
-                    if (document.fullscreenElement) {
-                        document.exitFullscreen().catch(err => console.log(err));
+                    // Exit native full screen
+                    const exitFS = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
+                    if (document.fullscreenElement || document.webkitFullscreenElement) {
+                        if (exitFS) exitFS.call(document).catch(err => console.log(err));
                     }
                 }
                 
@@ -724,7 +705,7 @@
             toggleFullscreenGlobal = toggleFullscreen;
 
             document.addEventListener('fullscreenchange', () => {
-                if (!document.fullscreenElement && isFullscreen) {
+                if (!document.fullscreenElement && !document.webkitFullscreenElement && isFullscreen) {
                     toggleFullscreen(); 
                 }
             });
