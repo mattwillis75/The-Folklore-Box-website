@@ -5,7 +5,7 @@ Int Base: 4.50
 Int Additional: 1.00
 ---
 Class: Large Letter
-UK Base: 2.50
+UK Base: 0.10
 UK Additional: 0.50
 Int Base: 8.50
 Int Additional: 1.50
