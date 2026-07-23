@@ -738,7 +738,7 @@
 
             // 3. Check if EmailJS loaded, then send
             if (typeof emailjs !== 'undefined') {
-                emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+                emailjs.send('service_zmm27cb', 'The Folklore Box', templateParams)
                     .then(function(response) {
                         console.log('Email sent successfully!', response.status, response.text);
                     }).catch(function(error) {
