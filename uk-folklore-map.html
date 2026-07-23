@@ -670,180 +670,18 @@
             L.imageOverlay('norfolk-map.svg', bounds).addTo(map);
             map.setMaxBounds(bounds);
 
-            function fitAndLockZoom() {
-                map.setMinZoom(-4); 
-                map.fitBounds(bounds, { padding: [0, 0], animate: false }); 
-                const perfectlyFittedZoom = map.getZoom();
-                map.setMinZoom(perfectlyFittedZoom);
-                // Trigger the semantic zoom check right after resetting bounds
-                updateSemanticZoom();
-            }
-
-            fitAndLockZoom();
-
-            const resizeObserver = new ResizeObserver(() => {
-                map.invalidateSize(); 
-                fitAndLockZoom();
-            });
-            resizeObserver.observe(document.getElementById('app-container'));
-            
-            // --- FULL SCREEN & ORIENTATION CONTROL ---
-            let isFullscreen = false;
-
-            L.Control.FullscreenButton = L.Control.extend({
-                onAdd: function(map) {
-                    const btn = L.DomUtil.create('button', 'custom-fs-btn');
-                    btn.innerHTML = '⛶'; 
-                    btn.title = 'View map in full screen';
-                    
-                    L.DomEvent.disableClickPropagation(btn); 
-                    
-                    btn.onclick = function(e) {
-                        e.preventDefault();
-                        toggleFullscreen();
-                    };
-                    return btn;
-                }
-            });
-
-            new L.Control.FullscreenButton({ position: 'topleft' }).addTo(map);
-
-            function toggleFullscreen() {
-                const body = document.body;
-                const btn = document.querySelector('.custom-fs-btn');
-                
-                // Select documentElement to force native browser fullscreen
-                const docEl = document.documentElement; 
-
-                if (!isFullscreen) {
-                    // ENTER FULLSCREEN
-                    body.classList.add('map-is-fullscreen');
-                    btn.innerHTML = '✕'; 
-                    isFullscreen = true;
-                    
-                    // Request native full screen if supported (hides URL/Tab bars completely)
-                    const requestFS = docEl.requestFullscreen || docEl.webkitRequestFullscreen || docEl.mozRequestFullScreen || docEl.msRequestFullscreen;
-                    
-                    if (requestFS) {
-                        requestFS.call(docEl).then(() => {
-                            if (screen.orientation && screen.orientation.lock) {
-                                screen.orientation.lock('landscape').catch(e => console.log("Orientation lock bypassed by device"));
-                            }
-                        }).catch(err => console.log("Fullscreen request failed:", err));
-                    }
-                    
-                    window.scrollTo(0, 1);
-                    setTimeout(() => window.scrollTo(0, 1), 100);
-
-                } else {
-                    // EXIT FULLSCREEN
-                    body.classList.remove('map-is-fullscreen');
-                    btn.innerHTML = '⛶'; 
-                    isFullscreen = false;
-                    
-                    clearSidebar();
-                    
-                    if (screen.orientation && screen.orientation.unlock) {
-                        screen.orientation.unlock();
-                    }
-
-                    // Exit native full screen
-                    const exitFS = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
-                    if (document.fullscreenElement || document.webkitFullscreenElement) {
-                        if (exitFS) exitFS.call(document).catch(err => console.log(err));
-                    }
-                }
-                
-                setTimeout(() => {
-                    map.invalidateSize();
-                    fitAndLockZoom();
-                }, 300);
-            }
-
-            toggleFullscreenGlobal = toggleFullscreen;
-
-            document.addEventListener('fullscreenchange', () => {
-                if (!document.fullscreenElement && !document.webkitFullscreenElement && isFullscreen) {
-                    toggleFullscreen(); 
-                }
-            });
-
-            // --- LOAD DATA FROM PINS.JS ---
+            // Establish Layer Groups & Registries
             const customIcons = {
                 'Cryptid': L.icon({ iconUrl: 'cryptid-marker.svg', iconSize: [32, 42], iconAnchor: [16, 42] }),
                 'Haunting': L.icon({ iconUrl: 'ghost-marker.svg', iconSize: [32, 42], iconAnchor: [16, 42] }),
                 'UFO': L.icon({ iconUrl: 'ufo-marker.svg', iconSize: [32, 42], iconAnchor: [16, 42] })
             };
 
-            const pinCollection = (typeof savedPins !== 'undefined') ? savedPins : [];
             const pinLayerGroup = L.layerGroup().addTo(map);
-
-            pinCollection.forEach((pin, index) => { 
-                renderPin(pin, index); 
-            });
-
-            // --- SEMANTIC ZOOM: TOWN LABELS ---
-            const townRegistry = (typeof savedTowns !== 'undefined') ? savedTowns : [];
             const townsLayerGroup = L.layerGroup().addTo(map);
             const semanticTowns = [];
 
-            townRegistry.forEach((town, index) => {
-                renderTown(town, index);
-            });
-
-            function renderTown(data, index) {
-                const iconHtml = `<div class="town-label"><span class="town-dot"></span>${data.title}</div>`;
-                const textIcon = L.divIcon({ html: iconHtml, className: '', iconSize: null, iconAnchor: [4, 12] });
-                
-                const marker = L.marker([data.lat, data.lng], { icon: textIcon, zIndexOffset: -50 });
-                
-                marker.on('click', function(e) {
-                    L.DomEvent.stopPropagation(e);
-                    populateSidebar(data);
-                });
-                
-                const requiredZoom = (data.minZoom !== undefined && data.minZoom !== null) ? Number(data.minZoom) : -4;
-                semanticTowns.push({ marker: marker, minZoom: requiredZoom });
-            }
-
-            // Fixed updateSemanticZoom function using exact minZoom baseline 
-            function updateSemanticZoom() {
-                const currentZoom = map.getZoom();
-                // getMinZoom is completely accurate to the fitted starting size, regardless of screen orientation
-                const baseZoom = map.getMinZoom(); 
-                const zoomStepsIn = currentZoom - baseZoom;
-                
-                semanticTowns.forEach(item => {
-                    let requiredSteps = 0; 
-                    
-                    // Maps standard desktop minZooms (-2, -1, 0, 1) to continuous mobile zoom increments
-                    if (item.minZoom <= -2) {
-                        requiredSteps = 0;    // Shows immediately on initial map load
-                    } else if (item.minZoom === -1) {
-                        requiredSteps = 0.8;  // Shows on 1st zoom (+ a little bit of tolerance)
-                    } else if (item.minZoom === 0) {
-                        requiredSteps = 1.8;  // Shows on 2nd zoom
-                    } else if (item.minZoom >= 1) {
-                        requiredSteps = 2.8;  // Shows on 3rd zoom
-                    }
-
-                    if (zoomStepsIn >= requiredSteps) {
-                        if (!townsLayerGroup.hasLayer(item.marker)) {
-                            townsLayerGroup.addLayer(item.marker);
-                        }
-                    } else {
-                        if (townsLayerGroup.hasLayer(item.marker)) {
-                            townsLayerGroup.removeLayer(item.marker);
-                        }
-                    }
-                });
-            }
-
-            // Map event listeners
-            map.on('zoomend', updateSemanticZoom);
-            updateSemanticZoom();
-
-            // --- SIDEBAR / MODAL LOGIC ---
+            // Helper Functions
             function populateSidebar(data) {
                 document.getElementById('info-sidebar').classList.add('modal-active');
                 document.getElementById('sidebar-content-area').style.display = 'flex';
@@ -887,6 +725,166 @@
                 });
             }
 
+            function renderTown(data, index) {
+                const iconHtml = `<div class="town-label"><span class="town-dot"></span>${data.title}</div>`;
+                const textIcon = L.divIcon({ html: iconHtml, className: '', iconSize: null, iconAnchor: [4, 12] });
+                
+                const marker = L.marker([data.lat, data.lng], { icon: textIcon, zIndexOffset: -50 });
+                
+                marker.on('click', function(e) {
+                    L.DomEvent.stopPropagation(e);
+                    populateSidebar(data);
+                });
+                
+                const requiredZoom = (data.minZoom !== undefined && data.minZoom !== null) ? Number(data.minZoom) : -4;
+                semanticTowns.push({ marker: marker, minZoom: requiredZoom });
+            }
+
+            // Populate Markers
+            const pinCollection = (typeof savedPins !== 'undefined') ? savedPins : [];
+            pinCollection.forEach((pin, index) => { 
+                renderPin(pin, index); 
+            });
+
+            const townRegistry = (typeof savedTowns !== 'undefined') ? savedTowns : [];
+            townRegistry.forEach((town, index) => {
+                renderTown(town, index);
+            });
+
+            // Calculate relative baseline zoom tiers across dataset
+            let lowestMinZoom = -4;
+            if (townRegistry.length > 0) {
+                const minZooms = townRegistry.map(t => (t.minZoom !== undefined && t.minZoom !== null) ? Number(t.minZoom) : -4);
+                lowestMinZoom = Math.min(...minZooms);
+            }
+
+            function updateSemanticZoom() {
+                const currentZoom = map.getZoom();
+                const baseZoom = map.getMinZoom(); 
+                const zoomStepsIn = currentZoom - baseZoom;
+                
+                semanticTowns.forEach(item => {
+                    const stepTier = item.minZoom - lowestMinZoom;
+                    let requiredSteps = 0; 
+                    
+                    if (stepTier <= 0) {
+                        requiredSteps = 0;     // Tier 0: Visible on initial map load
+                    } else if (stepTier === 1) {
+                        requiredSteps = 0.7;   // Tier 1: Visible on 1st zoom
+                    } else if (stepTier === 2) {
+                        requiredSteps = 1.7;   // Tier 2: Visible on 2nd zoom
+                    } else {
+                        requiredSteps = 2.7;   // Tier 3+: Visible on 3rd zoom
+                    }
+
+                    if (zoomStepsIn >= requiredSteps) {
+                        if (!townsLayerGroup.hasLayer(item.marker)) {
+                            townsLayerGroup.addLayer(item.marker);
+                        }
+                    } else {
+                        if (townsLayerGroup.hasLayer(item.marker)) {
+                            townsLayerGroup.removeLayer(item.marker);
+                        }
+                    }
+                });
+            }
+
+            function fitAndLockZoom() {
+                map.setMinZoom(-4); 
+                map.fitBounds(bounds, { padding: [0, 0], animate: false }); 
+                const perfectlyFittedZoom = map.getZoom();
+                map.setMinZoom(perfectlyFittedZoom);
+                updateSemanticZoom();
+            }
+
+            // Initial view alignment
+            fitAndLockZoom();
+
+            const resizeObserver = new ResizeObserver(() => {
+                map.invalidateSize(); 
+                fitAndLockZoom();
+            });
+            resizeObserver.observe(document.getElementById('app-container'));
+            
+            // --- FULL SCREEN & ORIENTATION CONTROL ---
+            let isFullscreen = false;
+
+            L.Control.FullscreenButton = L.Control.extend({
+                onAdd: function(map) {
+                    const btn = L.DomUtil.create('button', 'custom-fs-btn');
+                    btn.innerHTML = '⛶'; 
+                    btn.title = 'View map in full screen';
+                    
+                    L.DomEvent.disableClickPropagation(btn); 
+                    
+                    btn.onclick = function(e) {
+                        e.preventDefault();
+                        toggleFullscreen();
+                    };
+                    return btn;
+                }
+            });
+
+            new L.Control.FullscreenButton({ position: 'topleft' }).addTo(map);
+
+            function toggleFullscreen() {
+                const body = document.body;
+                const btn = document.querySelector('.custom-fs-btn');
+                const docEl = document.documentElement; 
+
+                if (!isFullscreen) {
+                    // ENTER FULLSCREEN
+                    body.classList.add('map-is-fullscreen');
+                    btn.innerHTML = '✕'; 
+                    isFullscreen = true;
+                    
+                    const requestFS = docEl.requestFullscreen || docEl.webkitRequestFullscreen || docEl.mozRequestFullScreen || docEl.msRequestFullscreen;
+                    
+                    if (requestFS) {
+                        requestFS.call(docEl).then(() => {
+                            if (screen.orientation && screen.orientation.lock) {
+                                screen.orientation.lock('landscape').catch(e => console.log("Orientation lock bypassed by device"));
+                            }
+                        }).catch(err => console.log("Fullscreen request failed:", err));
+                    }
+                    
+                    window.scrollTo(0, 1);
+                    setTimeout(() => window.scrollTo(0, 1), 100);
+
+                } else {
+                    // EXIT FULLSCREEN
+                    body.classList.remove('map-is-fullscreen');
+                    btn.innerHTML = '⛶'; 
+                    isFullscreen = false;
+                    
+                    clearSidebar();
+                    
+                    if (screen.orientation && screen.orientation.unlock) {
+                        screen.orientation.unlock();
+                    }
+
+                    const exitFS = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
+                    if (document.fullscreenElement || document.webkitFullscreenElement) {
+                        if (exitFS) exitFS.call(document).catch(err => console.log(err));
+                    }
+                }
+                
+                setTimeout(() => {
+                    map.invalidateSize();
+                    fitAndLockZoom();
+                }, 300);
+            }
+
+            toggleFullscreenGlobal = toggleFullscreen;
+
+            document.addEventListener('fullscreenchange', () => {
+                if (!document.fullscreenElement && !document.webkitFullscreenElement && isFullscreen) {
+                    toggleFullscreen(); 
+                }
+            });
+
+            // Map listeners
+            map.on('zoomend', updateSemanticZoom);
             document.getElementById('close-modal').addEventListener('click', clearSidebar);
             map.on('click', clearSidebar);
         });
