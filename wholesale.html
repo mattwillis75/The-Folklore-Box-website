@@ -911,20 +911,49 @@
                         });
                     },
                     onApprove: function(data, actions) {
-                        return actions.order.capture().then(function(details) {
-                            alert('Payment successful! Thank you for your order, ' + details.payer.name.given_name + '.');
-                            
-                            // Empty cart and update UI
-                            cart = []; 
-                            const currentKey = sessionStorage.getItem('wholesaleAuthenticated') === 'true' ? 'folkloreWholesaleCart' : 'folkloreCart';
-                            localStorage.setItem(currentKey, JSON.stringify(cart)); 
-                            updateCartUI(); 
-                            
-                            // Close the cart sidebar safely
-                            document.getElementById('cart-sidebar').classList.remove('open'); 
-                            document.getElementById('cart-overlay').classList.remove('active');
-                        });
-                    },
+    return actions.order.capture().then(function(details) {
+        
+        // 1. Build a clean list of the purchased items for the email
+        let orderBreakdown = "";
+        cart.forEach(item => {
+            const itemTotal = (item.price * (item.quantity || 1)).toFixed(2);
+            orderBreakdown += `${item.quantity || 1}x ${item.title} - £${itemTotal}\n`;
+        });
+
+        // 2. Prepare the variables to send to your EmailJS template
+        const templateParams = {
+            to_name: details.payer.name.given_name,
+            to_email: details.payer.email_address, // Pulls the customer's PayPal email
+            order_details: orderBreakdown,
+            shipping_cost: document.getElementById('cart-shipping-cost').textContent,
+            total_paid: document.getElementById('cart-total').textContent.replace('Total: £', '')
+        };
+
+        // 3. Send the email via EmailJS
+        // REPLACE 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your actual IDs
+        emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+            .then(function(response) {
+                console.log('Email sent successfully!', response.status, response.text);
+            }, function(error) {
+                console.error('Email failed to send...', error);
+            });
+
+        // 4. Show success message to the customer
+        alert('Payment successful! Thank you for your order, ' + details.payer.name.given_name + '. Your receipt has been emailed.');
+        
+        // 5. Empty cart and update UI
+        cart = []; 
+        const currentKey = sessionStorage.getItem('wholesaleAuthenticated') === 'true' ? 'folkloreWholesaleCart' : 'folkloreCart';
+        localStorage.setItem(currentKey, JSON.stringify(cart)); 
+        updateCartUI(); 
+        
+        // 6. Close the cart sidebar safely
+        const sidebar = document.getElementById('cart-sidebar');
+        const overlay = document.getElementById('cart-overlay');
+        if(sidebar) sidebar.classList.remove('open'); 
+        if(overlay) overlay.classList.remove('active');
+    });
+},
                     onError: function(err) { console.error('PayPal Checkout Error:', err); alert('There was an issue connecting to PayPal. Please try again.'); }
                 }).render('#paypal-button-container');
             } catch (error) {
