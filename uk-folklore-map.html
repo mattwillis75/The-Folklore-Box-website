@@ -670,7 +670,7 @@
             L.imageOverlay('norfolk-map.svg', bounds).addTo(map);
             map.setMaxBounds(bounds);
 
-            // Establish Layer Groups & Registries
+            // 1. Establish Layer Groups & Data Registries 
             const customIcons = {
                 'Cryptid': L.icon({ iconUrl: 'cryptid-marker.svg', iconSize: [32, 42], iconAnchor: [16, 42] }),
                 'Haunting': L.icon({ iconUrl: 'ghost-marker.svg', iconSize: [32, 42], iconAnchor: [16, 42] }),
@@ -681,7 +681,7 @@
             const townsLayerGroup = L.layerGroup().addTo(map);
             const semanticTowns = [];
 
-            // Helper Functions
+            // 2. Helper Functions to draw the markers
             function populateSidebar(data) {
                 document.getElementById('info-sidebar').classList.add('modal-active');
                 document.getElementById('sidebar-content-area').style.display = 'flex';
@@ -740,7 +740,7 @@
                 semanticTowns.push({ marker: marker, minZoom: requiredZoom });
             }
 
-            // Populate Markers
+            // 3. Populate Markers from pins.js
             const pinCollection = (typeof savedPins !== 'undefined') ? savedPins : [];
             pinCollection.forEach((pin, index) => { 
                 renderPin(pin, index); 
@@ -751,12 +751,9 @@
                 renderTown(town, index);
             });
 
-            // Calculate relative baseline zoom tiers across dataset
-            let lowestMinZoom = -4;
-            if (townRegistry.length > 0) {
-                const minZooms = townRegistry.map(t => (t.minZoom !== undefined && t.minZoom !== null) ? Number(t.minZoom) : -4);
-                lowestMinZoom = Math.min(...minZooms);
-            }
+            // 4. Calculate relative baseline zoom tiers by analyzing the actual data provided
+            // This prevents "dead zooms" if your numbers jump from -2 straight to 0
+            const uniqueZooms = [...new Set(semanticTowns.map(t => t.minZoom))].sort((a, b) => a - b);
 
             function updateSemanticZoom() {
                 const currentZoom = map.getZoom();
@@ -764,18 +761,11 @@
                 const zoomStepsIn = currentZoom - baseZoom;
                 
                 semanticTowns.forEach(item => {
-                    const stepTier = item.minZoom - lowestMinZoom;
-                    let requiredSteps = 0; 
+                    // Find which exact tier this town belongs to (0 = Base, 1 = First Zoom, etc.)
+                    const tierIndex = uniqueZooms.indexOf(item.minZoom);
                     
-                    if (stepTier <= 0) {
-                        requiredSteps = 0;     // Tier 0: Visible on initial map load
-                    } else if (stepTier === 1) {
-                        requiredSteps = 0.7;   // Tier 1: Visible on 1st zoom
-                    } else if (stepTier === 2) {
-                        requiredSteps = 1.7;   // Tier 2: Visible on 2nd zoom
-                    } else {
-                        requiredSteps = 2.7;   // Tier 3+: Visible on 3rd zoom
-                    }
+                    // Tier 0 is always visible (0 steps). Tier 1 requires 0.5 steps, Tier 2 requires 1.5 steps, etc.
+                    const requiredSteps = tierIndex === 0 ? 0 : (tierIndex - 0.5);
 
                     if (zoomStepsIn >= requiredSteps) {
                         if (!townsLayerGroup.hasLayer(item.marker)) {
@@ -794,10 +784,10 @@
                 map.fitBounds(bounds, { padding: [0, 0], animate: false }); 
                 const perfectlyFittedZoom = map.getZoom();
                 map.setMinZoom(perfectlyFittedZoom);
-                updateSemanticZoom();
+                updateSemanticZoom(); // Ensure we run the zoom check immediately
             }
 
-            // Initial view alignment
+            // 5. Initial view alignment
             fitAndLockZoom();
 
             const resizeObserver = new ResizeObserver(() => {
@@ -883,7 +873,7 @@
                 }
             });
 
-            // Map listeners
+            // Set up Map Listeners
             map.on('zoomend', updateSemanticZoom);
             document.getElementById('close-modal').addEventListener('click', clearSidebar);
             map.on('click', clearSidebar);
