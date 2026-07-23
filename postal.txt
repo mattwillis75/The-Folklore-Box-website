@@ -1,6 +1,6 @@
 Class: Letter
 UK Base: 1.50
-UK Additional: 0.50
+UK Additional: 0.40
 Int Base: 4.50
 Int Additional: 1.00
 ---
