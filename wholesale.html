@@ -914,38 +914,32 @@
     return actions.order.capture().then(function(details) {
         
         // 1. Build a clean list of the purchased items for the email
-        // 1. Build the array for the dynamic table
-const orderItems = cart.map(item => {
-    return {
-        name: item.title,
-        units: item.quantity || 1,
-        price: (item.price * (item.quantity || 1)).toFixed(2)
-    };
-});
+        let orderBreakdown = "";
+        cart.forEach(item => {
+            const itemTotal = (item.price * (item.quantity || 1)).toFixed(2);
+            orderBreakdown += `${item.quantity || 1}x ${item.title} - £${itemTotal}\n`;
+        });
 
-// 2. Prepare the variables to send to EmailJS
-const templateParams = {
-    to_name: details.payer.name.given_name,
-    to_email: details.payer.email_address,
-    orders: orderItems,
-    shipping_cost: document.getElementById('cart-shipping-cost').textContent,
-    total_paid: document.getElementById('cart-total').textContent.replace('Total: £', '')
-};
-
-// 3. Send the email...
-// (Keep the rest of your emailjs.send logic here)
+        // 2. Prepare the variables to send to your EmailJS template
+        const templateParams = {
+            to_name: details.payer.name.given_name,
+            to_email: details.payer.email_address, // Pulls the customer's PayPal email
+            order_details: orderBreakdown,
+            shipping_cost: document.getElementById('cart-shipping-cost').textContent,
+            total_paid: document.getElementById('cart-total').textContent.replace('Total: £', '')
+        };
 
         // 3. Send the email via EmailJS
-        // REPLACE 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your actual IDs
-        emailjs.send('service_zmm27cb', 'The Folklore Box', templateParams)
+        // REMEMBER TO REPLACE THESE WITH YOUR ACTUAL IDS
+        emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
             .then(function(response) {
                 console.log('Email sent successfully!', response.status, response.text);
             }, function(error) {
                 console.error('Email failed to send...', error);
             });
 
-        // 4. Show success message to the customer
-        alert('Payment successful! Thank you for your order, ' + details.payer.name.given_name + '. Your receipt has been emailed.');
+        // 4. Show success pop-up to the customer
+        alert('Payment successful! We have received your order, ' + details.payer.name.given_name + ', and an email confirmation will be sent to you shortly.');
         
         // 5. Empty cart and update UI
         cart = []; 
