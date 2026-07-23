@@ -124,7 +124,7 @@
             z-index: 1;
         }
 
-        /* Semantic Zoom Town Labels */
+        /* Semantic Zoom Town Labels (Transitions added for smooth zooming) */
         .town-label {
             color: #ffffff; 
             background-color: rgba(60, 60, 60, 0.85); 
@@ -140,13 +140,18 @@
             white-space: nowrap; 
             cursor: pointer;
             width: max-content; 
+            transition: transform 0.1s ease-out; /* Smooth scaling */
         }
         .town-dot {
             width: 8px; height: 8px; background-color: var(--accent-red);
             border-radius: 50%; display: inline-block;
             box-shadow: 0 0 8px rgba(204, 0, 0, 0.8); flex-shrink: 0;
         }
+        
         .leaflet-image-layer { outline: 2px solid #000000; outline-offset: -1px; }
+        
+        /* Smooth scaling for marker images */
+        .leaflet-marker-icon { transition: width 0.1s ease-out, height 0.1s ease-out, margin-top 0.1s ease-out, margin-left 0.1s ease-out; }
 
         /* --- DESKTOP SIDEBAR --- */
         #info-sidebar { 
@@ -226,7 +231,7 @@
             }
 
             body.map-is-fullscreen .map-wrapper {
-                padding: 15px; /* Creates the requested black space around the edge */
+                padding: 15px; 
                 box-sizing: border-box;
             }
 
@@ -237,7 +242,7 @@
                 width: 100%; 
                 height: 100%; 
                 aspect-ratio: unset;
-                transform: none; /* Map stays upright */
+                transform: none; 
                 top: 0; left: 0;
             }
 
@@ -302,7 +307,6 @@
                 
                 /* ROTATE ONLY THE BORDER TO PREVENT SQUASHING */
                 body.map-is-fullscreen #border-overlay {
-                    /* Swaps the width and height to fit the portrait screen perfectly */
                     width: calc(100dvh - 30px);
                     height: calc(100vw - 30px);
                     top: 50%; left: 50%;
@@ -315,11 +319,19 @@
                     height: 94vh; 
                     max-height: 94vh;
                 }
+                
+                /* Shift X icon down slightly to sit nicely below the screen edge */
+                body.map-is-fullscreen #close-modal {
+                    top: 40px; 
+                    right: 20px;
+                }
+                
                 body.map-is-fullscreen #sidebar-content-area {
                     display: flex;
                     flex-direction: column;
                     overflow: hidden; 
-                    padding: 20px; 
+                    /* Increased top padding to give image and X icon plenty of black space */
+                    padding: 60px 20px 20px 20px; 
                 }
                 .modal-image-col {
                     width: 100%;
@@ -332,7 +344,8 @@
                     width: 75%; 
                     height: auto;
                     max-height: 40vh; 
-                    object-fit: cover;
+                    /* Switched to 'contain' to perfectly preserve original image proportions */
+                    object-fit: contain; 
                     border-radius: 4px;
                 }
                 .modal-text-col {
@@ -725,7 +738,6 @@
                         }).catch(err => console.log("Fullscreen request failed:", err));
                     }
                     
-                    // iOS Safari workaround attempt to push URL bar offscreen
                     window.scrollTo(0, 1);
                     setTimeout(() => window.scrollTo(0, 1), 100);
 
@@ -821,9 +833,46 @@
                         }
                     }
                 });
+
+                // Trigger marker scaling to catch dynamically added items
+                updateMarkerSizes();
             }
 
+            // --- DYNAMIC MARKER SCALING ---
+            // Scales markers dynamically so they grow/shrink proportional to the map
+            function updateMarkerSizes() {
+                const currentZoom = map.getZoom();
+                const baseZoom = map.getBoundsZoom(bounds);
+                const scale = Math.pow(2, currentZoom - baseZoom);
+
+                // Update Town Labels
+                document.querySelectorAll('.town-label').forEach(label => {
+                    label.style.transform = `scale(${scale})`;
+                    label.style.transformOrigin = '0% 50%'; // Scale from the left dot
+                });
+
+                // Update Image Markers
+                const newWidth = 32 * scale;
+                const newHeight = 42 * scale;
+                const newAnchorX = 16 * scale;
+                const newAnchorY = 42 * scale;
+
+                document.querySelectorAll('.leaflet-marker-icon').forEach(icon => {
+                    // Only target the custom image icons (not the label divs)
+                    if (icon.tagName.toLowerCase() === 'img') {
+                        icon.style.width = `${newWidth}px`;
+                        icon.style.height = `${newHeight}px`;
+                        icon.style.marginLeft = `-${newAnchorX}px`;
+                        icon.style.marginTop = `-${newAnchorY}px`;
+                    }
+                });
+            }
+
+            // Apply size updates on zoom animations
+            map.on('zoom', updateMarkerSizes);
             map.on('zoomend', updateSemanticZoom);
+            
+            // Run initially
             updateSemanticZoom();
 
             // --- SIDEBAR / MODAL LOGIC ---
