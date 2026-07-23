@@ -230,13 +230,17 @@
             body.map-is-fullscreen #border-overlay {
                 background-image: url('map-border-mobile.png');
             }
+            body.map-is-fullscreen .map-wrapper {
+                padding: 15px; /* Creates the requested black space around the edge */
+                box-sizing: border-box;
+            }
             body.map-is-fullscreen #map {
                 top: 4%; bottom: 4%; left: 4%; right: 4%; 
             }
             body.map-is-fullscreen #app-container {
-                max-width: none;
+                max-width: 100%;
                 width: 100%; 
-                height: 100dvh;
+                height: 100%; /* Changed to fill the wrapper minus padding */
                 aspect-ratio: unset;
             }
 
@@ -287,23 +291,26 @@
             /* === PORTRAIT ORIENTATION === */
             @media (orientation: portrait) {
                 body.map-is-fullscreen #info-sidebar {
-                    width: 90vw;
-                    max-height: 85vh;
+                    width: 94vw;
+                    height: 94vh; /* Extended to fit virtually the full screen */
+                    max-height: 94vh;
                 }
                 body.map-is-fullscreen #sidebar-content-area {
                     display: flex;
                     flex-direction: column;
                     overflow-y: auto; /* Makes the entire column scrollable */
-                    padding: 65px 20px 30px 20px; /* 65px top padding guarantees it clears the X button completely */
+                    padding: 65px 20px 30px 20px; 
                 }
                 .modal-image-col {
                     width: 100%;
                     flex-shrink: 0;
+                    display: flex; /* Helps center the resized image */
+                    justify-content: center;
                 }
                 .modal-image-col img {
-                    width: 100%;
+                    width: 75%; /* Shrunk to 75% of full width */
                     height: auto;
-                    max-height: 40vh; /* Prevents image dominating entire screen */
+                    max-height: 40vh; 
                     object-fit: cover;
                     border-radius: 4px;
                     margin-bottom: 20px;
@@ -339,8 +346,8 @@
                     overflow: hidden; /* Locks image in position */
                 }
                 .modal-image-col img {
-                    max-width: 100%;
-                    max-height: 100%;
+                    max-width: 80%; /* Shrunk slightly to leave breathing room */
+                    max-height: 80%;
                     object-fit: contain;
                     border-radius: 4px;
                 }
@@ -349,7 +356,7 @@
                     height: 100%;
                     overflow-y: auto; /* Makes text independently scrollable */
                     padding-right: 15px; 
-                    padding-top: 40px; /* Gives clearance for the X button on the top right */
+                    padding-top: 40px; /* Gives clearance for the X button */
                     padding-bottom: 20px;
                     max-width: 500px; /* Restricts line length to roughly match portrait width */
                     margin: 0 auto;
