@@ -441,7 +441,7 @@
         </p>
     </footer>
 
-    <!-- Interactive Scripts -->
+   <!-- Interactive Scripts -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             
@@ -453,13 +453,18 @@
             async function loadCarouselData() {
                 try {
                     const response = await fetch('carousel.txt', { cache: 'no-store' });
-                    if (!response.ok) return;
+                    
+                    // FIX 2: Check if the file actually exists on the server
+                    if (!response.ok) {
+                        console.warn("carousel.txt could not be found. Please ensure you have published at least one slide from the Admin Dashboard.");
+                        return;
+                    }
                     
                     const text = await response.text();
                     const slideBlocks = text.split('---').filter(block => block.trim() !== '');
                     const track = document.getElementById('carousel-track');
                     
-                    slideBlocks.forEach((slideText, index) => {
+                    slideBlocks.forEach((slideText) => {
                         let slideData = {};
                         
                         slideText.trim().split('\n').forEach(line => {
@@ -474,22 +479,26 @@
                         if (slideData.image) {
                             carouselData.push(slideData);
                             
-                            // Build the image HTML dynamically
+                            // FIX 1: Ensure the FIRST image pushed to the array gets the 'active' class
+                            const isFirstImage = carouselData.length === 1;
+                            
                             const slideDiv = document.createElement('div');
-                            slideDiv.className = `carousel-slide ${index === 0 ? 'active' : ''}`;
+                            slideDiv.className = `carousel-slide ${isFirstImage ? 'active' : ''}`;
                             
                             const img = document.createElement('img');
                             img.src = slideData.image;
-                            if (index > 0) img.loading = 'lazy'; 
-                            img.alt = slideData.heading || `Carousel Slide ${index + 1}`;
+                            if (!isFirstImage) img.loading = 'lazy'; 
+                            img.alt = slideData.heading || `Carousel Slide ${carouselData.length}`;
                             
                             slideDiv.appendChild(img);
                             track.appendChild(slideDiv);
                         }
                     });
                     
-                    // Initialize the text for the first slide immediately
-                    updateHeroText(0);
+                    // Initialize the text for the first slide immediately if data exists
+                    if (carouselData.length > 0) {
+                        updateHeroText(0);
+                    }
                     
                 } catch (error) {
                     console.error("Failed to load carousel data:", error);
@@ -498,8 +507,9 @@
 
             function updateHeroText(index) {
                 if (carouselData[index]) {
-                    document.getElementById('hero-heading').textContent = carouselData[index].heading || '';
-                    document.getElementById('hero-subtitle').textContent = carouselData[index].description || '';
+                    // Added fallbacks to your default text just in case the text file is blank
+                    document.getElementById('hero-heading').textContent = carouselData[index].heading || 'British Folklore & Myths';
+                    document.getElementById('hero-subtitle').textContent = carouselData[index].description || 'Original artwork, prints, and wooden wares by illustrator Matt Willis.';
                 }
             }
 
