@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>The Folklore Box | British Folklore Illustrations & Zines</title>
+    <title>The Folklore Box | British Folklore Illustrations & Zines</title>
     <meta name="description" content="Shop handmade wooden decorations, art prints, apparel, and SHUCK zine by illustrator Matt Willis. Discover art inspired by British folklore and Norfolk myths.">
     
     <!-- Google Fonts: Lato Light (300) and Spectral Regular (400) -->
@@ -81,6 +81,15 @@
             align-items: center;
             justify-content: center;
             background-color: #000;
+        }
+
+        #carousel-track {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
         }
 
         .carousel-slide {
@@ -339,23 +348,9 @@
         
         <!-- Full Width Hero Carousel -->
         <section class="hero-carousel-container">
-            <!-- Carousel Images -->
-            <div class="carousel-slide active">
-                <!-- No lazy loading here so the first image pops up instantly -->
-                <img src="./Carousel-1.jpg" alt="British Folklore Illustration 1">
-            </div>
-            <div class="carousel-slide">
-                <img src="./Carousel-2.jpg" loading="lazy" alt="British Folklore Illustration 2">
-            </div>
-            <div class="carousel-slide">
-                <img src="./Carousel-3.jpg" loading="lazy" alt="British Folklore Illustration 3">
-            </div>
-            <div class="carousel-slide">
-                <img src="./Carousel-4.jpg" loading="lazy" alt="British Folklore Illustration 4">
-            </div>
-            <div class="carousel-slide">
-                <img src="./Carousel-5.jpg" loading="lazy" alt="British Folklore Illustration 5">
-            </div>
+            
+            <!-- Dynamic Carousel Images Will Be Injected Here -->
+            <div id="carousel-track"></div>
 
             <!-- Navigation Arrows -->
             <button class="carousel-arrow arrow-left" onclick="changeSlide(-1)">&#10094;</button>
@@ -363,8 +358,8 @@
 
             <!-- Hero Content Overlay -->
             <div class="hero-content animate-on-scroll is-visible">
-                <h1>British Folklore & Myths</h1>
-                <p class="subtitle">Original artwork, prints, and wooden wares by illustrator Matt Willis.</p>
+                <h1 id="hero-heading">British Folklore & Myths</h1>
+                <p id="hero-subtitle" class="subtitle">Original artwork, prints, and wooden wares by illustrator Matt Willis.</p>
                 <a href="#collections" class="btn">Explore the Shop</a>
             </div>
         </section>
@@ -449,19 +444,77 @@
     <!-- Interactive Scripts -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            // --- Carousel Logic ---
+            
+            // --- 1. DYNAMIC CAROUSEL LOGIC ---
             let currentSlide = 0;
-            const slides = document.querySelectorAll('.carousel-slide');
             let slideInterval;
-
-            function showSlide(index) {
-                slides.forEach(slide => slide.classList.remove('active'));
-                if (index >= slides.length) currentSlide = 0;
-                if (index < 0) currentSlide = slides.length - 1;
-                slides[currentSlide].classList.add('active');
+            let carouselData = [];
+            
+            async function loadCarouselData() {
+                try {
+                    const response = await fetch('carousel.txt', { cache: 'no-store' });
+                    if (!response.ok) return;
+                    
+                    const text = await response.text();
+                    const slideBlocks = text.split('---').filter(block => block.trim() !== '');
+                    const track = document.getElementById('carousel-track');
+                    
+                    slideBlocks.forEach((slideText, index) => {
+                        let slideData = {};
+                        
+                        slideText.trim().split('\n').forEach(line => {
+                            const sepIndex = line.indexOf(':');
+                            if(sepIndex > -1) {
+                                const key = line.slice(0, sepIndex).trim().toLowerCase();
+                                const value = line.slice(sepIndex + 1).trim();
+                                slideData[key] = value;
+                            }
+                        });
+                        
+                        if (slideData.image) {
+                            carouselData.push(slideData);
+                            
+                            // Build the image HTML dynamically
+                            const slideDiv = document.createElement('div');
+                            slideDiv.className = `carousel-slide ${index === 0 ? 'active' : ''}`;
+                            
+                            const img = document.createElement('img');
+                            img.src = slideData.image;
+                            if (index > 0) img.loading = 'lazy'; 
+                            img.alt = slideData.heading || `Carousel Slide ${index + 1}`;
+                            
+                            slideDiv.appendChild(img);
+                            track.appendChild(slideDiv);
+                        }
+                    });
+                    
+                    // Initialize the text for the first slide immediately
+                    updateHeroText(0);
+                    
+                } catch (error) {
+                    console.error("Failed to load carousel data:", error);
+                }
             }
 
-            // Expose changeSlide to the global window object so the HTML buttons can use it
+            function updateHeroText(index) {
+                if (carouselData[index]) {
+                    document.getElementById('hero-heading').textContent = carouselData[index].heading || '';
+                    document.getElementById('hero-subtitle').textContent = carouselData[index].description || '';
+                }
+            }
+
+            function showSlide(index) {
+                const slidesDOM = document.querySelectorAll('.carousel-slide');
+                if (slidesDOM.length === 0) return;
+
+                slidesDOM.forEach(slide => slide.classList.remove('active'));
+                if (index >= slidesDOM.length) currentSlide = 0;
+                if (index < 0) currentSlide = slidesDOM.length - 1;
+                
+                slidesDOM[currentSlide].classList.add('active');
+                updateHeroText(currentSlide);
+            }
+
             window.changeSlide = function(direction) {
                 currentSlide += direction;
                 showSlide(currentSlide);
@@ -477,9 +530,12 @@
                 clearInterval(slideInterval);
                 slideInterval = setInterval(autoAdvanceSlide, 5000); 
             }
-
+            
+            // Execute the fetch and start the timer
+            loadCarouselData();
             slideInterval = setInterval(autoAdvanceSlide, 5000);
 
+            
             // --- Scroll Animations Logic ---
             const observerOptions = {
                 root: null,
