@@ -441,7 +441,7 @@
         </p>
     </footer>
 
-   <!-- Interactive Scripts -->
+    <!-- Interactive Scripts -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             
@@ -454,7 +454,7 @@
                 try {
                     const response = await fetch('carousel.txt', { cache: 'no-store' });
                     
-                    // FIX 2: Check if the file actually exists on the server
+                    // Check if the file actually exists on the server
                     if (!response.ok) {
                         console.warn("carousel.txt could not be found. Please ensure you have published at least one slide from the Admin Dashboard.");
                         return;
@@ -479,7 +479,7 @@
                         if (slideData.image) {
                             carouselData.push(slideData);
                             
-                            // FIX 1: Ensure the FIRST image pushed to the array gets the 'active' class
+                            // Ensure the FIRST image pushed to the array gets the 'active' class
                             const isFirstImage = carouselData.length === 1;
                             
                             const slideDiv = document.createElement('div');
