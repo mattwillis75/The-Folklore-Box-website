@@ -55,41 +55,18 @@
         }
 
         /* Layout */
-        main {
-            padding-top: 0; 
-        }
+        main { padding-top: 0; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
+        section { margin-bottom: 5rem; scroll-margin-top: 100px; }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
-
-        section {
-            margin-bottom: 5rem;
-            scroll-margin-top: 100px;
-        }
-
-        /* Full-Width Carousel */
-        .hero-carousel-container {
+        /* Full-Width Carousel (Matched to Working Structure) */
+        .carousel-container {
             position: relative;
             width: 100%;
-            height: 100vh; 
+            height: 100vh;
             min-height: 500px;
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             background-color: #000;
-        }
-
-        #carousel-track {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
         }
 
         .carousel-slide {
@@ -100,18 +77,59 @@
             height: 100%;
             opacity: 0;
             transition: opacity 1s ease-in-out;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
         .carousel-slide.active {
             opacity: 1;
-            z-index: 1;
+            z-index: 10;
         }
 
-        .carousel-slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
+        /* Carousel Overlay Styling adjusted for Folklore Box theme */
+        .carousel-overlay {
+            position: absolute;
+            bottom: 15%;
+            left: 5%;
+            background: rgba(0, 0, 0, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 2.5rem;
+            border-radius: 4px;
+            max-width: 500px;
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            backdrop-filter: blur(5px);
+        }
+
+        .carousel-overlay h2 {
+            font-size: 0.9rem;
+            margin: 0;
+            letter-spacing: 2px;
+            color: var(--accent-red);
+            text-transform: uppercase;
+        }
+
+        .carousel-overlay h3 {
+            font-size: 2.2rem;
+            margin: 0 0 0.5rem 0;
+            line-height: 1.2;
+        }
+
+        .overlay-bottom {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+        }
+
+        .overlay-bottom p {
+            font-size: 1rem;
+            flex: 1;
+            margin: 0;
+            color: #ddd;
         }
 
         /* Carousel Navigation Arrows */
@@ -127,7 +145,7 @@
             border-radius: 50%;
             font-size: 1.5rem;
             cursor: pointer;
-            z-index: 10;
+            z-index: 30;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
@@ -141,31 +159,6 @@
 
         .arrow-left { left: 20px; }
         .arrow-right { right: 20px; }
-
-        /* Hero Text Overlay */
-        .hero-content {
-            position: relative;
-            z-index: 5;
-            text-align: center;
-            color: #fff;
-            background: rgba(0, 0, 0, 0.6); 
-            padding: 3rem;
-            border-radius: 8px;
-            max-width: 800px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .hero-content h1 {
-            font-size: 3.5rem;
-            margin: 0 0 1rem 0;
-            line-height: 1.2;
-        }
-
-        .hero-content .subtitle {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            font-weight: 300;
-        }
 
         /* Typography & Elements */
         h2 {
@@ -187,9 +180,7 @@
             transition: width 0.3s ease;
         }
 
-        h2:hover::after {
-            width: 100%;
-        }
+        h2:hover::after { width: 100%; }
 
         .btn {
             display: inline-block;
@@ -205,47 +196,14 @@
             transition: background 0.3s ease, transform 0.2s ease;
         }
 
-        .btn:hover {
-            background: #e60000;
-            transform: translateY(-2px);
-        }
+        .btn:hover { background: #e60000; transform: translateY(-2px); }
 
         /* Grid Image Styles */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .grid-image {
-            width: 100%;
-            height: 350px;
-            object-fit: cover;
-            margin-bottom: 1.5rem;
-            border-radius: 4px;
-        }
-
-        .grid-item h3 {
-            font-size: 1.5rem;
-            margin-top: 0;
-        }
-
-        .about-text {
-            max-width: 800px;
-            font-size: 1.2rem;
-            line-height: 1.8;
-            margin-bottom: 2rem;
-            color: #dddddd;
-        }
-
-        /* Map Teaser Image Style */
-        .map-teaser-img {
-            width: 100%;
-            height: 400px;
-            object-fit: cover;
-            margin-bottom: 2rem;
-            border-radius: 4px;
-        }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+        .grid-image { width: 100%; height: 350px; object-fit: cover; margin-bottom: 1.5rem; border-radius: 4px; }
+        .grid-item h3 { font-size: 1.5rem; margin-top: 0; }
+        .about-text { max-width: 800px; font-size: 1.2rem; line-height: 1.8; margin-bottom: 2rem; color: #dddddd; }
+        .map-teaser-img { width: 100%; height: 400px; object-fit: cover; margin-bottom: 2rem; border-radius: 4px; }
 
         /* --- Slide-Out Cart Styles --- */
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 2001; display: none; backdrop-filter: blur(3px); }
@@ -258,7 +216,6 @@
         .close-cart:hover { color: var(--accent-red); }
         .cart-items-container { flex-grow: 1; margin-bottom: 1rem; padding-right: 0.5rem; overflow-y: visible; }
         
-        /* Updated Cart Grouping Styles */
         .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid #222; gap: 0.8rem; }
         .cart-item-title { flex-grow: 1; font-weight: 600; font-size: 0.95rem; line-height: 1.3; }
         .cart-qty-controls { display: flex; align-items: center; gap: 0.5rem; background: #111; padding: 0.2rem 0.5rem; border-radius: 3px; border: 1px solid #333; }
@@ -272,44 +229,14 @@
         .cart-total { font-size: 1.8rem; text-align: right; margin-bottom: 1.5rem; font-family: 'Spectral', serif; color: var(--accent-red); }
 
         /* Footer */
-        footer {
-            background: #000000; 
-            color: #ffffff;
-            padding: 4rem 2rem;
-            text-align: center;
-            border-top: 1px solid #222;
-        }
-
-        footer a {
-            color: #ffffff;
-            text-decoration: none;
-            margin: 0 1rem;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: color 0.3s ease;
-        }
-        
-        footer a:hover {
-            color: var(--accent-red);
-        }
-
-        .social-links {
-            margin-bottom: 2rem;
-        }
+        footer { background: #000000; color: #ffffff; padding: 4rem 2rem; text-align: center; border-top: 1px solid #222; }
+        footer a { color: #ffffff; text-decoration: none; margin: 0 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
+        footer a:hover { color: var(--accent-red); }
+        .social-links { margin-bottom: 2rem; }
 
         /* --- Animations --- */
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-
-        .animate-on-scroll.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
+        .animate-on-scroll { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
         .grid-item:nth-child(1) { transition-delay: 0.1s; }
         .grid-item:nth-child(2) { transition-delay: 0.2s; }
         .grid-item:nth-child(3) { transition-delay: 0.3s; }
@@ -346,21 +273,13 @@
 
     <main>
         
-        <!-- Full Width Hero Carousel -->
-        <section class="hero-carousel-container">
+        <!-- Full Width Hero Carousel (Matched structure) -->
+        <section class="carousel-container animate-on-scroll" id="dynamic-carousel">
+            <button class="carousel-arrow arrow-left" onclick="moveSlide(-1)">&#10094;</button>
+            <button class="carousel-arrow arrow-right" onclick="moveSlide(1)">&#10095;</button>
             
-            <!-- Dynamic Carousel Images Will Be Injected Here -->
-            <div id="carousel-track"></div>
-
-            <!-- Navigation Arrows -->
-            <button class="carousel-arrow arrow-left" onclick="changeSlide(-1)">&#10094;</button>
-            <button class="carousel-arrow arrow-right" onclick="changeSlide(1)">&#10095;</button>
-
-            <!-- Hero Content Overlay -->
-            <div class="hero-content animate-on-scroll is-visible">
-                <h1 id="hero-heading">British Folklore & Myths</h1>
-                <p id="hero-subtitle" class="subtitle">Original artwork, prints, and wooden wares by illustrator Matt Willis.</p>
-                <a href="#collections" class="btn">Explore the Shop</a>
+            <div id="carousel-slides-container">
+                <!-- Slides will be dynamically injected here from carousel.txt -->
             </div>
         </section>
 
@@ -445,107 +364,100 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             
-            // --- 1. DYNAMIC CAROUSEL LOGIC ---
-            let currentSlide = 0;
-            let slideInterval;
-            let carouselData = [];
-            
-            async function loadCarouselData() {
+            // --- 1. DYNAMIC CAROUSEL LOGIC (Matched to Working Norfolk App) ---
+            async function loadCarousel() {
+                const container = document.getElementById('carousel-slides-container');
+                if(!container) return;
+
                 try {
                     const response = await fetch('carousel.txt', { cache: 'no-store' });
-                    
-                    // Check if the file actually exists on the server
-                    if (!response.ok) {
-                        console.warn("carousel.txt could not be found. Please ensure you have published at least one slide from the Admin Dashboard.");
-                        return;
-                    }
+                    if (!response.ok) return;
                     
                     const text = await response.text();
-                    const slideBlocks = text.split('---').filter(block => block.trim() !== '');
-                    const track = document.getElementById('carousel-track');
+                    const slidesRaw = text.split('---');
+                    let slideIndex = 0;
                     
-                    slideBlocks.forEach((slideText) => {
-                        let slideData = {};
+                    const cacheBuster = new Date().getTime();
+
+                    slidesRaw.forEach(rawSlide => {
+                        if(!rawSlide.trim()) return;
+                        let slide = { format: "", heading: "", desc: "", image: "" };
                         
-                        slideText.trim().split('\n').forEach(line => {
-                            const sepIndex = line.indexOf(':');
-                            if(sepIndex > -1) {
-                                const key = line.slice(0, sepIndex).trim().toLowerCase();
-                                const value = line.slice(sepIndex + 1).trim();
-                                slideData[key] = value;
+                        rawSlide.trim().split('\n').forEach(line => {
+                            const idx = line.indexOf(':');
+                            if(idx > -1) {
+                                const key = line.slice(0,idx).trim().toLowerCase();
+                                const val = line.slice(idx+1).trim();
+                                if(key === 'format') slide.format = val;
+                                if(key === 'heading') slide.heading = val;
+                                if(key === 'description') slide.desc = val;
+                                if(key === 'image') slide.image = val;
                             }
                         });
-                        
-                        if (slideData.image) {
-                            carouselData.push(slideData);
+
+                        if (slide.heading || slide.image) {
+                            const isActive = slideIndex === 0 ? "active" : "";
+                            const imageUrlWithBuster = `${slide.image}?v=${cacheBuster}`;
                             
-                            // Ensure the FIRST image pushed to the array gets the 'active' class
-                            const isFirstImage = carouselData.length === 1;
-                            
-                            const slideDiv = document.createElement('div');
-                            slideDiv.className = `carousel-slide ${isFirstImage ? 'active' : ''}`;
-                            
-                            const img = document.createElement('img');
-                            img.src = slideData.image;
-                            if (!isFirstImage) img.loading = 'lazy'; 
-                            img.alt = slideData.heading || `Carousel Slide ${carouselData.length}`;
-                            
-                            slideDiv.appendChild(img);
-                            track.appendChild(slideDiv);
+                            const html = `
+                            <div class="carousel-slide slide-${slideIndex + 1} ${isActive}" style="background-image: url('${imageUrlWithBuster}');">
+                                <div class="carousel-overlay">
+                                    <h2>${slide.format || ''}</h2>
+                                    <h3>${slide.heading || ''}</h3>
+                                    <div class="overlay-bottom">
+                                        <p>${slide.desc || ''}</p>
+                                    </div>
+                                </div>
+                            </div>`;
+                            container.innerHTML += html;
+                            slideIndex++;
                         }
                     });
-                    
-                    // Initialize the text for the first slide immediately if data exists
-                    if (carouselData.length > 0) {
-                        updateHeroText(0);
+
+                    let currentSlide = 0;
+                    const slides = document.querySelectorAll('.carousel-slide');
+                    const totalSlides = slides.length;
+                    let slideInterval;
+
+                    window.moveSlide = function(step) {
+                        showSlide(currentSlide + step);
+                        resetInterval();
+                    };
+
+                    function showSlide(index) {
+                        slides.forEach(s => s.classList.remove('active'));
+                        if (index >= totalSlides) {
+                            currentSlide = 0;
+                        } else if (index < 0) {
+                            currentSlide = totalSlides - 1;
+                        } else {
+                            currentSlide = index;
+                        }
+                        slides[currentSlide].classList.add('active');
                     }
-                    
+
+                    function startInterval() {
+                        slideInterval = setInterval(() => {
+                            showSlide(currentSlide + 1);
+                        }, 5000); 
+                    }
+
+                    function resetInterval() {
+                        clearInterval(slideInterval);
+                        startInterval();
+                    }
+
+                    if(totalSlides > 0) {
+                        startInterval();
+                    }
+
                 } catch (error) {
-                    console.error("Failed to load carousel data:", error);
+                    console.error("Error loading carousel data.", error);
                 }
             }
 
-            function updateHeroText(index) {
-                if (carouselData[index]) {
-                    // Added fallbacks to your default text just in case the text file is blank
-                    document.getElementById('hero-heading').textContent = carouselData[index].heading || 'British Folklore & Myths';
-                    document.getElementById('hero-subtitle').textContent = carouselData[index].description || 'Original artwork, prints, and wooden wares by illustrator Matt Willis.';
-                }
-            }
+            loadCarousel();
 
-            function showSlide(index) {
-                const slidesDOM = document.querySelectorAll('.carousel-slide');
-                if (slidesDOM.length === 0) return;
-
-                slidesDOM.forEach(slide => slide.classList.remove('active'));
-                if (index >= slidesDOM.length) currentSlide = 0;
-                if (index < 0) currentSlide = slidesDOM.length - 1;
-                
-                slidesDOM[currentSlide].classList.add('active');
-                updateHeroText(currentSlide);
-            }
-
-            window.changeSlide = function(direction) {
-                currentSlide += direction;
-                showSlide(currentSlide);
-                resetInterval(); 
-            }
-
-            function autoAdvanceSlide() {
-                currentSlide++;
-                showSlide(currentSlide);
-            }
-
-            function resetInterval() {
-                clearInterval(slideInterval);
-                slideInterval = setInterval(autoAdvanceSlide, 5000); 
-            }
-            
-            // Execute the fetch and start the timer
-            loadCarouselData();
-            slideInterval = setInterval(autoAdvanceSlide, 5000);
-
-            
             // --- Scroll Animations Logic ---
             const observerOptions = {
                 root: null,
@@ -598,8 +510,6 @@
             }
 
             let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
-            
-            // Ensure the quantity property exists for the grouped logic
             cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
             
             const cartSidebar = document.getElementById('cart-sidebar');
@@ -616,7 +526,6 @@
             closeCartBtn.addEventListener('click', closeCartSidebar);
             cartOverlay.addEventListener('click', closeCartSidebar);
 
-            // Adjust Quantities Logic
             window.updateQuantity = function(index, delta) {
                 cart[index].quantity += delta;
                 if (cart[index].quantity <= 0) {
@@ -671,18 +580,11 @@
                 cartToggle.textContent = `Cart (${cartItemCount})`;
             };
 
-            // --- BROWSER BACK BUTTON FIX ---
             window.addEventListener('pageshow', (event) => {
-                // event.persisted is true if the browser loaded the page from its history cache
                 if (event.persisted) {
-                    // Re-fetch the live data from local storage
                     const currentKey = typeof cartKey !== 'undefined' ? cartKey : 'folkloreCart';
                     cart = JSON.parse(localStorage.getItem(currentKey)) || [];
-                    
-                    // Ensure the quantity property exists for the grouped logic
                     cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
-                    
-                    // Force the cart UI to update to match the live data
                     updateCartUI();
                 }
             });
