@@ -200,7 +200,16 @@
         .entry-date { color: var(--accent-red); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; margin-bottom: 0.5rem; display: block; }
         .entry-title { font-size: 2.2rem; margin: 0 0 1.5rem 0; line-height: 1.2; }
         
-        .entry-text p { font-size: 1.1rem; line-height: 1.8; color: #ddd; margin-bottom: 1.5rem; text-align: justify; }
+        .entry-text, .entry-text p { 
+            font-size: 1rem;       /* Matches the first paragraph's size */
+            line-height: 1.6;      /* Matches the first paragraph's spacing */
+            text-align: left; 
+        }
+
+        .entry-text p { 
+            margin-bottom: 1.5rem; 
+            margin-top: 0;
+        }
         
         .entry-keywords { margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
         
