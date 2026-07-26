@@ -5,8 +5,8 @@ Description: Available from The Folklore Box
 Image: Carousel-1.jpg
 ---
 Slide: 2
-Format: PODCAST
-Heading: Wooden Standing Decorations
+Format: Event
+Heading: Black Shuck Festival
 Description: Available from The Folklore Box
 Image: Carousel-2.jpg
 ---
