@@ -480,17 +480,29 @@
                         keywordsHtml = `<div class="entry-keywords">` + entry.keywords.map(k => `<span class="keyword-tag">${k}</span>`).join('') + `</div>`;
                     }
 
-                    feedContainer.innerHTML += `
-                        <article class="journal-entry">
-                            ${imageHtml}
-                            <div class="entry-content">
-                                <span class="entry-date">${formattedDate}</span>
-                                <h2 class="entry-title">${entry.title}</h2>
-                                <div class="entry-text">${entry.textHtml}</div>
-                                ${keywordsHtml}
-                            </div>
-                        </article>
-                    `;
+                    // Inside your renderEntries function, add a button and a hidden container:
+
+feedContainer.innerHTML += `
+    <article class="journal-entry">
+        ${imageHtml}
+        <div class="entry-content">
+            <span class="entry-date">${formattedDate}</span>
+            <h2 class="entry-title">${entry.title}</h2>
+            <div class="entry-text">${entry.textHtml}</div>
+            ${keywordsHtml}
+            
+            <!-- NEW: Comments Toggle -->
+            <button class="toggle-comments-btn" onclick="toggleComments('${index}', '${entry.title.replace(/'/g, "\\'")}')" style="margin-top: 2rem; background: transparent; border: 1px solid var(--accent-red); color: var(--accent-red); padding: 0.5rem 1rem; cursor: pointer; text-transform: uppercase; font-family: 'Lato', sans-serif; font-size: 0.85rem;">
+                Load Comments
+            </button>
+            
+            <!-- NEW: Comments Container (Hidden by default) -->
+            <div id="comments-container-${index}" style="display: none; margin-top: 2rem; padding-top: 2rem; border-top: 1px dashed #333;">
+                <!-- Comments will be injected here -->
+            </div>
+        </div>
+    </article>
+`;
                 });
             }
 
