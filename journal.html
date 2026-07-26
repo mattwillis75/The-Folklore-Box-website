@@ -179,6 +179,92 @@
             background: #111;
         }
         .entry-image { display: block; }
+
+        /* --- COMMENTS SECTION STYLES --- */
+.comments-section { 
+    margin-top: 2rem; 
+    padding-top: 2rem; 
+    border-top: 1px dashed #333; 
+    display: none; 
+}
+
+.toggle-comments-btn { 
+    margin-top: 2rem; 
+    background: transparent; 
+    border: 1px solid var(--accent-red); 
+    color: var(--accent-red); 
+    padding: 0.6rem 1.2rem; 
+    cursor: pointer; 
+    text-transform: uppercase; 
+    font-family: 'Lato', sans-serif; 
+    font-size: 0.85rem; 
+    transition: all 0.3s ease; 
+    letter-spacing: 1px;
+}
+.toggle-comments-btn:hover { 
+    background: var(--accent-red); 
+    color: #fff; 
+}
+
+.comment-item { 
+    background: #0a0a0a; 
+    padding: 1.2rem; 
+    border-left: 2px solid var(--accent-red); 
+    margin-bottom: 1rem; 
+    border-radius: 0 4px 4px 0; 
+}
+.comment-header { 
+    display: flex; 
+    justify-content: space-between; 
+    margin-bottom: 0.5rem; 
+    font-size: 0.85rem; 
+}
+.comment-author { font-weight: 600; color: #fff; text-transform: uppercase; letter-spacing: 1px; }
+.comment-date { color: #888; }
+.comment-body { font-size: 0.95rem; line-height: 1.6; color: #ccc; margin: 0; }
+
+.comment-form { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 1rem; 
+    margin-top: 2rem;
+    background: #111;
+    padding: 1.5rem;
+    border-radius: 4px;
+}
+.comment-form h4 { 
+    margin: 0 0 0.5rem 0; 
+    font-family: 'Spectral', serif; 
+    font-size: 1.5rem; 
+    color: #fff;
+}
+.comment-form input, .comment-form textarea { 
+    width: 100%; 
+    padding: 0.8rem; 
+    background: #000; 
+    color: #fff; 
+    border: 1px solid #333; 
+    border-radius: 3px; 
+    font-family: 'Lato', sans-serif; 
+    box-sizing: border-box; 
+    transition: border-color 0.3s;
+}
+.comment-form input:focus, .comment-form textarea:focus { 
+    outline: none; 
+    border-color: var(--accent-red); 
+}
+.comment-form button { 
+    background: var(--accent-red); 
+    color: #fff; 
+    border: none; 
+    padding: 0.8rem; 
+    text-transform: uppercase; 
+    font-weight: bold; 
+    cursor: pointer; 
+    transition: background 0.3s; 
+    letter-spacing: 1px;
+}
+.comment-form button:hover { background: #a30000; }
         
         /* Carousel Specific Styles */
         .carousel-container { position: relative; width: 100%; aspect-ratio: 4 / 3; overflow: hidden; display: block; }
@@ -490,6 +576,23 @@ feedContainer.innerHTML += `
             <h2 class="entry-title">${entry.title}</h2>
             <div class="entry-text">${entry.textHtml}</div>
             ${keywordsHtml}
+
+            <button id="toggle-btn-${index}" class="toggle-comments-btn" onclick="window.toggleComments('${index}', '${entry.title.replace(/'/g, "\\'")}')">
+        Load Comments
+    </button>
+    
+    <div id="comments-section-${index}" class="comments-section">
+        <div id="comment-list-${index}"></div>
+        
+        <div class="comment-form">
+            <h4>Leave a Note</h4>
+            <input type="text" id="comment-name-${index}" placeholder="Your Name (Required)">
+            <textarea id="comment-text-${index}" rows="3" placeholder="Your thoughts on this entry... (Required)"></textarea>
+            <button onclick="window.submitComment('${index}', '${entry.title.replace(/'/g, "\\'")}')">Post Comment</button>
+        </div>
+    </div>
+</div>
+</article>
             
             <!-- NEW: Comments Toggle -->
             <button class="toggle-comments-btn" onclick="toggleComments('${index}', '${entry.title.replace(/'/g, "\\'")}')" style="margin-top: 2rem; background: transparent; border: 1px solid var(--accent-red); color: var(--accent-red); padding: 0.5rem 1rem; cursor: pointer; text-transform: uppercase; font-family: 'Lato', sans-serif; font-size: 0.85rem;">
@@ -648,5 +751,138 @@ feedContainer.innerHTML += `
             });
         }
     </script>
+    <script type="module">
+    // Import the functions you need from the Firebase SDKs
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, query, where, orderBy, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    // TODO: Replace this with your project's config from Step 1
+    const firebaseConfig = {
+      apiKey: "AIzaSyAn4X2DQXlTaxW2wiNdl536tAmK7T1oOuI",
+      authDomain: "the-folklore-box.firebaseapp.com",
+      projectId: "the-folklore-box",
+      storageBucket: "the-folklore-box.appspot.com",
+      messagingSenderId: "120616950202",
+      appId: "1:120616950202:web:779aea24db860f02afe583"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Global function to toggle and fetch comments
+    window.toggleComments = async function(index, entryTitle) {
+        const section = document.getElementById(`comments-section-${index}`);
+        const btn = document.getElementById(`toggle-btn-${index}`);
+        const list = document.getElementById(`comment-list-${index}`);
+        
+        if (section.style.display === 'none' || section.style.display === '') {
+            // Open section
+            section.style.display = 'block';
+            btn.textContent = 'Hide Comments';
+            
+            // If empty, fetch from database
+            if (list.innerHTML.trim() === '') {
+                list.innerHTML = '<p style="color: #888; font-style: italic;">Loading folklore scholars...</p>';
+                try {
+                    const q = query(
+                        collection(db, "comments"), 
+                        where("entryId", "==", entryTitle), 
+                        orderBy("timestamp", "asc")
+                    );
+                    const querySnapshot = await getDocs(q);
+                    
+                    list.innerHTML = ''; // Clear loading text
+                    
+                    if (querySnapshot.empty) {
+                        list.innerHTML = '<p style="color: #888; font-style: italic;">No notes found for this entry. Be the first to add yours.</p>';
+                    } else {
+                        querySnapshot.forEach((doc) => {
+                            const data = doc.data();
+                            // Handle cases where timestamp is pending
+                            const dateStr = data.timestamp ? data.timestamp.toDate().toLocaleDateString('en-GB') : 'Just now';
+                            
+                            list.innerHTML += `
+                                <div class="comment-item">
+                                    <div class="comment-header">
+                                        <span class="comment-author">${data.name}</span>
+                                        <span class="comment-date">${dateStr}</span>
+                                    </div>
+                                    <p class="comment-body">${data.text}</p>
+                                </div>
+                            `;
+                        });
+                    }
+                } catch (e) {
+                    console.error("Error fetching comments: ", e);
+                    // Firestore needs an index for this query. If it fails, check your console for the link to build the index!
+                    list.innerHTML = `<p style="color: var(--accent-red);">The archives are currently unreachable. Try again later.</p>`;
+                }
+            }
+        } else {
+            // Close section
+            section.style.display = 'none';
+            btn.textContent = 'Load Comments';
+        }
+    };
+
+    // Global function to submit a comment
+    window.submitComment = async function(index, entryTitle) {
+        const nameInput = document.getElementById(`comment-name-${index}`);
+        const textInput = document.getElementById(`comment-text-${index}`);
+        const list = document.getElementById(`comment-list-${index}`);
+        const btn = event.target;
+        
+        const name = nameInput.value.trim();
+        const text = textInput.value.trim();
+        
+        if (!name || !text) {
+            alert("Please provide both your name and a comment.");
+            return;
+        }
+
+        // Disable button while sending
+        const originalBtnText = btn.textContent;
+        btn.textContent = 'Sending...';
+        btn.disabled = true;
+        
+        try {
+            await addDoc(collection(db, "comments"), {
+                entryId: entryTitle,
+                name: name,
+                text: text,
+                timestamp: serverTimestamp()
+            });
+            
+            // Remove the "No notes found" text if it's the first comment
+            const noCommentsMsg = list.querySelector('p');
+            if (noCommentsMsg && noCommentsMsg.textContent.includes('No notes found')) {
+                list.innerHTML = '';
+            }
+            
+            // Add new comment to UI immediately
+            list.innerHTML += `
+                <div class="comment-item" style="border-color: #4CAF50;">
+                    <div class="comment-header">
+                        <span class="comment-author">${name}</span>
+                        <span class="comment-date">Just now</span>
+                    </div>
+                    <p class="comment-body">${text}</p>
+                </div>
+            `;
+            
+            // Clear inputs
+            nameInput.value = '';
+            textInput.value = '';
+            
+        } catch (e) {
+            console.error("Error adding document: ", e);
+            alert("Failed to add your note to the archive.");
+        } finally {
+            btn.textContent = originalBtnText;
+            btn.disabled = false;
+        }
+    };
+</script>
 </body>
 </html>
