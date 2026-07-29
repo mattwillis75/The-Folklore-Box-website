@@ -2,6 +2,10 @@ Title: SHUCK Issue 1 - The Dark
 Main Image: ./shuck-issue1-1.jpg
 Images: ./shuck-issue1-2.jpg, ./shuck-issue1-3.jpg, ./shuck-issue1-4.jpg
 Sections: Zines
+Size: 
+Materials: 
+Postal Class: First Class Letter
+Item Cost: 
 Description: Shuck zine was a Kickstarter project initiated by three friends at the start of the pandemic. Overwhelmed by support, issue #1 sold like hot cakes and has been in print ever since. Each Shuck zine explores a different themes within Norfolk and British folklore, uncovering age-old, handed-down, dark and twisty tales rooted in truth? Who can tell.
 Written for adults, suitable for older teens, contains creepy and gory tales.
 Issue #1 - The Dark Issue#2 - Love Issue#3 - Cursed Issue#4 - Feasting Issue #5 - The Deep Issue - 6 - Beasts
@@ -17,6 +21,10 @@ Title: SHUCK Issue 2 - Love
 Main Image: ./shuck-issue2-1.jpg
 Images: ./shuck-issue2-2.jpg, ./shuck-issue2-3.jpg, ./shuck-issue2-4.jpg
 Sections: Zines
+Size: 
+Materials: 
+Postal Class: First Class Letter
+Item Cost: 
 Description: Shuck zine was a Kickstarter project initiated by three friends at the start of the pandemic. Overwhelmed by support, issue #1 sold like hot cakes and has been in print ever since. Each Shuck zine explores a different themes within Norfolk and British folklore, uncovering age-old, handed-down, dark and twisty tales rooted in truth? Who can tell.
 Written for adults, suitable for older teens, contains creepy and gory tales.
 Issue #1 - The Dark Issue#2 - Love Issue#3 - Cursed Issue#4 - Feasting Issue #5 - The Deep Issue - 6 - Beasts
@@ -32,6 +40,10 @@ Title: SHUCK Issue 3 - Cursed
 Main Image: ./shuck-issue3-1.jpg
 Images: ./shuck-issue3-2.jpg, ./shuck-issue3-3.jpg, ./shuck-issue3-4.jpg
 Sections: Zines
+Size: 
+Materials: 
+Postal Class: First Class Letter
+Item Cost: 
 Description: Shuck zine was a Kickstarter project initiated by three friends at the start of the pandemic. Overwhelmed by support, issue #1 sold like hot cakes and has been in print ever since. Each Shuck zine explores a different themes within Norfolk and British folklore, uncovering age-old, handed-down, dark and twisty tales rooted in truth? Who can tell.
 Written for adults, suitable for older teens, contains creepy and gory tales.
 Issue #1 - The Dark Issue#2 - Love Issue#3 - Cursed Issue#4 - Feasting Issue #5 - The Deep Issue - 6 - Beasts
@@ -47,6 +59,10 @@ Title: SHUCK Issue 4 - Feasting
 Main Image: ./shuck-issue4-1.jpg
 Images: ./shuck-issue4-2.jpg, ./shuck-issue4-3.jpg
 Sections: Zines
+Size: 
+Materials: 
+Postal Class: First Class Letter
+Item Cost: 
 Description: Shuck zine was a Kickstarter project initiated by three friends at the start of the pandemic. Overwhelmed by support, issue #1 sold like hot cakes and has been in print ever since. Each Shuck zine explores a different themes within Norfolk and British folklore, uncovering age-old, handed-down, dark and twisty tales rooted in truth? Who can tell.
 Written for adults, suitable for older teens, contains creepy and gory tales.
 Issue #1 - The Dark Issue#2 - Love Issue#3 - Cursed Issue#4 - Feasting Issue #5 - The Deep Issue - 6 - Beasts
@@ -62,6 +78,10 @@ Title: SHUCK Issue 5 - The Deep
 Main Image: ./shuck-issue5-1.jpg
 Images: ./shuck-issue5-2.jpg, ./shuck-issue5-3.jpg
 Sections: Zines
+Size: 
+Materials: 
+Postal Class: First Class Letter
+Item Cost: 
 Description: Shuck zine was a Kickstarter project initiated by three friends at the start of the pandemic. Overwhelmed by support, issue #1 sold like hot cakes and has been in print ever since. Each Shuck zine explores a different themes within Norfolk and British folklore, uncovering age-old, handed-down, dark and twisty tales rooted in truth? Who can tell.
 Written for adults, suitable for older teens, contains creepy and gory tales.
 Issue #1 - The Dark Issue#2 - Love Issue#3 - Cursed Issue#4 - Feasting Issue #5 - The Deep Issue - 6 - Beasts
@@ -77,6 +97,10 @@ Title: SHUCK Issue 6 - Beasts
 Main Image: ./shuck-issue6-1.jpg
 Images: ./shuck-issue6-2.jpg, ./shuck-issue6-3.jpg
 Sections: Zines
+Size: 
+Materials: 
+Postal Class: First Class Letter
+Item Cost: 
 Description: Shuck zine was a Kickstarter project initiated by three friends at the start of the pandemic. Overwhelmed by support, issue #1 sold like hot cakes and has been in print ever since. Each Shuck zine explores a different themes within Norfolk and British folklore, uncovering age-old, handed-down, dark and twisty tales rooted in truth? Who can tell.
 Written for adults, suitable for older teens, contains creepy and gory tales.
 Issue #1 - The Dark Issue#2 - Love Issue#3 - Cursed Issue#4 - Feasting Issue #5 - The Deep Issue - 6 - Beasts
@@ -92,6 +116,10 @@ Title: SHUCK Issue 7 - Witches
 Main Image: ./shuck-issue7-1.jpg
 Images: ./shuck-issue7-2.jpg, ./shuck-issue7-3.jpg, ./shuck-issue7-4.jpg
 Sections: Zines
+Size: 
+Materials: 
+Postal Class: First Class Letter
+Item Cost: 
 Description: Shuck zine was a Kickstarter project initiated by three friends at the start of the pandemic. Overwhelmed by support, issue #1 sold like hot cakes and has been in print ever since. Each Shuck zine explores a different themes within Norfolk and British folklore, uncovering age-old, handed-down, dark and twisty tales rooted in truth? Who can tell.
 Written for adults, suitable for older teens, contains creepy and gory tales.
 Issue #1 - The Dark Issue#2 - Love Issue#3 - Cursed Issue#4 - Feasting Issue #5 - The Deep Issue - 6 - Beasts
@@ -107,6 +135,10 @@ Title: Memento Mori Skeleton with Wings Birch Plywood Pin Badge
 Main Image: ./badge-memento-mori-1.jpg
 Images: ./badge-memento-mori-2.jpg, ./badge-memento-mori-3.jpg, ./badge-memento-mori-4.jpg
 Sections: Badges
+Size: 
+Materials: 
+Postal Class: First Class Letter
+Item Cost: 
 Description: This listing is for a Memento Mori Winged Skull pin badge.
 
 The design is cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover. The badge measures 48mm x 22mm.
@@ -121,6 +153,10 @@ Title: Standing Stone with Sun Birch Plywood Pin Badge
 Main Image: ./badge-standing-stone-sun-1.jpg
 Images: ./badge-standing-stone-sun-2.jpg, ./badge-standing-stone-sun-3.jpg, ./badge-standing-stone-sun-4.jpg, ./badge-standing-stone-sun-5.jpg
 Sections: Badges
+Size: 
+Materials: 
+Postal Class: First Class Letter
+Item Cost: 
 Description: This listing is for a Standing Stone with Moon pin badge.
 
 The design is cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover. The badge measures 28mm x 40mm.
@@ -135,6 +171,10 @@ Title: Skeleton in Coffin Birch Plywood Pin Badge
 Main Image: ./badge-skeleton-coffin-1.jpg
 Images: ./badge-skeleton-coffin-2.jpg, ./badge-skeleton-coffin-3.jpg, ./badge-skeleton-coffin-4.jpg
 Sections: Badges
+Size: 
+Materials: 
+Postal Class: First Class Letter
+Item Cost: 
 Description: This listing is for a Skeleton in a Coffin pin badge.
 
 The design is cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover. The badge measures 28mm x 40mm.
@@ -149,6 +189,10 @@ Title: Witch with Black Cat Birch Plywood Pin Badge
 Main Image: ./badge-witch-with-cat-1.jpg
 Images: ./badge-witch-with-cat-2.jpg, ./badge-witch-with-cat-3.jpg, ./badge-witch-with-cat-4.jpg
 Sections: Badges
+Size: 
+Materials: 
+Postal Class: First Class Letter
+Item Cost: 
 Description: This listing is for a Witch with Black cat pin badge.
 
 The design is cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover. The badge measures 35mm x 40mm.
@@ -163,6 +207,10 @@ Title: Crow’s Head Birch Plywood Pin Badge
 Main Image: ./badge-crows-head-1.jpg
 Images: ./badge-crows-head-2.jpg, ./badge-crows-head-3.jpg, ./badge-crows-head-4.jpg
 Sections: Badges
+Size: 
+Materials: 
+Postal Class: First Class Letter
+Item Cost: 
 Description: This listing is for a Crow’s Head pin badge.
 
 The design is cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover. The badge measures 50mm x 33mm.
@@ -178,6 +226,10 @@ Title: Sitting Hare Birch Plywood Pin Badge
 Main Image: badge-sitting-hare-1.jpg
 Images: badge-sitting-hare-2.jpg, badge-sitting-hare-3.jpg, badge-sitting-hare-4.jpg, badge-sitting-hare-5.jpg
 Sections: Badges
+Size: 
+Materials: 
+Postal Class: First Class Letter
+Item Cost: 
 Description: This listing is for a Sitting Hare pin badge.
 
 The design is cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover. The badge measures 40mm x 23mm.
@@ -192,6 +244,10 @@ Title: Morning Star Flail Birch Plywood Pin Badge
 Main Image: badge-morning-star-flail-1.jpg
 Images: badge-morning-star-flail-2.jpg, badge-morning-star-flail-3.jpg, badge-morning-star-flail-4.jpg
 Sections: Badges
+Size: 
+Materials: 
+Postal Class: First Class Letter
+Item Cost: 
 Description: This listing is for a Morning Star Flail pin badge.
 
 The design is cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover. The badge measures 28mm x 45mm.
@@ -206,6 +262,10 @@ Title: Winged Demon Clutch Pin Badge - Laser Cut Birch Plywood
 Main Image: badge-tongue-bench-end.jpg
 Images: 
 Sections: Badges
+Size: 
+Materials: 
+Postal Class: First Class Letter
+Item Cost: 
 Description: This is a Winged Demon End clutch pin badge. It is inspired by medieval carved bench ends seen on my church crawling experiences.
 
 It is laser cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover.
@@ -220,6 +280,10 @@ Title: Dog Demon Birch Plywood Pin Badge – Medieval Folk Art
 Main Image: badge-dog-demon-1.jpg
 Images: 
 Sections: Badges
+Size: 
+Materials: 
+Postal Class: First Class Letter
+Item Cost: 
 Description: This is a Dog Demon Bench End clutch pin badge. It is inspired by medieval carved bench ends seen on my church crawling experiences.
 
 It is laser cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover.
@@ -234,6 +298,10 @@ Title: Dragon Bench End Pin Badge - Laser Cut Birch Plywood
 Main Image: badge-dragon-bench-end-1.jpg
 Images: 
 Sections: Badges
+Size: 
+Materials: 
+Postal Class: First Class Letter
+Item Cost: 
 Description: This is a Dragon Bench End clutch pin badge. It is inspired by medieval carved bench ends seen on my church crawling experiences.
 
 It is laser cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover.
@@ -248,6 +316,10 @@ Title: Death’s Head Moth Birch Plywood Pin Badge
 Main Image: badge-deaths-head-moth-1.jpg
 Images: badge-deaths-head-moth-2.jpg, badge-deaths-head-moth-3.jpg, badge-deaths-head-moth-4.jpg
 Sections: Badges
+Size: 
+Materials: 
+Postal Class: First Class Letter
+Item Cost: 
 Description: This listing is for a Death’s Head Moth pin badge.
 
 The design is cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover. The badge measures 50mm x 35mm.
@@ -262,6 +334,10 @@ Title: Cottage with Moon Birch Plywood Pin Badge
 Main Image: badge-cottage-with-moon-1.jpg
 Images: badge-cottage-with-moon-2.jpg,badge-cottage-with-moon-3.jpg,badge-cottage-with-moon-4.jpg,badge-cottage-with-moon-5.jpg
 Sections: Badges
+Size: 
+Materials: 
+Postal Class: First Class Letter
+Item Cost: 
 Description: This listing is for a Cottage with Moon pin badge.
 
 The design is cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover. The badge measures 25mm x 40mm.
@@ -276,6 +352,10 @@ Title: Toadstools Birch Plywood Pin Badge
 Main Image: badge-toadstools-1.jpg
 Images: badge-cottage-with-moon-2.jpg, badge-cottage-with-moon-3.jpg, badge-cottage-with-moon-4.jpg
 Sections: Badges
+Size: 
+Materials: 
+Postal Class: First Class Letter
+Item Cost: 
 Description: This listing is for a Toadstools pin badge.
 
 The design is cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover. The badge measures 35mm x 30mm.
@@ -290,6 +370,10 @@ Title: Cernunnos Birch Plywood Pin Badge
 Main Image: badge-cernunnos-1.jpg
 Images: badge-cernunnos-2.jpg, badge-cernunnos-3.jpg, badge-cernunnos-4.jpg ,badge-cernunnos-5.jpg
 Sections: Badges
+Size: 
+Materials: 
+Postal Class: First Class Letter
+Item Cost: 
 Description: This listing is for a Cernunnos pin badge.
 
 The design is cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover. The badge measures 35mm x 30mm.
@@ -301,10 +385,13 @@ Postal Class: Large Letter
 Item Cost: 6.00
 ---
 Title: Knight’s Helmet Birch Plywood Pin Badge
-
 Main Image: badge-knights-helmet-1.jpg
 Images: badge-knights-helmet-2.jpg, badge-knights-helmet-3.jpg, badge-knights-helmet-4.jpg
 Sections: Badges
+Size: 
+Materials: 
+Postal Class: First Class Letter
+Item Cost: 
 Description: This listing is for a Knight’s Helmet pin badge.
 
 The design is cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover. The badge measures 32mm x 45mm.
@@ -316,10 +403,13 @@ Postal Class: Large Letter
 Item Cost: 6.00
 ---
 Title: Knight’s Gauntlet Birch Plywood Pin Badge
-
 Main Image: badge-knights-gauntlet-1.jpg
 Images: badge-gauntlet-helmet-2.jpg
 Sections: Badges
+Size: 
+Materials: 
+Postal Class: First Class Letter
+Item Cost: 
 Description: This listing is for a Knight’s Gauntlet pin badge.
 
 The design is cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover. The badge measures 19mm x 50mm.
@@ -330,12 +420,14 @@ Materials: Birch wood, metal, rubber
 Postal Class: Large Letter
 Item Cost: 6.00
 ---
----
 Title: Spiral Stone with Sun Birch Plywood Pin Badge
-
 Main Image: badge-spiral-stone-1.jpg
 Images: badge-spiral-stone-2.jpg, badge-spiral-stone-3.jpg, badge-spiral-stone-4.jpg, badge-spiral-stone-5.jpg
 Sections: Badges
+Size: 
+Materials: 
+Postal Class: First Class Letter
+Item Cost: 
 Description: This listing is for a Spiral Stone pin badge.
 
 The design is cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover. The badge measures 20mm x 40mm.
@@ -347,10 +439,13 @@ Postal Class: Large Letter
 Item Cost: 6.00
 ---
 Title: Devil’s Head Birch Plywood Pin Badge
-
 Main Image: badge-devils-head-1.jpg
 Images: badge-devils-head-2.jpg, badge-devils-head-3.jpg, badge-devils-head-4.jpg
 Sections: Badges
+Size: 
+Materials: 
+Postal Class: First Class Letter
+Item Cost: 
 Description: This listing is for a Devil’s Head pin badge.
 
 The design is cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover. The badge measures 35mm x 40mm.
@@ -365,6 +460,10 @@ Title: Standing Witch Wooden Hanging Decoration
 Main Image: hanging-dec-witch-standing-1.jpg
 Images: hanging-dec-witch-standing-2.jpg, hanging-dec-witch-standing-3.jpg, hanging-dec-witch-standing-4.jpg
 Sections: Hanging Decorations
+Size: 
+Materials: 
+Postal Class: First Class Letter
+Item Cost: 
 Description: This listing is for my Standing Witch hanging decoration, laser cut into black painted birch plywood from an original illustration. the front and back are both painted black and it comes with a red silk effect ribbon. The decoration measure approx 90x90mm (not including the ribbon).
 
 Each decoration also ships with a mini print measuring 90 x 90 mm of the original illustration while stocks last.
@@ -379,6 +478,10 @@ Title: Woodwose Wooden Hanging Decoration
 Main Image: hanging-dec-woodwose-1.jpg
 Images: hanging-dec-woodwose-2.jpg, hanging-dec-woodwose-3.jpg, hanging-dec-woodwose-4.jpg
 Sections: Hanging Decorations
+Size: 
+Materials: 
+Postal Class: First Class Letter
+Item Cost: 
 Description: This listing is for my Woodwose hanging decoration, laser cut into black painted birch plywood from an original illustration. the front and back are both painted black and it comes with a red silk effect ribbon. The decoration measure approx 90x90mm (not including the ribbon).
 
 Each decoration also ships with a mini print measuring 90 x 90 mm of the original illustration while stocks last.
@@ -393,6 +496,10 @@ Title: Snow Spell Hanging Decoration
 Main Image: hanging-dec-snow-stone-1.jpg
 Images: hanging-dec-snow-stone-2.jpg
 Sections: Hanging Decorations
+Size: 
+Materials: 
+Postal Class: First Class Letter
+Item Cost: 
 Description: This listing is for my Snow Stone hanging decoration, laser cut into black painted birch plywood from an original illustration. the front and back are both painted black and it comes with a red silk effect ribbon. The decoration measure approx 90x90mm (not including the ribbon).
 
 Each decoration also ships with a mini print measuring 90 x 90 mm of the original illustration while stocks last.
@@ -407,6 +514,10 @@ Title: Mari Lwyd Hanging Decoration
 Main Image: hanging-dec-mari-lwyd-1.jpg
 Images: hanging-dec-mari-lwyd-2.jpg, hanging-dec-mari-lwyd-3.jpg, hanging-dec-mari-lwyd-4.jpg
 Sections: Hanging Decorations
+Size: 
+Materials: 
+Postal Class: First Class Letter
+Item Cost: 
 Description: This listing is for my Mari Lwyd hanging decoration, laser cut into black painted birch plywood from an original illustration. the front and back are both painted black and it comes with a red silk effect ribbon. The decoration measure approx 90x90mm (not including the ribbon).
 
 Each decoration also ships with a mini print measuring 90 x 90 mm of the original illustration while stocks last.
@@ -421,6 +532,10 @@ Title: Krampus Face Hanging Decoration
 Main Image: hanging-dec-krampus-face-1.jpg
 Images: hanging-dec-krampus-face-2.jpg, hanging-dec-krampus-face-3.jpg, hanging-dec-krampus-face-4.jpg
 Sections: Hanging Decorations
+Size: 
+Materials: 
+Postal Class: First Class Letter
+Item Cost: 
 Description: This listing is for my Krampus Face hanging decoration, laser cut into black painted birch plywood from an original illustration. the front and back are both painted black and it comes with a red silk effect ribbon. The decoration measure approx 90x90mm (not including the ribbon).
 
 Each decoration also ships with a mini print measuring 90 x 90 mm of the original illustration while stocks last.
@@ -435,6 +550,10 @@ Title: Snow Stone Hanging Decoration
 Main Image: hanging-dec-snow-stone-1.jpg
 Images: hanging-dec-snow-stone-2.jpg
 Sections: Hanging Decorations
+Size: 
+Materials: 
+Postal Class: First Class Letter
+Item Cost: 
 Description: This listing is for my Snow Stone hanging decoration, laser cut into black painted birch plywood from an original illustration. the front and back are both painted black and it comes with a red silk effect ribbon. The decoration measure approx 90x90mm (not including the ribbon).
 
 Each decoration also ships with a mini print measuring 90 x 90 mm of the original illustration while stocks last.
@@ -444,4 +563,18 @@ Size: 60x110x3mm
 Materials: Birch wood, ribbon
 Postal Class: Large Letter
 Item Cost: 14.00
+---
+Title: Baba Yaga Wooden Decoration Set
+Main Image: images/Hanging-dec-baba-yaga-set-1.jpg
+Images: images/Hanging-dec-baba-yaga-1.jpg, images/Hanging-dec-baba-yaga-hut-1.jpg, images/Hanging-dec-baba-yaga-vasilisa-1.jpg
+Sections: Hanging Decorations
+Size: 90x135x3mm
+Materials: birch plywood, black paint, red velvet ribbon
+Postal Class: Second Class Large Letter
+Item Cost: 50
+Description: This listing is for x3 hanging decorations - Baba Yaga, The Hen Legged Hut and Vasilisa the Beautiful. Each decoration is laser cut into black painted birch plywood from an original illustration. the front and back are both painted black and it comes with a red velvet effect ribbon.
+
+These are larger than normal hanging decorations - measuring 90mm width x 135mm height (standard decorations are approx 90mm high).
+
+Please be aware that there may be slight differences in colouring with each piece due to the processes used in production and occasionally some variance in colour or grain of the birch wood.
 ---
