@@ -620,3 +620,15 @@ Description: Each Witch decoration is laser cut into black painted birch plywood
 
 Please be aware that there may be slight differences in colouring with each piece due to the processes used in production and occasionally some variance in colour or grain of the birch wood.
 ---
+Title: Witch Riding Goat Hanging Decoration
+Main Image: images/Hanging-dec-witch-goat-1.jpg
+Images: images/Hanging-dec-witch-goat-2.jpg, images/Hanging-dec-witch-goat-3.jpg, images/Hanging-dec-witch-goat-4.jpg
+Sections: Hanging Decorations
+Size: 90 x 100 x 3mm
+Materials: birch plywood, black paint, red velvet ribbon
+Postal Class: Second Class Large Letter
+Item Cost: 15
+Description: Each Cauldron Witch decoration is laser cut into black painted birch plywood from an original illustration. the front and back are both painted black and it comes with a red velvet effect ribbon.
+
+Please be aware that there may be slight differences in colouring with each piece due to the processes used in production and occasionally some variance in colour or grain of the birch wood.
+---
