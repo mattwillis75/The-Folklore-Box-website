@@ -644,3 +644,17 @@ Description: Each Cauldron Witch decoration is laser cut into black painted birc
 
 Please be aware that there may be slight differences in colouring with each piece due to the processes used in production and occasionally some variance in colour or grain of the birch wood.
 ---
+Title: Black Phillip the Goat Haning Decoration
+Main Image: images/Hanging-dec-black-phillip-1.jpg
+Images: images/Hanging-dec-black-phillip-2.jpg, images/Hanging-dec-black-phillip-3.jpg, images/Hanging-dec-black-phillip-4.jpg
+Sections: Hanging Decorations
+Size: 75 x 95 x x3mm
+Materials: birch plywood, black paint, red velvet ribbon
+Postal Class: Second Class Large Letter
+Item Cost: 15
+Description: Each Black Phillip decoration is laser cut into black painted birch plywood from an original illustration. the front and back are both painted black and it comes with a red velvet effect ribbon.
+
+Each decoration also ships with a mini print measuring 90 x 90 mm of the original illustration in a silver metallic ink while stocks last.
+
+Please be aware that there may be slight differences in colouring with each piece due to the processes used in production and occasionally some variance in colour or grain of the birch wood.
+---
