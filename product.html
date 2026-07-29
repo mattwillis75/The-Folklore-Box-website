@@ -60,10 +60,10 @@
         /* Container for the thumbnails */
         .gallery-thumbnails { 
             display: grid; 
-            grid-template-columns: repeat(4, 1fr); /* Forces exactly 4 equal columns */
-            gap: 1rem; /* Adjust this for the space between the thumbnails */
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem; 
             width: 100%; 
-            max-width: 450px; /* Perfectly matches your main image container width */
+            max-width: 450px; 
             box-sizing: border-box; 
         }
 
@@ -71,7 +71,7 @@
         .gallery-thumbnails img { 
             width: 100%; 
             height: auto; 
-            aspect-ratio: 4 / 3; /* Matches the ratio of the main image */
+            aspect-ratio: 4 / 3; 
             object-fit: cover; 
             border: 2px solid transparent; 
             border-radius: 4px; 
@@ -284,7 +284,7 @@
                     let product = { additionalImages: [], description: '' };
                     let isParsingDesc = false;
                     
-                    const validKeys = ['title', 'main image', 'image', 'images', 'description', 'postal class', 'size', 'material', 'materials', 'item cost'];
+                    const validKeys = ['title', 'main image', 'image', 'images', 'description', 'postal class', 'size', 'material', 'materials', 'item cost', 'sections'];
 
                     lines.forEach(line => {
                         const sepIndex = line.indexOf(':');
@@ -297,7 +297,8 @@
                             
                             if (possibleKey === 'title') { product.title = value; product.id = value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, ''); }
                             else if (possibleKey === 'main image' || possibleKey === 'image') product.mainImage = value;
-                            else if (possibleKey === 'images') product.additionalImages = value.split(',').map(s => s.trim());
+                            else if (possibleKey === 'images') product.additionalImages = value ? value.split(',').map(s => s.trim()).filter(Boolean) : [];
+                            else if (possibleKey === 'sections') product.sections = value.split(',').map(s => s.trim());
                             else if (possibleKey === 'description') product.description = value;
                             else if (possibleKey === 'postal class') product.postalClass = value;
                             else if (possibleKey === 'size') product.size = value;
