@@ -113,7 +113,7 @@
         .product-card:hover .product-image img { transform: scale(1.05); }
         
         .product-info { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
-        .product-title { font-size: 1.4rem; margin: 0 0 0.5rem 0; line-height: 1.2; font-family: 'Spectral', serif; color: #fff;}
+        .product-title { font-size: 1.4rem; margin: 0 0 1rem 0; line-height: 1.2; font-family: 'Spectral', serif; color: #fff;}
         .product-price { font-family: 'Lato', sans-serif; font-weight: 600; font-size: 1.2rem; color: #fff; margin: 0; }
         
         /* Add to Cart Button */
@@ -534,45 +534,32 @@
                     if (rawItem.trim() === '') return;
                     
                     const lines = rawItem.trim().split('\n');
-                    let product = { sections: [], basePrice: 0, description: "" };
-                    let isParsingDesc = false;
+                    let product = { sections: [], basePrice: 0 };
                     
                     lines.forEach(line => {
-                        if (!isParsingDesc) {
-                            const sepIndex = line.indexOf(':');
-                            if (sepIndex > -1) {
-                                const key = line.slice(0, sepIndex).trim().toLowerCase();
-                                const value = line.slice(sepIndex + 1).trim();
-                                
-                                if (key === 'title') {
-                                    product.title = value;
-                                    product.id = value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
-                                }
-                                else if (key === 'main image' || key === 'image') product.mainImage = value;
-                                else if (key === 'images') product.images = value;
-                                else if (key === 'sections') product.sections = value.split(',').map(s => s.trim());
-                                else if (key === 'size') product.size = value;
-                                else if (key === 'materials') product.materials = value;
-                                else if (key === 'postal class') product.postalClass = value;
-                                else if (key === 'item cost') {
-                                    let parsedPrice = parseFloat(value.replace(/[^0-9.]/g, ''));
-                                    product.basePrice = isNaN(parsedPrice) ? 0 : parsedPrice;
-                                    if (isWholesale) {
-                                        product.basePrice = product.basePrice * 0.60;
-                                    }
-                                }
-                                else if (key === 'description') {
-                                    isParsingDesc = true;
-                                    product.description += value ? value + "\n" : "";
+                        const sepIndex = line.indexOf(':');
+                        if (sepIndex > -1) {
+                            const key = line.slice(0, sepIndex).trim().toLowerCase();
+                            const value = line.slice(sepIndex + 1).trim();
+                            
+                            if (key === 'title') {
+                                product.title = value;
+                                product.id = value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+                            }
+                            else if (key === 'main image' || key === 'image') product.mainImage = value;
+                            else if (key === 'sections') product.sections = value.split(',').map(s => s.trim());
+                            else if (key === 'postal class') product.postalClass = value;
+                            else if (key === 'item cost') {
+                                // Strip accidental currency symbols before parsing to prevent database crashing
+                                let parsedPrice = parseFloat(value.replace(/[^0-9.]/g, ''));
+                                product.basePrice = isNaN(parsedPrice) ? 0 : parsedPrice;
+                                if (isWholesale) {
+                                    product.basePrice = product.basePrice * 0.60;
                                 }
                             }
-                        } else {
-                            product.description += line + "\n";
                         }
                     });
                     
-                    product.description = product.description.trim();
-
                     if (product.title) {
                         products.push(product);
                         if (product.sections) {
@@ -608,14 +595,6 @@
                     }
 
                     filteredProducts.forEach(product => {
-                        let metaHtml = '';
-                        if (product.size || product.materials) {
-                            let parts = [];
-                            if (product.size) parts.push(product.size);
-                            if (product.materials) parts.push(product.materials);
-                            metaHtml = `<p style="font-size: 0.85rem; color: #aaa; margin: 0 0 0.8rem 0; font-family: 'Lato', sans-serif;">${parts.join(' &bull; ')}</p>`;
-                        }
-
                         shopGrid.innerHTML += `
                             <div class="product-card">
                                 <a href="product.html?id=${product.id}">
@@ -625,7 +604,6 @@
                                     <div class="product-info">
                                         <div>
                                             <h3 class="product-title">${product.title}</h3>
-                                            ${metaHtml}
                                         </div>
                                         <div>
                                             <p class="product-price">£${product.basePrice.toFixed(2)}</p>
