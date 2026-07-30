@@ -469,17 +469,21 @@
             if(cartOverlay) cartOverlay.addEventListener('click', closeCartSidebar);
             if(destSelect) destSelect.addEventListener('change', updateCartUI);
 
-            window.addToSmartCart = function(id, title, price, postalClass) {
-                let existingItem = cart.find(item => item.id === id);
-                if (existingItem) {
-                    existingItem.quantity += 1;
-                } else {
-                    cart.push({ id, title, price, postalClass, quantity: 1 });
-                }
-                localStorage.setItem(cartKey, JSON.stringify(cart));
-                updateCartUI();
-                openCart();
-            };
+            // REPLACE your current addToSmartCart function with this:
+window.addToSmartCart = function(id, title, price, postalClass, size = null) {
+    // Generate a unique cart ID so different sizes of the same shirt don't merge
+    const cartItemId = size ? `${id}-${size}` : id;
+    
+    let existingItem = cart.find(item => (item.cartItemId || item.id) === cartItemId);
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({ id, cartItemId, title, price, postalClass, size, quantity: 1 });
+    }
+    localStorage.setItem(cartKey, JSON.stringify(cart));
+    updateCartUI();
+    openCart();
+};
 
             window.updateQuantity = function(index, delta) {
                 cart[index].quantity += delta;
