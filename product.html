@@ -700,7 +700,7 @@ container.innerHTML += `
                             // --- SAFETY NET FOR POST-TRANSACTION LOGIC ---
                             try {
                                 // 1. Build a clean list of the purchased items for the email
-                                let orderBreakdown = "":
+                                let orderBreakdown = "";
 cart.forEach(item => {
     const displayName = item.size ? `${item.title} (Size: ${item.size})` : item.title;
     const itemTotal = (item.price * (item.quantity || 1)).toFixed(2);
