@@ -457,26 +457,33 @@ ${sizeDropdown}
             cartOverlay.addEventListener('click', closeCart);
             destSelect.addEventListener('change', updateCartUI);
 
-            // Adding item logic via the product page button
-            document.addEventListener('click', (e) => {
-                if (e.target && e.target.id === 'add-to-cart-btn') {
-                    let existingItem = cart.find(item => item.id === foundProduct.id);
-                    if (existingItem) {
-                        existingItem.quantity += 1;
-                    } else {
-                        cart.push({ 
-                            id: foundProduct.id, 
-                            title: foundProduct.title, 
-                            price: foundProduct.basePrice, 
-                            postalClass: foundProduct.postalClass, 
-                            quantity: 1 
-                        });
-                    }
-                    localStorage.setItem(cartKey, JSON.stringify(cart));
-                    updateCartUI();
-                    openCart();
-                }
+            
+document.addEventListener('click', (e) => {
+    if (e.target && e.target.id === 'add-to-cart-btn') {
+        const sizeSelect = document.getElementById('product-size-select');
+        const size = sizeSelect ? sizeSelect.value : null;
+        
+        const cartItemId = size ? `${foundProduct.id}-${size}` : foundProduct.id;
+        let existingItem = cart.find(item => (item.cartItemId || item.id) === cartItemId);
+        
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            cart.push({ 
+                id: foundProduct.id, 
+                cartItemId: cartItemId,
+                title: foundProduct.title, 
+                price: foundProduct.basePrice, 
+                postalClass: foundProduct.postalClass, 
+                size: size,
+                quantity: 1 
             });
+        }
+        localStorage.setItem(cartKey, JSON.stringify(cart));
+        updateCartUI();
+        openCart();
+    }
+});
 
             // Adjust Quantities Logic
             window.updateQuantity = function(index, delta) {
