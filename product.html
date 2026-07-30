@@ -365,6 +365,30 @@
                         specsHtml += `</div>`;
                     }
 
+                    // ADD THIS right above productContainer.innerHTML = ...
+let sizeDropdown = '';
+if (foundProduct.sections && foundProduct.sections.includes('T-Shirts')) {
+    sizeDropdown = `
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+            <label style="display: block; font-size: 0.9rem; color: #aaa; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">Select Size</label>
+            <select id="product-size-select" style="width: 100%; padding: 1rem; background: #111; color: #fff; border: 1px solid #333; border-radius: 3px; font-size: 1rem; cursor: pointer;">
+                <option value="S">Small (S)</option>
+                <option value="M" selected>Medium (M)</option>
+                <option value="L">Large (L)</option>
+                <option value="XL">Extra Large (XL)</option>
+                <option value="XXL">XXL</option>
+            </select>
+        </div>
+    `;
+}
+
+// Inside the productContainer.innerHTML string, drop the variable in:
+// ...
+${specsHtml}
+${sizeDropdown}
+<div class="price-breakdown">
+// ...
+
                     productContainer.innerHTML = `
                         <div class="product-gallery">
                             <div class="product-image-container"><img id="main-product-image" src="${foundProduct.mainImage}" alt="${foundProduct.title}"></div>
