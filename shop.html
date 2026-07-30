@@ -602,41 +602,36 @@ window.addToSmartCart = function(id, title, price, postalClass, size = null) {
 
                    // REPLACE your current renderGrid product generation loop with this:
 filteredProducts.forEach(product => {
-    let sizeDropdown = '';
-    
-    // Check if the product belongs to the T-Shirts section
-    if (product.sections && product.sections.includes('T-Shirts')) {
-        sizeDropdown = `
-            <select id="size-${product.id}" onclick="event.preventDefault(); event.stopPropagation();" style="width: 100%; margin-top: 1rem; padding: 0.6rem; background: #222; color: #fff; border: 1px solid #444; border-radius: 3px; font-family: 'Lato', sans-serif; cursor: pointer;">
-                <option value="S">Small (S)</option>
-                <option value="M" selected>Medium (M)</option>
-                <option value="L">Large (L)</option>
-                <option value="XL">Extra Large (XL)</option>
-                <option value="XXL">XXL</option>
-            </select>
-        `;
-    }
+                        let actionButton = '';
+                        
+                        // Check if the product belongs to the T-Shirts section
+                        if (product.sections && product.sections.includes('T-Shirts')) {
+                            // T-Shirts button says "Add to Cart" but links to the product page for size selection
+                            actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='product.html?id=${product.id}'">Add to Cart</button>`;
+                        } else {
+                            // Regular items add straight to the slide-out cart
+                            actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); addToSmartCart('${product.id}', '${product.title}', ${product.basePrice}, '${product.postalClass}', null)">Add to Cart</button>`;
+                        }
 
-    shopGrid.innerHTML += `
-        <div class="product-card">
-            <a href="product.html?id=${product.id}">
-                <div class="product-image">
-                    <img src="${product.mainImage}" alt="${product.title}">
-                </div>
-                <div class="product-info">
-                    <div>
-                        <h3 class="product-title">${product.title}</h3>
-                    </div>
-                    <div>
-                        <p class="product-price">£${product.basePrice.toFixed(2)}</p>
-                        ${sizeDropdown}
-                        <button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); const s = document.getElementById('size-${product.id}'); addToSmartCart('${product.id}', '${product.title}', ${product.basePrice}, '${product.postalClass}', s ? s.value : null)">Add to Cart</button>
-                    </div>
-                </div>
-            </a>
-        </div>
-    `;
-});
+                        shopGrid.innerHTML += `
+                            <div class="product-card">
+                                <a href="product.html?id=${product.id}">
+                                    <div class="product-image">
+                                        <img src="${product.mainImage}" alt="${product.title}">
+                                    </div>
+                                    <div class="product-info">
+                                        <div>
+                                            <h3 class="product-title">${product.title}</h3>
+                                        </div>
+                                        <div>
+                                            <p class="product-price">£${product.basePrice.toFixed(2)}</p>
+                                            ${actionButton}
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        `;
+                    });
 }
                 renderGrid('All');
 
