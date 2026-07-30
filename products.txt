@@ -776,3 +776,17 @@ Description: Each Cute Krampus decoration is laser cut into black painted birch 
 
 Please be aware that there may be slight differences in colouring with each piece due to the processes used in production and occasionally some variance in colour or grain of the birch wood.
 ---
+Title: Moonstones Wooden Hanging Decoration
+Main Image: images/Hanging-dec-moon-stone-1.jpg
+Images: images/Hanging-dec-moon-stone-2.jpg, images/Hanging-dec-moon-stone-3.jpg, images/Hanging-dec-moon-stone-4.jpg, images/Hanging-dec-moon-stone-6.jpg
+Sections: Hanging Decorations
+Size: 60 x 90 x 3mm
+Materials: 
+Postal Class: Second Class Large Letter
+Item Cost: 15
+Description: This is a Moon Stone Hanging decoration.
+
+It is laser cut into black painted birch plywood from an original illustration. the front and back are both painted black and it comes with a red velvet effect ribbon.
+
+Please be aware that there may be slight differences in colouring with each piece due to the processes used in production.
+---
