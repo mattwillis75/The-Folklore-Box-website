@@ -378,12 +378,14 @@
                         itemsTotal += itemTotalCost;
                         cartItemCount += qty;
 
-                        cartItemsContainer.innerHTML += `
-                            <div class="cart-item">
-                                <div class="cart-item-title">
-                                    ${item.title} <br>
-                                    <span style="font-size:0.8rem; color:#888; font-weight:normal;">£${item.price.toFixed(2)} each</span>
-                                </div>
+                        const displayName = item.size ? `${item.title} <br><span style="font-size:0.85rem; color:#aaa;">Size: ${item.size}</span>` : item.title;
+
+container.innerHTML += `
+    <div class="cart-item">
+        <div class="cart-item-title">
+            ${displayName} <br>
+            <span style="font-size:0.8rem; color:#888; font-weight:normal;">£${item.price.toFixed(2)} each</span>
+        </div>
                                 <div class="cart-qty-controls">
                                     <button onclick="updateQuantity(${index}, -1)">-</button>
                                     <span>${qty}</span>
