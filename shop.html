@@ -720,12 +720,13 @@ filteredProducts.forEach(product => {
                             });
                             
                             const paypalItems = cart.map(item => {
-                                return {
-                                    name: item.title,
-                                    unit_amount: { currency_code: 'GBP', value: item.price.toFixed(2) },
-                                    quantity: (item.quantity || 1).toString()
-                                };
-                            });
+    const displayName = item.size ? `${item.title} (Size: ${item.size})` : item.title;
+    return {
+        name: displayName,
+        unit_amount: { currency_code: 'GBP', value: item.price.toFixed(2) },
+        quantity: (item.quantity || 1).toString()
+    };
+});
                             
                             if (isWholesale && itemsTotal < 75) { 
                                 alert("Minimum wholesale spend of £75 not met."); 
@@ -757,10 +758,11 @@ filteredProducts.forEach(product => {
         try {
             // 1. Build a clean list of the purchased items for the email
             let orderBreakdown = "";
-            cart.forEach(item => {
-                const itemTotal = (item.price * (item.quantity || 1)).toFixed(2);
-                orderBreakdown += `${item.quantity || 1}x ${item.title} - £${itemTotal}\n`;
-            });
+cart.forEach(item => {
+    const displayName = item.size ? `${item.title} (Size: ${item.size})` : item.title;
+    const itemTotal = (item.price * (item.quantity || 1)).toFixed(2);
+    orderBreakdown += `${item.quantity || 1}x ${displayName} - £${itemTotal}\n`;
+});
 
             // 2. Prepare the variables to send to your EmailJS template
             const templateParams = {
