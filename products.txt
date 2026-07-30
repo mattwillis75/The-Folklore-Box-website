@@ -764,3 +764,15 @@ Description: Each Snow Stone Globe decoration is laser cut into black painted bi
 
 Please be aware that there may be slight differences in colouring with each piece due to the processes used in production and occasionally some variance in colour or grain of the birch wood.
 ---
+Title: Cute Krampus Wooden Hanging Decoration
+Main Image: images/Hanging-dec-cute-krampus-1.jpg
+Images: images/Hanging-dec-cute-krampus-2.jpg, images/Hanging-dec-cute-krampus-3.jpg, images/Hanging-dec-cute-krampus-4.jpg, images/Hanging-dec-cute-krampus-5.jpg
+Sections: Hanging Decoration
+Size: 85 x 105 x 3mm
+Materials: birch plywood, black paint, red velvet ribbon
+Postal Class: Second Class Large Letter
+Item Cost: 15
+Description: Each Cute Krampus decoration is laser cut into black painted birch plywood from an original illustration. the front and back are both painted black and it comes with a red velvet effect ribbon.
+
+Please be aware that there may be slight differences in colouring with each piece due to the processes used in production and occasionally some variance in colour or grain of the birch wood.
+---
