@@ -701,7 +701,7 @@ Please be aware that there may be slight differences in colouring with each piec
 Title: Devil Wooden Hanging Decoration
 Main Image: images/Hanging-dec-sun-stone-1.jpg
 Images: images/Hanging-dec-sun-stone-2.jpg
-Sections: Hanging Decoration
+Sections: Hanging Decorations
 Size: 50 x 90 x 3mm
 Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Large Letter
@@ -715,7 +715,7 @@ Please be aware that there may be slight differences in colouring with each piec
 Title: Black Cat - Pyewacket - Wooden Hanging Decoration
 Main Image: images/Hanging-dec-black-cat-1.jpg
 Images: images/Hanging-dec-black-cat-2.jpg
-Sections: Hanging Decoration
+Sections: Hanging Decorations
 Size: 60 x 90 x 3mm
 Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Large Letter
@@ -729,7 +729,7 @@ Please be aware that there may be slight differences in colouring with each piec
 Title: Krampus Square Wooden Hanging Decoration
 Main Image: images/Hanging-dec-krampus-square-1.jpg
 Images: images/Hanging-dec-krampus-square-2.jpg
-Sections: Hanging Decoration
+Sections: Hanging Decorations
 Size: 90 x 90 x 3mm
 Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Large Letter
@@ -741,7 +741,7 @@ Please be aware that there may be slight differences in colouring with each piec
 Title: Jock O'Lantern Wooden Hanging Decoration
 Main Image: images/Hanging-dec-jack-o-lantern-1.jpg
 Images: images/Hanging-dec-jack-o-lantern-2.jpg, images/Hanging-dec-jack-o-lantern-3.jpg, images/Hanging-dec-jack-o-lantern-4.jpg
-Sections: Hanging Decoration
+Sections: Hanging Decorations
 Size: 60 x 90 x 3mm
 Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Large Letter
@@ -755,7 +755,7 @@ Please be aware that there may be slight differences in colouring with each piec
 Title: Snow Stone Globe Wooden Hanging Decoration
 Main Image: images/Hanging-dec-snow-stone-globe-1.jpg
 Images: images/Hanging-dec-snow-stone-globe-2.jpg, images/Hanging-dec-snow-stone-globe-3.jpg, images/Hanging-dec-snow-stone-globe-4.jpg
-Sections: Hanging Decoration
+Sections: Hanging Decorations
 Size: 60 x  90 x 3
 Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: First Class Letter
@@ -767,7 +767,7 @@ Please be aware that there may be slight differences in colouring with each piec
 Title: Cute Krampus Wooden Hanging Decoration
 Main Image: images/Hanging-dec-cute-krampus-1.jpg
 Images: images/Hanging-dec-cute-krampus-2.jpg, images/Hanging-dec-cute-krampus-3.jpg, images/Hanging-dec-cute-krampus-4.jpg, images/Hanging-dec-cute-krampus-5.jpg
-Sections: Hanging Decoration
+Sections: Hanging Decorations
 Size: 85 x 105 x 3mm
 Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Large Letter
@@ -781,7 +781,7 @@ Main Image: images/Hanging-dec-moon-stone-1.jpg
 Images: images/Hanging-dec-moon-stone-2.jpg, images/Hanging-dec-moon-stone-3.jpg, images/Hanging-dec-moon-stone-4.jpg, images/Hanging-dec-moon-stone-6.jpg
 Sections: Hanging Decorations
 Size: 60 x 90 x 3mm
-Materials: 
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Large Letter
 Item Cost: 15
 Description: This is a Moon Stone Hanging decoration.
