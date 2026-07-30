@@ -804,3 +804,15 @@ It is laser cut into black painted birch plywood from an original illustration. 
 
 Please be aware that there may be slight differences in colouring with each piece due to the processes used in production.
 ---
+Title: Tshirt for Spalton
+Main Image: images/tshirt-black-shuck-head-final-3.jpg
+Images: images/tshirt-black-shuck-head-final-2.jpg, images/tshirt-black-shuck-head-final-1.jpg
+Sections: T-Shirts
+Size: S/M/L/XL/XXL
+Materials: 100% Organic ringspun combed cotton
+Postal Class: FREE
+Item Cost: 25
+Description: Hi Spalton,
+
+Let me know what size you'dlike and I'll bring on Saturday
+---
