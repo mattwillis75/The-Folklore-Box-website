@@ -5,10 +5,12 @@ Sections: A4 Art Prints
 Size: A4 - 210 x 297mm
 Materials: 
 Postal Class: FREE
-Item Cost: 36
+Item Cost: 45
 Description: 2 x leaping Shuck A4 prints
 
 1 x Shuck face print
+
+1 x Shuck Zine 7
 ---
 Title: Black Shuck Leaping T-Shirt
 Main Image: images/k-shuck-leaping-final-1.jpg
@@ -878,4 +880,3 @@ It is laser cut into black painted birch plywood from an original illustration. 
 
 Please be aware that there may be slight differences in colouring with each piece due to the processes used in production.
 ---
-
