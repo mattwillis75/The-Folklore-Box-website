@@ -1,12 +1,12 @@
-Title: Black Shuck T-Shirt
-Main Image: images/tshirt-black-shuck-head-final-3.jpg
-Images: images/tshirt-black-shuck-head-final-2.jpg, images/tshirt-black-shuck-head-final-1.jpg
+Title: Black Shuck Head T-Shirt
+Main Image: images/k-shuck-head-final-1.jpg
+Images: images/k-shuck-head-final-2.jpg
 Sections: T-Shirts
 Size: S/M/L/XL/XXL
 Materials: 100% Organic ringspun combed cotton
 Postal Class: FREE
 Item Cost: 25
-Description: This is a T-Shirt featuring the likness of Black Shuck - The Devil Dog of Bungay.
+Description: This is a T-Shirt featuring the likeness of Black Shuck - The Devil Dog of Bungay.
 
 Black Shuck is a legendary ghostly black dog from English folklore said to roam the coastline and countryside of East Anglia. The creature is typically described as an immense, shaggy hound with glowing fiery eyes and is viewed as an omen of death or misfortune. Its name likely comes from the Old English word scucca, meaning devil or fiend.
 
