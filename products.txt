@@ -78,8 +78,6 @@ Description: Shuck zine was a Kickstarter project initiated by three friends at 
 Written for adults, suitable for older teens, contains creepy and gory tales.
 Issue #1 - The Dark Issue#2 - Love Issue#3 - Cursed Issue#4 - Feasting Issue #5 - The Deep Issue - 6 - Beasts
 Issue#7 - Witches
-
-
 ---
 Title: SHUCK Issue 2 - Love
 Main Image: ./shuck-issue2-1.jpg
@@ -868,4 +866,15 @@ It is laser cut into black painted birch plywood from an original illustration. 
 
 Please be aware that there may be slight differences in colouring with each piece due to the processes used in production.
 ---
+Title: Order for Louise
+Main Image: images/k-shuck-head-final-2.jpg
+Images: 
+Sections: A4 Art Prints
+Size: A4 - 210 x 297mm
+Materials: 
+Postal Class: FREE
+Item Cost: 36
+Description: 2 x leaping Shuck A4 prints
 
+1 x Shuck face print
+---
