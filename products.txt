@@ -1,3 +1,37 @@
+Title: Black Shuck Leaping T-Shirt
+Main Image: images/k-shuck-leaping-final-1.jpg
+Images: images/k-shuck-leaping-final-2.jpg
+Sections: T-Shirts
+Size: 
+Materials: 100% Organic ringspun combed cotton
+Postal Class: FREE
+Item Cost: 25
+Description: This is a T-Shirt featuring a leaping Black Shuck - The Devil Dog of Bungay.
+
+Black Shuck is a legendary ghostly black dog from English folklore said to roam the coastline and countryside of East Anglia. The creature is typically described as an immense, shaggy hound with glowing fiery eyes and is viewed as an omen of death or misfortune. Its name likely comes from the Old English word scucca, meaning devil or fiend.
+
+During a violent thunderstorm,on August 4, 1577, the beast allegedly burst through the doors of St Mary's Church, struck down members of the congregation, and killed two people. Scorched claw marks left on the church door are still pointed to today as the "devil's fingerprints".
+
+On the exact same day, about 13 miles away at Holy Trinity Church in Blythburgh, the spectral hound reportedly burst inside, killed a man and a boy, and caused the steeple to collapse through the roof, leaving matching scorch marks on the north door.
+
+The T-Shirt is made from 100% Organic ringspun combed cotton.
+---
+Title: Black Shuck Leaping Tote Bag
+Main Image: images/tote-black-shuck-leaping-final-1.jpg
+Images: images/tote-black-shuck-leaping-final-2.jpg, images/tote-black-shuck-leaping-final-3.jpg
+Sections: Tote Bags
+Size: 380 x 420mm
+Materials: 100% recycled cotton 170gsm
+Postal Class: FREE
+Item Cost: 15
+Description: This is a Tote Bag featuring a leaping Black Shuck - The Devil Dog of Bungay.
+
+Black Shuck is a legendary ghostly black dog from English folklore said to roam the coastline and countryside of East Anglia. The creature is typically described as an immense, shaggy hound with glowing fiery eyes and is viewed as an omen of death or misfortune. Its name likely comes from the Old English word scucca, meaning devil or fiend.
+
+During a violent thunderstorm,on August 4, 1577, the beast allegedly burst through the doors of St Mary's Church, struck down members of the congregation, and killed two people. Scorched claw marks left on the church door are still pointed to today as the "devil's fingerprints".
+
+On the exact same day, about 13 miles away at Holy Trinity Church in Blythburgh, the spectral hound reportedly burst inside, killed a man and a boy, and caused the steeple to collapse through the roof, leaving matching scorch marks on the north door.
+---
 Title: Black Shuck Head T-Shirt
 Main Image: images/k-shuck-head-final-1.jpg
 Images: images/k-shuck-head-final-2.jpg
@@ -16,6 +50,22 @@ On the exact same day, about 13 miles away at Holy Trinity Church in Blythburgh,
 
 The T-Shirt is made from 100% Organic ringspun combed cotton.
 ---
+Title: Black Shuck Head Tote Bag
+Main Image: images/tote-black-shuck-head-final-1.jpg
+Images: images/tote-black-shuck-head-final-2.jpg, images/tote-black-shuck-head-final-3.jpg
+Sections: Tote Bags
+Size: 380 x 420mm
+Materials: 100% recycled cotton 170gsm
+Postal Class: FREE
+Item Cost: 15
+Description: This is a Tote Bag featuring the likeness of Black Shuck - The Devil Dog of Bungay.
+
+Black Shuck is a legendary ghostly black dog from English folklore said to roam the coastline and countryside of East Anglia. The creature is typically described as an immense, shaggy hound with glowing fiery eyes and is viewed as an omen of death or misfortune. Its name likely comes from the Old English word scucca, meaning devil or fiend.
+
+During a violent thunderstorm,on August 4, 1577, the beast allegedly burst through the doors of St Mary's Church, struck down members of the congregation, and killed two people. Scorched claw marks left on the church door are still pointed to today as the "devil's fingerprints".
+
+On the exact same day, about 13 miles away at Holy Trinity Church in Blythburgh, the spectral hound reportedly burst inside, killed a man and a boy, and caused the steeple to collapse through the roof, leaving matching scorch marks on the north door.
+---
 Title: SHUCK Issue 1 - The Dark
 Main Image: ./shuck-issue1-1.jpg
 Images: ./shuck-issue1-2.jpg, ./shuck-issue1-3.jpg, ./shuck-issue1-4.jpg
@@ -23,17 +73,13 @@ Sections: Zines
 Size: 
 Materials: 
 Postal Class: First Class Letter
-Item Cost: 
+Item Cost: 7.50
 Description: Shuck zine was a Kickstarter project initiated by three friends at the start of the pandemic. Overwhelmed by support, issue #1 sold like hot cakes and has been in print ever since. Each Shuck zine explores a different themes within Norfolk and British folklore, uncovering age-old, handed-down, dark and twisty tales rooted in truth? Who can tell.
 Written for adults, suitable for older teens, contains creepy and gory tales.
 Issue #1 - The Dark Issue#2 - Love Issue#3 - Cursed Issue#4 - Feasting Issue #5 - The Deep Issue - 6 - Beasts
 Issue#7 - Witches
 
-SHUCK #1 - THE DARK
-Size: A5
-Materials: Paper
-Postal Class: Large Letter
-Item Cost: 0.10
+
 ---
 Title: SHUCK Issue 2 - Love
 Main Image: ./shuck-issue2-1.jpg
@@ -822,53 +868,4 @@ It is laser cut into black painted birch plywood from an original illustration. 
 
 Please be aware that there may be slight differences in colouring with each piece due to the processes used in production.
 ---
-Title: Black Shuck Leaping T-Shirt
-Main Image: images/k-shuck-leaping-final-1.jpg
-Images: images/k-shuck-leaping-final-2.jpg
-Sections: T-Shirts
-Size: 
-Materials: 100% Organic ringspun combed cotton
-Postal Class: FREE
-Item Cost: 25
-Description: This is a T-Shirt featuring a leaping Black Shuck - The Devil Dog of Bungay.
 
-Black Shuck is a legendary ghostly black dog from English folklore said to roam the coastline and countryside of East Anglia. The creature is typically described as an immense, shaggy hound with glowing fiery eyes and is viewed as an omen of death or misfortune. Its name likely comes from the Old English word scucca, meaning devil or fiend.
-
-During a violent thunderstorm,on August 4, 1577, the beast allegedly burst through the doors of St Mary's Church, struck down members of the congregation, and killed two people. Scorched claw marks left on the church door are still pointed to today as the "devil's fingerprints".
-
-On the exact same day, about 13 miles away at Holy Trinity Church in Blythburgh, the spectral hound reportedly burst inside, killed a man and a boy, and caused the steeple to collapse through the roof, leaving matching scorch marks on the north door.
-
-The T-Shirt is made from 100% Organic ringspun combed cotton.
----
-Title: Black Shuck Head Tote Bag
-Main Image: images/tote-black-shuck-head-final-1.jpg
-Images: images/tote-black-shuck-head-final-2.jpg, images/tote-black-shuck-head-final-3.jpg
-Sections: Tote Bags
-Size: 380 x 420mm
-Materials: 100% recycled cotton 170gsm
-Postal Class: FREE
-Item Cost: 15
-Description: This is a Tote Bag featuring the likeness of Black Shuck - The Devil Dog of Bungay.
-
-Black Shuck is a legendary ghostly black dog from English folklore said to roam the coastline and countryside of East Anglia. The creature is typically described as an immense, shaggy hound with glowing fiery eyes and is viewed as an omen of death or misfortune. Its name likely comes from the Old English word scucca, meaning devil or fiend.
-
-During a violent thunderstorm,on August 4, 1577, the beast allegedly burst through the doors of St Mary's Church, struck down members of the congregation, and killed two people. Scorched claw marks left on the church door are still pointed to today as the "devil's fingerprints".
-
-On the exact same day, about 13 miles away at Holy Trinity Church in Blythburgh, the spectral hound reportedly burst inside, killed a man and a boy, and caused the steeple to collapse through the roof, leaving matching scorch marks on the north door.
----
-Title: Black Shuck Leaping Tote Bag
-Main Image: images/tote-black-shuck-leaping-final-1.jpg
-Images: images/tote-black-shuck-leaping-final-2.jpg, images/tote-black-shuck-leaping-final-3.jpg
-Sections: Tote Bags
-Size: 380 x 420mm
-Materials: 100% recycled cotton 170gsm
-Postal Class: FREE
-Item Cost: 15
-Description: This is a Tote Bag featuring a leaping Black Shuck - The Devil Dog of Bungay.
-
-Black Shuck is a legendary ghostly black dog from English folklore said to roam the coastline and countryside of East Anglia. The creature is typically described as an immense, shaggy hound with glowing fiery eyes and is viewed as an omen of death or misfortune. Its name likely comes from the Old English word scucca, meaning devil or fiend.
-
-During a violent thunderstorm,on August 4, 1577, the beast allegedly burst through the doors of St Mary's Church, struck down members of the congregation, and killed two people. Scorched claw marks left on the church door are still pointed to today as the "devil's fingerprints".
-
-On the exact same day, about 13 miles away at Holy Trinity Church in Blythburgh, the spectral hound reportedly burst inside, killed a man and a boy, and caused the steeple to collapse through the roof, leaving matching scorch marks on the north door.
----
