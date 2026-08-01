@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vCard QR Generator</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #f4f4f5;
+            color: #18181b;
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .card {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d4d4d8;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            background-color: #18181b;
+            color: #white;
+            color: #fff;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #27272a;
+        }
+        #qrcode {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+    <!-- Include QR Code Generation Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+
+    <div class="card">
+        <h2>vCard QR Code Generator</h2>
+        <p>Enter your details below to create a scannable contact card that saves directly to a phone's address book.</p>
+        
+        <div class="form-group">
+            <label>Full Name / Business Name</label>
+            <input type="text" id="name" value="The Folklore Box">
+        </div>
+        <div class="form-group">
+            <label>Phone Number</label>
+            <input type="text" id="phone" value="+44...">
+        </div>
+        <div class="form-group">
+            <label>Email Address</label>
+            <input type="text" id="email" value="you@example.com">
+        </div>
+        <div class="form-group">
+            <label>Online Shop URL</label>
+            <input type="text" id="website" value="https://your-shop.com">
+        </div>
+
+        <button onclick="generateVCardQR()">Generate QR Code</button>
+
+        <div id="qrcode"></div>
+    </div>
+
+    <script>
+        function generateVCardQR() {
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+            const website = document.getElementById('website').value;
+
+            // Standard vCard 3.0 format structure
+            const vcardData = `BEGIN:VCARD
+VERSION:3.0
+FN:${name}
+TEL:${phone}
+EMAIL:${email}
+URL:${website}
+END:VCARD`;
+
+            // Clear previous QR code if it exists
+            document.getElementById("qrcode").innerHTML = "";
+
+            // Generate new QR code containing the vCard text string
+            new QRCode(document.getElementById("qrcode"), {
+                text: vcardData,
+                width: 220,
+                height: 220,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.M
+            });
+        }
+
+        // Run once on load to show a default state
+        generateVCardQR();
+    </script>
+
+</body>
+</html>
