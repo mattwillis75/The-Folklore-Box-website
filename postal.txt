@@ -41,10 +41,10 @@ Int Base: 0.00
 Int Additional: 0.00
 ---
 Class: Second Class Small Parcel
-UK Base: 0.00
-UK Additional: 0.00
-Int Base: 0.00
-Int Additional: 0.00
+UK Base: 3.00
+UK Additional: 1.00
+Int Base: 15.00
+Int Additional: 1.00
 ---
 Class: Second Class Medium Parcel
 UK Base: 0.00
