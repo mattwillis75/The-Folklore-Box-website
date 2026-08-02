@@ -32,26 +32,20 @@
             line-height: 1.6;
         }
 
-        /* Navigation */
+        /* Navigation - Reverted to Original Layout */
         header {
             padding: 20px 40px;
             border-bottom: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(0, 0, 0, 0.85); 
-            backdrop-filter: blur(8px);
-            position: sticky;
-            top: 0;
-            z-index: 500;
+            background-color: var(--bg-color);
         }
         
         header h1 {
             font-family: var(--font-headings);
             margin: 0;
             font-size: 1.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
         .cart-toggle-btn {
@@ -100,9 +94,10 @@
             color: var(--text-light);
         }
 
+        /* Reverted to fit 4 items comfortably */
         .shop-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 30px;
         }
 
@@ -356,18 +351,17 @@
         const cartKey = 'folklore_cart';
         let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
-        // 1. Fetch and Parse products.txt
+        // 1. Fetch and Parse products.txt with robust ID generation
         fetch('products.txt')
             .then(response => response.text())
             .then(text => {
-                const blocks = text.split('---\n');
-                blocks.forEach((block, index) => {
+                const blocks = text.split(/---\r?\n/);
+                blocks.forEach(block => {
                     if (block.trim() === '') return;
                     const lines = block.split('\n');
                     
-                    // Base template with defaults
                     let product = { 
-                        id: `prod-${index}`, basePrice: 0, sections: '', 
+                        basePrice: 0, sections: '', 
                         stock: 10, stockS: 10, stockM: 10, stockL: 10, stockXL: 10, stockXXL: 10 
                     }; 
                     
@@ -380,13 +374,13 @@
                             else if (key === 'main image') product.mainImage = value;
                             else if (key === 'sections') {
                                 product.sections = value;
-                                // Add categories to the Set for dynamic filtering
                                 value.split(',').forEach(sec => {
                                     if(sec.trim()) availableCategories.add(sec.trim());
                                 });
                             }
                             else if (key === 'postal class') product.postalClass = value;
-                            else if (key === 'item cost') product.basePrice = parseFloat(value.replace(/[^0-9.]/g, ''));
+                            else if (key === 'item cost') product.basePrice = parseFloat(value.replace(/[^0-9.]/g, '')) || 0;
+                            
                             // Stock parsing
                             else if (key === 'stock') product.stock = isNaN(parseInt(value)) ? 10 : parseInt(value);
                             else if (key === 'stock s') product.stockS = isNaN(parseInt(value)) ? 10 : parseInt(value);
@@ -396,7 +390,12 @@
                             else if (key === 'stock xxl') product.stockXXL = isNaN(parseInt(value)) ? 10 : parseInt(value);
                         }
                     });
-                    if (product.title) products.push(product);
+
+                    // Generate a rock-solid unique ID based on the Title 
+                    if (product.title) {
+                        product.id = 'prod-' + product.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                        products.push(product);
+                    }
                 });
                 
                 filteredProducts = [...products];
@@ -423,7 +422,7 @@
             filteredProducts.forEach(product => {
                 let actionButton = '';
                 
-                // T-SHIRTS OR ITEMS WITH MULTIPLE SIZES (Link to product page for size selection)
+                // T-SHIRTS (Link to product page for size selection)
                 if (product.sections && product.sections.toLowerCase().includes('t-shirts')) {
                     actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='product.html?id=${product.id}'">Add to Cart</button>`;
                 } 
@@ -440,7 +439,7 @@
                     <div class="product-card">
                         <a href="product.html?id=${product.id}">
                             <div class="product-image">
-                                <img src="${product.mainImage || 'placeholder.jpg'}" alt="${product.title}">
+                                <img src="${product.mainImage || 'placeholder.jpg'}" alt="${product.title.replace(/"/g, '&quot;')}">
                             </div>
                             <div class="product-info">
                                 <div>
@@ -474,7 +473,6 @@
         window.addToSmartCart = function(id, title, price, postalClass, size = null) {
             const productData = products.find(p => p.id === id);
             
-            // Check which stock limit to use based on size
             let maxStock = 10;
             if (productData) {
                 if (size === 'S') maxStock = productData.stockS;
@@ -510,7 +508,6 @@
                 const item = cart[index];
                 const productData = products.find(p => p.id === item.id);
                 
-                // Check which stock limit to use based on size
                 let maxStock = 10;
                 if (productData) {
                     if (item.size === 'S') maxStock = productData.stockS;
