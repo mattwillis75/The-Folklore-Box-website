@@ -217,7 +217,7 @@
         .add-cart-btn:hover:not(:disabled) { background: #e60000; }
         .add-cart-btn:disabled { background: #333; color: #777; cursor: not-allowed; }
 
-        /* Smart Cart Side Panel (Shared with Shop) */
+        /* Smart Cart Side Panel */
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); backdrop-filter: blur(3px); z-index: 1000; opacity: 0; visibility: hidden; transition: opacity 0.3s; }
         .cart-panel { position: fixed; top: 0; right: -400px; width: 100%; max-width: 400px; height: 100vh; background: var(--secondary-bg); border-left: 1px solid var(--border-color); z-index: 1001; transition: right 0.3s ease; display: flex; flex-direction: column; }
         .cart-overlay.active { opacity: 1; visibility: visible; }
@@ -300,17 +300,17 @@
         const cartKey = 'folklore_cart';
         let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
-        // 1. Fetch & Parse Database
-        fetch('products.txt')
+        // 1. Fetch & Parse Database (with Cache Buster and robust IDs)
+        fetch('products.txt?v=' + new Date().getTime(), { cache: 'no-store' })
             .then(response => response.text())
             .then(text => {
-                const blocks = text.split('---\n');
-                blocks.forEach((block, index) => {
+                const blocks = text.split(/---\r?\n/);
+                blocks.forEach(block => {
                     if (block.trim() === '') return;
                     const lines = block.split('\n');
                     
                     let product = { 
-                        id: `prod-${index}`, basePrice: 0, sections: '', 
+                        basePrice: 0, sections: '', 
                         size: '', materials: '', images: '',
                         stock: 10, stockS: 10, stockM: 10, stockL: 10, stockXL: 10, stockXXL: 10 
                     }; 
@@ -331,7 +331,7 @@
                                 else if (key === 'size') product.size = value;
                                 else if (key === 'materials') product.materials = value;
                                 else if (key === 'postal class') product.postalClass = value;
-                                else if (key === 'item cost') product.basePrice = parseFloat(value.replace(/[^0-9.]/g, ''));
+                                else if (key === 'item cost') product.basePrice = parseFloat(value.replace(/[^0-9.]/g, '')) || 0;
                                 
                                 // Stock parsing
                                 else if (key === 'stock') product.stock = isNaN(parseInt(value)) ? 10 : parseInt(value);
@@ -352,7 +352,12 @@
                     });
                     
                     if(product.description) product.description = product.description.trim();
-                    if (product.title) allProducts.push(product);
+                    
+                    // The crucial ID fix
+                    if (product.title) {
+                        product.id = 'prod-' + product.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                        allProducts.push(product);
+                    }
                 });
                 
                 currentProduct = allProducts.find(p => p.id === productId);
@@ -377,7 +382,6 @@
 
         // 2. Render Product UI
         function renderProduct() {
-            // Build Gallery Array
             let galleryImages = [];
             if(currentProduct.mainImage) galleryImages.push(currentProduct.mainImage);
             if(currentProduct.images) {
@@ -394,7 +398,6 @@
                 });
             }
 
-            // Optional Metadata
             let metaHtml = '';
             if (currentProduct.size || currentProduct.materials) {
                 metaHtml = `<ul class="meta-list">`;
@@ -403,7 +406,6 @@
                 metaHtml += `</ul>`;
             }
 
-            // Variant / Stock Logic
             const isTshirt = currentProduct.sections && currentProduct.sections.toLowerCase().includes('t-shirts');
             let formHtml = '';
 
@@ -434,7 +436,7 @@
             document.getElementById('product-container').innerHTML = `
                 <div>
                     <div class="gallery-main">
-                        <img id="main-product-image" src="${galleryImages[0]}" alt="${currentProduct.title}">
+                        <img id="main-product-image" src="${galleryImages[0]}" alt="${currentProduct.title.replace(/"/g, '&quot;')}">
                     </div>
                     <div class="gallery-thumbs" id="gallery-thumbs">
                         ${thumbsHtml}
@@ -485,7 +487,6 @@
         window.addToSmartCart = function(id, title, price, postalClass, size = null) {
             const productData = allProducts.find(p => p.id === id);
             
-            // Check which stock limit to use based on size
             let maxStock = 10;
             if (productData) {
                 if (size === 'S') maxStock = productData.stockS;
@@ -521,7 +522,6 @@
                 const item = cart[index];
                 const productData = allProducts.find(p => p.id === item.id);
                 
-                // Check which stock limit to use based on size
                 let maxStock = 10;
                 if (productData) {
                     if (item.size === 'S') maxStock = productData.stockS;
