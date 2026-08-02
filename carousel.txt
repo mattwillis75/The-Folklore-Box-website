@@ -1,8 +1,8 @@
 Slide: 1
-Format: PODCAST
-Heading: Wooden Standing Decorations
-Description: Available from The Folklore Box
-Image: Carousel-1.jpg
+Format: Shop Update
+Heading: Black Shuck festival T-Shirts in the shop
+Description: THe remainder of my T-Shirts for the Black Shuck festival are up on my shop page! Don't worry if your size isn't available - a restock is happening soon.
+Image: images/tshirt-black-shuck-head-carousel.jpg
 ---
 Slide: 2
 Format: Event
