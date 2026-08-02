@@ -1,17 +1,3 @@
-Title: Order for Louise
-Main Image: images/k-shuck-head-final-2.jpg
-Images: 
-Sections: A4 Art Prints
-Size: A4 - 210 x 297mm
-Materials: 
-Postal Class: FREE
-Item Cost: 45
-Description: 2 x leaping Shuck A4 prints
-
-1 x Shuck face print
-
-1 x Shuck Zine 7
----
 Title: Black Shuck Leaping T-Shirt
 Main Image: images/k-shuck-leaping-final-1.jpg
 Images: images/k-shuck-leaping-final-2.jpg
@@ -20,6 +6,12 @@ Size:
 Materials: 100% Organic ringspun combed cotton
 Postal Class: Second Class Small Parcel
 Item Cost: 25
+Stock: 10
+Stock S: 10
+Stock M: 10
+Stock L: 10
+Stock XL: 10
+Stock XXL: 10
 Description: This is a T-Shirt featuring a leaping Black Shuck - The Devil Dog of Bungay.
 
 Black Shuck is a legendary ghostly black dog from English folklore said to roam the coastline and countryside of East Anglia. The creature is typically described as an immense, shaggy hound with glowing fiery eyes and is viewed as an omen of death or misfortune. Its name likely comes from the Old English word scucca, meaning devil or fiend.
@@ -38,6 +30,12 @@ Size: 380 x 420mm
 Materials: 100% recycled cotton 170gsm
 Postal Class: First Class Small Parcel
 Item Cost: 15
+Stock: 10
+Stock S: 10
+Stock M: 10
+Stock L: 10
+Stock XL: 10
+Stock XXL: 10
 Description: This is a Tote Bag featuring a leaping Black Shuck - The Devil Dog of Bungay.
 
 Black Shuck is a legendary ghostly black dog from English folklore said to roam the coastline and countryside of East Anglia. The creature is typically described as an immense, shaggy hound with glowing fiery eyes and is viewed as an omen of death or misfortune. Its name likely comes from the Old English word scucca, meaning devil or fiend.
@@ -54,6 +52,12 @@ Size: S/M/L/XL/XXL
 Materials: 100% Organic ringspun combed cotton
 Postal Class: FREE
 Item Cost: 25
+Stock: 10
+Stock S: 10
+Stock M: 10
+Stock L: 10
+Stock XL: 10
+Stock XXL: 10
 Description: This is a T-Shirt featuring the likeness of Black Shuck - The Devil Dog of Bungay.
 
 Black Shuck is a legendary ghostly black dog from English folklore said to roam the coastline and countryside of East Anglia. The creature is typically described as an immense, shaggy hound with glowing fiery eyes and is viewed as an omen of death or misfortune. Its name likely comes from the Old English word scucca, meaning devil or fiend.
@@ -72,6 +76,12 @@ Size: 380 x 420mm
 Materials: 100% recycled cotton 170gsm
 Postal Class: Second Class Small Parcel
 Item Cost: 15
+Stock: 10
+Stock S: 10
+Stock M: 10
+Stock L: 10
+Stock XL: 10
+Stock XXL: 10
 Description: This is a Tote Bag featuring the likeness of Black Shuck - The Devil Dog of Bungay.
 
 Black Shuck is a legendary ghostly black dog from English folklore said to roam the coastline and countryside of East Anglia. The creature is typically described as an immense, shaggy hound with glowing fiery eyes and is viewed as an omen of death or misfortune. Its name likely comes from the Old English word scucca, meaning devil or fiend.
