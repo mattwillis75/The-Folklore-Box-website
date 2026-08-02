@@ -833,5 +833,12 @@ cart.forEach(item => {
             }
         });
     </script>
+    <div id="stock-alert" class="stock-alert-overlay">
+    <div class="stock-alert-box">
+        <h2 style="margin-top: 0; color: var(--accent-red);">Stock Limit Reached</h2>
+        <p id="stock-alert-msg"></p>
+        <button class="stock-alert-btn" onclick="document.getElementById('stock-alert').style.display='none'">Understood</button>
+    </div>
+</div>
 </body>
 </html>
