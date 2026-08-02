@@ -138,6 +138,28 @@
         footer a { color: #ffffff; text-decoration: none; margin: 0 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
         footer a:hover { color: var(--accent-red); }
         .social-links { margin-bottom: 2rem; }
+
+        /* Custom Stock Alert Modal */
+.stock-alert-overlay { 
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
+    background: rgba(0,0,0,0.8); z-index: 3000; 
+    display: none; align-items: center; justify-content: center; 
+    backdrop-filter: blur(5px); 
+}
+.stock-alert-box { 
+    background: #0a0a0a; border: 1px solid var(--accent-red); 
+    padding: 2.5rem; border-radius: 4px; max-width: 400px; 
+    width: 90%; text-align: center; color: #fff; 
+    box-shadow: 0 10px 30px rgba(204,0,0,0.15); 
+}
+.stock-alert-box p { margin-bottom: 2rem; font-size: 1.1rem; }
+.stock-alert-btn { 
+    background: var(--accent-red); color: #fff; border: none; 
+    padding: 1rem 2rem; text-transform: uppercase; font-weight: 600; 
+    letter-spacing: 1px; cursor: pointer; border-radius: 3px; 
+    transition: background 0.3s ease; width: 100%; 
+}
+.stock-alert-btn:hover { background: #e60000; }
     </style>
 
     <!-- EmailJS SDK -->
