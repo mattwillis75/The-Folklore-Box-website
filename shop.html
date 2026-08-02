@@ -32,7 +32,7 @@
             line-height: 1.6;
         }
 
-        /* Navigation - Reverted to Original Layout */
+        /* Navigation */
         header {
             padding: 20px 40px;
             border-bottom: 1px solid var(--border-color);
@@ -94,7 +94,7 @@
             color: var(--text-light);
         }
 
-        /* Reverted to fit 4 items comfortably */
+        /* Fits 4 items comfortably */
         .shop-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -304,7 +304,7 @@
     <div class="container">
         <!-- Category Filters -->
         <div class="filter-bar" id="filter-bar">
-            <!-- Populated dynamically by JS based on products.txt -->
+            <!-- Populated dynamically -->
         </div>
 
         <!-- Dynamic Shop Grid -->
@@ -351,8 +351,8 @@
         const cartKey = 'folklore_cart';
         let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
-        // 1. Fetch and Parse products.txt with robust ID generation
-        fetch('products.txt')
+        // CACHE BUSTER ADDED HERE
+        fetch('products.txt?v=' + new Date().getTime(), { cache: 'no-store' })
             .then(response => response.text())
             .then(text => {
                 const blocks = text.split(/---\r?\n/);
@@ -391,7 +391,7 @@
                         }
                     });
 
-                    // Generate a rock-solid unique ID based on the Title 
+                    // Generate rock-solid unique ID based on the Title 
                     if (product.title) {
                         product.id = 'prod-' + product.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
                         products.push(product);
@@ -422,9 +422,9 @@
             filteredProducts.forEach(product => {
                 let actionButton = '';
                 
-                // T-SHIRTS (Link to product page for size selection)
+                // T-SHIRTS
                 if (product.sections && product.sections.toLowerCase().includes('t-shirts')) {
-                    actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='product.html?id=${product.id}'">Add to Cart</button>`;
+                    actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='product.html?id=${encodeURIComponent(product.id)}'">Add to Cart</button>`;
                 } 
                 // STANDARD ITEMS - OUT OF STOCK
                 else if (product.stock <= 0) {
@@ -437,7 +437,7 @@
 
                 shopGrid.innerHTML += `
                     <div class="product-card">
-                        <a href="product.html?id=${product.id}">
+                        <a href="product.html?id=${encodeURIComponent(product.id)}">
                             <div class="product-image">
                                 <img src="${product.mainImage || 'placeholder.jpg'}" alt="${product.title.replace(/"/g, '&quot;')}">
                             </div>
