@@ -86,7 +86,29 @@
             .container { grid-template-columns: 1fr; }
         }
 
-        /* Image Gallery - Restored 4:3 Ratio */
+        /* Back Button */
+        .back-btn {
+            background: transparent;
+            color: var(--text-light);
+            border: 1px solid var(--border-color);
+            padding: 8px 20px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: 300;
+            letter-spacing: 1px;
+            border-radius: 3px;
+            transition: border-color var(--transition-speed), color var(--transition-speed);
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+
+        .back-btn:hover {
+            border-color: var(--accent-red);
+            color: var(--accent-red);
+        }
+
+        /* Image Gallery - 4:3 Ratio */
         .gallery-main {
             width: 100%;
             aspect-ratio: 4 / 3;
@@ -207,7 +229,7 @@
             border-radius: 3px;
             cursor: pointer;
             text-transform: uppercase;
-            font-weight: 300; /* Adjusted to light weight */
+            font-weight: 300; /* Light weight */
             letter-spacing: 1.5px;
             font-size: 1.1rem;
             transition: background var(--transition-speed);
@@ -238,7 +260,7 @@
 
         .cart-footer { padding: 20px; border-top: 1px solid var(--border-color); background: var(--bg-color); }
         .cart-total-row { display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 600; margin-bottom: 20px; }
-        .checkout-btn { width: 100%; padding: 15px; background: var(--accent-red); color: #fff; border: none; border-radius: 3px; text-transform: uppercase; font-weight: 300; /* Adjusted to light weight */ letter-spacing: 1px; cursor: pointer; font-size: 1rem; font-family: var(--font-body); }
+        .checkout-btn { width: 100%; padding: 15px; background: var(--accent-red); color: #fff; border: none; border-radius: 3px; text-transform: uppercase; font-weight: 300; /* Light weight */ letter-spacing: 1px; cursor: pointer; font-size: 1rem; font-family: var(--font-body); }
 
         /* Custom Stock Alert Modal */
         .stock-alert-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.8); z-index: 4000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
@@ -485,7 +507,11 @@
                 }
             }
 
+            // Injected Back Button here
             document.getElementById('product-container').innerHTML = `
+                <div style="grid-column: 1 / -1; margin-bottom: -15px;">
+                    <a href="shop.html" class="back-btn">&larr; Back to Shop</a>
+                </div>
                 <div>
                     <div class="gallery-main">
                         <img id="main-product-image" src="${galleryImages[0]}" alt="${currentProduct.title.replace(/"/g, '&quot;')}">
