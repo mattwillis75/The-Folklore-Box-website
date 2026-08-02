@@ -3,782 +3,610 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Goods & Wares | The Folklore Box</title>
-    <meta name="description" content="Shop handcrafted wooden decorations, apparel, and zines inspired by British folklore, myths, and legends.">
+    <title>Product | The Folklore Box</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;600&family=Spectral:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
-        /* Base Styles */
-        :root { --bg-color: #000000; --text-color: #ffffff; --accent-red: #cc0000; --header-bg: rgba(0, 0, 0, 0.85); }
-        body { font-family: 'Lato', sans-serif; font-weight: 300; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 0; line-height: 1.6; overflow-x: hidden; }
-        h1, h2, h3 { font-family: 'Spectral', serif; font-weight: 400; color: #ffffff; }
-        
-        /* Header & Nav */
-        header { position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 3rem; background: var(--header-bg); border-bottom: 1px solid #333333; z-index: 1000; box-sizing: border-box; backdrop-filter: blur(8px); }
-        .logo img { max-width: 180px; height: auto; }
-        /* Navigation & Dropdowns */
-        nav ul { list-style: none; display: flex; align-items: center; gap: 2rem; margin: 0; padding: 0; }
-        nav a { text-decoration: none; color: #ffffff; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; transition: color 0.3s ease; font-family: 'Lato', sans-serif; white-space: nowrap; }
-        nav a:hover { color: var(--accent-red); }
-        .active-page { color: var(--accent-red) !important; }
-        
-        #cart-toggle { color: var(--accent-red); border: 1px solid var(--accent-red); padding: 0.5rem 1rem; border-radius: 3px; }
-        #cart-toggle:hover { background: var(--accent-red); color: #ffffff; }
-
-        /* Dropdown Styles */
-        .dropdown { position: relative; display: inline-block; }
-        .dropdown-content { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background-color: var(--accent-red); min-width: 180px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5); z-index: 1001; border-radius: 4px; flex-direction: column; margin-top: 1.5rem; padding: 0.5rem 0; }
-        .dropdown-content::before { content: ""; position: absolute; top: -1.5rem; left: 0; width: 100%; height: 1.5rem; }
-        .dropdown:hover .dropdown-content { display: flex; }
-        .dropdown-content a { padding: 10px 16px; display: block; color: #ffffff; text-align: center; }
-        .dropdown-content a:hover { background-color: #a30000; color: #ffffff; }
-        .dropdown-divider { height: 1px; background-color: #ffffff; margin: 0 15px; }
-
-        /* Mobile Menu */
-        .mobile-menu-toggle { display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1005; }
-        .mobile-menu-toggle span { width: 25px; height: 3px; background-color: #ffffff; transition: all 0.3s ease; border-radius: 3px; }
-        @media (max-width: 1100px) {
-            .mobile-menu-toggle { display: flex; }
-            nav ul { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background-color: rgba(0, 0, 0, 0.95); padding: 1rem 0; }
-            nav ul.mobile-active { display: flex; }
+        /* Base Colors & Typography */
+        :root {
+            --bg-color: #000000;
+            --secondary-bg: #0a0a0a;
+            --border-color: #333333;
+            --text-light: #ffffff;
+            --text-muted: #aaaaaa;
+            --accent-red: #cc0000;
+            --font-headings: 'Spectral', serif;
+            --font-body: 'Lato', sans-serif;
+            --transition-speed: 0.3s;
         }
 
-        /* Product Page Layout */
-        main { padding-top: 120px; min-height: 100vh; max-width: 1200px; margin: 0 auto; padding-bottom: 4rem; }
-        .wholesale-banner { background: #222; color: var(--accent-red); border-bottom: 1px solid #333; text-align: center; padding: 0.8rem 2rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; margin-bottom: 1rem; display: none; }
-        
-        .product-container { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; padding: 2rem; align-items: start; }
-        @media (max-width: 800px) { .product-container { grid-template-columns: 1fr; } }
-        
-        .product-gallery { display: flex; flex-direction: column; gap: 1.5rem; align-items: center; }
-        .product-image-container { width: 100%; max-width: 450px; }
-        .product-image-container img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: 1px solid #333; border-radius: 4px; transition: opacity 0.3s ease; display: block; background: #111; }
-        
-        /* Container for the thumbnails */
-        .gallery-thumbnails { 
-            display: grid; 
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem; 
-            width: 100%; 
-            max-width: 450px; 
-            box-sizing: border-box; 
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
         }
 
-        /* Individual thumbnail styling */
-        .gallery-thumbnails img { 
-            width: 100%; 
-            height: auto; 
-            aspect-ratio: 4 / 3; 
-            object-fit: cover; 
-            border: 2px solid transparent; 
-            border-radius: 4px; 
-            cursor: pointer; 
-            transition: all 0.3s ease; 
-            opacity: 0.6; 
+        /* Navigation */
+        header {
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.85); 
+            backdrop-filter: blur(8px);
+            position: sticky;
+            top: 0;
+            z-index: 500;
+        }
+        
+        header h1 {
+            font-family: var(--font-headings);
+            margin: 0;
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .gallery-thumbnails img:hover { opacity: 1; border-color: #555; }
-        .gallery-thumbnails img.active { border-color: var(--accent-red); opacity: 1; }
+        .back-btn, .cart-toggle-btn {
+            background: transparent;
+            color: var(--text-light);
+            border: 1px solid var(--border-color);
+            padding: 10px 20px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border-radius: 3px;
+            transition: border-color var(--transition-speed);
+            text-decoration: none;
+            display: inline-block;
+        }
 
-        /* Back to Shop Link */
-        .back-to-shop { display: inline-flex; align-items: center; gap: 0.5rem; color: #888; text-decoration: none; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; margin-bottom: 1.5rem; }
-        .back-to-shop:hover { color: var(--accent-red); }
-        .back-to-shop span { font-size: 1.2rem; line-height: 1; padding-bottom: 2px; }
+        .back-btn:hover, .cart-toggle-btn:hover {
+            border-color: var(--accent-red);
+        }
 
-        .product-info { height: auto; overflow: visible; }
-        .product-info h1 { font-size: 2.5rem; margin-top: 0; }
-        .product-description { font-size: 1.1rem; color: #ccc; margin-bottom: 1.5rem; height: auto; overflow: visible; }
-        
-        /* Size & Material Styles */
-        .product-meta { font-size: 0.9rem; color: #aaa; margin: 0.2rem 0; text-transform: uppercase; letter-spacing: 1px; font-family: 'Lato', sans-serif; }
-        .product-meta strong { color: #fff; font-weight: 600; margin-right: 0.5rem; }
-        .product-specs { margin-bottom: 2.5rem; padding-top: 1rem; border-top: 1px solid #222; }
-        
-        .price-breakdown { background: #0a0a0a; border: 1px solid #222; padding: 1.5rem; border-radius: 4px; margin-bottom: 2rem; }
-        .price-total { display: flex; justify-content: space-between; font-family: 'Spectral', serif; font-size: 1.8rem; color: var(--accent-red); }
-        
-        .btn { display: block; background: var(--accent-red); color: #fff; padding: 1.2rem; text-align: center; border: none; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; width: 100%; border-radius: 3px; transition: background 0.3s ease;}
-        .btn:hover { background: #e60000; }
-        
-        /* --- Slide-Out Cart Styles --- */
-        .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 1001; display: none; }
-        .cart-overlay.active { display: block; }
-        .cart-sidebar { position: fixed; top: 0; right: -500px; width: 500px; max-width: 100vw; height: 100vh; background: #0a0a0a; border-left: 1px solid #222; z-index: 1002; transition: right 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); padding: 2rem; box-sizing: border-box; display: flex; flex-direction: column; overflow-y: auto; }
-        .cart-sidebar.open { right: 0; }
-        .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 1rem; margin-bottom: 1.5rem; flex-shrink: 0; }
-        .cart-header h2 { margin: 0; font-size: 2rem; }
-        .close-cart { font-size: 2.5rem; cursor: pointer; color: #fff; line-height: 1; transition: color 0.3s; }
-        .close-cart:hover { color: var(--accent-red); }
-        .cart-items-container { flex-grow: 1; margin-bottom: 1rem; padding-right: 0.5rem; overflow-y: visible; }
-        
-        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid #222; gap: 0.8rem; }
-        .cart-item-title { flex-grow: 1; font-weight: 600; font-size: 0.95rem; line-height: 1.3; }
-        .cart-qty-controls { display: flex; align-items: center; gap: 0.5rem; background: #111; padding: 0.2rem 0.5rem; border-radius: 3px; border: 1px solid #333; }
-        .cart-qty-controls button { background: none; border: none; color: #fff; cursor: pointer; font-size: 1.2rem; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
-        .cart-qty-controls button:hover { color: var(--accent-red); }
-        .cart-item-total { font-weight: bold; min-width: 60px; text-align: right; }
-        .remove-btn { background: none; border: none; color: #666; cursor: pointer; font-size: 1.5rem; padding: 0 0 0 0.5rem; transition: color 0.2s; }
-        .remove-btn:hover { color: var(--accent-red); }
-        
-        .cart-footer { border-top: 1px solid #333; padding-top: 1.5rem; flex-shrink: 0; }
-        .cart-shipping-selector { margin-bottom: 1rem; border-bottom: 1px solid #222; padding-bottom: 1rem; }
-        .cart-shipping-selector label { display: block; color: #aaa; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
-        .cart-shipping-selector select { width: 100%; padding: 0.8rem; background: #111; color: #fff; border: 1px solid #333; border-radius: 3px; cursor: pointer; }
-        .cart-breakdown { margin-bottom: 1rem; color: #aaa; font-size: 1.1rem; }
-        .cart-row { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
-        .cart-total { font-size: 1.8rem; text-align: right; margin-bottom: 1.5rem; font-family: 'Spectral', serif; color: var(--accent-red); border-top: 1px solid #333; padding-top: 1rem; }
+        header nav { display: flex; gap: 15px; }
 
-        .cart-warning { background: rgba(204, 0, 0, 0.1); border: 1px solid var(--accent-red); color: var(--accent-red); font-weight: bold; text-align: center; padding: 1rem; border-radius: 4px; margin-bottom: 1.5rem; font-size: 0.9rem; line-height: 1.4; display: none; }
-        .paypal-disabled { pointer-events: none; opacity: 0.4; filter: grayscale(100%); }
+        /* Product Layout */
+        .container {
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
 
-        footer { background: #000000; color: #ffffff; padding: 4rem 2rem; text-align: center; border-top: 1px solid #222; }
-        footer a { color: #ffffff; text-decoration: none; margin: 0 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
-        footer a:hover { color: var(--accent-red); }
-        .social-links { margin-bottom: 2rem; }
+        @media (max-width: 800px) {
+            .container { grid-template-columns: 1fr; }
+        }
+
+        /* Image Gallery */
+        .gallery-main {
+            width: 100%;
+            height: 600px;
+            background: #111;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-main img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .gallery-thumbs {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+        }
+
+        .gallery-thumbs img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border: 1px solid var(--border-color);
+            border-radius: 3px;
+            cursor: pointer;
+            transition: border-color var(--transition-speed);
+        }
+
+        .gallery-thumbs img:hover, .gallery-thumbs img.active {
+            border-color: var(--accent-red);
+        }
+
+        /* Product Details */
+        .product-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-title {
+            font-family: var(--font-headings);
+            font-size: 2.5rem;
+            margin: 0 0 10px 0;
+            line-height: 1.2;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            margin: 0 0 30px 0;
+        }
+
+        .product-description {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+        }
+
+        .meta-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 30px 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 0;
+        }
+
+        .meta-list li {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+        .meta-list li strong { color: var(--text-light); }
+
+        /* Form / Add to Cart */
+        .variant-select {
+            margin-bottom: 25px;
+        }
+
+        .variant-select label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        .variant-select select {
+            width: 100%;
+            padding: 15px;
+            background: #111;
+            color: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 3px;
+            outline: none;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        
+        .variant-select select:focus { border-color: var(--accent-red); }
+
+        .add-cart-btn {
+            width: 100%;
+            padding: 18px;
+            background: var(--accent-red);
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            font-size: 1.1rem;
+            transition: background var(--transition-speed);
+        }
+
+        .add-cart-btn:hover:not(:disabled) { background: #e60000; }
+        .add-cart-btn:disabled { background: #333; color: #777; cursor: not-allowed; }
+
+        /* Smart Cart Side Panel (Shared with Shop) */
+        .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); backdrop-filter: blur(3px); z-index: 1000; opacity: 0; visibility: hidden; transition: opacity 0.3s; }
+        .cart-panel { position: fixed; top: 0; right: -400px; width: 100%; max-width: 400px; height: 100vh; background: var(--secondary-bg); border-left: 1px solid var(--border-color); z-index: 1001; transition: right 0.3s ease; display: flex; flex-direction: column; }
+        .cart-overlay.active { opacity: 1; visibility: visible; }
+        .cart-panel.active { right: 0; }
+        .cart-header { padding: 20px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .cart-header h2 { margin: 0; font-family: var(--font-headings); }
+        .close-cart-btn { background: none; border: none; color: var(--text-light); font-size: 1.5rem; cursor: pointer; }
+        .cart-items-container { flex-grow: 1; padding: 20px; overflow-y: auto; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); }
+        .cart-item-details { flex-grow: 1; }
+        .cart-item-title { margin: 0 0 5px 0; font-weight: 600; }
+        .cart-item-meta { font-size: 0.85rem; color: var(--text-muted); margin: 0 0 5px 0; }
+        .cart-qty-controls { display: flex; align-items: center; gap: 10px; }
+        .qty-btn { background: #222; border: none; color: #fff; width: 25px; height: 25px; cursor: pointer; border-radius: 3px; }
+        .cart-footer { padding: 20px; border-top: 1px solid var(--border-color); background: var(--bg-color); }
+        .cart-total-row { display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 600; margin-bottom: 20px; }
+        .checkout-btn { width: 100%; padding: 15px; background: var(--accent-red); color: #fff; border: none; border-radius: 3px; text-transform: uppercase; font-weight: 600; letter-spacing: 1px; cursor: pointer; font-size: 1rem; }
 
         /* Custom Stock Alert Modal */
-.stock-alert-overlay { 
-    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
-    background: rgba(0,0,0,0.8); z-index: 3000; 
-    display: none; align-items: center; justify-content: center; 
-    backdrop-filter: blur(5px); 
-}
-.stock-alert-box { 
-    background: #0a0a0a; border: 1px solid var(--accent-red); 
-    padding: 2.5rem; border-radius: 4px; max-width: 400px; 
-    width: 90%; text-align: center; color: #fff; 
-    box-shadow: 0 10px 30px rgba(204,0,0,0.15); 
-}
-.stock-alert-box p { margin-bottom: 2rem; font-size: 1.1rem; }
-.stock-alert-btn { 
-    background: var(--accent-red); color: #fff; border: none; 
-    padding: 1rem 2rem; text-transform: uppercase; font-weight: 600; 
-    letter-spacing: 1px; cursor: pointer; border-radius: 3px; 
-    transition: background 0.3s ease; width: 100%; 
-}
-.stock-alert-btn:hover { background: #e60000; }
+        .stock-alert-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.8); z-index: 3000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+        .stock-alert-box { background: #0a0a0a; border: 1px solid var(--accent-red); padding: 2.5rem; border-radius: 4px; max-width: 400px; width: 90%; text-align: center; color: #fff; box-shadow: 0 10px 30px rgba(204,0,0,0.15); }
+        .stock-alert-box p { margin-bottom: 2rem; font-size: 1.1rem; }
+        .stock-alert-btn { background: var(--accent-red); color: #fff; border: none; padding: 1rem 2rem; text-transform: uppercase; font-weight: 600; letter-spacing: 1px; cursor: pointer; border-radius: 3px; transition: background 0.3s ease; width: 100%; }
+        .stock-alert-btn:hover { background: #e60000; }
     </style>
-
-    <!-- EmailJS SDK -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script type="text/javascript">
-       (function(){
-          emailjs.init({
-            publicKey: "qI6ltlwzFXECV29P8",
-          });
-       })();
-    </script>
 </head>
 <body>
 
-    <header id="main-header">
-        <div class="logo"><a href="index.html"><img src="./The-folklore-box-logo.png" alt="The Folklore Box Logo"></a></div>
-        <div class="mobile-menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
+    <header>
+        <h1>The Folklore Box</h1>
         <nav>
-            <ul id="nav-list">
-                <li class="dropdown">
-                    <a href="index.html">Home</a>
-                    <div class="dropdown-content">
-                        <a href="index.html#collections">Goods & Wares</a>
-                        <div class="dropdown-divider"></div>
-                        <a href="index.html#about">About the Artist</a>
-                        <div class="dropdown-divider"></div>
-                        <a href="index.html#map-teaser">The Folklore Map</a>
-                    </div>
-                </li>
-                <li><a href="portfolio.html">Portfolio</a></li>
-                <li><a href="shop.html">Shop</a></li>
-                <li><a href="uk-folklore-map.html">UK Folklore Map</a></li>
-                <li><a href="journal.html">Journal</a></li>
-                <li><a href="wholesale.html">Wholesale</a></li>
-                <li><a href="#" id="cart-toggle">Cart (0)</a></li>
-            </ul>
+            <a href="shop.html" class="back-btn">&larr; Back to Shop</a>
+            <button class="cart-toggle-btn" onclick="openCart()">Cart (<span id="cart-count">0</span>)</button>
         </nav>
     </header>
 
-    <main>
-        <div class="wholesale-banner" id="wholesale-banner">
-            Wholesale Account Active: Prices are 60% of standard retail. Minimum spend £75.
-        </div>
-
-        <div class="product-container" id="product-container">
-            <!-- Loading -->
-        </div>
-    </main>
-
-    <div class="cart-overlay" id="cart-overlay"></div>
-    <div class="cart-sidebar" id="cart-sidebar">
-        <div class="cart-header"><h2 id="cart-title">Your Cart</h2><span class="close-cart" id="close-cart">&times;</span></div>
-        <div class="cart-items-container" id="cart-items"></div>
-        
-        <div class="cart-footer">
-            <div class="cart-warning" id="cart-warning">
-                Minimum wholesale spend is £75.00 before postage and packing is added. Add more items to unlock checkout.
-            </div>
-
-            <div class="cart-shipping-selector">
-                <label for="cart-destination">Deliver to:</label>
-                <select id="cart-destination">
-                    <option value="uk">United Kingdom</option>
-                    <option value="int">International</option>
-                </select>
-            </div>
-            
-            <div class="cart-breakdown">
-                <div class="cart-row"><span>Items:</span><span id="cart-subtotal">£0.00</span></div>
-                <div class="cart-row"><span>Postage:</span><span id="cart-shipping-cost">£0.00</span></div>
-            </div>
-            
-            <div class="cart-total" id="cart-total">Total: £0.00</div>
-            <div id="paypal-button-container"></div>
+    <div class="container" id="product-container">
+        <!-- Content injected via JS -->
+        <div style="grid-column: 1 / -1; text-align: center; padding: 50px;">
+            <h2>Loading product...</h2>
         </div>
     </div>
 
-    <footer>
-        <div class="social-links">
-            <a href="https://instagram.com/the_folklore_box" target="_blank">Instagram: @the_folklore_box</a> | 
-            <a href="https://facebook.com/thefolklorebox" target="_blank">Facebook: @thefolklorebox</a>
+    <!-- Smart Cart Panel -->
+    <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+    <div class="cart-panel" id="cart-panel">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <button class="close-cart-btn" onclick="closeCart()">&times;</button>
         </div>
-        <div style="margin-bottom: 2rem;">
-            <a href="shop.html">Shop</a>
-            <a href="wholesale.html">Wholesale Enquiries</a>
-            <a href="contact.html">Contact</a>
+        <div class="cart-items-container" id="cart-items">
+            <!-- Cart items injected here -->
         </div>
-        <p style="font-size: 0.8rem; color: #555; font-family: 'Lato', sans-serif;">&copy; 2026 The Folklore Box by Matt Willis. All rights reserved.</p>
-    </footer>
+        <div class="cart-footer">
+            <div class="cart-total-row">
+                <span>Subtotal</span>
+                <span id="cart-subtotal">£0.00</span>
+            </div>
+            <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+        </div>
+    </div>
 
-    <script src="https://www.paypal.com/sdk/js?client-id=BAAyFEECFHCgIYSVAcx3GUqT0FI1rHhhU_mwYJxRf6ngeAPN3zYdx3W4a1tCIEHivTFLxU7oFEeDD1NIIs&currency=GBP&locale=en_GB"></script>
+    <!-- Custom Stock Alert Modal -->
+    <div id="stock-alert" class="stock-alert-overlay">
+        <div class="stock-alert-box">
+            <h2 style="margin-top: 0; color: var(--accent-red);">Stock Limit Reached</h2>
+            <p id="stock-alert-msg"></p>
+            <button class="stock-alert-btn" onclick="document.getElementById('stock-alert').style.display='none'">Understood</button>
+        </div>
+    </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", async () => {
-            
-            // --- DETECT USER TYPE ---
-            const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
-            const cartKey = isWholesale ? 'folkloreWholesaleCart' : 'folkloreCart';
-            
-            if (isWholesale) {
-                document.getElementById('wholesale-banner').style.display = 'block';
-                document.getElementById('cart-title').textContent = 'Wholesale Cart';
-            }
+        // Extract Product ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id');
+        
+        let allProducts = [];
+        let currentProduct = null;
+        
+        const cartKey = 'folklore_cart';
+        let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
-            const productContainer = document.getElementById('product-container');
-            const urlParams = new URLSearchParams(window.location.search);
-            const productId = urlParams.get('id');
-            let foundProduct = null;
-            let postalRates = {};
-
-            // 1. Fetch Postal Rates
-            try {
-                const postalResponse = await fetch('postal.txt', { cache: 'no-store' });
-                const postalText = await postalResponse.text();
-                postalText.split('---').forEach(block => {
-                    if(!block.trim()) return;
-                    let currentClass = "";
-                    let rates = {};
-                    block.trim().split('\n').forEach(line => {
-                        const sepIndex = line.indexOf(':');
-                        if(sepIndex > -1) {
-                            const key = line.slice(0, sepIndex).trim().toLowerCase();
-                            const value = line.slice(sepIndex + 1).trim();
-                            if(key === 'class') currentClass = value;
-                            else if(key === 'uk base') rates.ukBase = parseFloat(value);
-                            else if(key === 'uk additional') rates.ukAdd = parseFloat(value);
-                            else if(key === 'int base') rates.intBase = parseFloat(value);
-                            else if(key === 'int additional') rates.intAdd = parseFloat(value);
-                        }
-                    });
-                    if(currentClass) postalRates[currentClass] = rates;
-                });
-            } catch(e) { console.error("Could not load postal rates."); }
-
-            // 2. Fetch and Parse Product (UPDATED PARSER)
-            try {
-                const response = await fetch('products.txt', { cache: 'no-store' });
-                const text = await response.text();
-                const rawItems = text.split('---');
-
-                for (const rawItem of rawItems) {
-                    if (rawItem.trim() === '') continue;
-                    const lines = rawItem.trim().split('\n');
-                    let product = { additionalImages: [], description: '' };
-                    let isParsingDesc = false;
+        // 1. Fetch & Parse Database
+        fetch('products.txt')
+            .then(response => response.text())
+            .then(text => {
+                const blocks = text.split('---\n');
+                blocks.forEach((block, index) => {
+                    if (block.trim() === '') return;
+                    const lines = block.split('\n');
                     
-                    const validKeys = ['title', 'main image', 'image', 'images', 'description', 'postal class', 'size', 'material', 'materials', 'item cost', 'sections'];
+                    let product = { 
+                        id: `prod-${index}`, basePrice: 0, sections: '', 
+                        size: '', materials: '', images: '',
+                        stock: 10, stockS: 10, stockM: 10, stockL: 10, stockXL: 10, stockXXL: 10 
+                    }; 
+                    
+                    let isParsingDesc = false;
 
                     lines.forEach(line => {
-                        const sepIndex = line.indexOf(':');
-                        const possibleKey = sepIndex > -1 ? line.slice(0, sepIndex).trim().toLowerCase() : '';
-                        
-                        // If the line starts with a valid data key
-                        if (validKeys.includes(possibleKey)) {
-                            isParsingDesc = (possibleKey === 'description');
-                            const value = line.slice(sepIndex + 1).trim();
-                            
-                            if (possibleKey === 'title') { product.title = value; product.id = value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, ''); }
-                            else if (possibleKey === 'main image' || possibleKey === 'image') product.mainImage = value;
-                            else if (possibleKey === 'images') product.additionalImages = value ? value.split(',').map(s => s.trim()).filter(Boolean) : [];
-                            else if (possibleKey === 'sections') product.sections = value.split(',').map(s => s.trim());
-                            else if (possibleKey === 'description') product.description = value;
-                            else if (possibleKey === 'postal class') product.postalClass = value;
-                            else if (possibleKey === 'size') product.size = value;
-                            else if (possibleKey === 'material' || possibleKey === 'materials') product.materials = value;
-                            else if (possibleKey === 'item cost') {
-                                product.basePrice = parseFloat(value);
-                                if (isWholesale) {
-                                    product.basePrice = product.basePrice * 0.60;
+                        if (!isParsingDesc) {
+                            const colonIdx = line.indexOf(':');
+                            if (colonIdx > -1) {
+                                const key = line.substring(0, colonIdx).trim().toLowerCase();
+                                const value = line.substring(colonIdx + 1).trim();
+                                
+                                if (key === 'title') product.title = value;
+                                else if (key === 'main image') product.mainImage = value;
+                                else if (key === 'images') product.images = value;
+                                else if (key === 'sections') product.sections = value;
+                                else if (key === 'size') product.size = value;
+                                else if (key === 'materials') product.materials = value;
+                                else if (key === 'postal class') product.postalClass = value;
+                                else if (key === 'item cost') product.basePrice = parseFloat(value.replace(/[^0-9.]/g, ''));
+                                
+                                // Stock parsing
+                                else if (key === 'stock') product.stock = isNaN(parseInt(value)) ? 10 : parseInt(value);
+                                else if (key === 'stock s') product.stockS = isNaN(parseInt(value)) ? 10 : parseInt(value);
+                                else if (key === 'stock m') product.stockM = isNaN(parseInt(value)) ? 10 : parseInt(value);
+                                else if (key === 'stock l') product.stockL = isNaN(parseInt(value)) ? 10 : parseInt(value);
+                                else if (key === 'stock xl') product.stockXL = isNaN(parseInt(value)) ? 10 : parseInt(value);
+                                else if (key === 'stock xxl') product.stockXXL = isNaN(parseInt(value)) ? 10 : parseInt(value);
+                                
+                                else if (key === 'description') {
+                                    isParsingDesc = true;
+                                    product.description = value ? value + "\n" : "";
                                 }
                             }
                         } else {
-                            // If it doesn't have a valid key, but we are currently parsing the description,
-                            // treat it as a new paragraph and attach it safely!
-                            if (isParsingDesc && line.trim() !== '') {
-                                product.description += '<br><br>' + line.trim();
-                            }
+                            product.description += line + "\n";
                         }
                     });
-                    if (product.id === productId) { foundProduct = product; break; }
-                }
-
-                if (foundProduct) {
-                    // --- DYNAMIC SEO UPDATE ---
-                    // Update the page title
-                    document.title = `${foundProduct.title} | The Folklore Box`;
-
-                    // Update or create the meta description
-                    let metaDesc = document.querySelector('meta[name="description"]');
-                    if (!metaDesc) {
-                        metaDesc = document.createElement('meta');
-                        metaDesc.name = "description";
-                        document.head.appendChild(metaDesc);
-                    }
-                    // Strip HTML tags from the product description and limit to 155 characters for Google
-                    let cleanDesc = foundProduct.description.replace(/<[^>]*>?/gm, '');
-                    metaDesc.content = cleanDesc.length > 155 ? cleanDesc.substring(0, 152) + '...' : cleanDesc;
-                    // --------------------------
                     
-                    let allImages = [foundProduct.mainImage];
-                    if (foundProduct.additionalImages.length > 0) allImages = allImages.concat(foundProduct.additionalImages);
-
-                    let galleryHTML = '';
-                    if (allImages.length > 1) {
-                        galleryHTML = `<div class="gallery-thumbnails">`;
-                        allImages.forEach((imgSrc, index) => {
-                            const activeClass = index === 0 ? 'active' : '';
-                            
-                            // 1. Generate the thumbnail filename for .png, .jpg, AND .jpeg files
-                            const thumbSrc = imgSrc.replace('.png', '-thumb.png')
-                                                   .replace('.jpg', '-thumb.jpg')
-                                                   .replace('.jpeg', '-thumb.jpeg');
-                            
-                            // 2. Put thumbSrc in the src attribute, but keep imgSrc in the data-src attribute!
-                            galleryHTML += `<img src="${thumbSrc}" class="thumbnail ${activeClass}" data-src="${imgSrc}" loading="lazy" alt="${foundProduct.title} thumbnail ${index + 1}">`;
-                        });
-                        galleryHTML += `</div>`;
-                    }
-
-                    let specsHtml = '';
-                    if (foundProduct.size || foundProduct.materials) {
-                        specsHtml += `<div class="product-specs">`;
-                        if (foundProduct.size) specsHtml += `<p class="product-meta"><strong>Size:</strong> ${foundProduct.size}</p>`;
-                        if (foundProduct.materials) specsHtml += `<p class="product-meta"><strong>Materials:</strong> ${foundProduct.materials}</p>`;
-                        specsHtml += `</div>`;
-                    }
-
-                    // ADD THIS right above productContainer.innerHTML = ...
-let sizeDropdown = '';
-                    if (foundProduct.sections && foundProduct.sections.includes('T-Shirts')) {
-                        sizeDropdown = `
-                            <div class="form-group" style="margin-bottom: 1.5rem;">
-                                <label style="display: block; font-size: 0.9rem; color: #aaa; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">Select Size</label>
-                                <select id="product-size-select" style="width: 100%; padding: 1rem; background: #111; color: #fff; border: 1px solid #333; border-radius: 3px; font-size: 1rem; cursor: pointer;">
-                                    <option value="S">Small (S)</option>
-                                    <option value="M" selected>Medium (M)</option>
-                                    <option value="L">Large (L)</option>
-                                    <option value="XL">Extra Large (XL)</option>
-                                    <option value="XXL">XXL</option>
-                                </select>
-                            </div>
-                        `;
-                    }
-
-                    productContainer.innerHTML = `
-                        <div class="product-gallery">
-                            <div class="product-image-container"><img id="main-product-image" src="${foundProduct.mainImage}" alt="${foundProduct.title}"></div>
-                            ${galleryHTML}
-                        </div>
-                        <div class="product-info">
-                            <a href="shop.html" class="back-to-shop"><span>&larr;</span> Back to Shop</a>
-                            <h1>${foundProduct.title}</h1>
-                            <p class="product-description">${foundProduct.description || ''}</p>
-                            
-                            ${specsHtml}
-                            ${sizeDropdown}
-                            
-                            <div class="price-breakdown">
-                                <div class="price-total"><span>Price:</span><span>£${foundProduct.basePrice.toFixed(2)}</span></div>
-                            </div>
-                            <button class="btn" id="add-to-cart-btn">Add to Cart</button>
-                        </div>
-                    `;
-
-                    if (allImages.length > 1) {
-                        const thumbnails = document.querySelectorAll('.gallery-thumbnails .thumbnail');
-                        const mainImage = document.getElementById('main-product-image');
-                        thumbnails.forEach(thumb => {
-                            thumb.addEventListener('click', (e) => {
-                                mainImage.style.opacity = 0.5;
-                                setTimeout(() => { mainImage.src = e.target.dataset.src; mainImage.style.opacity = 1; }, 150);
-                                thumbnails.forEach(t => t.classList.remove('active'));
-                                e.target.classList.add('active');
-                            });
-                        });
-                    }
+                    if(product.description) product.description = product.description.trim();
+                    if (product.title) allProducts.push(product);
+                });
+                
+                currentProduct = allProducts.find(p => p.id === productId);
+                
+                if (currentProduct) {
+                    renderProduct();
+                } else {
+                    document.getElementById('product-container').innerHTML = `
+                        <div style="grid-column: 1 / -1; text-align: center; padding: 50px;">
+                            <h2>Product not found.</h2>
+                            <p>It may have been removed or the link is incorrect.</p>
+                            <br><a href="shop.html" class="back-btn">Return to Shop</a>
+                        </div>`;
                 }
-            } catch (err) { productContainer.innerHTML = "Error loading product."; }
+                
+                updateCartUI();
+            })
+            .catch(err => {
+                console.error("Error loading product:", err);
+                document.getElementById('product-container').innerHTML = "<div style='grid-column: 1 / -1; text-align: center;'><h2>Error loading product data.</h2></div>";
+            });
 
-            // --- HEADER SCROLL EFFECT ---
-            const header = document.getElementById('main-header');
-            if (header) {
-                window.addEventListener('scroll', () => {
-                    if (window.scrollY > 50) {
-                        header.style.boxShadow = '0 2px 20px rgba(255, 0, 0, 0.1)';
-                        header.style.borderBottom = '1px solid var(--accent-red)';
-                    } else {
-                        header.style.boxShadow = 'none';
-                        header.style.borderBottom = '1px solid #333333';
-                    }
+        // 2. Render Product UI
+        function renderProduct() {
+            // Build Gallery Array
+            let galleryImages = [];
+            if(currentProduct.mainImage) galleryImages.push(currentProduct.mainImage);
+            if(currentProduct.images) {
+                const extras = currentProduct.images.split(',').map(img => img.trim()).filter(Boolean);
+                galleryImages = galleryImages.concat(extras);
+            }
+            if(galleryImages.length === 0) galleryImages.push('placeholder.jpg');
+
+            let thumbsHtml = '';
+            if(galleryImages.length > 1) {
+                galleryImages.forEach((img, i) => {
+                    const activeClass = i === 0 ? 'active' : '';
+                    thumbsHtml += `<img src="${img}" class="${activeClass}" onclick="swapImage(this, '${img}')" alt="Thumbnail">`;
                 });
             }
 
-            // --- MULTIPLE-ITEM SMART CART LOGIC ---
-            let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
-            cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
-            
-            const cartSidebar = document.getElementById('cart-sidebar');
-            const cartOverlay = document.getElementById('cart-overlay');
-            const cartToggle = document.getElementById('cart-toggle');
-            const closeCartBtn = document.getElementById('close-cart');
-            const destSelect = document.getElementById('cart-destination');
-            const cartWarning = document.getElementById('cart-warning');
-            const paypalContainer = document.getElementById('paypal-button-container');
+            // Optional Metadata
+            let metaHtml = '';
+            if (currentProduct.size || currentProduct.materials) {
+                metaHtml = `<ul class="meta-list">`;
+                if (currentProduct.size) metaHtml += `<li><strong>Size:</strong> ${currentProduct.size}</li>`;
+                if (currentProduct.materials) metaHtml += `<li><strong>Materials:</strong> ${currentProduct.materials}</li>`;
+                metaHtml += `</ul>`;
+            }
 
-            const openCart = () => { cartSidebar.classList.add('open'); cartOverlay.classList.add('active'); };
-            const closeCart = () => { cartSidebar.classList.remove('open'); cartOverlay.classList.remove('active'); };
+            // Variant / Stock Logic
+            const isTshirt = currentProduct.sections && currentProduct.sections.toLowerCase().includes('t-shirts');
+            let formHtml = '';
 
-            cartToggle.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
-            closeCartBtn.addEventListener('click', closeCart);
-            cartOverlay.addEventListener('click', closeCart);
-            destSelect.addEventListener('change', updateCartUI);
-
-            
-document.addEventListener('click', (e) => {
-    if (e.target && e.target.id === 'add-to-cart-btn') {
-        const sizeSelect = document.getElementById('product-size-select');
-        const size = sizeSelect ? sizeSelect.value : null;
-        
-        const cartItemId = size ? `${foundProduct.id}-${size}` : foundProduct.id;
-        let existingItem = cart.find(item => (item.cartItemId || item.id) === cartItemId);
-        
-        if (existingItem) {
-            existingItem.quantity += 1;
-        } else {
-            cart.push({ 
-                id: foundProduct.id, 
-                cartItemId: cartItemId,
-                title: foundProduct.title, 
-                price: foundProduct.basePrice, 
-                postalClass: foundProduct.postalClass, 
-                size: size,
-                quantity: 1 
-            });
-        }
-        localStorage.setItem(cartKey, JSON.stringify(cart));
-        updateCartUI();
-        openCart();
-    }
-});
-
-            // Adjust Quantities Logic
-            window.updateQuantity = function(index, delta) {
-                cart[index].quantity += delta;
-                if (cart[index].quantity <= 0) {
-                    cart.splice(index, 1);
+            if (isTshirt) {
+                formHtml = `
+                    <div class="variant-select">
+                        <label for="tshirt-size">Select Size <span style="color:var(--accent-red)">*</span></label>
+                        <select id="tshirt-size" onchange="document.getElementById('size-error').style.display='none'">
+                            <option value="">-- Choose a size --</option>
+                            <option value="S" ${currentProduct.stockS <= 0 ? 'disabled style="color:#555;"' : ''}>Small ${currentProduct.stockS <= 0 ? '(Out of Stock)' : ''}</option>
+                            <option value="M" ${currentProduct.stockM <= 0 ? 'disabled style="color:#555;"' : ''}>Medium ${currentProduct.stockM <= 0 ? '(Out of Stock)' : ''}</option>
+                            <option value="L" ${currentProduct.stockL <= 0 ? 'disabled style="color:#555;"' : ''}>Large ${currentProduct.stockL <= 0 ? '(Out of Stock)' : ''}</option>
+                            <option value="XL" ${currentProduct.stockXL <= 0 ? 'disabled style="color:#555;"' : ''}>X-Large ${currentProduct.stockXL <= 0 ? '(Out of Stock)' : ''}</option>
+                            <option value="XXL" ${currentProduct.stockXXL <= 0 ? 'disabled style="color:#555;"' : ''}>XX-Large ${currentProduct.stockXXL <= 0 ? '(Out of Stock)' : ''}</option>
+                        </select>
+                        <div id="size-error" style="color:var(--accent-red); font-size:0.85rem; margin-top:0.5rem; display:none;">Please select a size before adding to cart.</div>
+                    </div>
+                    <button class="add-cart-btn" onclick="addToCartAction()">Add to Cart</button>
+                `;
+            } else {
+                if (currentProduct.stock <= 0) {
+                    formHtml = `<button class="add-cart-btn" disabled>Out of Stock</button>`;
+                } else {
+                    formHtml = `<button class="add-cart-btn" onclick="addToCartAction()">Add to Cart</button>`;
                 }
-                localStorage.setItem(cartKey, JSON.stringify(cart));
-                updateCartUI();
-            };
+            }
 
-            window.removeFromCart = function(index) { 
-                cart.splice(index, 1); 
-                localStorage.setItem(cartKey, JSON.stringify(cart)); 
-                updateCartUI(); 
-            };
-
-            function updateCartUI() {
-                const container = document.getElementById('cart-items');
-                container.innerHTML = '';
-                let itemsTotal = 0; let shippingTotal = 0; let finalTotal = 0;
-                let cartItemCount = 0;
-                
-                if (cart.length === 0) {
-                    container.innerHTML = `<p style="color: #777; font-style: italic;">Your ${isWholesale ? 'wholesale ' : ''}cart is currently empty.</p>`;
-                    document.getElementById('cart-subtotal').textContent = `£0.00`;
-                    document.getElementById('cart-shipping-cost').textContent = `£0.00`;
-                    document.getElementById('cart-total').textContent = `Total: £0.00`;
-                    document.getElementById('cart-toggle').textContent = `Cart (0)`;
+            document.getElementById('product-container').innerHTML = `
+                <div>
+                    <div class="gallery-main">
+                        <img id="main-product-image" src="${galleryImages[0]}" alt="${currentProduct.title}">
+                    </div>
+                    <div class="gallery-thumbs" id="gallery-thumbs">
+                        ${thumbsHtml}
+                    </div>
+                </div>
+                <div class="product-details">
+                    <div>
+                        <h1 class="product-title">${currentProduct.title}</h1>
+                        <p class="product-price">£${currentProduct.basePrice.toFixed(2)}</p>
+                        
+                        <div class="product-description">${currentProduct.description || 'No description available.'}</div>
+                        
+                        ${metaHtml}
+                    </div>
                     
-                    if (isWholesale) {
-                        cartWarning.style.display = 'block';
-                        paypalContainer.classList.add('paypal-disabled');
-                    }
+                    <div style="margin-top: 20px;">
+                        ${formHtml}
+                    </div>
+                </div>
+            `;
+        }
+
+        // 3. UI Interactions
+        window.swapImage = function(thumbElement, src) {
+            document.getElementById('main-product-image').src = src;
+            const thumbs = document.getElementById('gallery-thumbs').getElementsByTagName('img');
+            for(let img of thumbs) { img.classList.remove('active'); }
+            thumbElement.classList.add('active');
+        };
+
+        window.addToCartAction = function() {
+            const isTshirt = currentProduct.sections && currentProduct.sections.toLowerCase().includes('t-shirts');
+            let selectedSize = null;
+
+            if (isTshirt) {
+                const sizeSelect = document.getElementById('tshirt-size');
+                selectedSize = sizeSelect.value;
+                if (!selectedSize) {
+                    document.getElementById('size-error').style.display = 'block';
                     return;
                 }
+            }
+            
+            addToSmartCart(currentProduct.id, currentProduct.title, currentProduct.basePrice, currentProduct.postalClass, selectedSize);
+        };
 
-                const dest = destSelect.value;
-                let maxBase = 0; let maxBaseItem = null;
+        // 4. Cart Logic & Size-Specific Stock Validation
+        window.addToSmartCart = function(id, title, price, postalClass, size = null) {
+            const productData = allProducts.find(p => p.id === id);
+            
+            // Check which stock limit to use based on size
+            let maxStock = 10;
+            if (productData) {
+                if (size === 'S') maxStock = productData.stockS;
+                else if (size === 'M') maxStock = productData.stockM;
+                else if (size === 'L') maxStock = productData.stockL;
+                else if (size === 'XL') maxStock = productData.stockXL;
+                else if (size === 'XXL') maxStock = productData.stockXXL;
+                else maxStock = productData.stock;
+            }
+            
+            const cartItemId = size ? `${id}-${size}` : id;
+            let existingItem = cart.find(item => (item.cartItemId || item.id) === cartItemId);
+            let currentQty = existingItem ? existingItem.quantity : 0;
 
-                // Step 1: Render items & Find heaviest base shipping
+            if (currentQty + 1 > maxStock) {
+                document.getElementById('stock-alert-msg').textContent = `Apologies. We only have ${maxStock} of this item in stock.`;
+                document.getElementById('stock-alert').style.display = 'flex';
+                return; 
+            }
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ id, cartItemId, title, price, postalClass, size, quantity: 1 });
+            }
+            
+            saveAndRefreshCart();
+            openCart();
+        };
+
+        window.updateQuantity = function(index, delta) {
+            if (delta > 0) {
+                const item = cart[index];
+                const productData = allProducts.find(p => p.id === item.id);
+                
+                // Check which stock limit to use based on size
+                let maxStock = 10;
+                if (productData) {
+                    if (item.size === 'S') maxStock = productData.stockS;
+                    else if (item.size === 'M') maxStock = productData.stockM;
+                    else if (item.size === 'L') maxStock = productData.stockL;
+                    else if (item.size === 'XL') maxStock = productData.stockXL;
+                    else if (item.size === 'XXL') maxStock = productData.stockXXL;
+                    else maxStock = productData.stock;
+                }
+                
+                if (item.quantity + delta > maxStock) {
+                    document.getElementById('stock-alert-msg').textContent = `Apologies. We only have ${maxStock} of this item in stock.`;
+                    document.getElementById('stock-alert').style.display = 'flex';
+                    return;
+                }
+            }
+
+            cart[index].quantity += delta;
+            if (cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
+            saveAndRefreshCart();
+        };
+
+        function saveAndRefreshCart() {
+            localStorage.setItem(cartKey, JSON.stringify(cart));
+            updateCartUI();
+        }
+
+        // 5. Cart UI Updates
+        function updateCartUI() {
+            const cartContainer = document.getElementById('cart-items');
+            const cartCountLabel = document.getElementById('cart-count');
+            const cartSubtotalLabel = document.getElementById('cart-subtotal');
+            
+            cartContainer.innerHTML = '';
+            let totalItems = 0;
+            let subtotal = 0;
+
+            if (cart.length === 0) {
+                cartContainer.innerHTML = '<p style="color:var(--text-muted); text-align:center; margin-top:40px;">Your cart is empty.</p>';
+            } else {
                 cart.forEach((item, index) => {
-                    const qty = item.quantity || 1;
-                    const itemTotalCost = item.price * qty;
-                    itemsTotal += itemTotalCost;
-                    cartItemCount += qty;
-
-                    const displayName = item.size ? `${item.title} <br><span style="font-size:0.85rem; color:#aaa;">Size: ${item.size}</span>` : item.title;
-
-container.innerHTML += `
-    <div class="cart-item">
-        <div class="cart-item-title">
-            ${displayName} <br>
-            <span style="font-size:0.8rem; color:#888; font-weight:normal;">£${item.price.toFixed(2)} each</span>
-        </div>
-                            <div class="cart-qty-controls">
-                                <button onclick="updateQuantity(${index}, -1)">-</button>
-                                <span>${qty}</span>
-                                <button onclick="updateQuantity(${index}, 1)">+</button>
+                    totalItems += item.quantity;
+                    subtotal += item.price * item.quantity;
+                    
+                    const sizeLabel = item.size ? `<p class="cart-item-meta">Size: ${item.size}</p>` : '';
+                    
+                    cartContainer.innerHTML += `
+                        <div class="cart-item">
+                            <div class="cart-item-details">
+                                <h4 class="cart-item-title">${item.title}</h4>
+                                ${sizeLabel}
+                                <p class="cart-item-meta">£${item.price.toFixed(2)}</p>
                             </div>
-                            <div class="cart-item-total">£${itemTotalCost.toFixed(2)}</div>
-                            <button class="remove-btn" onclick="removeFromCart(${index})" title="Remove item">&times;</button>
+                            <div class="cart-qty-controls">
+                                <button class="qty-btn" onclick="updateQuantity(${index}, -1)">-</button>
+                                <span>${item.quantity}</span>
+                                <button class="qty-btn" onclick="updateQuantity(${index}, 1)">+</button>
+                            </div>
                         </div>
                     `;
-                    
-                    const rates = postalRates[item.postalClass];
-                    if(rates) {
-                        const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
-                        if(baseRate > maxBase) { maxBase = baseRate; maxBaseItem = item; }
-                    }
                 });
-
-                // Step 2: Calculate shipping correctly based on grouped quantities
-                let baseRateApplied = false;
-                cart.forEach((item) => {
-                    const rates = postalRates[item.postalClass];
-                    if(rates) {
-                        const qty = item.quantity || 1;
-                        const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
-                        const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
-
-                        if (item === maxBaseItem && !baseRateApplied) {
-                            shippingTotal += baseRate + (addRate * (qty - 1));
-                            baseRateApplied = true;
-                        } else {
-                            shippingTotal += addRate * qty;
-                        }
-                    }
-                });
-
-                finalTotal = itemsTotal + shippingTotal;
-
-                document.getElementById('cart-subtotal').textContent = `£${itemsTotal.toFixed(2)}`;
-                document.getElementById('cart-shipping-cost').textContent = `£${shippingTotal.toFixed(2)}`;
-                document.getElementById('cart-total').textContent = `Total: £${finalTotal.toFixed(2)}`;
-                document.getElementById('cart-toggle').textContent = `Cart (${cartItemCount})`;
-
-                // Wholesale Only: Validation for £75 Minimum Spend
-                if (isWholesale) {
-                    if (itemsTotal >= 75) {
-                        cartWarning.style.display = 'none';
-                        paypalContainer.classList.remove('paypal-disabled');
-                    } else {
-                        cartWarning.style.display = 'block';
-                        paypalContainer.classList.add('paypal-disabled');
-                    }
-                }
             }
 
-            document.getElementById('mobile-toggle').addEventListener('click', () => { document.getElementById('nav-list').classList.toggle('mobile-active'); });
-            
-            // --- BROWSER BACK BUTTON FIX ---
-            window.addEventListener('pageshow', (event) => {
-                if (event.persisted) {
-                    const currentKey = typeof cartKey !== 'undefined' ? cartKey : 'folkloreCart';
-                    cart = JSON.parse(localStorage.getItem(currentKey)) || [];
-                    cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
-                    updateCartUI();
-                }
-            });
-            
-            updateCartUI();
+            cartCountLabel.innerText = totalItems;
+            cartSubtotalLabel.innerText = `£${subtotal.toFixed(2)}`;
+        }
 
-            // --- 5. PAYPAL INITIALIZATION ---
-            try {
-                paypal.Buttons({
-                    style: { color: 'gold', shape: 'rect', label: 'checkout', layout: 'vertical' },
-                    
-                    // Auto-scroll when the PayPal button is clicked
-                    onClick: function() {
-                        setTimeout(() => {
-                            const sidebar = document.getElementById('cart-sidebar');
-                            sidebar.scrollTo({ top: sidebar.scrollHeight, behavior: 'smooth' });
-                        }, 600);
-                    },
+        // 6. Side Panel Toggles
+        window.openCart = function() {
+            document.getElementById('cart-overlay').classList.add('active');
+            document.getElementById('cart-panel').classList.add('active');
+        };
 
-                    createOrder: function(data, actions) {
-                        let itemsTotal = 0; let shippingTotal = 0; let maxBase = 0; let maxBaseItem = null;
-                        const dest = document.getElementById('cart-destination').value;
-                        
-                        // 1. Calculate items and find heaviest shipping base
-                        cart.forEach(item => {
-                            const qty = item.quantity || 1;
-                            itemsTotal += item.price * qty;
-                            const rates = postalRates[item.postalClass];
-                            if(rates) {
-                                const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
-                                if(baseRate > maxBase) { maxBase = baseRate; maxBaseItem = item; }
-                            }
-                        });
+        window.closeCart = function() {
+            document.getElementById('cart-overlay').classList.remove('active');
+            document.getElementById('cart-panel').classList.remove('active');
+        };
 
-                        // 2. Calculate accurate grouped shipping
-                        let baseRateApplied = false;
-                        cart.forEach(item => {
-                            const rates = postalRates[item.postalClass];
-                            if(rates) {
-                                const qty = item.quantity || 1;
-                                const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
-                                const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
-                                if (item === maxBaseItem && !baseRateApplied) {
-                                    shippingTotal += baseRate + (addRate * (qty - 1));
-                                    baseRateApplied = true;
-                                } else {
-                                    shippingTotal += addRate * qty;
-                                }
-                            }
-                        });
-                        
-                        // 3. Build the Itemized Array for PayPal
-                        const paypalItems = cart.map(item => {
-    const displayName = item.size ? `${item.title} (Size: ${item.size})` : item.title;
-    return {
-        name: displayName,
-        unit_amount: { currency_code: 'GBP', value: item.price.toFixed(2) },
-        quantity: (item.quantity || 1).toString()
-    };
-});
-                        
-                        // 4. Failsafe limit check
-                        const isWholesaleCheck = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
-                        if (isWholesaleCheck && itemsTotal < 75) { 
-                            alert("Minimum wholesale spend of £75 not met."); 
-                            return; 
-                        }
-
-                        let finalTotal = itemsTotal + shippingTotal;
-                        if (finalTotal === 0) { alert("Your cart is empty!"); return; }
-
-                        // 5. Send the detailed breakdown to PayPal
-                        return actions.order.create({
-                            purchase_units: [{ 
-                                amount: { 
-                                    currency_code: 'GBP', 
-                                    value: finalTotal.toFixed(2),
-                                    breakdown: {
-                                        item_total: {
-                                            currency_code: 'GBP',
-                                            value: itemsTotal.toFixed(2)
-                                        },
-                                        shipping: {
-                                            currency_code: 'GBP',
-                                            value: shippingTotal.toFixed(2)
-                                        }
-                                    }
-                                },
-                                items: paypalItems
-                            }],
-                            application_context: { shipping_preference: 'GET_FROM_FILE' }
-                        });
-                    },
-                    onApprove: function(data, actions) {
-                        return actions.order.capture().then(function(details) {
-
-                            // --- SAFETY NET FOR POST-TRANSACTION LOGIC ---
-                            try {
-                                // 1. Build a clean list of the purchased items for the email
-                                let orderBreakdown = "";
-cart.forEach(item => {
-    const displayName = item.size ? `${item.title} (Size: ${item.size})` : item.title;
-    const itemTotal = (item.price * (item.quantity || 1)).toFixed(2);
-    orderBreakdown += `${item.quantity || 1}x ${displayName} - £${itemTotal}\n`;
-});
-
-                                // 2. Prepare the variables to send to your EmailJS template
-                                const templateParams = {
-                                    to_name: details.payer.name.given_name,
-                                    to_email: details.payer.email_address,
-                                    order_details: orderBreakdown,
-                                    shipping_cost: document.getElementById('cart-shipping-cost').textContent,
-                                    total_paid: document.getElementById('cart-total').textContent.replace('Total: £', '')
-                                };
-
-                                // 3. Check if EmailJS loaded, then send
-                                if (typeof emailjs !== 'undefined') {
-                                    emailjs.send('service_zmm27cb', 'template_ld7uqbh', templateParams)
-                                        .then(function(response) {
-                                            console.log('Email sent successfully!', response.status, response.text);
-                                        }).catch(function(error) {
-                                            console.error('Email failed to send...', error);
-                                        });
-                                } else {
-                                    console.error('EmailJS library did not load in time.');
-                                }
-                            } catch (err) {
-                                // If anything in the email generation fails, it gets logged here quietly
-                                // without crashing the rest of the PayPal checkout!
-                                console.error('Non-critical error after capture:', err);
-                            }
-                            // --- END SAFETY NET ---
-
-                            // 4. ALWAYS show success pop-up to the customer
-                            alert('Payment successful! We have received your order, ' + details.payer.name.given_name + ', and an email confirmation will be sent to you shortly.');
-                            
-                            // 5. ALWAYS empty cart and update UI
-                            cart = []; 
-                            const currentKey = sessionStorage.getItem('wholesaleAuthenticated') === 'true' ? 'folkloreWholesaleCart' : 'folkloreCart';
-                            localStorage.setItem(currentKey, JSON.stringify(cart)); 
-                            updateCartUI(); 
-                            
-                            // 6. ALWAYS close the cart sidebar safely
-                            const sidebar = document.getElementById('cart-sidebar');
-                            const overlay = document.getElementById('cart-overlay');
-                            if(sidebar) sidebar.classList.remove('open'); 
-                            if(overlay) overlay.classList.remove('active');
-                        });
-                    },
-                    onError: function(err) { console.error('PayPal Checkout Error:', err); alert('There was an issue connecting to PayPal. Please try again.'); }
-                }).render('#paypal-button-container');
-            } catch (error) {
-                console.warn("PayPal SDK could not initialize. Please ensure a valid Client ID is set.", error);
-            }
-        });
+        // 7. Checkout Stub 
+        window.checkout = function() {
+            if(cart.length === 0) return;
+            alert('Proceeding to checkout...'); 
+        };
     </script>
-    <div id="stock-alert" class="stock-alert-overlay">
-    <div class="stock-alert-box">
-        <h2 style="margin-top: 0; color: var(--accent-red);">Stock Limit Reached</h2>
-        <p id="stock-alert-msg"></p>
-        <button class="stock-alert-btn" onclick="document.getElementById('stock-alert').style.display='none'">Understood</button>
-    </div>
-</div>
 </body>
 </html>
