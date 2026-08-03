@@ -35,55 +35,9 @@
             margin: 0;
             padding: 0;
             line-height: 1.6;
-        }
-
-        /* Wholesale Banner UI */
-        .wholesale-banner {
-            display: none;
-            background: #111111;
-            color: var(--accent-red);
-            text-align: center;
-            padding: 0.6rem 1rem;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 2005;
-            box-sizing: border-box;
-            font-family: var(--font-body);
-            font-weight: 300;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            border-bottom: 1px solid #222222;
-        }
-        
-        .wholesale-banner button {
-            background: transparent;
-            color: var(--text-light);
-            border: 1px solid #333333;
-            padding: 0.4rem 0.8rem;
-            cursor: pointer;
-            text-transform: uppercase;
-            font-size: 0.7rem;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-        }
-        
-        .wholesale-banner button:hover {
-            color: var(--accent-red);
-            border-color: var(--accent-red);
-        }
-
-        body.wholesale-active .wholesale-banner {
             display: flex;
-        }
-
-        body.wholesale-active header {
-            top: 44px; /* Adjusts the header position below the new banner height */
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         /* Fixed Header */
@@ -123,8 +77,51 @@
             .mobile-menu-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
         }
 
+        /* Main Wrapper & Wholesale Banner (Matching Wholesale Page) */
+        main { 
+            padding-top: 85px; 
+            flex-grow: 1; 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        .wholesale-banner { 
+            background: #222; 
+            color: var(--accent-red); 
+            border-bottom: 1px solid #333; 
+            text-align: center; 
+            padding: 0.8rem 2rem; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            font-size: 0.9rem; 
+            margin-bottom: 1rem; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 15px; 
+            flex-wrap: wrap; 
+        }
+        
+        .exit-wholesale-btn { 
+            background: transparent; 
+            color: #fff; 
+            border: 1px solid var(--accent-red); 
+            padding: 0.4rem 1rem; 
+            font-family: 'Lato', sans-serif; 
+            font-size: 0.8rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            cursor: pointer; 
+            border-radius: 3px; 
+            transition: all 0.3s ease; 
+        }
+        .exit-wholesale-btn:hover { 
+            background: var(--accent-red); 
+        }
+
         /* Shop Layout */
-        .container { max-width: 1200px; margin: 120px auto 40px; padding: 0 20px; }
+        .container { max-width: 1200px; margin: 20px auto 40px; padding: 0 20px; width: 100%; box-sizing: border-box; }
         
         .page-title {
             text-align: center;
@@ -312,12 +309,6 @@
 </head>
 <body>
 
-    <!-- Wholesale Active Banner -->
-    <div class="wholesale-banner" id="wholesale-banner">
-        <span>Minimum spend to allow the wholesale discount is £75.</span>
-        <button onclick="logoutWholesale()">Exit Wholesale</button>
-    </div>
-
     <header id="main-header">
         <div class="logo"><a href="index.html"><img src="./The-folklore-box-logo.png" alt="The Folklore Box Logo"></a></div>
         <div class="mobile-menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
@@ -343,12 +334,19 @@
         </nav>
     </header>
 
-    <div class="container">
-        <h1 class="page-title">The Folklore Box Shop</h1>
-        
-        <div class="filter-bar" id="filter-bar"></div>
-        <div class="shop-grid" id="shop-grid"></div>
-    </div>
+    <main>
+        <!-- Wholesale Banner matching wholesale.html exactly -->
+        <div class="wholesale-banner" id="wholesale-banner" style="display: none;">
+            <span>Minimum spend to allow the wholesale discount is £75.</span>
+            <button id="wholesale-logout-btn" class="exit-wholesale-btn">Exit Wholesale</button>
+        </div>
+
+        <div class="container">
+            <h1 class="page-title">The Folklore Box Shop</h1>
+            <div class="filter-bar" id="filter-bar"></div>
+            <div class="shop-grid" id="shop-grid"></div>
+        </div>
+    </main>
 
     <!-- Smart Cart Panel with PayPal Integration -->
     <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
@@ -378,45 +376,78 @@
     </div>
 
     <script>
-        // Track the current wholesale status using the unified keys
+        // Check wholesale state
         let isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
         let cartKey = isWholesale ? 'folkloreWholesaleCart' : 'folkloreCart';
         
-        // Add active class if logged in to display the banner, shift the header, and update the cart title
-        if (isWholesale) {
-            document.body.classList.add('wholesale-active');
-            const cartHeaderTitle = document.getElementById('cart-title');
-            if (cartHeaderTitle) cartHeaderTitle.textContent = 'Wholesale Cart';
-        }
+        const banner = document.getElementById('wholesale-banner');
+        const cartHeaderTitle = document.getElementById('cart-title');
 
-        // Handle logging out and retaining the items
-        window.logoutWholesale = function() {
-            // Restore items to retail prices and move them to the standard cart
-            if (cart.length > 0) {
-                cart.forEach(item => {
-                    const prod = products.find(p => p.id === item.id);
-                    if (prod) {
-                        item.price = prod.basePrice; // Reset to the retail price
+        if (isWholesale) {
+            if (banner) banner.style.display = 'flex';
+            if (cartHeaderTitle) cartHeaderTitle.textContent = 'Wholesale Cart';
+
+            // Auto-convert any retail cart items to wholesale if user navigated into shop while authenticated
+            let rCart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
+            if (rCart.length > 0) {
+                let wCart = JSON.parse(localStorage.getItem('folkloreWholesaleCart')) || [];
+                rCart.forEach(rItem => {
+                    let existingW = wCart.find(w => w.id === rItem.id);
+                    let discountedPrice = Math.round(rItem.price * 0.60 * 100) / 100;
+                    if (existingW) {
+                        existingW.quantity += (rItem.quantity || 1);
+                    } else {
+                        wCart.push({
+                            id: rItem.id,
+                            cartItemId: rItem.cartItemId || rItem.id,
+                            title: rItem.title,
+                            price: discountedPrice,
+                            postalClass: rItem.postalClass,
+                            size: rItem.size || null,
+                            quantity: rItem.quantity || 1
+                        });
                     }
                 });
-                localStorage.setItem('folkloreCart', JSON.stringify(cart));
+                localStorage.setItem('folkloreWholesaleCart', JSON.stringify(wCart));
+                localStorage.removeItem('folkloreCart');
             }
-            
-            // Delete the wholesale session and cart
-            localStorage.removeItem('folkloreWholesaleCart');
-            sessionStorage.removeItem('wholesaleAuthenticated');
-            
-            // Update the state variables
-            isWholesale = false;
-            cartKey = 'folkloreCart';
-            document.body.classList.remove('wholesale-active');
-            
-            const cartHeaderTitle = document.getElementById('cart-title');
-            if (cartHeaderTitle) cartHeaderTitle.textContent = 'Your Cart';
-            
-            renderGrid();
-            updateCartUI(); 
-        };
+        }
+
+        // Exit Wholesale logic matching wholesale.html
+        const logoutBtn = document.getElementById('wholesale-logout-btn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                let wCart = JSON.parse(localStorage.getItem('folkloreWholesaleCart')) || [];
+                let rCart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
+                
+                // Convert prices back to full retail upon exit
+                wCart.forEach(wItem => {
+                    let existingRItem = rCart.find(rItem => rItem.id === wItem.id);
+                    if (existingRItem) {
+                        existingRItem.quantity += (wItem.quantity || 1);
+                    } else {
+                        let retailPrice = Math.round((wItem.price / 0.60) * 100) / 100;
+                        rCart.push({
+                            id: wItem.id,
+                            cartItemId: wItem.cartItemId || wItem.id,
+                            title: wItem.title,
+                            price: retailPrice,
+                            postalClass: wItem.postalClass,
+                            size: wItem.size || null,
+                            quantity: wItem.quantity || 1
+                        });
+                    }
+                });
+
+                localStorage.setItem('folkloreCart', JSON.stringify(rCart));
+                localStorage.removeItem('folkloreWholesaleCart');
+                sessionStorage.removeItem('wholesaleAuthenticated');
+                
+                alert("You have exited Wholesale Mode. Returning to the standard retail shop.");
+                window.location.href = 'shop.html'; 
+            });
+        }
 
         const mobileToggle = document.getElementById('mobile-toggle');
         const navList = document.getElementById('nav-list');
@@ -444,7 +475,6 @@
         let filteredProducts = [];
         let availableCategories = new Set();
         
-        // Load the cart from the correct key based on login state
         let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
         fetch('products.txt?v=' + new Date().getTime(), { cache: 'no-store' })
@@ -512,7 +542,7 @@
             shopGrid.innerHTML = '';
             filteredProducts.forEach(product => {
                 
-                let displayPrice = isWholesale ? (product.basePrice * 0.6) : product.basePrice;
+                let displayPrice = isWholesale ? Math.round(product.basePrice * 0.60 * 100) / 100 : product.basePrice;
                 let priceHTML = isWholesale 
                     ? `<p><span class="original-price">£${product.basePrice.toFixed(2)}</span> £${displayPrice.toFixed(2)}</p>` 
                     : `<p>£${displayPrice.toFixed(2)}</p>`;
@@ -580,8 +610,7 @@
             if (existingItem) {
                 existingItem.quantity += 1;
             } else {
-                // Calculate and store the exact price depending on the login state 
-                let finalPrice = isWholesale ? (price * 0.6) : price;
+                let finalPrice = isWholesale ? Math.round(price * 0.60 * 100) / 100 : price;
                 cart.push({ id, cartItemId, title, price: finalPrice, postalClass, size, quantity: 1 });
             }
             
@@ -642,7 +671,6 @@
             } else {
                 paypalContainer.style.display = 'block';
                 cart.forEach((item, index) => {
-                    
                     totalItems += item.quantity;
                     subtotal += item.price * item.quantity;
                     const sizeLabel = item.size ? `<p class="cart-item-meta">Size: ${item.size}</p>` : '';
