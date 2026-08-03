@@ -233,7 +233,7 @@
         }
 
         @media (max-width: 600px) {
-            .shop-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
+            .shop-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; padding: 0 1.5rem 4rem; }
             .product-card { min-height: 380px; }
             .product-card a { padding: 1rem; }
             .product-image { margin-bottom: 1rem; }
@@ -294,7 +294,7 @@
                 <li><a href="uk-folklore-map.html">Folklore Map</a></li>
                 <li><a href="journal.html">Journal</a></li>
                 <li><a href="wholesale.html" class="active-page">Wholesale</a></li>
-                <li><a href="#" id="cart-toggle">Cart (0)</a></li>
+                <li><a href="#" id="cart-toggle">Cart (<span id="cart-count">0</span>)</a></li>
             </ul>
         </nav>
     </header>
@@ -451,9 +451,9 @@
                 
                 // AUTO-MERGE: Check if there are unassigned items sitting in the normal cart
                 // and securely transition them to the wholesale cart with the 40% discount.
-                let strayRetailCart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
+                let strayRetailCart = JSON.parse(sessionStorage.getItem('folkloreCart')) || [];
                 if (strayRetailCart.length > 0) {
-                    let wCart = JSON.parse(localStorage.getItem('folkloreWholesaleCart')) || [];
+                    let wCart = JSON.parse(sessionStorage.getItem('folkloreWholesaleCart')) || [];
                     
                     strayRetailCart.forEach(retailItem => {
                         let matchId = retailItem.id || retailItem.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
@@ -475,8 +475,8 @@
                         }
                     });
                     
-                    localStorage.setItem('folkloreWholesaleCart', JSON.stringify(wCart));
-                    localStorage.removeItem('folkloreCart');
+                    sessionStorage.setItem('folkloreWholesaleCart', JSON.stringify(wCart));
+                    sessionStorage.removeItem('folkloreCart');
                 }
             }
 
@@ -495,8 +495,8 @@
                 logoutBtn.addEventListener('click', (e) => {
                     e.preventDefault();
                     
-                    let wCart = JSON.parse(localStorage.getItem('folkloreWholesaleCart')) || [];
-                    let rCart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
+                    let wCart = JSON.parse(sessionStorage.getItem('folkloreWholesaleCart')) || [];
+                    let rCart = JSON.parse(sessionStorage.getItem('folkloreCart')) || [];
                     
                     // Securely merge back into retail cart and mathematically fix prices to standard
                     wCart.forEach(wItem => {
@@ -519,10 +519,10 @@
                     });
 
                     // Save retail cart back so items remain
-                    localStorage.setItem('folkloreCart', JSON.stringify(rCart));
+                    sessionStorage.setItem('folkloreCart', JSON.stringify(rCart));
                     
                     // OBLITERATE wholesale cart ONLY so ghost items NEVER resurrect upon next login
-                    localStorage.removeItem('folkloreWholesaleCart');
+                    sessionStorage.removeItem('folkloreWholesaleCart');
                     sessionStorage.removeItem('wholesaleAuthenticated');
                     
                     alert("You have exited Wholesale Mode. Returning to the standard retail shop.");
@@ -610,8 +610,8 @@
                         sessionStorage.setItem('wholesaleAuthenticated', 'true');
                         
                         // --- CART MERGER LOGIC (Handles active sessions merging in sizes correctly) ---
-                        let retailCart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
-                        let wholesaleCart = JSON.parse(localStorage.getItem('folkloreWholesaleCart')) || [];
+                        let retailCart = JSON.parse(sessionStorage.getItem('folkloreCart')) || [];
+                        let wholesaleCart = JSON.parse(sessionStorage.getItem('folkloreWholesaleCart')) || [];
                         
                         if (retailCart.length > 0) {
                             retailCart.forEach(retailItem => {
@@ -634,8 +634,8 @@
                                 }
                             });
                             
-                            localStorage.setItem('folkloreWholesaleCart', JSON.stringify(wholesaleCart));
-                            localStorage.removeItem('folkloreCart');
+                            sessionStorage.setItem('folkloreWholesaleCart', JSON.stringify(wholesaleCart));
+                            sessionStorage.removeItem('folkloreCart');
                             sessionStorage.setItem('openCartOnLoad', 'true');
                         }
                         
@@ -806,7 +806,7 @@
             // ==========================================
             // SLIDE-OUT CART LOGIC
             // ==========================================
-            let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+            let cart = JSON.parse(sessionStorage.getItem(cartKey)) || [];
             cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
 
             const cartSidebar = document.getElementById('cart-sidebar');
@@ -837,7 +837,7 @@
                     let finalPrice = isWholesale ? Math.round(price * 0.60 * 100) / 100 : price;
                     cart.push({ id, cartItemId, title, price: finalPrice, postalClass, size, quantity: 1 });
                 }
-                localStorage.setItem(cartKey, JSON.stringify(cart));
+                sessionStorage.setItem(cartKey, JSON.stringify(cart));
                 updateCartUI();
                 openCart();
             };
@@ -847,13 +847,13 @@
                 if (cart[index].quantity <= 0) {
                     cart.splice(index, 1);
                 }
-                localStorage.setItem(cartKey, JSON.stringify(cart));
+                sessionStorage.setItem(cartKey, JSON.stringify(cart));
                 updateCartUI();
             };
 
             window.removeFromCart = function(index) { 
                 cart.splice(index, 1); 
-                localStorage.setItem(cartKey, JSON.stringify(cart)); 
+                sessionStorage.setItem(cartKey, JSON.stringify(cart)); 
                 updateCartUI(); 
             };
 
@@ -1080,7 +1080,7 @@
                             // 5. ALWAYS empty cart and update UI
                             cart = []; 
                             const currentKey = sessionStorage.getItem('wholesaleAuthenticated') === 'true' ? 'folkloreWholesaleCart' : 'folkloreCart';
-                            localStorage.setItem(currentKey, JSON.stringify(cart)); 
+                            sessionStorage.setItem(currentKey, JSON.stringify(cart)); 
                             updateCartUI(); 
                             
                             // 6. ALWAYS close the cart sidebar safely
