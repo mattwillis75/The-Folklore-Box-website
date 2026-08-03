@@ -37,6 +37,53 @@
             line-height: 1.6;
         }
 
+        /* Wholesale Banner UI */
+        .wholesale-banner {
+            display: none;
+            background: var(--accent-red);
+            color: #fff;
+            text-align: center;
+            padding: 0.5rem 1rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 2005;
+            box-sizing: border-box;
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .wholesale-banner button {
+            background: transparent;
+            color: #fff;
+            border: 1px solid #fff;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+        }
+        
+        .wholesale-banner button:hover {
+            background: #fff;
+            color: var(--accent-red);
+        }
+
+        body.wholesale-active .wholesale-banner {
+            display: flex;
+        }
+
+        body.wholesale-active header {
+            top: 38px; /* Pushes the header down to make room for the banner */
+        }
+
         /* Fixed Header */
         header { position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 3rem; background: var(--header-bg); border-bottom: 1px solid var(--border-color); z-index: 2000; box-sizing: border-box; backdrop-filter: blur(8px); transition: all 0.3s ease; }
         .logo img { max-width: 180px; height: auto; }
@@ -94,7 +141,7 @@
             gap: 15px; 
             margin-bottom: 40px; 
             flex-wrap: wrap; 
-            justify-content: center; /* Centers the buttons */
+            justify-content: center;
         }
         
         .filter-btn { 
@@ -103,7 +150,7 @@
             border: 1px solid var(--border-color); 
             padding: 0.6rem 1.5rem; 
             cursor: pointer; 
-            border-radius: 3px; /* Slightly squared to match the add-to-cart buttons */
+            border-radius: 3px; 
             text-transform: uppercase;
             letter-spacing: 1.5px;
             font-size: 0.85rem;
@@ -121,7 +168,7 @@
         /* Restored 4-Column Grid */
         .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 30px; }
 
-      /* Product Cards */
+        /* Product Cards */
         .product-card { 
             background: #111; 
             border: 1px solid #333; 
@@ -202,6 +249,13 @@
             color: #ffffff; 
             font-weight: 300; 
         }
+
+        .original-price {
+            text-decoration: line-through;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-right: 8px;
+        }
         
         .add-cart-btn { 
             background: transparent; 
@@ -225,6 +279,7 @@
             color: #000000; 
             border-color: #ffffff;
         }
+        
         /* Smart Cart Side Panel */
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); backdrop-filter: blur(3px); z-index: 3000; opacity: 0; visibility: hidden; transition: opacity 0.3s; }
         .cart-panel { position: fixed; top: 0; right: -400px; width: 100%; max-width: 400px; height: 100vh; background: var(--secondary-bg); border-left: 1px solid var(--border-color); z-index: 3001; transition: right 0.3s ease; display: flex; flex-direction: column; }
@@ -257,6 +312,12 @@
 </head>
 <body>
 
+    <!-- Wholesale Active Banner -->
+    <div class="wholesale-banner" id="wholesale-banner">
+        <span>Wholesale Mode Active: 40% Discount Applied</span>
+        <button onclick="logoutWholesale()">Log Out</button>
+    </div>
+
     <header id="main-header">
         <div class="logo"><a href="index.html"><img src="./The-folklore-box-logo.png" alt="The Folklore Box Logo"></a></div>
         <div class="mobile-menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
@@ -283,7 +344,6 @@
     </header>
 
     <div class="container">
-        <!-- New Shop Title -->
         <h1 class="page-title">The Folklore Box Shop</h1>
         
         <div class="filter-bar" id="filter-bar"></div>
@@ -318,6 +378,23 @@
     </div>
 
     <script>
+        // Track the current wholesale status using sessionStorage
+        let isWholesale = sessionStorage.getItem('wholesaleAuth') === 'true';
+        
+        // Add active class if logged in to display the banner and shift the header
+        if (isWholesale) {
+            document.body.classList.add('wholesale-active');
+        }
+
+        // Handle logging out directly from the shop page
+        window.logoutWholesale = function() {
+            sessionStorage.removeItem('wholesaleAuth');
+            isWholesale = false;
+            document.body.classList.remove('wholesale-active');
+            renderGrid();
+            updateCartUI(); // Recalculates cart to normal prices
+        };
+
         const mobileToggle = document.getElementById('mobile-toggle');
         const navList = document.getElementById('nav-list');
         if (mobileToggle && navList) {
@@ -411,12 +488,20 @@
         function renderGrid() {
             shopGrid.innerHTML = '';
             filteredProducts.forEach(product => {
+                
+                // Dynamically calculate grid display price if wholesale is active
+                let displayPrice = isWholesale ? (product.basePrice * 0.6) : product.basePrice;
+                let priceHTML = isWholesale 
+                    ? `<p><span class="original-price">£${product.basePrice.toFixed(2)}</span> £${displayPrice.toFixed(2)}</p>` 
+                    : `<p>£${displayPrice.toFixed(2)}</p>`;
+
                 let actionButton = '';
                 if (product.sections && product.sections.toLowerCase().includes('t-shirts')) {
                     actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='product.html?id=${encodeURIComponent(product.id)}'">Add to Cart</button>`;
                 } else if (product.stock <= 0) {
                     actionButton = `<button class="add-cart-btn" disabled style="background:#222; color:#777; border-color:#333; cursor:not-allowed;">Out of Stock</button>`;
                 } else {
+                    // We explicitly pass the basePrice to the cart, letting the cart dynamically handle the discount
                     actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); addToSmartCart('${product.id}', '${product.title.replace(/'/g, "\\'")}', ${product.basePrice}, '${product.postalClass}', null)">Add to Cart</button>`;
                 }
 
@@ -428,7 +513,7 @@
                             </div>
                             <div class="product-details">
                                 <h3 class="product-title">${product.title}</h3>
-                                <div class="product-prices"><p>£${product.basePrice.toFixed(2)}</p></div>
+                                <div class="product-prices">${priceHTML}</div>
                                 ${actionButton}
                             </div>
                         </a>
@@ -474,6 +559,7 @@
             if (existingItem) {
                 existingItem.quantity += 1;
             } else {
+                // We save the retail 'price' parameter into localStorage regardless of wholesale state
                 cart.push({ id, cartItemId, title, price, postalClass, size, quantity: 1 });
             }
             
@@ -534,8 +620,12 @@
             } else {
                 paypalContainer.style.display = 'block';
                 cart.forEach((item, index) => {
+                    
+                    // The cart reads the base price from memory and converts to wholesale dynamically if needed
+                    let currentPrice = isWholesale ? (item.price * 0.6) : item.price;
+                    
                     totalItems += item.quantity;
-                    subtotal += item.price * item.quantity;
+                    subtotal += currentPrice * item.quantity;
                     const sizeLabel = item.size ? `<p class="cart-item-meta">Size: ${item.size}</p>` : '';
                     
                     cartContainer.innerHTML += `
@@ -543,7 +633,7 @@
                             <div class="cart-item-details">
                                 <h4 class="cart-item-title">${item.title}</h4>
                                 ${sizeLabel}
-                                <p class="cart-item-meta">£${item.price.toFixed(2)}</p>
+                                <p class="cart-item-meta">£${currentPrice.toFixed(2)}</p>
                             </div>
                             <div class="cart-qty-controls">
                                 <button class="qty-btn" onclick="updateQuantity(${index}, -1)">-</button>
@@ -575,11 +665,14 @@
             createOrder: function(data, actions) {
                 let total = 0;
                 let itemArray = cart.map(item => {
-                    let itemTotal = item.price * item.quantity;
+                    // Ensure the exact same dynamic price is fed into PayPal
+                    let currentPrice = isWholesale ? (item.price * 0.6) : item.price;
+                    let itemTotal = currentPrice * item.quantity;
+                    
                     total += itemTotal;
                     return {
                         name: item.title + (item.size ? ` (${item.size})` : ''),
-                        unit_amount: { currency_code: 'GBP', value: item.price.toFixed(2) },
+                        unit_amount: { currency_code: 'GBP', value: currentPrice.toFixed(2) },
                         quantity: item.quantity.toString()
                     };
                 });
