@@ -167,17 +167,17 @@
         
         .paypal-disabled { pointer-events: none; opacity: 0.4; filter: grayscale(100%); }
 
-        footer { background: #000000; color: #ffffff; padding: 4rem 2rem; text-align: center; border-top: 1px solid #222; margin-top: auto; }
-        footer a { color: #ffffff; text-decoration: none; margin: 0 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
-        footer a:hover { color: var(--accent-red); }
-        .social-links { margin-bottom: 2rem; }
-
         /* Custom Stock Alert Modal */
         .stock-alert-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.8); z-index: 4000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
         .stock-alert-box { background: #0a0a0a; border: 1px solid var(--accent-red); padding: 2.5rem; border-radius: 4px; max-width: 400px; width: 90%; text-align: center; color: #fff; box-shadow: 0 10px 30px rgba(204,0,0,0.15); }
         .stock-alert-box p { margin-bottom: 2rem; font-size: 1.1rem; }
         .stock-alert-btn { background: var(--accent-red); color: #fff; border: none; padding: 1rem 2rem; text-transform: uppercase; font-weight: 300; letter-spacing: 1px; cursor: pointer; border-radius: 3px; transition: background 0.3s ease; width: 100%; font-family: 'Lato', sans-serif; }
         .stock-alert-btn:hover { background: #e60000; }
+
+        footer { background: #000000; color: #ffffff; padding: 4rem 2rem; text-align: center; border-top: 1px solid #222; margin-top: auto; }
+        footer a { color: #ffffff; text-decoration: none; margin: 0 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
+        footer a:hover { color: var(--accent-red); }
+        .social-links { margin-bottom: 2rem; }
 
         /* --- Request Form Modal Styles --- */
         .request-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); z-index: 3000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
@@ -252,7 +252,7 @@
     <main class="fade-in">
         <div class="wholesale-banner" id="wholesale-banner" style="display: none;">
             <span>Minimum spend to allow the wholesale discount is £75.</span>
-            <button id="wholesale-logout-btn" class="exit-wholesale-btn">Exit Wholesale</button>
+            <button id="wholesale-logout-btn" class="exit-wholesale-btn" style="display: none;">Exit Wholesale</button>
         </div>
 
         <div class="shop-header">
@@ -403,10 +403,16 @@
             const logoutBtn = document.getElementById('wholesale-logout-btn');
 
             if (logoutBtn) {
+                if (isWholesale) {
+                    logoutBtn.style.display = 'inline-block'; 
+                } else {
+                    logoutBtn.style.display = 'none';
+                }
+                
                 logoutBtn.addEventListener('click', (e) => {
                     e.preventDefault();
                     
-                    // Wipe carts entirely so no ghosts remain
+                    // Wipes EVERYTHING from sessionStorage when logging out
                     sessionStorage.removeItem('folkloreWholesaleCart');
                     sessionStorage.removeItem('folkloreCart');
                     sessionStorage.removeItem('wholesaleAuthenticated');
@@ -794,12 +800,12 @@
                 let cartItemCount = 0;
                 
                 if (cart.length === 0) {
-                    container.innerHTML = `<p style="color: #777; font-style: italic;">Your ${isWholesale ? 'wholesale ' : ''}cart is currently empty.</p>`;
+                    container.innerHTML = '<p style="color: #777; font-style: italic;">Your wholesale cart is currently empty.</p>';
                     document.getElementById('cart-subtotal').textContent = `£0.00`;
                     document.getElementById('cart-shipping-cost').textContent = `£0.00`;
                     document.getElementById('cart-total').textContent = `Total: £0.00`;
                     document.getElementById('cart-toggle').textContent = `Cart (0)`;
-                    cartWarning.style.display = 'none';
+                    cartWarning.style.display = 'block';
                     paypalContainer.classList.add('paypal-disabled');
                     return;
                 }
@@ -863,18 +869,13 @@
                 document.getElementById('cart-total').textContent = `Total: £${finalTotal.toFixed(2)}`;
                 document.getElementById('cart-toggle').textContent = `Cart (${cartItemCount})`;
 
-                // Validation for Wholesale Minimum Spend (£75) applied only if user is logged in
-                if (isWholesale) {
-                    if (itemsTotal >= 75) {
-                        cartWarning.style.display = 'none';
-                        paypalContainer.classList.remove('paypal-disabled');
-                    } else {
-                        cartWarning.style.display = 'block';
-                        paypalContainer.classList.add('paypal-disabled');
-                    }
-                } else {
+                // Validation for Wholesale Minimum Spend (£75)
+                if (itemsTotal >= 75) {
                     cartWarning.style.display = 'none';
                     paypalContainer.classList.remove('paypal-disabled');
+                } else {
+                    cartWarning.style.display = 'block';
+                    paypalContainer.classList.add('paypal-disabled');
                 }
             }
 
@@ -950,7 +951,8 @@
                         });
                         
                         // 4. Failsafe limit check
-                        if (isWholesale && itemsTotal < 75) { 
+                        const isWholesaleCheck = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
+                        if (isWholesaleCheck && itemsTotal < 75) { 
                             alert("Minimum wholesale spend of £75 not met."); 
                             return; 
                         }
@@ -1017,7 +1019,8 @@
                             
                             // 5. ALWAYS empty cart and update UI
                             cart = []; 
-                            sessionStorage.setItem(cartKey, JSON.stringify(cart)); 
+                            const currentKey = sessionStorage.getItem('wholesaleAuthenticated') === 'true' ? 'folkloreWholesaleCart' : 'folkloreCart';
+                            sessionStorage.setItem(currentKey, JSON.stringify(cart)); 
                             updateCartUI(); 
                             
                             // 6. ALWAYS close the cart sidebar safely
