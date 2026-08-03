@@ -533,7 +533,7 @@
                 });
             }
 
-            // --- Smart Cart Detection Logic ---
+           // --- Smart Cart Detection Logic ---
             const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
             const cartKey = isWholesale ? 'folkloreWholesaleCart' : 'folkloreCart';
             
@@ -542,7 +542,8 @@
                 if (cartHeaderTitle) cartHeaderTitle.textContent = 'Wholesale Cart';
             }
 
-            let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+            // CRUCIAL FIX: Changed from localStorage to sessionStorage
+            let cart = JSON.parse(sessionStorage.getItem(cartKey)) || [];
             cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
             
             const cartSidebar = document.getElementById('cart-sidebar');
@@ -552,37 +553,39 @@
             const cartItemsContainer = document.getElementById('cart-items');
             const cartTotalElement = document.getElementById('cart-total');
 
-            const openCart = () => { cartSidebar.classList.add('open'); cartOverlay.classList.add('active'); };
-            const closeCartSidebar = () => { cartSidebar.classList.remove('open'); cartOverlay.classList.remove('active'); };
+            const openCart = () => { if(cartSidebar) cartSidebar.classList.add('open'); if(cartOverlay) cartOverlay.classList.add('active'); };
+            const closeCartSidebar = () => { if(cartSidebar) cartSidebar.classList.remove('open'); if(cartOverlay) cartOverlay.classList.remove('active'); };
 
-            cartToggle.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
-            closeCartBtn.addEventListener('click', closeCartSidebar);
-            cartOverlay.addEventListener('click', closeCartSidebar);
+            if(cartToggle) cartToggle.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
+            if(closeCartBtn) closeCartBtn.addEventListener('click', closeCartSidebar);
+            if(cartOverlay) cartOverlay.addEventListener('click', closeCartSidebar);
 
             window.updateQuantity = function(index, delta) {
                 cart[index].quantity += delta;
                 if (cart[index].quantity <= 0) {
                     cart.splice(index, 1);
                 }
-                localStorage.setItem(cartKey, JSON.stringify(cart));
+                sessionStorage.setItem(cartKey, JSON.stringify(cart));
                 updateCartUI();
             };
 
             window.removeFromCart = function(index) { 
                 cart.splice(index, 1); 
-                localStorage.setItem(cartKey, JSON.stringify(cart)); 
+                sessionStorage.setItem(cartKey, JSON.stringify(cart)); 
                 updateCartUI(); 
             };
 
             const updateCartUI = () => {
+                if(!cartItemsContainer) return;
+                
                 cartItemsContainer.innerHTML = '';
                 let itemsTotal = 0;
                 let cartItemCount = 0;
                 
                 if (cart.length === 0) {
                     cartItemsContainer.innerHTML = `<p style="color: #777; font-style: italic;">Your ${isWholesale ? 'wholesale ' : ''}cart is currently empty.</p>`;
-                    cartTotalElement.textContent = 'Total: £0.00';
-                    cartToggle.textContent = 'Cart (0)';
+                    if(cartTotalElement) cartTotalElement.textContent = 'Total: £0.00';
+                    if(cartToggle) cartToggle.textContent = 'Cart (0)';
                     return;
                 }
 
@@ -609,14 +612,14 @@
                     `;
                 });
 
-                cartTotalElement.textContent = `Total: £${itemsTotal.toFixed(2)}`;
-                cartToggle.textContent = `Cart (${cartItemCount})`;
+                if(cartTotalElement) cartTotalElement.textContent = `Total: £${itemsTotal.toFixed(2)}`;
+                if(cartToggle) cartToggle.textContent = `Cart (${cartItemCount})`;
             };
 
             window.addEventListener('pageshow', (event) => {
                 if (event.persisted) {
                     const currentKey = typeof cartKey !== 'undefined' ? cartKey : 'folkloreCart';
-                    cart = JSON.parse(localStorage.getItem(currentKey)) || [];
+                    cart = JSON.parse(sessionStorage.getItem(currentKey)) || [];
                     cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
                     updateCartUI();
                 }
