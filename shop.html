@@ -7,46 +7,21 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;600&family=Spectral:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;600&family=Spectral:wght@400&display=swap" rel="stylesheet">
     
-    <!-- PayPal SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id=BAAyFEECFHCgIYSVAcx3GUqT0FI1rHhhU_mwYJxRf6ngeAPN3zYdx3W4a1tCIEHivTFLxU7oFEeDD1NIIs&currency=GBP&locale=en_GB"></script>
-
     <style>
         /* Base Colors & Typography */
-        :root {
-            --bg-color: #000000;
-            --secondary-bg: #0a0a0a;
-            --border-color: #333333;
-            --text-light: #ffffff;
-            --text-muted: #aaaaaa;
-            --accent-red: #cc0000;
-            --font-headings: 'Spectral', serif;
-            --font-body: 'Lato', sans-serif;
-            --transition-speed: 0.3s;
-            --header-bg: rgba(0, 0, 0, 0.85);
-        }
-
-        body {
-            font-family: var(--font-body);
-            font-weight: 300;
-            background-color: var(--bg-color);
-            color: var(--text-light);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
+        :root { --bg-color: #000000; --text-color: #ffffff; --accent-red: #cc0000; --header-bg: rgba(0, 0, 0, 0.85); }
+        body { font-family: 'Lato', sans-serif; font-weight: 300; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 0; line-height: 1.6; overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; background-image: radial-gradient(circle at top, #1a1a1a 0%, #000000 100%); background-attachment: fixed; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Spectral', serif; font-weight: 400; color: #ffffff; }
 
         /* Fixed Header */
-        header { position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 3rem; background: var(--header-bg); border-bottom: 1px solid var(--border-color); z-index: 2000; box-sizing: border-box; backdrop-filter: blur(8px); transition: all 0.3s ease; }
+        header { position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 3rem; background: var(--header-bg); border-bottom: 1px solid #333333; z-index: 2000; box-sizing: border-box; backdrop-filter: blur(8px); transition: all 0.3s ease; }
         .logo img { max-width: 180px; height: auto; }
 
         /* Navigation */
         nav ul { list-style: none; display: flex; align-items: center; gap: 2rem; margin: 0; padding: 0; }
-        nav a { text-decoration: none; color: #ffffff; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; transition: color 0.3s ease; font-family: var(--font-body); white-space: nowrap; }
+        nav a { text-decoration: none; color: #ffffff; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; transition: color 0.3s ease; font-family: 'Lato', sans-serif; white-space: nowrap; }
         nav a:hover { color: var(--accent-red); }
         .active-page { color: var(--accent-red) !important; }
         #cart-toggle { color: var(--accent-red); border: 1px solid var(--accent-red); padding: 0.5rem 1rem; border-radius: 3px; }
@@ -54,7 +29,7 @@
 
         /* Dropdown */
         .dropdown { position: relative; display: inline-block; }
-        .dropdown-content { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background-color: var(--accent-red); min-width: 180px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5); z-index: 1001; border-radius: 4px; flex-direction: column; margin-top: 1.5rem; padding: 0.5rem 0; }
+        .dropdown-content { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background-color: var(--accent-red); min-width: 180px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5); z-index: 2001; border-radius: 4px; flex-direction: column; margin-top: 1.5rem; padding: 0.5rem 0; }
         .dropdown-content::before { content: ""; position: absolute; top: -1.5rem; left: 0; width: 100%; height: 1.5rem; }
         .dropdown:hover .dropdown-content { display: flex; }
         .dropdown-content a { padding: 10px 16px; display: block; color: #ffffff; text-align: center; }
@@ -62,9 +37,8 @@
         .dropdown-divider { height: 1px; background-color: #ffffff; margin: 0 15px; }
 
         /* Mobile Menu */
-        .mobile-menu-toggle { display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1005; }
+        .mobile-menu-toggle { display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 2005; }
         .mobile-menu-toggle span { width: 25px; height: 3px; background-color: #ffffff; transition: all 0.3s ease; border-radius: 3px; }
-        
         @media (max-width: 1100px) {
             .mobile-menu-toggle { display: flex; }
             nav ul { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background-color: rgba(0, 0, 0, 0.95); padding: 1rem 0; border-bottom: 1px solid #333; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
@@ -77,13 +51,8 @@
             .mobile-menu-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
         }
 
-        /* Main Wrapper & Wholesale Banner (Matching Wholesale Page) */
-        main { 
-            padding-top: 85px; 
-            flex-grow: 1; 
-            display: flex; 
-            flex-direction: column; 
-        }
+        /* Wholesale Banner & Shop Layout */
+        main { padding-top: 85px; flex-grow: 1; display: flex; flex-direction: column; }
         
         .wholesale-banner { 
             background: #222; 
@@ -120,192 +89,85 @@
             background: var(--accent-red); 
         }
 
-        /* Shop Layout */
-        .container { max-width: 1200px; margin: 20px auto 40px; padding: 0 20px; width: 100%; box-sizing: border-box; }
-        
-        .page-title {
-            text-align: center;
-            font-family: var(--font-headings);
-            font-size: 2.8rem;
-            font-weight: 400;
-            margin-bottom: 2.5rem;
-            color: var(--text-light);
-            letter-spacing: 1px;
-        }
+        /* Grid & Filters */
+        .shop-header { text-align: center; padding: 1rem 2rem; }
+        .shop-header h1 { font-size: 3rem; margin-bottom: 0.5rem; margin-top: 0; }
+        .shop-header p { color: #888; font-style: italic; margin-top: 0; }
 
-        /* Filter Bar & Buttons */
-        .filter-bar { 
-            display: flex; 
-            gap: 15px; 
-            margin-bottom: 40px; 
-            flex-wrap: wrap; 
-            justify-content: center;
-        }
-        
-        .filter-btn { 
-            background: transparent; 
-            color: var(--text-light); 
-            border: 1px solid var(--border-color); 
-            padding: 0.6rem 1.5rem; 
-            cursor: pointer; 
-            border-radius: 3px; 
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-size: 0.85rem;
-            transition: all var(--transition-speed); 
-            font-family: var(--font-body); 
-            font-weight: 600;
-        }
-        
-        .filter-btn.active, .filter-btn:hover { 
-            border-color: var(--accent-red); 
-            background: var(--accent-red);
-            color: var(--text-light); 
-        }
+        .shop-filters { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; padding: 0 2rem 2rem; max-width: 1000px; margin: 0 auto; }
+        .filter-btn { background: transparent; color: #fff; border: 1px solid #444; padding: 0.6rem 1.5rem; border-radius: 30px; font-family: 'Lato', sans-serif; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: all 0.3s ease; }
+        .filter-btn:hover { border-color: var(--accent-red); }
+        .filter-btn.active { background: var(--accent-red); border-color: var(--accent-red); color: #fff; }
 
-        .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 30px; }
+        .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2.5rem; padding: 0 5% 5rem; max-width: 1400px; margin: 0 auto; }
+        @media (max-width: 600px) { .shop-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); padding: 0 1.5rem 4rem; gap: 1rem; } }
 
-        /* Product Cards */
-        .product-card { 
-            background: #111; 
-            border: 1px solid #333; 
-            border-radius: 4px; 
-            transition: border-color 0.3s ease, transform 0.3s ease; 
-            cursor: pointer; 
-            position: relative;
-            display: flex; 
-            flex-direction: column; 
-            height: 520px;
-        }
+        .product-card { background: #111; border: 1px solid #333; border-radius: 4px; transition: border-color 0.3s ease, transform 0.3s ease; cursor: pointer; position: relative; display: flex; flex-direction: column; }
+        .product-card:hover { border-color: var(--accent-red); transform: translateY(-5px); }
+        .product-card a { text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%; padding: 1.5rem; box-sizing: border-box; }
+        .product-image { width: 100%; aspect-ratio: 1 / 1; background: #0a0a0a; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .product-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+        .product-card:hover .product-image img { transform: scale(1.05); }
+        .product-details { display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; text-align: center; }
+        .product-title { font-family: 'Spectral', serif; font-size: 1.4rem; margin: 0 0 0.5rem 0; line-height: 1.3; }
+        .product-prices { font-family: 'Lato', sans-serif; color: #999; margin-bottom: 1.5rem; }
+        .product-prices p { margin: 0; font-size: 1.1rem; color: var(--accent-red); font-weight: 600; }
         
-        .product-card:hover { 
-            border-color: var(--accent-red); 
-            transform: translateY(-5px); 
-        }
-        
-        .product-card a { 
-            text-decoration: none; 
-            color: inherit; 
-            display: flex; 
-            flex-direction: column; 
-            height: 100%; 
-            padding: 1.5rem; 
-            box-sizing: border-box; 
-        }
-        
-        .product-image { 
-            width: 100%; 
-            aspect-ratio: 1 / 1; 
-            background: #0a0a0a; 
-            margin-bottom: 1.5rem; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            overflow: hidden; 
-            flex-shrink: 0; 
-        }
-        
-        .product-image img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            transition: transform 0.4s ease; 
-        }
-        
-        .product-card:hover .product-image img { 
-            transform: scale(1.05); 
-        }
-        
-        .product-details { 
-            display: flex; 
-            flex-direction: column; 
-            flex-grow: 1; 
-            text-align: left; 
-        }
-        
-        .product-title { 
-            font-family: 'Spectral', serif; 
-            font-size: 1.6rem; 
-            font-weight: 600; 
-            margin: 0 0 auto 0; 
-            line-height: 1.3; 
-            display: -webkit-box;
-            -webkit-line-clamp: 2; 
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        
-        .product-prices { 
-            font-family: 'Lato', sans-serif; 
-            margin-bottom: 1.2rem; 
-        }
-        
-        .product-prices p { 
-            margin: 0; 
-            font-size: 1.2rem; 
-            color: #ffffff; 
-            font-weight: 300; 
-        }
+        .add-cart-btn { background: transparent; color: #fff; border: 1px solid #fff; padding: 0.8rem; font-family: 'Lato', sans-serif; text-transform: uppercase; font-weight: bold; font-size: 0.8rem; letter-spacing: 2px; cursor: pointer; transition: background 0.3s ease, border-color 0.3s ease; margin-top: auto; width: 100%; box-sizing: border-box; }
+        .add-cart-btn:hover { background: var(--accent-red); border-color: var(--accent-red); }
 
-        .original-price {
-            text-decoration: line-through;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-right: 8px;
-        }
+        /* Slide-Out Cart */
+        .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 2001; display: none; backdrop-filter: blur(3px); }
+        .cart-overlay.active { display: block; }
+        .cart-sidebar { position: fixed; top: 0; right: -500px; width: 500px; max-width: 100vw; height: 100vh; background: #0a0a0a; border-left: 1px solid #222; z-index: 2002; transition: right 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); padding: 2rem; box-sizing: border-box; display: flex; flex-direction: column; overflow-y: auto; }
+        .cart-sidebar.open { right: 0; }
+        .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 1rem; margin-bottom: 1.5rem; flex-shrink: 0; }
+        .cart-header h2 { margin: 0; font-size: 2rem; }
+        .close-cart { font-size: 2.5rem; cursor: pointer; color: #fff; line-height: 1; transition: color 0.3s; }
+        .close-cart:hover { color: var(--accent-red); }
+        .cart-items-container { flex-grow: 1; margin-bottom: 1rem; padding-right: 0.5rem; overflow-y: visible; }
         
-        .add-cart-btn { 
-            background: transparent; 
-            color: #fff; 
-            border: 1px solid #fff; 
-            padding: 0.8rem; 
-            font-family: 'Lato', sans-serif; 
-            text-transform: uppercase; 
-            font-weight: bold; 
-            font-size: 0.85rem; 
-            letter-spacing: 2px; 
-            cursor: pointer; 
-            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease; 
-            width: 100%; 
-            box-sizing: border-box; 
-            margin-top: 0; 
-        }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid #222; gap: 0.8rem; }
+        .cart-item-title { flex-grow: 1; font-weight: 600; font-size: 0.95rem; line-height: 1.3; }
         
-        .add-cart-btn:hover { 
-            background: #ffffff; 
-            color: #000000; 
-            border-color: #ffffff;
-        }
+        .cart-qty-controls { display: flex; align-items: center; gap: 0.5rem; background: #111; padding: 0.2rem 0.5rem; border-radius: 3px; border: 1px solid #333; }
+        .cart-qty-controls button { background: none; border: none; color: #fff; cursor: pointer; font-size: 1.2rem; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
+        .cart-qty-controls button:hover { color: var(--accent-red); }
         
-        /* Smart Cart Side Panel */
-        .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); backdrop-filter: blur(3px); z-index: 3000; opacity: 0; visibility: hidden; transition: opacity 0.3s; }
-        .cart-panel { position: fixed; top: 0; right: -400px; width: 100%; max-width: 400px; height: 100vh; background: var(--secondary-bg); border-left: 1px solid var(--border-color); z-index: 3001; transition: right 0.3s ease; display: flex; flex-direction: column; }
-        .cart-overlay.active { opacity: 1; visibility: visible; }
-        .cart-panel.active { right: 0; }
-        .cart-header { padding: 20px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
-        .cart-header h2 { margin: 0; font-family: var(--font-headings); font-weight: 400; }
-        .close-cart-btn { background: none; border: none; color: var(--text-light); font-size: 1.5rem; cursor: pointer; }
-        .cart-items-container { flex-grow: 1; padding: 20px; overflow-y: auto; }
+        .cart-item-total { font-weight: bold; min-width: 60px; text-align: right; }
         
-        .cart-item { display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); gap: 10px; }
-        .cart-item-details { flex-grow: 1; }
-        .cart-item-title { margin: 0 0 5px 0; font-weight: 600; }
-        .cart-item-meta { font-size: 0.85rem; color: var(--text-muted); margin: 0 0 5px 0; }
-        .cart-qty-controls { display: flex; align-items: center; gap: 10px; }
-        .qty-btn { background: #222; border: none; color: #fff; width: 25px; height: 25px; cursor: pointer; border-radius: 3px; }
-        .remove-btn { background: none; border: none; color: #888; cursor: pointer; font-size: 1.5rem; padding: 0 0 0 0.5rem; transition: color 0.2s; }
+        .remove-btn { background: none; border: none; color: #666; cursor: pointer; font-size: 1.5rem; padding: 0 0 0 0.5rem; transition: color 0.2s; }
         .remove-btn:hover { color: var(--accent-red); }
-
-        .cart-footer { padding: 20px; border-top: 1px solid var(--border-color); background: var(--bg-color); }
-        .cart-total-row { display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 600; margin-bottom: 20px; }
         
-        /* Custom Stock Alert Modal */
-        .stock-alert-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.8); z-index: 4000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
-        .stock-alert-box { background: #0a0a0a; border: 1px solid var(--accent-red); padding: 2.5rem; border-radius: 4px; max-width: 400px; width: 90%; text-align: center; color: #fff; box-shadow: 0 10px 30px rgba(204,0,0,0.15); }
-        .stock-alert-box p { margin-bottom: 2rem; font-size: 1.1rem; }
-        .stock-alert-btn { background: var(--accent-red); color: #fff; border: none; padding: 1rem 2rem; text-transform: uppercase; font-weight: 300; letter-spacing: 1px; cursor: pointer; border-radius: 3px; transition: background 0.3s ease; width: 100%; font-family: var(--font-body); }
-        .stock-alert-btn:hover { background: #e60000; }
+        .cart-footer { border-top: 1px solid #333; padding-top: 1.5rem; flex-shrink: 0; }
+        .cart-shipping-selector { margin-bottom: 1rem; border-bottom: 1px solid #222; padding-bottom: 1rem; }
+        .cart-shipping-selector label { display: block; color: #aaa; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
+        .cart-shipping-selector select { width: 100%; padding: 0.8rem; background: #111; color: #fff; border: 1px solid #333; border-radius: 3px; cursor: pointer; }
+        .cart-breakdown { margin-bottom: 1rem; color: #aaa; font-size: 1.1rem; }
+        .cart-row { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
+        .cart-total { font-size: 1.8rem; text-align: right; margin-bottom: 1.5rem; font-family: 'Spectral', serif; color: var(--accent-red); border-top: 1px solid #333; padding-top: 1rem; }
+
+        .cart-warning { background: rgba(204, 0, 0, 0.1); border: 1px solid var(--accent-red); color: var(--accent-red); font-weight: bold; text-align: center; padding: 1rem; border-radius: 4px; margin-bottom: 1.5rem; font-size: 0.9rem; line-height: 1.4; display: none; }
+        
+        .paypal-disabled { pointer-events: none; opacity: 0.4; filter: grayscale(100%); }
+
+        footer { background: #000000; color: #ffffff; padding: 4rem 2rem; text-align: center; border-top: 1px solid #222; margin-top: auto; }
+        footer a { color: #ffffff; text-decoration: none; margin: 0 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
+        footer a:hover { color: var(--accent-red); }
+        .social-links { margin-bottom: 2rem; }
+        
+        .fade-in { animation: fadeIn 1.5s ease-in forwards; }
+        @keyframes fadeIn { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
     </style>
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+       (function(){
+          emailjs.init({
+            publicKey: "qI6ltlwzFXECV29P8",
+          });
+       })();
+    </script>
 </head>
 <body>
 
@@ -329,424 +191,574 @@
                 <li><a href="uk-folklore-map.html">Folklore Map</a></li>
                 <li><a href="journal.html">Journal</a></li>
                 <li><a href="wholesale.html">Wholesale</a></li>
-                <li><a href="#" id="cart-toggle" onclick="openCart(); return false;">Cart (<span id="cart-count">0</span>)</a></li>
+                <li><a href="#" id="cart-toggle">Cart (0)</a></li>
             </ul>
         </nav>
     </header>
 
-    <main>
-        <!-- Wholesale Banner matching wholesale.html exactly -->
+    <main class="fade-in">
         <div class="wholesale-banner" id="wholesale-banner" style="display: none;">
             <span>Minimum spend to allow the wholesale discount is £75.</span>
             <button id="wholesale-logout-btn" class="exit-wholesale-btn">Exit Wholesale</button>
         </div>
 
-        <div class="container">
-            <h1 class="page-title">The Folklore Box Shop</h1>
-            <div class="filter-bar" id="filter-bar"></div>
-            <div class="shop-grid" id="shop-grid"></div>
+        <div class="shop-header">
+            <h1>The Folklore Box Shop</h1>
+            <p>Original illustration, wooden wares & apparel.</p>
         </div>
+        <div class="shop-filters" id="shop-filters"></div>
+        <section class="shop-grid" id="shop-grid">
+            <p style="color: #888; text-align: center; grid-column: 1 / -1;">Loading catalogue...</p>
+        </section>
     </main>
 
-    <!-- Smart Cart Panel with PayPal Integration -->
-    <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
-    <div class="cart-panel" id="cart-panel">
-        <div class="cart-header">
-            <h2 id="cart-title">Your Cart</h2>
-            <button class="close-cart-btn" onclick="closeCart()">&times;</button>
-        </div>
+    <div class="cart-overlay" id="cart-overlay"></div>
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header"><h2 id="cart-title">Your Cart</h2><span class="close-cart" id="close-cart">&times;</span></div>
         <div class="cart-items-container" id="cart-items"></div>
         <div class="cart-footer">
-            <div class="cart-total-row">
-                <span>Subtotal</span>
-                <span id="cart-subtotal">£0.00</span>
+            
+            <div class="cart-warning" id="cart-warning">
+                Minimum wholesale spend is £75.00 before postage and packing is added. Add more items to unlock checkout.
             </div>
-            <!-- PayPal Button Target -->
-            <div id="paypal-button-container" style="margin-top: 15px;"></div>
+
+            <div class="cart-shipping-selector">
+                <label for="cart-destination">Deliver to:</label>
+                <select id="cart-destination">
+                    <option value="uk">United Kingdom</option>
+                    <option value="int">International</option>
+                </select>
+            </div>
+            <div class="cart-breakdown">
+                <div class="cart-row"><span>Items:</span><span id="cart-subtotal">£0.00</span></div>
+                <div class="cart-row"><span>Postage:</span><span id="cart-shipping-cost">£0.00</span></div>
+            </div>
+            <div class="cart-total" id="cart-total">Total: £0.00</div>
+            
+            <!-- PayPal Button Container -->
+            <div id="paypal-button-container"></div>
         </div>
     </div>
 
-    <!-- Custom Stock Alert Modal -->
-    <div id="stock-alert" class="stock-alert-overlay">
-        <div class="stock-alert-box">
-            <h2 style="margin-top: 0; color: var(--accent-red);">Stock Limit Reached</h2>
-            <p id="stock-alert-msg"></p>
-            <button class="stock-alert-btn" onclick="document.getElementById('stock-alert').style.display='none'">Understood</button>
+    <footer>
+        <div class="social-links">
+            <a href="https://instagram.com/the_folklore_box" target="_blank">Instagram: @the_folklore_box</a> | 
+            <a href="https://facebook.com/thefolklorebox" target="_blank">Facebook: @thefolklorebox</a>
         </div>
-    </div>
+        <div style="margin-bottom: 2rem;">
+            <a href="shop.html">Shop</a>
+            <a href="wholesale.html">Wholesale Enquiries</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <p style="font-size: 0.8rem; color: #555; font-family: 'Lato', sans-serif;">&copy; 2026 The Folklore Box by Matt Willis. All rights reserved.</p>
+    </footer>
+
+    <!-- DON'T FORGET YOUR CLIENT ID HERE -->
+    <script src="https://www.paypal.com/sdk/js?client-id=BAAyFEECFHCgIYSVAcx3GUqT0FI1rHhhU_mwYJxRf6ngeAPN3zYdx3W4a1tCIEHivTFLxU7oFEeDD1NIIs&currency=GBP&locale=en_GB"></script>
 
     <script>
-        // Check wholesale state
-        let isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
-        let cartKey = isWholesale ? 'folkloreWholesaleCart' : 'folkloreCart';
-        
-        const banner = document.getElementById('wholesale-banner');
-        const cartHeaderTitle = document.getElementById('cart-title');
+        document.addEventListener("DOMContentLoaded", async () => {
+            
+            // ==========================================
+            // UI SCRIPTS: Header, Nav, and Cart Logic
+            // ==========================================
 
-        if (isWholesale) {
-            if (banner) banner.style.display = 'flex';
-            if (cartHeaderTitle) cartHeaderTitle.textContent = 'Wholesale Cart';
-
-            // Auto-convert any retail cart items to wholesale if user navigated into shop while authenticated
-            let rCart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
-            if (rCart.length > 0) {
-                let wCart = JSON.parse(localStorage.getItem('folkloreWholesaleCart')) || [];
-                rCart.forEach(rItem => {
-                    let existingW = wCart.find(w => w.id === rItem.id);
-                    let discountedPrice = Math.round(rItem.price * 0.60 * 100) / 100;
-                    if (existingW) {
-                        existingW.quantity += (rItem.quantity || 1);
+            const header = document.getElementById('main-header');
+            if (header) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 50) {
+                        header.style.boxShadow = '0 2px 20px rgba(255, 0, 0, 0.1)';
+                        header.style.borderBottom = '1px solid var(--accent-red)';
                     } else {
-                        wCart.push({
-                            id: rItem.id,
-                            cartItemId: rItem.cartItemId || rItem.id,
-                            title: rItem.title,
-                            price: discountedPrice,
-                            postalClass: rItem.postalClass,
-                            size: rItem.size || null,
-                            quantity: rItem.quantity || 1
-                        });
+                        header.style.boxShadow = 'none';
+                        header.style.borderBottom = '1px solid #333333';
                     }
                 });
-                localStorage.setItem('folkloreWholesaleCart', JSON.stringify(wCart));
-                localStorage.removeItem('folkloreCart');
             }
-        }
 
-        // Exit Wholesale logic matching wholesale.html
-        const logoutBtn = document.getElementById('wholesale-logout-btn');
-        if (logoutBtn) {
-            logoutBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                let wCart = JSON.parse(localStorage.getItem('folkloreWholesaleCart')) || [];
-                let rCart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
-                
-                // Convert prices back to full retail upon exit
-                wCart.forEach(wItem => {
-                    let existingRItem = rCart.find(rItem => rItem.id === wItem.id);
-                    if (existingRItem) {
-                        existingRItem.quantity += (wItem.quantity || 1);
-                    } else {
-                        let retailPrice = Math.round((wItem.price / 0.60) * 100) / 100;
-                        rCart.push({
-                            id: wItem.id,
-                            cartItemId: wItem.cartItemId || wItem.id,
-                            title: wItem.title,
-                            price: retailPrice,
-                            postalClass: wItem.postalClass,
-                            size: wItem.size || null,
-                            quantity: wItem.quantity || 1
-                        });
-                    }
+            const mobileToggle = document.getElementById('mobile-toggle');
+            const navList = document.getElementById('nav-list');
+            if (mobileToggle && navList) {
+                mobileToggle.addEventListener('click', () => { 
+                    navList.classList.toggle('mobile-active'); 
+                    mobileToggle.classList.toggle('open');
                 });
-
-                localStorage.setItem('folkloreCart', JSON.stringify(rCart));
-                localStorage.removeItem('folkloreWholesaleCart');
-                sessionStorage.removeItem('wholesaleAuthenticated');
-                
-                alert("You have exited Wholesale Mode. Returning to the standard retail shop.");
-                window.location.href = 'shop.html'; 
-            });
-        }
-
-        const mobileToggle = document.getElementById('mobile-toggle');
-        const navList = document.getElementById('nav-list');
-        if (mobileToggle && navList) {
-            mobileToggle.addEventListener('click', () => {
-                navList.classList.toggle('mobile-active');
-                mobileToggle.classList.toggle('open');
-            });
-        }
-
-        const header = document.getElementById('main-header');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.style.boxShadow = '0 2px 20px rgba(255, 0, 0, 0.1)';
-                header.style.borderBottom = '1px solid var(--accent-red)';
-            } else {
-                header.style.boxShadow = 'none';
-                header.style.borderBottom = '1px solid #333333';
             }
-        });
 
-        const shopGrid = document.getElementById('shop-grid');
-        const filterBar = document.getElementById('filter-bar');
-        let products = [];
-        let filteredProducts = [];
-        let availableCategories = new Set();
-        
-        let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+            // --- Determine Active Mode ---
+            const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
+            const cartKey = isWholesale ? 'folkloreWholesaleCart' : 'folkloreCart';
+            
+            if (isWholesale) {
+                document.getElementById('wholesale-banner').style.display = 'flex';
+                const cartHeaderTitle = document.getElementById('cart-title');
+                if (cartHeaderTitle) cartHeaderTitle.textContent = 'Wholesale Cart';
+            }
 
-        fetch('products.txt?v=' + new Date().getTime(), { cache: 'no-store' })
-            .then(response => response.text())
-            .then(text => {
-                const blocks = text.split(/---\r?\n/);
-                blocks.forEach(block => {
-                    if (block.trim() === '') return;
-                    const lines = block.split('\n');
+            // ==========================================
+            // WHOLESALE LOGOUT LOGIC
+            // ==========================================
+            const logoutBtn = document.getElementById('wholesale-logout-btn');
+
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
                     
-                    let product = { 
-                        basePrice: 0, sections: '', 
-                        stock: 10, stockS: 10, stockM: 10, stockL: 10, stockXL: 10, stockXXL: 10 
-                    }; 
+                    let wCart = JSON.parse(localStorage.getItem('folkloreWholesaleCart')) || [];
+                    let rCart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
                     
-                    lines.forEach(line => {
-                        const colonIdx = line.indexOf(':');
-                        if (colonIdx > -1) {
-                            const key = line.substring(0, colonIdx).trim().toLowerCase();
-                            const value = line.substring(colonIdx + 1).trim();
-                            if (key === 'title') product.title = value;
-                            else if (key === 'main image') product.mainImage = value;
-                            else if (key === 'sections') {
-                                product.sections = value;
-                                value.split(',').forEach(sec => {
-                                    if(sec.trim()) availableCategories.add(sec.trim());
-                                });
-                            }
-                            else if (key === 'postal class') product.postalClass = value;
-                            else if (key === 'item cost') product.basePrice = parseFloat(value.replace(/[^0-9.]/g, '')) || 0;
-                            
-                            else if (key === 'stock') product.stock = isNaN(parseInt(value)) ? 10 : parseInt(value);
-                            else if (key === 'stock s') product.stockS = isNaN(parseInt(value)) ? 10 : parseInt(value);
-                            else if (key === 'stock m') product.stockM = isNaN(parseInt(value)) ? 10 : parseInt(value);
-                            else if (key === 'stock l') product.stockL = isNaN(parseInt(value)) ? 10 : parseInt(value);
-                            else if (key === 'stock xl') product.stockXL = isNaN(parseInt(value)) ? 10 : parseInt(value);
-                            else if (key === 'stock xxl') product.stockXXL = isNaN(parseInt(value)) ? 10 : parseInt(value);
+                    // Convert prices back to full retail upon exit
+                    wCart.forEach(wItem => {
+                        let existingRItem = rCart.find(rItem => rItem.id === wItem.id);
+                        if (existingRItem) {
+                            existingRItem.quantity += (wItem.quantity || 1);
+                        } else {
+                            let retailPrice = Math.round((wItem.price / 0.60) * 100) / 100;
+                            rCart.push({
+                                id: wItem.id,
+                                title: wItem.title,
+                                price: retailPrice,
+                                postalClass: wItem.postalClass,
+                                quantity: wItem.quantity || 1
+                            });
                         }
                     });
 
-                    if (product.title) {
-                        product.id = product.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
-                        products.push(product);
-                    }
+                    localStorage.setItem('folkloreCart', JSON.stringify(rCart));
+                    localStorage.removeItem('folkloreWholesaleCart');
+                    sessionStorage.removeItem('wholesaleAuthenticated');
+                    
+                    alert("You have exited Wholesale Mode. Returning to the standard retail shop.");
+                    window.location.reload(); 
                 });
-                
-                filteredProducts = [...products];
-                buildFilters();
-                renderGrid();
-                updateCartUI();
-            })
-            .catch(err => {
-                console.error("Error loading products:", err);
-                shopGrid.innerHTML = "<p>Unable to load shop inventory at this time.</p>";
-            });
-
-        function buildFilters() {
-            filterBar.innerHTML = `<button class="filter-btn active" onclick="filterCategory('All')">All Items</button>`;
-            Array.from(availableCategories).sort().forEach(category => {
-                filterBar.innerHTML += `<button class="filter-btn" onclick="filterCategory('${category.replace(/'/g, "\\'")}')">${category}</button>`;
-            });
-        }
-
-        function renderGrid() {
-            shopGrid.innerHTML = '';
-            filteredProducts.forEach(product => {
-                
-                let displayPrice = isWholesale ? Math.round(product.basePrice * 0.60 * 100) / 100 : product.basePrice;
-                let priceHTML = isWholesale 
-                    ? `<p><span class="original-price">£${product.basePrice.toFixed(2)}</span> £${displayPrice.toFixed(2)}</p>` 
-                    : `<p>£${displayPrice.toFixed(2)}</p>`;
-
-                let actionButton = '';
-                if (product.sections && product.sections.toLowerCase().includes('t-shirts')) {
-                    actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='product.html?id=${encodeURIComponent(product.id)}'">Add to Cart</button>`;
-                } else if (product.stock <= 0) {
-                    actionButton = `<button class="add-cart-btn" disabled style="background:#222; color:#777; border-color:#333; cursor:not-allowed;">Out of Stock</button>`;
-                } else {
-                    actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); addToSmartCart('${product.id}', '${product.title.replace(/'/g, "\\'")}', ${product.basePrice}, '${product.postalClass}', null)">Add to Cart</button>`;
-                }
-
-                shopGrid.innerHTML += `
-                    <div class="product-card">
-                        <a href="product.html?id=${encodeURIComponent(product.id)}">
-                            <div class="product-image">
-                                <img src="${product.mainImage || 'placeholder.jpg'}" alt="${product.title.replace(/"/g, '&quot;')}">
-                            </div>
-                            <div class="product-details">
-                                <h3 class="product-title">${product.title}</h3>
-                                <div class="product-prices">${priceHTML}</div>
-                                ${actionButton}
-                            </div>
-                        </a>
-                    </div>
-                `;
-            });
-        }
-
-        window.filterCategory = function(category) {
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-
-            if (category === 'All') {
-                filteredProducts = [...products];
-            } else {
-                filteredProducts = products.filter(p => p.sections && p.sections.split(',').map(s=>s.trim()).includes(category));
             }
-            renderGrid();
-        };
 
-        window.addToSmartCart = function(id, title, price, postalClass, size = null) {
-            const productData = products.find(p => p.id === id);
-            let maxStock = 10;
-            if (productData) {
-                if (size === 'S') maxStock = productData.stockS;
-                else if (size === 'M') maxStock = productData.stockM;
-                else if (size === 'L') maxStock = productData.stockL;
-                else if (size === 'XL') maxStock = productData.stockXL;
-                else if (size === 'XXL') maxStock = productData.stockXXL;
-                else maxStock = productData.stock;
+            // ==========================================
+            // FETCH AND BUILD CATALOGUE 
+            // ==========================================
+            const shopGrid = document.getElementById('shop-grid');
+            const filtersContainer = document.getElementById('shop-filters');
+            let products = [];
+            let uniqueSections = new Set(); 
+            let postalRates = {};
+
+            async function initializeProducts() {
+                try {
+                    const postalResponse = await fetch('postal.txt', { cache: 'no-store' });
+                    const postalText = await postalResponse.text();
+                    postalText.split('---').forEach(block => {
+                        if(!block.trim()) return;
+                        let currentClass = "";
+                        let rates = {};
+                        block.trim().split('\n').forEach(line => {
+                            const sepIndex = line.indexOf(':');
+                            if(sepIndex > -1) {
+                                const key = line.slice(0, sepIndex).trim().toLowerCase();
+                                const value = line.slice(sepIndex + 1).trim();
+                                if(key === 'class') currentClass = value;
+                                else if(key === 'uk base') rates.ukBase = parseFloat(value);
+                                else if(key === 'uk additional') rates.ukAdd = parseFloat(value);
+                                else if(key === 'int base') rates.intBase = parseFloat(value);
+                                else if(key === 'int additional') rates.intAdd = parseFloat(value);
+                            }
+                        });
+                        if(currentClass) postalRates[currentClass] = rates;
+                    });
+                } catch(e) { console.error("Could not load postal rates."); }
+
+                try {
+                    const response = await fetch('products.txt', { cache: 'no-store' });
+                    if (!response.ok) throw new Error("Could not find products.txt");
+                    
+                    const text = await response.text();
+                    const rawItems = text.split('---');
+
+                    rawItems.forEach(rawItem => {
+                        if (rawItem.trim() === '') return;
+                        
+                        const lines = rawItem.trim().split('\n');
+                        let product = { sections: [] };
+                        
+                        lines.forEach(line => {
+                            const sepIndex = line.indexOf(':');
+                            if (sepIndex > -1) {
+                                const key = line.slice(0, sepIndex).trim().toLowerCase();
+                                const value = line.slice(sepIndex + 1).trim();
+                                
+                                if (key === 'title') {
+                                    product.title = value;
+                                    product.id = value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+                                }
+                                else if (key === 'main image' || key === 'image') product.mainImage = value;
+                                else if (key === 'sections') product.sections = value.split(',').map(s => s.trim());
+                                else if (key === 'postal class') product.postalClass = value;
+                                
+                                // Parse retail base price (unlike the wholesale page which immediately converts)
+                                else if (key === 'item cost') product.basePrice = parseFloat(value.replace(/[^0-9.]/g, '')) || 0; 
+                            }
+                        });
+                        
+                        if (product.title) {
+                            products.push(product);
+                            product.sections.forEach(section => uniqueSections.add(section));
+                        }
+                    });
+
+                    if (uniqueSections.size > 0) {
+                        let filterHTML = `<button class="filter-btn active" data-filter="All">All Goods</button>`;
+                        Array.from(uniqueSections).sort().forEach(sec => {
+                            filterHTML += `<button class="filter-btn" data-filter="${sec}">${sec}</button>`;
+                        });
+                        filtersContainer.innerHTML = filterHTML;
+
+                        document.querySelectorAll('.filter-btn').forEach(btn => {
+                            btn.addEventListener('click', (e) => {
+                                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                                e.target.classList.add('active');
+                                renderGrid(e.target.dataset.filter);
+                            });
+                        });
+                    }
+
+                    renderGrid('All');
+
+                } catch (error) {
+                    shopGrid.innerHTML = '<p style="color: #cc0000; grid-column: 1 / -1; text-align: center;">Error loading products database.</p>';
+                }
             }
             
-            const cartItemId = size ? `${id}-${size}` : id;
-            let existingItem = cart.find(item => (item.cartItemId || item.id) === cartItemId);
-            let currentQty = existingItem ? existingItem.quantity : 0;
+            function renderGrid(filterValue) {
+                shopGrid.innerHTML = '';
+                const filteredProducts = filterValue === 'All' ? products : products.filter(p => p.sections.includes(filterValue));
 
-            if (currentQty + 1 > maxStock) {
-                document.getElementById('stock-alert-msg').textContent = `Apologies. We only have ${maxStock} of this item in stock.`;
-                document.getElementById('stock-alert').style.display = 'flex';
-                return; 
-            }
-
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                let finalPrice = isWholesale ? Math.round(price * 0.60 * 100) / 100 : price;
-                cart.push({ id, cartItemId, title, price: finalPrice, postalClass, size, quantity: 1 });
-            }
-            
-            saveAndRefreshCart();
-            openCart();
-        };
-
-        window.updateQuantity = function(index, delta) {
-            if (delta > 0) {
-                const item = cart[index];
-                const productData = products.find(p => p.id === item.id);
-                let maxStock = 10;
-                if (productData) {
-                    if (item.size === 'S') maxStock = productData.stockS;
-                    else if (item.size === 'M') maxStock = productData.stockM;
-                    else if (item.size === 'L') maxStock = productData.stockL;
-                    else if (item.size === 'XL') maxStock = productData.stockXL;
-                    else if (item.size === 'XXL') maxStock = productData.stockXXL;
-                    else maxStock = productData.stock;
-                }
-                if (item.quantity + delta > maxStock) {
-                    document.getElementById('stock-alert-msg').textContent = `Apologies. We only have ${maxStock} of this item in stock.`;
-                    document.getElementById('stock-alert').style.display = 'flex';
+                if (filteredProducts.length === 0) {
+                    shopGrid.innerHTML = '<p style="color: #fff; grid-column: 1 / -1; text-align: center;">No products found in this section.</p>';
                     return;
                 }
-            }
 
-            cart[index].quantity += delta;
-            if (cart[index].quantity <= 0) {
-                cart.splice(index, 1);
-            }
-            saveAndRefreshCart();
-        };
-
-        window.removeFromCart = function(index) {
-            cart.splice(index, 1);
-            saveAndRefreshCart();
-        };
-
-        function saveAndRefreshCart() {
-            localStorage.setItem(cartKey, JSON.stringify(cart));
-            updateCartUI();
-        }
-
-        function updateCartUI() {
-            const cartContainer = document.getElementById('cart-items');
-            const cartCountLabel = document.getElementById('cart-count');
-            const cartSubtotalLabel = document.getElementById('cart-subtotal');
-            const paypalContainer = document.getElementById('paypal-button-container');
-            
-            cartContainer.innerHTML = '';
-            let totalItems = 0;
-            let subtotal = 0;
-
-            if (cart.length === 0) {
-                cartContainer.innerHTML = '<p style="color:var(--text-muted); text-align:center; margin-top:40px;">Your cart is empty.</p>';
-                paypalContainer.style.display = 'none';
-            } else {
-                paypalContainer.style.display = 'block';
-                cart.forEach((item, index) => {
-                    totalItems += item.quantity;
-                    subtotal += item.price * item.quantity;
-                    const sizeLabel = item.size ? `<p class="cart-item-meta">Size: ${item.size}</p>` : '';
+                filteredProducts.forEach(product => {
                     
-                    cartContainer.innerHTML += `
-                        <div class="cart-item">
-                            <div class="cart-item-details">
-                                <h4 class="cart-item-title">${item.title}</h4>
-                                ${sizeLabel}
-                                <p class="cart-item-meta">£${item.price.toFixed(2)}</p>
-                            </div>
-                            <div class="cart-qty-controls">
-                                <button class="qty-btn" onclick="updateQuantity(${index}, -1)">-</button>
-                                <span>${item.quantity}</span>
-                                <button class="qty-btn" onclick="updateQuantity(${index}, 1)">+</button>
-                            </div>
-                            <button class="remove-btn" onclick="removeFromCart(${index})" title="Remove item">&times;</button>
+                    // Display wholesale price dynamically if user is logged in
+                    let displayPrice = isWholesale ? (product.basePrice * 0.60) : product.basePrice;
+
+                    let actionButton = '';
+                    if (product.sections.some(s => s.toLowerCase() === 't-shirts')) {
+                        actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='product.html?id=${encodeURIComponent(product.id)}'">Add to Cart</button>`;
+                    } else if (product.stock <= 0) {
+                        actionButton = `<button class="add-cart-btn" disabled style="background:#222; color:#777; border-color:#333; cursor:not-allowed;">Out of Stock</button>`;
+                    } else {
+                        // Pass the RETAIL base price, the script will handle the discount when adding to cart
+                        actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); addToCart('${product.id}', '${product.title.replace(/'/g, "\\'")}', ${product.basePrice}, '${product.postalClass}')">Add to Cart</button>`;
+                    }
+
+                    shopGrid.innerHTML += `
+                        <div class="product-card">
+                            <a href="product.html?id=${encodeURIComponent(product.id)}">
+                                <div class="product-image">
+                                    <img src="${product.mainImage || 'placeholder.jpg'}" alt="${product.title.replace(/"/g, '&quot;')}">
+                                </div>
+                                <div class="product-details">
+                                    <h3 class="product-title">${product.title}</h3>
+                                    <div class="product-prices"><p>£${displayPrice.toFixed(2)}</p></div>
+                                    ${actionButton}
+                                </div>
+                            </a>
                         </div>
                     `;
                 });
             }
 
-            if (cartCountLabel) cartCountLabel.innerText = totalItems;
-            if (cartSubtotalLabel) cartSubtotalLabel.innerText = `£${subtotal.toFixed(2)}`;
-        }
+            initializeProducts();
 
-        window.openCart = function() {
-            document.getElementById('cart-overlay').classList.add('active');
-            document.getElementById('cart-panel').classList.add('active');
-        };
+            // ==========================================
+            // SLIDE-OUT CART LOGIC
+            // ==========================================
+            let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+            cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
 
-        window.closeCart = function() {
-            document.getElementById('cart-overlay').classList.remove('active');
-            document.getElementById('cart-panel').classList.remove('active');
-        };
+            const cartSidebar = document.getElementById('cart-sidebar');
+            const cartOverlay = document.getElementById('cart-overlay');
+            const cartToggle = document.getElementById('cart-toggle');
+            const closeCartBtn = document.getElementById('close-cart');
+            const cartItemsContainer = document.getElementById('cart-items');
+            const destSelect = document.getElementById('cart-destination');
+            const cartWarning = document.getElementById('cart-warning');
+            const paypalContainer = document.getElementById('paypal-button-container');
 
-        // PayPal SDK Logic
-        paypal.Buttons({
-            createOrder: function(data, actions) {
-                let total = 0;
-                let itemArray = cart.map(item => {
-                    let itemTotal = item.price * item.quantity;
-                    total += itemTotal;
-                    return {
-                        name: item.title + (item.size ? ` (${item.size})` : ''),
-                        unit_amount: { currency_code: 'GBP', value: item.price.toFixed(2) },
-                        quantity: item.quantity.toString()
-                    };
-                });
+            const openCart = () => { cartSidebar.classList.add('open'); cartOverlay.classList.add('active'); };
+            const closeCart = () => { cartSidebar.classList.remove('open'); cartOverlay.classList.remove('active'); };
+
+            if (cartToggle) cartToggle.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
+            if (closeCartBtn) closeCartBtn.addEventListener('click', closeCart);
+            if (cartOverlay) cartOverlay.addEventListener('click', closeCart);
+            if (destSelect) destSelect.addEventListener('change', updateCartUI);
+
+            window.addToCart = function(id, title, price, postalClass) {
+                let existingItem = cart.find(item => item.id === id);
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    // Lock in the 40% discount if the user is authenticated in Wholesale mode
+                    let finalPrice = isWholesale ? (price * 0.60) : price;
+                    cart.push({ id, title, price: finalPrice, postalClass, quantity: 1 });
+                }
+                localStorage.setItem(cartKey, JSON.stringify(cart));
+                updateCartUI();
+                openCart();
+            };
+
+            window.updateQuantity = function(index, delta) {
+                cart[index].quantity += delta;
+                if (cart[index].quantity <= 0) {
+                    cart.splice(index, 1);
+                }
+                localStorage.setItem(cartKey, JSON.stringify(cart));
+                updateCartUI();
+            };
+
+            window.removeFromCart = function(index) { 
+                cart.splice(index, 1); 
+                localStorage.setItem(cartKey, JSON.stringify(cart)); 
+                updateCartUI(); 
+            };
+
+            function updateCartUI() {
+                const container = document.getElementById('cart-items');
+                container.innerHTML = '';
+                let itemsTotal = 0; let shippingTotal = 0; let finalTotal = 0;
+                let cartItemCount = 0;
                 
-                return actions.order.create({
-                    purchase_units: [{
-                        amount: {
-                            currency_code: 'GBP',
-                            value: total.toFixed(2),
-                            breakdown: {
-                                item_total: { currency_code: 'GBP', value: total.toFixed(2) }
-                            }
-                        },
-                        items: itemArray
-                    }]
-                });
-            },
-            onApprove: function(data, actions) {
-                return actions.order.capture().then(function(details) {
-                    alert('Transaction completed successfully! Thank you for your order, ' + details.payer.name.given_name + '.');
-                    cart = [];
-                    saveAndRefreshCart();
-                    closeCart();
-                });
-            },
-            onError: function (err) {
-                console.error("PayPal Checkout Error:", err);
-            }
-        }).render('#paypal-button-container');
+                if (cart.length === 0) {
+                    container.innerHTML = `<p style="color: #777; font-style: italic;">Your ${isWholesale ? 'wholesale ' : ''}cart is currently empty.</p>`;
+                    document.getElementById('cart-subtotal').textContent = `£0.00`;
+                    document.getElementById('cart-shipping-cost').textContent = `£0.00`;
+                    document.getElementById('cart-total').textContent = `Total: £0.00`;
+                    document.getElementById('cart-toggle').textContent = `Cart (0)`;
+                    cartWarning.style.display = 'none';
+                    paypalContainer.classList.add('paypal-disabled');
+                    return;
+                }
 
+                const dest = destSelect.value;
+                let maxBase = 0; let maxBaseItem = null;
+
+                // Render items
+                cart.forEach((item, index) => {
+                    const qty = item.quantity || 1;
+                    const itemTotalCost = item.price * qty;
+                    itemsTotal += itemTotalCost;
+                    cartItemCount += qty;
+
+                    container.innerHTML += `
+                        <div class="cart-item">
+                            <div class="cart-item-title">
+                                ${item.title} <br>
+                                <span style="font-size:0.8rem; color:#888; font-weight:normal;">£${item.price.toFixed(2)} each</span>
+                            </div>
+                            <div class="cart-qty-controls">
+                                <button onclick="updateQuantity(${index}, -1)">-</button>
+                                <span>${qty}</span>
+                                <button onclick="updateQuantity(${index}, 1)">+</button>
+                            </div>
+                            <div class="cart-item-total">£${itemTotalCost.toFixed(2)}</div>
+                            <button class="remove-btn" onclick="removeFromCart(${index})" title="Remove item">&times;</button>
+                        </div>
+                    `;
+                    
+                    const rates = postalRates[item.postalClass];
+                    if(rates) {
+                        const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                        if(baseRate > maxBase) { maxBase = baseRate; maxBaseItem = item; }
+                    }
+                });
+
+                // Calculate shipping
+                let baseRateApplied = false;
+                cart.forEach((item) => {
+                    const rates = postalRates[item.postalClass];
+                    if(rates) {
+                        const qty = item.quantity || 1;
+                        const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                        const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
+
+                        if (item === maxBaseItem && !baseRateApplied) {
+                            shippingTotal += baseRate + (addRate * (qty - 1));
+                            baseRateApplied = true;
+                        } else {
+                            shippingTotal += addRate * qty;
+                        }
+                    }
+                });
+
+                finalTotal = itemsTotal + shippingTotal;
+
+                document.getElementById('cart-subtotal').textContent = `£${itemsTotal.toFixed(2)}`;
+                document.getElementById('cart-shipping-cost').textContent = `£${shippingTotal.toFixed(2)}`;
+                document.getElementById('cart-total').textContent = `Total: £${finalTotal.toFixed(2)}`;
+                document.getElementById('cart-toggle').textContent = `Cart (${cartItemCount})`;
+
+                // Validation for Wholesale Minimum Spend (£75) applied only if user is logged in
+                if (isWholesale) {
+                    if (itemsTotal >= 75) {
+                        cartWarning.style.display = 'none';
+                        paypalContainer.classList.remove('paypal-disabled');
+                    } else {
+                        cartWarning.style.display = 'block';
+                        paypalContainer.classList.add('paypal-disabled');
+                    }
+                } else {
+                    cartWarning.style.display = 'none';
+                    paypalContainer.classList.remove('paypal-disabled');
+                }
+            }
+
+            // --- BROWSER BACK BUTTON FIX ---
+            window.addEventListener('pageshow', (event) => {
+                if (event.persisted) {
+                    cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+                    cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
+                    updateCartUI();
+                }
+            });
+
+            // Auto-open cart check
+            if (sessionStorage.getItem('openCartOnLoad') === 'true') {
+                sessionStorage.removeItem('openCartOnLoad');
+                openCart();
+            }
+            updateCartUI();
+
+            // ==========================================
+            // PAYPAL INITIALIZATION
+            // ==========================================
+            try {
+                paypal.Buttons({
+                    style: { color: 'gold', shape: 'rect', label: 'checkout', layout: 'vertical' },
+                    
+                    onClick: function() {
+                        setTimeout(() => {
+                            const sidebar = document.getElementById('cart-sidebar');
+                            sidebar.scrollTo({ top: sidebar.scrollHeight, behavior: 'smooth' });
+                        }, 600);
+                    },
+
+                    createOrder: function(data, actions) {
+                        let itemsTotal = 0; let shippingTotal = 0; let maxBase = 0; let maxBaseItem = null;
+                        const dest = destSelect.value;
+                        
+                        // 1. Calculate items and find heaviest shipping base
+                        cart.forEach(item => {
+                            const qty = item.quantity || 1;
+                            itemsTotal += item.price * qty;
+                            const rates = postalRates[item.postalClass];
+                            if(rates) {
+                                const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                                if(baseRate > maxBase) { maxBase = baseRate; maxBaseItem = item; }
+                            }
+                        });
+
+                        // 2. Calculate accurate grouped shipping
+                        let baseRateApplied = false;
+                        cart.forEach(item => {
+                            const rates = postalRates[item.postalClass];
+                            if(rates) {
+                                const qty = item.quantity || 1;
+                                const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                                const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
+                                if (item === maxBaseItem && !baseRateApplied) {
+                                    shippingTotal += baseRate + (addRate * (qty - 1));
+                                    baseRateApplied = true;
+                                } else {
+                                    shippingTotal += addRate * qty;
+                                }
+                            }
+                        });
+                        
+                        // 3. Build the Itemized Array for PayPal
+                        const paypalItems = cart.map(item => {
+                            return {
+                                name: item.title,
+                                unit_amount: { currency_code: 'GBP', value: item.price.toFixed(2) },
+                                quantity: (item.quantity || 1).toString()
+                            };
+                        });
+                        
+                        // 4. Failsafe limit check
+                        if (isWholesale && itemsTotal < 75) { 
+                            alert("Minimum wholesale spend of £75 not met."); 
+                            return; 
+                        }
+
+                        let finalTotal = itemsTotal + shippingTotal;
+                        if (finalTotal === 0) { alert("Your cart is empty!"); return; }
+
+                        // 5. Send the detailed breakdown to PayPal
+                        return actions.order.create({
+                            purchase_units: [{ 
+                                amount: { 
+                                    currency_code: 'GBP', 
+                                    value: finalTotal.toFixed(2),
+                                    breakdown: {
+                                        item_total: { currency_code: 'GBP', value: itemsTotal.toFixed(2) },
+                                        shipping: { currency_code: 'GBP', value: shippingTotal.toFixed(2) }
+                                    }
+                                },
+                                items: paypalItems
+                            }],
+                            application_context: { shipping_preference: 'GET_FROM_FILE' }
+                        });
+                    },
+                    onApprove: function(data, actions) {
+                        return actions.order.capture().then(function(details) {
+                            
+                            // EmailJS Confirmation Trigger
+                            try {
+                                let orderBreakdown = "";
+                                cart.forEach(item => {
+                                    const itemTotal = (item.price * (item.quantity || 1)).toFixed(2);
+                                    orderBreakdown += `${item.quantity || 1}x ${item.title} - £${itemTotal}\n`;
+                                });
+
+                                const templateParams = {
+                                    to_name: details.payer.name.given_name,
+                                    to_email: details.payer.email_address,
+                                    order_details: orderBreakdown,
+                                    shipping_cost: document.getElementById('cart-shipping-cost').textContent,
+                                    total_paid: document.getElementById('cart-total').textContent.replace('Total: £', '')
+                                };
+
+                                if (typeof emailjs !== 'undefined') {
+                                    emailjs.send('service_zmm27cb', 'template_ld7uqbh', templateParams)
+                                        .then(function(response) {
+                                            console.log('Email sent successfully!', response.status, response.text);
+                                        }).catch(function(error) {
+                                            console.error('Email failed to send...', error);
+                                        });
+                                } else {
+                                    console.error('EmailJS library did not load in time.');
+                                }
+                            } catch (err) {
+                                console.error('Non-critical error after capture:', err);
+                            }
+
+                            alert('Payment successful! We have received your order, ' + details.payer.name.given_name + ', and an email confirmation will be sent to you shortly.');
+                            
+                            cart = []; 
+                            localStorage.setItem(cartKey, JSON.stringify(cart)); 
+                            updateCartUI(); 
+                            
+                            const sidebar = document.getElementById('cart-sidebar');
+                            const overlay = document.getElementById('cart-overlay');
+                            if(sidebar) sidebar.classList.remove('open'); 
+                            if(overlay) overlay.classList.remove('active');
+                        });
+                    },
+                    onError: function(err) { console.error('PayPal Checkout Error:', err); alert('There was an issue connecting to PayPal. Please try again.'); }
+                }).render('#paypal-button-container');
+            } catch (error) {
+                console.warn("PayPal SDK could not initialize. Please ensure a valid Client ID is set.", error);
+            }
+        });
     </script>
 </body>
 </html>
