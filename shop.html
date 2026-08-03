@@ -81,7 +81,7 @@
         }
 
         body.wholesale-active header {
-            top: 38px; /* Pushes the header down to make room for the banner */
+            top: 38px;
         }
 
         /* Fixed Header */
@@ -124,7 +124,6 @@
         /* Shop Layout */
         .container { max-width: 1200px; margin: 120px auto 40px; padding: 0 20px; }
         
-        /* Page Title */
         .page-title {
             text-align: center;
             font-family: var(--font-headings);
@@ -165,7 +164,6 @@
             color: var(--text-light); 
         }
 
-        /* Restored 4-Column Grid */
         .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 30px; }
 
         /* Product Cards */
@@ -354,7 +352,7 @@
     <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
     <div class="cart-panel" id="cart-panel">
         <div class="cart-header">
-            <h2>Your Cart</h2>
+            <h2 id="cart-title">Your Cart</h2>
             <button class="close-cart-btn" onclick="closeCart()">&times;</button>
         </div>
         <div class="cart-items-container" id="cart-items"></div>
@@ -378,21 +376,44 @@
     </div>
 
     <script>
-        // Track the current wholesale status using sessionStorage
-        let isWholesale = sessionStorage.getItem('wholesaleAuth') === 'true';
+        // Track the current wholesale status using the unified keys
+        let isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
+        let cartKey = isWholesale ? 'folkloreWholesaleCart' : 'folkloreCart';
         
-        // Add active class if logged in to display the banner and shift the header
+        // Add active class if logged in to display the banner, shift the header, and update the cart title
         if (isWholesale) {
             document.body.classList.add('wholesale-active');
+            const cartHeaderTitle = document.getElementById('cart-title');
+            if (cartHeaderTitle) cartHeaderTitle.textContent = 'Wholesale Cart';
         }
 
-        // Handle logging out directly from the shop page
+        // Handle logging out and retaining the items
         window.logoutWholesale = function() {
-            sessionStorage.removeItem('wholesaleAuth');
+            // Restore items to retail prices and move them to the standard cart
+            if (cart.length > 0) {
+                cart.forEach(item => {
+                    const prod = products.find(p => p.id === item.id);
+                    if (prod) {
+                        item.price = prod.basePrice; // Reset to the retail price
+                    }
+                });
+                localStorage.setItem('folkloreCart', JSON.stringify(cart));
+            }
+            
+            // Delete the wholesale session and cart
+            localStorage.removeItem('folkloreWholesaleCart');
+            sessionStorage.removeItem('wholesaleAuthenticated');
+            
+            // Update the state variables
             isWholesale = false;
+            cartKey = 'folkloreCart';
             document.body.classList.remove('wholesale-active');
+            
+            const cartHeaderTitle = document.getElementById('cart-title');
+            if (cartHeaderTitle) cartHeaderTitle.textContent = 'Your Cart';
+            
             renderGrid();
-            updateCartUI(); // Recalculates cart to normal prices
+            updateCartUI(); 
         };
 
         const mobileToggle = document.getElementById('mobile-toggle');
@@ -421,7 +442,7 @@
         let filteredProducts = [];
         let availableCategories = new Set();
         
-        const cartKey = 'folklore_cart';
+        // Load the cart from the correct key based on login state
         let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
         fetch('products.txt?v=' + new Date().getTime(), { cache: 'no-store' })
@@ -489,7 +510,6 @@
             shopGrid.innerHTML = '';
             filteredProducts.forEach(product => {
                 
-                // Dynamically calculate grid display price if wholesale is active
                 let displayPrice = isWholesale ? (product.basePrice * 0.6) : product.basePrice;
                 let priceHTML = isWholesale 
                     ? `<p><span class="original-price">£${product.basePrice.toFixed(2)}</span> £${displayPrice.toFixed(2)}</p>` 
@@ -501,7 +521,6 @@
                 } else if (product.stock <= 0) {
                     actionButton = `<button class="add-cart-btn" disabled style="background:#222; color:#777; border-color:#333; cursor:not-allowed;">Out of Stock</button>`;
                 } else {
-                    // We explicitly pass the basePrice to the cart, letting the cart dynamically handle the discount
                     actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); addToSmartCart('${product.id}', '${product.title.replace(/'/g, "\\'")}', ${product.basePrice}, '${product.postalClass}', null)">Add to Cart</button>`;
                 }
 
@@ -559,8 +578,9 @@
             if (existingItem) {
                 existingItem.quantity += 1;
             } else {
-                // We save the retail 'price' parameter into localStorage regardless of wholesale state
-                cart.push({ id, cartItemId, title, price, postalClass, size, quantity: 1 });
+                // Calculate and store the exact price depending on the login state 
+                let finalPrice = isWholesale ? (price * 0.6) : price;
+                cart.push({ id, cartItemId, title, price: finalPrice, postalClass, size, quantity: 1 });
             }
             
             saveAndRefreshCart();
@@ -621,11 +641,8 @@
                 paypalContainer.style.display = 'block';
                 cart.forEach((item, index) => {
                     
-                    // The cart reads the base price from memory and converts to wholesale dynamically if needed
-                    let currentPrice = isWholesale ? (item.price * 0.6) : item.price;
-                    
                     totalItems += item.quantity;
-                    subtotal += currentPrice * item.quantity;
+                    subtotal += item.price * item.quantity;
                     const sizeLabel = item.size ? `<p class="cart-item-meta">Size: ${item.size}</p>` : '';
                     
                     cartContainer.innerHTML += `
@@ -633,7 +650,7 @@
                             <div class="cart-item-details">
                                 <h4 class="cart-item-title">${item.title}</h4>
                                 ${sizeLabel}
-                                <p class="cart-item-meta">£${currentPrice.toFixed(2)}</p>
+                                <p class="cart-item-meta">£${item.price.toFixed(2)}</p>
                             </div>
                             <div class="cart-qty-controls">
                                 <button class="qty-btn" onclick="updateQuantity(${index}, -1)">-</button>
@@ -646,8 +663,8 @@
                 });
             }
 
-            cartCountLabel.innerText = totalItems;
-            cartSubtotalLabel.innerText = `£${subtotal.toFixed(2)}`;
+            if (cartCountLabel) cartCountLabel.innerText = totalItems;
+            if (cartSubtotalLabel) cartSubtotalLabel.innerText = `£${subtotal.toFixed(2)}`;
         }
 
         window.openCart = function() {
@@ -665,14 +682,11 @@
             createOrder: function(data, actions) {
                 let total = 0;
                 let itemArray = cart.map(item => {
-                    // Ensure the exact same dynamic price is fed into PayPal
-                    let currentPrice = isWholesale ? (item.price * 0.6) : item.price;
-                    let itemTotal = currentPrice * item.quantity;
-                    
+                    let itemTotal = item.price * item.quantity;
                     total += itemTotal;
                     return {
                         name: item.title + (item.size ? ` (${item.size})` : ''),
-                        unit_amount: { currency_code: 'GBP', value: currentPrice.toFixed(2) },
+                        unit_amount: { currency_code: 'GBP', value: item.price.toFixed(2) },
                         quantity: item.quantity.toString()
                     };
                 });
