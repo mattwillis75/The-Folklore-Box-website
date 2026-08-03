@@ -130,6 +130,9 @@
         .cart-footer { padding: 20px; border-top: 1px solid var(--border-color); background: var(--bg-color); }
         .cart-total-row { display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 600; margin-bottom: 20px; }
         
+        /* Wholesale Warning Banner */
+        .cart-warning { background: rgba(204, 0, 0, 0.1); border: 1px solid var(--accent-red); color: var(--accent-red); font-weight: bold; text-align: center; padding: 1rem; border-radius: 4px; margin-bottom: 1.5rem; font-size: 0.9rem; line-height: 1.4; display: none; }
+        
         /* Custom Stock Alert Modal */
         .stock-alert-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.8); z-index: 4000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
         .stock-alert-box { background: #0a0a0a; border: 1px solid var(--accent-red); padding: 2.5rem; border-radius: 4px; max-width: 400px; width: 90%; text-align: center; color: #fff; box-shadow: 0 10px 30px rgba(204,0,0,0.15); }
@@ -157,10 +160,10 @@
                     </div>
                 </li>
                 <li><a href="portfolio.html">Portfolio</a></li>
-                <li><a href="shop.html" class="active-page">Shop</a></li>
+                <li><a href="shop.html" id="nav-shop-link">Shop</a></li>
                 <li><a href="uk-folklore-map.html">Folklore Map</a></li>
                 <li><a href="journal.html">Journal</a></li>
-                <li><a href="wholesale.html">Wholesale</a></li>
+                <li><a href="wholesale.html" id="nav-wholesale-link">Wholesale</a></li>
                 <li><a href="#" id="cart-toggle" onclick="openCart(); return false;">Cart (<span id="cart-count">0</span>)</a></li>
             </ul>
         </nav>
@@ -176,13 +179,16 @@
     <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
     <div class="cart-panel" id="cart-panel">
         <div class="cart-header">
-            <h2>Your Cart</h2>
+            <h2 id="cart-panel-title">Your Cart</h2>
             <button class="close-cart-btn" onclick="closeCart()">&times;</button>
         </div>
         <div class="cart-items-container" id="cart-items">
             <!-- Cart items injected here -->
         </div>
         <div class="cart-footer">
+            <div class="cart-warning" id="cart-warning">
+                Minimum wholesale spend is £75.00 before postage.
+            </div>
             <div class="cart-total-row">
                 <span>Subtotal</span>
                 <span id="cart-subtotal">£0.00</span>
@@ -202,6 +208,19 @@
     </div>
 
     <script>
+        // Check Session for Wholesale
+        const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
+        const cartKey = isWholesale ? 'folkloreWholesaleCart' : 'folkloreCart';
+        let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+        // Update active page link dynamically
+        if (isWholesale) {
+            document.getElementById('nav-wholesale-link').classList.add('active-page');
+            document.getElementById('cart-panel-title').innerText = 'Wholesale Cart';
+        } else {
+            document.getElementById('nav-shop-link').classList.add('active-page');
+        }
+
         const mobileToggle = document.getElementById('mobile-toggle');
         const navList = document.getElementById('nav-list');
         if (mobileToggle && navList) {
@@ -227,9 +246,6 @@
         
         let allProducts = [];
         let currentProduct = null;
-        
-        const cartKey = 'folklore_cart';
-        let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
         fetch('products.txt?v=' + new Date().getTime(), { cache: 'no-store' })
             .then(response => response.text())
@@ -262,7 +278,11 @@
                                     else if (key === 'size') product.size = value;
                                     else if (key === 'materials') product.materials = value;
                                     else if (key === 'postal class') product.postalClass = value;
-                                    else if (key === 'item cost') product.basePrice = parseFloat(value.replace(/[^0-9.]/g, '')) || 0;
+                                    else if (key === 'item cost') {
+                                        let parsedPrice = parseFloat(value.replace(/[^0-9.]/g, '')) || 0;
+                                        // Apply 60% if Wholesale
+                                        product.basePrice = isWholesale ? (parsedPrice * 0.60) : parsedPrice;
+                                    }
                                     
                                     else if (key === 'stock') product.stock = isNaN(parseInt(value)) ? 10 : parseInt(value);
                                     else if (key === 'stock s') product.stockS = isNaN(parseInt(value)) ? 10 : parseInt(value);
@@ -284,7 +304,8 @@
                         if(product.description) product.description = product.description.trim();
                         
                         if (product.title) {
-                            product.id = 'prod-' + product.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                            // Matched ID logic to wholesale grid
+                            product.id = product.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
                             allProducts.push(product);
                         }
                     });
@@ -298,7 +319,7 @@
                             <div style="grid-column: 1 / -1; text-align: center; padding: 50px;">
                                 <h2 style="margin-bottom: 20px;">Product not found.</h2>
                                 <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 40px;">It may have been removed or the link is incorrect.</p>
-                                <a href="shop.html" class="back-btn" style="padding: 15px 30px; border-color: #555;">Return to Shop</a>
+                                <a href="${isWholesale ? 'wholesale.html' : 'shop.html'}" class="back-btn" style="padding: 15px 30px; border-color: #555;">Return to Shop</a>
                             </div>`;
                     }
                     
@@ -372,7 +393,7 @@
 
             document.getElementById('product-container').innerHTML = `
                 <div style="grid-column: 1 / -1; margin-bottom: -15px;">
-                    <a href="shop.html" class="back-btn">&larr; Back to Shop</a>
+                    <a href="${isWholesale ? 'wholesale.html' : 'shop.html'}" class="back-btn">&larr; Back to Shop</a>
                 </div>
                 <div>
                     <div class="gallery-main">
@@ -385,7 +406,7 @@
                 <div class="product-details">
                     <div>
                         <h1 class="product-title">${currentProduct.title}</h1>
-                        <p class="product-price">£${currentProduct.basePrice.toFixed(2)}</p>
+                        <p class="product-price">£${currentProduct.basePrice.toFixed(2)}${isWholesale ? ' <span style="font-size: 0.9rem; color: #888;">(Wholesale)</span>' : ''}</p>
                         
                         <div class="product-description">${currentProduct.description || 'No description available.'}</div>
                         
@@ -499,6 +520,7 @@
             const cartCountLabel = document.getElementById('cart-count');
             const cartSubtotalLabel = document.getElementById('cart-subtotal');
             const paypalContainer = document.getElementById('paypal-button-container');
+            const wholesaleWarning = document.getElementById('cart-warning');
             
             cartContainer.innerHTML = '';
             let totalItems = 0;
@@ -507,6 +529,7 @@
             if (cart.length === 0) {
                 cartContainer.innerHTML = '<p style="color:var(--text-muted); text-align:center; margin-top:40px;">Your cart is empty.</p>';
                 paypalContainer.style.display = 'none';
+                wholesaleWarning.style.display = 'none';
             } else {
                 paypalContainer.style.display = 'block';
                 cart.forEach((item, index) => {
@@ -531,6 +554,16 @@
                         </div>
                     `;
                 });
+
+                if (isWholesale) {
+                    if (subtotal < 75) {
+                        wholesaleWarning.style.display = 'block';
+                        paypalContainer.style.display = 'none'; 
+                    } else {
+                        wholesaleWarning.style.display = 'none';
+                        paypalContainer.style.display = 'block'; 
+                    }
+                }
             }
 
             cartCountLabel.innerText = totalItems;
