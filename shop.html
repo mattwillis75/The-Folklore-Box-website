@@ -9,6 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;600&family=Spectral:wght@400;700&display=swap" rel="stylesheet">
     
+    <!-- PayPal SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=BAAyFEECFHCgIYSVAcx3GUqT0FI1rHhhU_mwYJxRf6ngeAPN3zYdx3W4a1tCIEHivTFLxU7oFEeDD1NIIs&currency=GBP&locale=en_GB"></script>
+
     <style>
         /* Base Colors & Typography */
         :root {
@@ -34,7 +37,7 @@
             line-height: 1.6;
         }
 
-        /* Fixed Header from Index */
+        /* Fixed Header */
         header { position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 3rem; background: var(--header-bg); border-bottom: 1px solid var(--border-color); z-index: 2000; box-sizing: border-box; backdrop-filter: blur(8px); transition: all 0.3s ease; }
         .logo img { max-width: 180px; height: auto; }
 
@@ -72,123 +75,27 @@
         }
 
         /* Shop Layout */
-        .container {
-            max-width: 1200px;
-            margin: 120px auto 40px; /* Top margin accounts for fixed header */
-            padding: 0 20px;
-        }
-
-        .filter-bar {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            background: transparent;
-            color: var(--text-muted);
-            border: 1px solid var(--border-color);
-            padding: 8px 16px;
-            cursor: pointer;
-            border-radius: 20px;
-            transition: all var(--transition-speed);
-            font-family: var(--font-body);
-        }
-
-        .filter-btn.active, .filter-btn:hover {
-            border-color: var(--accent-red);
-            color: var(--text-light);
-        }
-
-        /* Fits 4 items comfortably */
-        .shop-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 30px;
-        }
+        .container { max-width: 1200px; margin: 120px auto 40px; padding: 0 20px; }
+        .filter-bar { display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; }
+        .filter-btn { background: transparent; color: var(--text-muted); border: 1px solid var(--border-color); padding: 8px 16px; cursor: pointer; border-radius: 20px; transition: all var(--transition-speed); font-family: var(--font-body); }
+        .filter-btn.active, .filter-btn:hover { border-color: var(--accent-red); color: var(--text-light); }
+        .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 30px; }
 
         /* Product Cards */
-        .product-card {
-            background: var(--secondary-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            overflow: hidden;
-            transition: transform var(--transition-speed);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-            border-color: #555;
-        }
-
-        .product-card a {
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-
-        .product-image {
-            width: 100%;
-            height: 280px;
-            overflow: hidden;
-            background: #111;
-        }
-
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .product-card:hover .product-image img {
-            transform: scale(1.05);
-        }
-
-        .product-info {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            flex-grow: 1;
-        }
-
-        .product-title {
-            font-family: var(--font-headings);
-            font-size: 1.25rem;
-            margin: 0 0 10px 0;
-            font-weight: 400;
-        }
-
-        .product-price {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-        }
+        .product-card { background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 4px; overflow: hidden; transition: transform var(--transition-speed); display: flex; flex-direction: column; }
+        .product-card:hover { transform: translateY(-5px); border-color: #555; }
+        .product-card a { text-decoration: none; color: inherit; display: flex; flex-direction: column; flex-grow: 1; }
+        .product-image { width: 100%; height: 280px; overflow: hidden; background: #111; }
+        .product-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .product-card:hover .product-image img { transform: scale(1.05); }
+        .product-info { padding: 20px; display: flex; flex-direction: column; justify-content: space-between; flex-grow: 1; }
+        .product-title { font-family: var(--font-headings); font-size: 1.25rem; margin: 0 0 10px 0; font-weight: 400; }
+        .product-price { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 15px; }
 
         .add-cart-btn {
-            width: 100%;
-            padding: 12px;
-            background: transparent;
-            color: var(--text-light);
-            border: 1px solid var(--accent-red);
-            border-radius: 3px;
-            cursor: pointer;
-            text-transform: uppercase;
-            font-weight: 300; /* Adjusted to light weight */
-            letter-spacing: 1px;
-            transition: background var(--transition-speed);
-            margin-top: auto;
+            width: 100%; padding: 12px; background: transparent; color: var(--text-light); border: 1px solid var(--accent-red); border-radius: 3px; cursor: pointer; text-transform: uppercase; font-weight: 300; letter-spacing: 1px; transition: background var(--transition-speed); margin-top: auto;
         }
-
-        .add-cart-btn:hover:not(:disabled) {
-            background: var(--accent-red);
-        }
+        .add-cart-btn:hover:not(:disabled) { background: var(--accent-red); }
 
         /* Smart Cart Side Panel */
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); backdrop-filter: blur(3px); z-index: 3000; opacity: 0; visibility: hidden; transition: opacity 0.3s; }
@@ -211,8 +118,7 @@
 
         .cart-footer { padding: 20px; border-top: 1px solid var(--border-color); background: var(--bg-color); }
         .cart-total-row { display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 600; margin-bottom: 20px; }
-        .checkout-btn { width: 100%; padding: 15px; background: var(--accent-red); color: #fff; border: none; border-radius: 3px; text-transform: uppercase; font-weight: 300; /* Adjusted to light weight */ letter-spacing: 1px; cursor: pointer; font-size: 1rem; font-family: var(--font-body); }
-
+        
         /* Custom Stock Alert Modal */
         .stock-alert-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.8); z-index: 4000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
         .stock-alert-box { background: #0a0a0a; border: 1px solid var(--accent-red); padding: 2.5rem; border-radius: 4px; max-width: 400px; width: 90%; text-align: center; color: #fff; box-shadow: 0 10px 30px rgba(204,0,0,0.15); }
@@ -223,7 +129,6 @@
 </head>
 <body>
 
-    <!-- Header & Navigation (Fixed) -->
     <header id="main-header">
         <div class="logo"><a href="index.html"><img src="./The-folklore-box-logo.png" alt="The Folklore Box Logo"></a></div>
         <div class="mobile-menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
@@ -250,33 +155,25 @@
     </header>
 
     <div class="container">
-        <!-- Category Filters -->
-        <div class="filter-bar" id="filter-bar">
-            <!-- Populated dynamically -->
-        </div>
-
-        <!-- Dynamic Shop Grid -->
-        <div class="shop-grid" id="shop-grid">
-            <!-- Products injected here by JS -->
-        </div>
+        <div class="filter-bar" id="filter-bar"></div>
+        <div class="shop-grid" id="shop-grid"></div>
     </div>
 
-    <!-- Smart Cart Panel -->
+    <!-- Smart Cart Panel with PayPal Integration -->
     <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
     <div class="cart-panel" id="cart-panel">
         <div class="cart-header">
             <h2>Your Cart</h2>
             <button class="close-cart-btn" onclick="closeCart()">&times;</button>
         </div>
-        <div class="cart-items-container" id="cart-items">
-            <!-- Cart items injected here -->
-        </div>
+        <div class="cart-items-container" id="cart-items"></div>
         <div class="cart-footer">
             <div class="cart-total-row">
                 <span>Subtotal</span>
                 <span id="cart-subtotal">£0.00</span>
             </div>
-            <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+            <!-- PayPal Button Target -->
+            <div id="paypal-button-container" style="margin-top: 15px;"></div>
         </div>
     </div>
 
@@ -290,7 +187,6 @@
     </div>
 
     <script>
-        // Mobile Menu Toggle Logic
         const mobileToggle = document.getElementById('mobile-toggle');
         const navList = document.getElementById('nav-list');
         if (mobileToggle && navList) {
@@ -300,7 +196,6 @@
             });
         }
 
-        // Header Scroll Effect
         const header = document.getElementById('main-header');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
@@ -321,7 +216,6 @@
         const cartKey = 'folklore_cart';
         let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
-        // Fetch Data with Cache Buster
         fetch('products.txt?v=' + new Date().getTime(), { cache: 'no-store' })
             .then(response => response.text())
             .then(text => {
@@ -351,7 +245,6 @@
                             else if (key === 'postal class') product.postalClass = value;
                             else if (key === 'item cost') product.basePrice = parseFloat(value.replace(/[^0-9.]/g, '')) || 0;
                             
-                            // Stock parsing
                             else if (key === 'stock') product.stock = isNaN(parseInt(value)) ? 10 : parseInt(value);
                             else if (key === 'stock s') product.stockS = isNaN(parseInt(value)) ? 10 : parseInt(value);
                             else if (key === 'stock m') product.stockM = isNaN(parseInt(value)) ? 10 : parseInt(value);
@@ -388,7 +281,6 @@
             shopGrid.innerHTML = '';
             filteredProducts.forEach(product => {
                 let actionButton = '';
-                
                 if (product.sections && product.sections.toLowerCase().includes('t-shirts')) {
                     actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='product.html?id=${encodeURIComponent(product.id)}'">Add to Cart</button>`;
                 } else if (product.stock <= 0) {
@@ -400,17 +292,10 @@
                 shopGrid.innerHTML += `
                     <div class="product-card">
                         <a href="product.html?id=${encodeURIComponent(product.id)}">
-                            <div class="product-image">
-                                <img src="${product.mainImage || 'placeholder.jpg'}" alt="${product.title.replace(/"/g, '&quot;')}">
-                            </div>
+                            <div class="product-image"><img src="${product.mainImage || 'placeholder.jpg'}" alt="${product.title.replace(/"/g, '&quot;')}"></div>
                             <div class="product-info">
-                                <div>
-                                    <h3 class="product-title">${product.title}</h3>
-                                </div>
-                                <div>
-                                    <p class="product-price">£${product.basePrice.toFixed(2)}</p>
-                                    ${actionButton}
-                                </div>
+                                <div><h3 class="product-title">${product.title}</h3></div>
+                                <div><p class="product-price">£${product.basePrice.toFixed(2)}</p>${actionButton}</div>
                             </div>
                         </a>
                     </div>
@@ -432,7 +317,6 @@
 
         window.addToSmartCart = function(id, title, price, postalClass, size = null) {
             const productData = products.find(p => p.id === id);
-            
             let maxStock = 10;
             if (productData) {
                 if (size === 'S') maxStock = productData.stockS;
@@ -467,7 +351,6 @@
             if (delta > 0) {
                 const item = cart[index];
                 const productData = products.find(p => p.id === item.id);
-                
                 let maxStock = 10;
                 if (productData) {
                     if (item.size === 'S') maxStock = productData.stockS;
@@ -477,7 +360,6 @@
                     else if (item.size === 'XXL') maxStock = productData.stockXXL;
                     else maxStock = productData.stock;
                 }
-                
                 if (item.quantity + delta > maxStock) {
                     document.getElementById('stock-alert-msg').textContent = `Apologies. We only have ${maxStock} of this item in stock.`;
                     document.getElementById('stock-alert').style.display = 'flex';
@@ -506,6 +388,7 @@
             const cartContainer = document.getElementById('cart-items');
             const cartCountLabel = document.getElementById('cart-count');
             const cartSubtotalLabel = document.getElementById('cart-subtotal');
+            const paypalContainer = document.getElementById('paypal-button-container');
             
             cartContainer.innerHTML = '';
             let totalItems = 0;
@@ -513,11 +396,12 @@
 
             if (cart.length === 0) {
                 cartContainer.innerHTML = '<p style="color:var(--text-muted); text-align:center; margin-top:40px;">Your cart is empty.</p>';
+                paypalContainer.style.display = 'none';
             } else {
+                paypalContainer.style.display = 'block';
                 cart.forEach((item, index) => {
                     totalItems += item.quantity;
                     subtotal += item.price * item.quantity;
-                    
                     const sizeLabel = item.size ? `<p class="cart-item-meta">Size: ${item.size}</p>` : '';
                     
                     cartContainer.innerHTML += `
@@ -552,11 +436,46 @@
             document.getElementById('cart-panel').classList.remove('active');
         };
 
-        window.checkout = function() {
-            if(cart.length === 0) return;
-            // Redirect straight to checkout page instead of alerting
-            window.location.href = 'checkout.html';
-        };
+        // PayPal SDK Logic
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+                let total = 0;
+                let itemArray = cart.map(item => {
+                    let itemTotal = item.price * item.quantity;
+                    total += itemTotal;
+                    return {
+                        name: item.title + (item.size ? ` (${item.size})` : ''),
+                        unit_amount: { currency_code: 'GBP', value: item.price.toFixed(2) },
+                        quantity: item.quantity.toString()
+                    };
+                });
+                
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            currency_code: 'GBP',
+                            value: total.toFixed(2),
+                            breakdown: {
+                                item_total: { currency_code: 'GBP', value: total.toFixed(2) }
+                            }
+                        },
+                        items: itemArray
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    alert('Transaction completed successfully! Thank you for your order, ' + details.payer.name.given_name + '.');
+                    cart = [];
+                    saveAndRefreshCart();
+                    closeCart();
+                });
+            },
+            onError: function (err) {
+                console.error("PayPal Checkout Error:", err);
+            }
+        }).render('#paypal-button-container');
+
     </script>
 </body>
 </html>
