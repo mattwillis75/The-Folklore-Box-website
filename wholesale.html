@@ -12,7 +12,7 @@
     
     <style>
         /* Base Colors & Typography */
-        :root { --bg-color: #000000; --text-color: #ffffff; --accent-red: #cc0000; --header-bg: rgba(0, 0, 0, 0.85); }
+        :root { --bg-color: #000000; --text-color: #ffffff; --accent-red: #cc0000; --header-bg: rgba(0, 0, 0, 0.85); --text-light: #ffffff; --text-muted: #aaaaaa; --border-color: #333333; --transition-speed: 0.3s; --font-headings: 'Spectral', serif; --font-body: 'Lato', sans-serif;}
         body { font-family: 'Lato', sans-serif; font-weight: 300; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 0; line-height: 1.6; overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; background-image: radial-gradient(circle at top, #1a1a1a 0%, #000000 100%); background-attachment: fixed; }
         h1, h2, h3, h4, h5, h6 { font-family: 'Spectral', serif; font-weight: 400; color: #ffffff; }
 
@@ -67,7 +67,7 @@
         .secondary-btn { background: transparent; color: #aaa; border: 1px solid #444; margin-top: 1rem; }
         .secondary-btn:hover { color: #ffffff; border-color: var(--accent-red); background: transparent; }
 
-        /* Wholesale Banner & Shop Layout */
+        /* Wholesale Banner & Container Layout */
         main { padding-top: 85px; flex-grow: 1; display: flex; flex-direction: column; }
         
         .wholesale-banner { 
@@ -105,32 +105,38 @@
             background: var(--accent-red); 
         }
 
+        .container { max-width: 1200px; margin: 20px auto 40px; padding: 0 20px; width: 100%; box-sizing: border-box; }
+
         /* Grid & Filters */
         .shop-header { text-align: center; padding: 1rem 2rem; }
-        .shop-header h1 { font-size: 3rem; margin-bottom: 0.5rem; margin-top: 0; }
-        .shop-header p { color: #888; font-style: italic; margin-top: 0; }
+        .page-title { text-align: center; font-family: var(--font-headings); font-size: 2.8rem; font-weight: 400; margin-bottom: 0.5rem; color: var(--text-light); letter-spacing: 1px; margin-top: 0;}
+        .shop-header p { color: #888; font-style: italic; margin-top: 0; margin-bottom: 2.5rem; }
 
-        .shop-filters { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; padding: 0 2rem 2rem; max-width: 1000px; margin: 0 auto; }
-        .filter-btn { background: transparent; color: #fff; border: 1px solid #444; padding: 0.6rem 1.5rem; border-radius: 30px; font-family: 'Lato', sans-serif; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: all 0.3s ease; }
+        .filter-bar { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 40px; }
+        .filter-btn { background: transparent; color: var(--text-light); border: 1px solid var(--border-color); padding: 0.6rem 1.5rem; cursor: pointer; border-radius: 3px; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.85rem; transition: all var(--transition-speed); font-family: var(--font-body); font-weight: 600; }
         .filter-btn:hover { border-color: var(--accent-red); }
-        .filter-btn.active { background: var(--accent-red); border-color: var(--accent-red); color: #fff; }
+        .filter-btn.active, .filter-btn:hover { border-color: var(--accent-red); background: var(--accent-red); color: var(--text-light); }
 
-        /* Modified to mirror standard shop grid width */
-        .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2.5rem; padding: 0 5% 5rem; max-width: 1400px; margin: 0 auto; }
+        /* Shop Page Matching Grid */
+        .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 30px; }
 
-        .product-card { background: #111; border: 1px solid #333; border-radius: 4px; transition: border-color 0.3s ease, transform 0.3s ease; cursor: pointer; position: relative; display: flex; flex-direction: column; }
+        .product-card { background: #111; border: 1px solid #333; border-radius: 4px; transition: border-color 0.3s ease, transform 0.3s ease; cursor: pointer; position: relative; display: flex; flex-direction: column; height: 520px; }
         .product-card:hover { border-color: var(--accent-red); transform: translateY(-5px); }
         .product-card a { text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%; padding: 1.5rem; box-sizing: border-box; }
-        .product-image { width: 100%; aspect-ratio: 1 / 1; background: #0a0a0a; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        
+        .product-image { width: 100%; aspect-ratio: 1 / 1; background: #0a0a0a; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0;}
         .product-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
         .product-card:hover .product-image img { transform: scale(1.05); }
-        .product-details { display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; text-align: center; }
-        .product-title { font-family: 'Spectral', serif; font-size: 1.4rem; margin: 0 0 0.5rem 0; line-height: 1.3; }
-        .product-prices { font-family: 'Lato', sans-serif; color: #999; margin-bottom: 1.5rem; }
-        .product-prices p { margin: 0; font-size: 1.1rem; color: var(--accent-red); font-weight: 600; }
         
-        .add-cart-btn { background: transparent; color: #fff; border: 1px solid #fff; padding: 0.8rem; font-family: 'Lato', sans-serif; text-transform: uppercase; font-weight: bold; font-size: 0.8rem; letter-spacing: 2px; cursor: pointer; transition: background 0.3s ease, border-color 0.3s ease; margin-top: auto; width: 100%; box-sizing: border-box; }
-        .add-cart-btn:hover { background: var(--accent-red); border-color: var(--accent-red); }
+        .product-details { display: flex; flex-direction: column; flex-grow: 1; text-align: left; }
+        .product-title { font-family: 'Spectral', serif; font-size: 1.6rem; font-weight: 600; margin: 0 0 auto 0; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        
+        .product-prices { font-family: 'Lato', sans-serif; margin-bottom: 1.2rem; margin-top: 0.5rem; }
+        .product-prices p { margin: 0; font-size: 1.2rem; color: #ffffff; font-weight: 300; }
+        .original-price { text-decoration: line-through; color: var(--text-muted); font-size: 0.9rem; margin-right: 8px; }
+        
+        .add-cart-btn { background: transparent; color: #fff; border: 1px solid #fff; padding: 0.8rem; font-family: 'Lato', sans-serif; text-transform: uppercase; font-weight: bold; font-size: 0.85rem; letter-spacing: 2px; cursor: pointer; transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease; width: 100%; box-sizing: border-box; margin-top: auto; }
+        .add-cart-btn:hover { background: #ffffff; color: #000000; border-color: #ffffff; }
 
         /* Slide-Out Cart */
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 2001; display: none; backdrop-filter: blur(3px); }
@@ -167,6 +173,12 @@
         
         .paypal-disabled { pointer-events: none; opacity: 0.4; filter: grayscale(100%); }
 
+        /* Index-matched Footer */
+        footer { background: #000000; color: #ffffff; padding: 4rem 2rem; text-align: center; border-top: 1px solid #222; margin-top: auto; }
+        footer a { color: #ffffff; text-decoration: none; margin: 0 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
+        footer a:hover { color: var(--accent-red); }
+        .social-links { margin-bottom: 2rem; }
+
         /* Custom Stock Alert Modal */
         .stock-alert-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.8); z-index: 4000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
         .stock-alert-box { background: #0a0a0a; border: 1px solid var(--accent-red); padding: 2.5rem; border-radius: 4px; max-width: 400px; width: 90%; text-align: center; color: #fff; box-shadow: 0 10px 30px rgba(204,0,0,0.15); }
@@ -195,19 +207,17 @@
         .fade-in { animation: fadeIn 1.5s ease-in forwards; }
         @keyframes fadeIn { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
 
-        /* ========================================= */
-        /* RESPONSIVE MOBILE LAYOUT ADJUSTMENTS      */
-        /* ========================================= */
+        /* Mobile Adjustments */
         @media (max-width: 800px) {
             header { padding: 1rem 1.5rem; }
             .shop-header { padding: 1rem; }
-            .shop-header h1 { font-size: 2.2rem; }
-            .shop-filters { padding: 0 1rem 1rem; gap: 10px; }
+            .page-title { font-size: 2.2rem; }
+            .filter-bar { padding: 0 1rem 1rem; gap: 10px; }
             .filter-btn { padding: 0.5rem 1rem; font-size: 0.75rem; }
         }
 
         @media (max-width: 600px) {
-            .shop-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; padding: 0 1rem 4rem; }
+            .shop-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; padding: 0 1.5rem 4rem; }
             .product-card { min-height: 380px; }
             .product-card a { padding: 1rem; }
             .product-image { margin-bottom: 1rem; }
@@ -268,7 +278,7 @@
                 <li><a href="uk-folklore-map.html">Folklore Map</a></li>
                 <li><a href="journal.html">Journal</a></li>
                 <li><a href="wholesale.html" class="active-page">Wholesale</a></li>
-                <li><a href="#" id="cart-toggle">Cart (<span id="cart-count">0</span>)</a></li>
+                <li><a href="#" id="cart-toggle">Cart (0)</a></li>
             </ul>
         </nav>
     </header>
@@ -279,14 +289,16 @@
             <button id="wholesale-logout-btn" class="exit-wholesale-btn" style="display: none;">Exit Wholesale</button>
         </div>
 
-        <div class="shop-header">
-            <h1>Wholesale Portal</h1>
-            <p>All prices shown are calculated at 60% of the standard retail price.</p>
+        <div class="container">
+            <div class="shop-header">
+                <h1 class="page-title">Wholesale Portal</h1>
+                <p>All prices shown are calculated at 60% of the standard retail price.</p>
+            </div>
+            <div class="filter-bar" id="shop-filters"></div>
+            <section class="shop-grid" id="shop-grid">
+                <p style="color: #888; text-align: center; grid-column: 1 / -1;">Loading catalogue...</p>
+            </section>
         </div>
-        <div class="shop-filters" id="shop-filters"></div>
-        <section class="shop-grid" id="shop-grid">
-            <p style="color: #888; text-align: center; grid-column: 1 / -1;">Loading catalogue...</p>
-        </section>
     </main>
 
     <div class="cart-overlay" id="cart-overlay"></div>
@@ -326,6 +338,7 @@
         </div>
     </div>
 
+    <!-- Index.html matching footer -->
     <footer>
         <div class="social-links">
             <a href="https://instagram.com/the_folklore_box" target="_blank">Instagram: @the_folklore_box</a> | 
@@ -336,7 +349,9 @@
             <a href="wholesale.html">Wholesale Enquiries</a>
             <a href="contact.html">Contact</a>
         </div>
-        <p style="font-size: 0.8rem; color: #555; font-family: 'Lato', sans-serif;">&copy; 2026 The Folklore Box by Matt Willis. All rights reserved.</p>
+        <p style="font-size: 0.8rem; color: #555; font-family: 'Lato', sans-serif;">
+            &copy; 2026 The Folklore Box by Matt Willis. All rights reserved.
+        </p>
     </footer>
 
     <!-- Password Request Pop-up Modal -->
@@ -420,9 +435,9 @@
                 
                 // AUTO-MERGE: Check if there are unassigned items sitting in the normal cart
                 // and securely transition them to the wholesale cart with the 40% discount.
-                let strayRetailCart = JSON.parse(sessionStorage.getItem('folkloreCart')) || [];
+                let strayRetailCart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
                 if (strayRetailCart.length > 0) {
-                    let wCart = JSON.parse(sessionStorage.getItem('folkloreWholesaleCart')) || [];
+                    let wCart = JSON.parse(localStorage.getItem('folkloreWholesaleCart')) || [];
                     
                     strayRetailCart.forEach(retailItem => {
                         let matchId = retailItem.id || retailItem.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
@@ -444,8 +459,8 @@
                         }
                     });
                     
-                    sessionStorage.setItem('folkloreWholesaleCart', JSON.stringify(wCart));
-                    sessionStorage.removeItem('folkloreCart');
+                    localStorage.setItem('folkloreWholesaleCart', JSON.stringify(wCart));
+                    localStorage.removeItem('folkloreCart');
                 }
             }
 
@@ -464,8 +479,8 @@
                 logoutBtn.addEventListener('click', (e) => {
                     e.preventDefault();
                     
-                    let wCart = JSON.parse(sessionStorage.getItem('folkloreWholesaleCart')) || [];
-                    let rCart = JSON.parse(sessionStorage.getItem('folkloreCart')) || [];
+                    let wCart = JSON.parse(localStorage.getItem('folkloreWholesaleCart')) || [];
+                    let rCart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
                     
                     // Securely merge back into retail cart and mathematically fix prices to standard
                     wCart.forEach(wItem => {
@@ -488,10 +503,10 @@
                     });
 
                     // Save retail cart back so items remain
-                    sessionStorage.setItem('folkloreCart', JSON.stringify(rCart));
+                    localStorage.setItem('folkloreCart', JSON.stringify(rCart));
                     
                     // OBLITERATE wholesale cart ONLY so ghost items NEVER resurrect upon next login
-                    sessionStorage.removeItem('folkloreWholesaleCart');
+                    localStorage.removeItem('folkloreWholesaleCart');
                     sessionStorage.removeItem('wholesaleAuthenticated');
                     
                     alert("You have exited Wholesale Mode. Returning to the standard retail shop.");
@@ -579,8 +594,8 @@
                         sessionStorage.setItem('wholesaleAuthenticated', 'true');
                         
                         // --- CART MERGER LOGIC (Handles active sessions merging in sizes correctly) ---
-                        let retailCart = JSON.parse(sessionStorage.getItem('folkloreCart')) || [];
-                        let wholesaleCart = JSON.parse(sessionStorage.getItem('folkloreWholesaleCart')) || [];
+                        let retailCart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
+                        let wholesaleCart = JSON.parse(localStorage.getItem('folkloreWholesaleCart')) || [];
                         
                         if (retailCart.length > 0) {
                             retailCart.forEach(retailItem => {
@@ -603,8 +618,8 @@
                                 }
                             });
                             
-                            sessionStorage.setItem('folkloreWholesaleCart', JSON.stringify(wholesaleCart));
-                            sessionStorage.removeItem('folkloreCart');
+                            localStorage.setItem('folkloreWholesaleCart', JSON.stringify(wholesaleCart));
+                            localStorage.removeItem('folkloreCart');
                             sessionStorage.setItem('openCartOnLoad', 'true');
                         }
                         
@@ -734,10 +749,10 @@
 
                 filteredProducts.forEach(product => {
                     
-                    // Display wholesale price dynamically
+                    // Display wholesale price dynamically matching Shop styling verbatim
                     let displayPrice = isWholesale ? (product.basePrice * 0.60) : product.basePrice;
                     let priceHTML = isWholesale 
-                        ? `<p><span class="original-price" style="text-decoration: line-through; color: #888; font-size: 0.9rem; margin-right: 8px;">£${product.basePrice.toFixed(2)}</span> £${displayPrice.toFixed(2)}</p>` 
+                        ? `<p><span class="original-price">£${product.basePrice.toFixed(2)}</span> £${displayPrice.toFixed(2)}</p>` 
                         : `<p>£${displayPrice.toFixed(2)}</p>`;
 
                     let actionButton = '';
@@ -775,7 +790,7 @@
             // ==========================================
             // SLIDE-OUT CART LOGIC
             // ==========================================
-            let cart = JSON.parse(sessionStorage.getItem(cartKey)) || [];
+            let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
             cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
 
             const cartSidebar = document.getElementById('cart-sidebar');
@@ -806,7 +821,7 @@
                     let finalPrice = isWholesale ? Math.round(price * 0.60 * 100) / 100 : price;
                     cart.push({ id, cartItemId, title, price: finalPrice, postalClass, size, quantity: 1 });
                 }
-                sessionStorage.setItem(cartKey, JSON.stringify(cart));
+                localStorage.setItem(cartKey, JSON.stringify(cart));
                 updateCartUI();
                 openCart();
             };
@@ -816,13 +831,13 @@
                 if (cart[index].quantity <= 0) {
                     cart.splice(index, 1);
                 }
-                sessionStorage.setItem(cartKey, JSON.stringify(cart));
+                localStorage.setItem(cartKey, JSON.stringify(cart));
                 updateCartUI();
             };
 
             window.removeFromCart = function(index) { 
                 cart.splice(index, 1); 
-                sessionStorage.setItem(cartKey, JSON.stringify(cart)); 
+                localStorage.setItem(cartKey, JSON.stringify(cart)); 
                 updateCartUI(); 
             };
 
@@ -1049,7 +1064,7 @@
                             // 5. ALWAYS empty cart and update UI
                             cart = []; 
                             const currentKey = sessionStorage.getItem('wholesaleAuthenticated') === 'true' ? 'folkloreWholesaleCart' : 'folkloreCart';
-                            sessionStorage.setItem(currentKey, JSON.stringify(cart)); 
+                            localStorage.setItem(currentKey, JSON.stringify(cart)); 
                             updateCartUI(); 
                             
                             // 6. ALWAYS close the cart sidebar safely
