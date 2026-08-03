@@ -59,7 +59,7 @@
         .container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
         section { margin-bottom: 5rem; scroll-margin-top: 100px; }
 
-        /* Full-Width Carousel (Matched to Working Structure) */
+        /* Full-Width Carousel */
         .carousel-container {
             position: relative;
             width: 100%;
@@ -87,7 +87,7 @@
             z-index: 10;
         }
 
-        /* Carousel Overlay Styling adjusted for Folklore Box theme */
+        /* Carousel Overlay */
         .carousel-overlay {
             position: absolute;
             bottom: 15%;
@@ -198,12 +198,25 @@
 
         .btn:hover { background: #e60000; transform: translateY(-2px); }
 
-        /* Grid Image Styles */
+        /* Grid, Map & Text Base Styles */
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
-        .grid-image { width: 100%; height: 350px; object-fit: cover; margin-bottom: 1.5rem; border-radius: 4px; }
-        .grid-item h3 { font-size: 1.5rem; margin-top: 0; }
-        .about-text { max-width: 800px; font-size: 1.2rem; line-height: 1.8; margin-bottom: 2rem; color: #dddddd; }
-        .map-teaser-img { width: 100%; height: 400px; object-fit: cover; margin-bottom: 2rem; border-radius: 4px; }
+        .grid-item h3 { font-size: 1.5rem; margin-top: 0; transition: color 0.3s ease; }
+        .about-text { max-width: 800px; font-size: 1.2rem; line-height: 1.8; margin-bottom: 2rem; color: #dddddd; transition: color 0.3s ease; }
+        
+        /* Interactive Links & Image Hovers */
+        .interactive-link { display: block; text-decoration: none; color: inherit; }
+        .image-wrapper { overflow: hidden; border-radius: 4px; margin-bottom: 1.5rem; }
+        .map-link .image-wrapper { margin-bottom: 2rem; }
+
+        .grid-image { width: 100%; height: 350px; object-fit: cover; display: block; transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .map-teaser-img { width: 100%; height: 400px; object-fit: cover; display: block; transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+
+        /* Hover Effects */
+        .interactive-link:hover .grid-image, 
+        .interactive-link:hover .map-teaser-img { transform: scale(1.05); }
+        
+        .interactive-link:hover h3, 
+        .interactive-link:hover .about-text { color: var(--accent-red); }
 
         /* --- Slide-Out Cart Styles --- */
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 2001; display: none; backdrop-filter: blur(3px); }
@@ -291,20 +304,36 @@
                 <h2 class="animate-on-scroll">Goods & Wares</h2>
                 <div class="grid">
                     <div class="grid-item animate-on-scroll">
-                        <img src="./Home-4.png" loading="lazy" alt="Fine Art Prints" class="grid-image">
-                        <h3>Prints</h3>
+                        <a href="shop.html" class="interactive-link">
+                            <div class="image-wrapper">
+                                <img src="./Home-4.png" loading="lazy" alt="Fine Art Prints" class="grid-image">
+                            </div>
+                            <h3>Prints</h3>
+                        </a>
                     </div>
                     <div class="grid-item animate-on-scroll">
-                        <img src="./Home-5.png" loading="lazy" alt="Wooden Badges and Clocks" class="grid-image">
-                        <h3>Wooden Wares</h3>
+                        <a href="shop.html" class="interactive-link">
+                            <div class="image-wrapper">
+                                <img src="./Home-5.png" loading="lazy" alt="Wooden Badges and Clocks" class="grid-image">
+                            </div>
+                            <h3>Wooden Wares</h3>
+                        </a>
                     </div>
                     <div class="grid-item animate-on-scroll">
-                        <img src="./Home-6.png" loading="lazy" alt="Screen-printed Apparel and Totes" class="grid-image">
-                        <h3>Apparel & Totes</h3>
+                        <a href="shop.html" class="interactive-link">
+                            <div class="image-wrapper">
+                                <img src="./Home-6.png" loading="lazy" alt="Screen-printed Apparel and Totes" class="grid-image">
+                            </div>
+                            <h3>Apparel & Totes</h3>
+                        </a>
                     </div>
                     <div class="grid-item animate-on-scroll">
-                        <img src="./Home-7.png" loading="lazy" alt="SHUCK Zine Publications" class="grid-image">
-                        <h3>Publications</h3>
+                        <a href="shop.html" class="interactive-link">
+                            <div class="image-wrapper">
+                                <img src="./Home-7.png" loading="lazy" alt="SHUCK Zine Publications" class="grid-image">
+                            </div>
+                            <h3>Publications</h3>
+                        </a>
                     </div>
                 </div>
             </section>
@@ -321,8 +350,12 @@
             <!-- Interactive Map Teaser -->
             <section id="map-teaser" class="map-teaser animate-on-scroll">
                 <h2>The Folklore Map</h2>
-                <img src="./Home-8.png" loading="lazy" alt="UK Folklore Interactive Map Teaser" class="map-teaser-img">
-                <p class="about-text">Discover the local legends, black dogs, and ancient tales haunting the British landscape with our interactive map.</p>
+                <a href="uk-folklore-map.html" class="interactive-link map-link">
+                    <div class="image-wrapper">
+                        <img src="./Home-8.png" loading="lazy" alt="UK Folklore Interactive Map Teaser" class="map-teaser-img">
+                    </div>
+                    <p class="about-text">Discover the local legends, black dogs, and ancient tales haunting the British landscape with our interactive map.</p>
+                </a>
                 <a href="uk-folklore-map.html" class="btn">Explore the Map</a>
             </section>
 
