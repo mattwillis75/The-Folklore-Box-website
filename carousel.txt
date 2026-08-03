@@ -11,7 +11,7 @@ Description: Pictures from around and about the festival on the Journal page.
 Image: images/carousel-image-2.jpg
 ---
 Slide: 3
-Format: PODCAST
+Format: GEEGAW
 Heading: Wooden Standing Decorations
 Description: Available soon from The Folklore Box shop.
 Image: Carousel-3.jpg
