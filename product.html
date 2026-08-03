@@ -307,7 +307,7 @@
         // Check Session for Wholesale
         const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
         const cartKey = isWholesale ? 'folkloreWholesaleCart' : 'folkloreCart';
-        let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+        let cart = JSON.parse(sessionStorage.getItem(cartKey)) || [];
 
         // Setup Wholesale UI Additions
         if (isWholesale) {
@@ -323,8 +323,8 @@
         if (logoutBtn) {
             logoutBtn.addEventListener('click', (e) => {
                 e.preventDefault();
-                let wCart = JSON.parse(localStorage.getItem('folkloreWholesaleCart')) || [];
-                let rCart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
+                let wCart = JSON.parse(sessionStorage.getItem('folkloreWholesaleCart')) || [];
+                let rCart = JSON.parse(sessionStorage.getItem('folkloreCart')) || [];
                 
                 // Convert prices back to full retail upon exit
                 wCart.forEach(wItem => {
@@ -345,8 +345,8 @@
                     }
                 });
 
-                localStorage.setItem('folkloreCart', JSON.stringify(rCart));
-                localStorage.removeItem('folkloreWholesaleCart');
+                sessionStorage.setItem('folkloreCart', JSON.stringify(rCart));
+                sessionStorage.removeItem('folkloreWholesaleCart');
                 sessionStorage.removeItem('wholesaleAuthenticated');
                 
                 alert("You have exited Wholesale Mode. Returning to the standard retail shop.");
@@ -681,7 +681,7 @@
         };
 
         function saveAndRefreshCart() {
-            localStorage.setItem(cartKey, JSON.stringify(cart));
+            sessionStorage.setItem(cartKey, JSON.stringify(cart));
             updateCartUI();
         }
 
@@ -797,7 +797,7 @@
         // --- BROWSER BACK BUTTON FIX ---
         window.addEventListener('pageshow', (event) => {
             if (event.persisted) {
-                cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+                cart = JSON.parse(sessionStorage.getItem(cartKey)) || [];
                 cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
                 updateCartUI();
             }
@@ -913,7 +913,7 @@
                         alert('Payment successful! We have received your order, ' + details.payer.name.given_name + ', and an email confirmation will be sent to you shortly.');
                         
                         cart = []; 
-                        localStorage.setItem(cartKey, JSON.stringify(cart)); 
+                        sessionStorage.setItem(cartKey, JSON.stringify(cart)); 
                         updateCartUI(); 
                         
                         const sidebar = document.getElementById('cart-sidebar');
