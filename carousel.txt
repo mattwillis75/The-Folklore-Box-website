@@ -23,8 +23,8 @@ Description: Available from The Folklore Box
 Image: Carousel-4.jpg
 ---
 Slide: 5
-Format: PODCAST
-Heading: Wooden Standing Decorations
-Description: Available from The Folklore Box
+Format: GEEGAW
+Heading: SHUCK Zines.
+Description: Available soon from The Folklore Box shop.
 Image: Carousel-5.jpg
 ---
