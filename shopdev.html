@@ -81,21 +81,110 @@
         .filter-btn.active, .filter-btn:hover { border-color: var(--accent-red); color: var(--text-light); }
         .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 30px; }
 
-        /* Product Cards */
-        .product-card { background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 4px; overflow: hidden; transition: transform var(--transition-speed); display: flex; flex-direction: column; }
-        .product-card:hover { transform: translateY(-5px); border-color: #555; }
-        .product-card a { text-decoration: none; color: inherit; display: flex; flex-direction: column; flex-grow: 1; }
-        .product-image { width: 100%; height: 280px; overflow: hidden; background: #111; }
-        .product-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
-        .product-card:hover .product-image img { transform: scale(1.05); }
-        .product-info { padding: 20px; display: flex; flex-direction: column; justify-content: space-between; flex-grow: 1; }
-        .product-title { font-family: var(--font-headings); font-size: 1.25rem; margin: 0 0 10px 0; font-weight: 400; }
-        .product-price { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 15px; }
-
-        .add-cart-btn {
-            width: 100%; padding: 12px; background: transparent; color: var(--text-light); border: 1px solid var(--accent-red); border-radius: 3px; cursor: pointer; text-transform: uppercase; font-weight: 300; letter-spacing: 1px; transition: background var(--transition-speed); margin-top: auto;
+       /* Product Cards */
+        .product-card { 
+            background: #111; 
+            border: 1px solid #333; 
+            border-radius: 4px; 
+            transition: border-color 0.3s ease, transform 0.3s ease; 
+            cursor: pointer; 
+            position: relative;
+            display: flex; 
+            flex-direction: column; 
+            height: 480px; /* Enforces standard grid height */
         }
-        .add-cart-btn:hover:not(:disabled) { background: var(--accent-red); }
+        
+        .product-card:hover { 
+            border-color: var(--accent-red); 
+            transform: translateY(-5px); 
+        }
+        
+        .product-card a { 
+            text-decoration: none; 
+            color: inherit; 
+            display: flex; 
+            flex-direction: column; 
+            height: 100%; 
+            padding: 1.5rem; 
+            box-sizing: border-box; 
+        }
+        
+        .product-image { 
+            width: 100%; 
+            aspect-ratio: 1 / 1; 
+            background: #0a0a0a; 
+            margin-bottom: 1.5rem; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            overflow: hidden; 
+            flex-shrink: 0; /* Prevents the image from squishing inside the fixed-height card */
+        }
+        
+        .product-image img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            transition: transform 0.4s ease; 
+        }
+        
+        .product-card:hover .product-image img { 
+            transform: scale(1.05); 
+        }
+        
+        .product-details { 
+            display: flex; 
+            flex-direction: column; 
+            flex-grow: 1; 
+            justify-content: space-between; 
+            text-align: center; 
+        }
+        
+        .product-title { 
+            font-family: 'Spectral', serif; 
+            font-size: 1.4rem; 
+            margin: 0 0 0.5rem 0; 
+            line-height: 1.3; 
+            display: -webkit-box;
+            -webkit-line-clamp: 2; /* Keeps longer titles to 2 lines max so they don't stretch the card */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .product-prices { 
+            font-family: 'Lato', sans-serif; 
+            color: #999; 
+            margin-bottom: 1.5rem; 
+        }
+        
+        .product-prices p { 
+            margin: 0; 
+            font-size: 1.1rem; 
+            color: var(--accent-red); 
+            font-weight: 600; 
+        }
+        
+        .add-cart-btn { 
+            background: transparent; 
+            color: #fff; 
+            border: 1px solid #fff; 
+            padding: 0.8rem; 
+            font-family: 'Lato', sans-serif; 
+            text-transform: uppercase; 
+            font-weight: bold; 
+            font-size: 0.8rem; 
+            letter-spacing: 2px; 
+            cursor: pointer; 
+            transition: background 0.3s ease, border-color 0.3s ease; 
+            margin-top: auto; 
+            width: 100%; 
+            box-sizing: border-box; 
+        }
+        
+        .add-cart-btn:hover { 
+            background: var(--accent-red); 
+            border-color: var(--accent-red); 
+        }
 
         /* Smart Cart Side Panel */
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); backdrop-filter: blur(3px); z-index: 3000; opacity: 0; visibility: hidden; transition: opacity 0.3s; }
