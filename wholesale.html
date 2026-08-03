@@ -168,6 +168,13 @@
         
         .paypal-disabled { pointer-events: none; opacity: 0.4; filter: grayscale(100%); }
 
+        /* Custom Stock Alert Modal */
+        .stock-alert-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.8); z-index: 4000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+        .stock-alert-box { background: #0a0a0a; border: 1px solid var(--accent-red); padding: 2.5rem; border-radius: 4px; max-width: 400px; width: 90%; text-align: center; color: #fff; box-shadow: 0 10px 30px rgba(204,0,0,0.15); }
+        .stock-alert-box p { margin-bottom: 2rem; font-size: 1.1rem; }
+        .stock-alert-btn { background: var(--accent-red); color: #fff; border: none; padding: 1rem 2rem; text-transform: uppercase; font-weight: 300; letter-spacing: 1px; cursor: pointer; border-radius: 3px; transition: background 0.3s ease; width: 100%; font-family: 'Lato', sans-serif; }
+        .stock-alert-btn:hover { background: #e60000; }
+
         footer { background: #000000; color: #ffffff; padding: 4rem 2rem; text-align: center; border-top: 1px solid #222; margin-top: auto; }
         footer a { color: #ffffff; text-decoration: none; margin: 0 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
         footer a:hover { color: var(--accent-red); }
@@ -238,7 +245,7 @@
                 <li><a href="uk-folklore-map.html">Folklore Map</a></li>
                 <li><a href="journal.html">Journal</a></li>
                 <li><a href="wholesale.html" class="active-page">Wholesale</a></li>
-                <li><a href="#" id="cart-toggle">Cart (0)</a></li>
+                <li><a href="#" id="cart-toggle">Cart (<span id="cart-count">0</span>)</a></li>
             </ul>
         </nav>
     </header>
@@ -261,7 +268,7 @@
 
     <div class="cart-overlay" id="cart-overlay"></div>
     <div class="cart-sidebar" id="cart-sidebar">
-        <div class="cart-header"><h2>Wholesale Cart</h2><span class="close-cart" id="close-cart">&times;</span></div>
+        <div class="cart-header"><h2 id="cart-title">Wholesale Cart</h2><span class="close-cart" id="close-cart">&times;</span></div>
         <div class="cart-items-container" id="cart-items"></div>
         <div class="cart-footer">
             
@@ -284,6 +291,15 @@
             
             <!-- PayPal Button Container -->
             <div id="paypal-button-container"></div>
+        </div>
+    </div>
+
+    <!-- Custom Stock Alert Modal -->
+    <div id="stock-alert" class="stock-alert-overlay">
+        <div class="stock-alert-box">
+            <h2 style="margin-top: 0; color: var(--accent-red);">Stock Limit Reached</h2>
+            <p id="stock-alert-msg"></p>
+            <button class="stock-alert-btn" onclick="document.getElementById('stock-alert').style.display='none'">Understood</button>
         </div>
     </div>
 
@@ -382,7 +398,7 @@
             }
 
             // ==========================================
-            // WHOLESALE LOGOUT LOGIC (Moved to Banner)
+            // WHOLESALE LOGOUT LOGIC
             // ==========================================
             const logoutBtn = document.getElementById('wholesale-logout-btn');
 
@@ -429,7 +445,7 @@
             }
 
             // ==========================================
-            // 2. REQUEST PASSWORD MODAL LOGIC
+            // REQUEST PASSWORD MODAL LOGIC
             // ==========================================
             const openRequestBtn = document.getElementById('open-request-btn');
             const closeRequestBtn = document.getElementById('close-request');
@@ -485,7 +501,7 @@
             }
 
             // ==========================================
-            // 1. PASSWORD GATE & SMART CART MERGER LOGIC
+            // PASSWORD GATE & SMART CART MERGER LOGIC
             // ==========================================
             const pwdOverlay = document.getElementById('password-overlay');
             const pwdInput = document.getElementById('wholesale-password');
@@ -562,7 +578,7 @@
 
 
             // ==========================================
-            // 3. FETCH AND BUILD CATALOGUE 
+            // FETCH AND BUILD CATALOGUE 
             // ==========================================
             const shopGrid = document.getElementById('shop-grid');
             const filtersContainer = document.getElementById('shop-filters');
@@ -605,7 +621,10 @@
                         if (rawItem.trim() === '') return;
                         
                         const lines = rawItem.trim().split('\n');
-                        let product = { sections: [] };
+                        let product = { 
+                            basePrice: 0, sections: [], 
+                            stock: 10, stockS: 10, stockM: 10, stockL: 10, stockXL: 10, stockXXL: 10 
+                        }; 
                         
                         lines.forEach(line => {
                             const sepIndex = line.indexOf(':');
@@ -620,9 +639,13 @@
                                 else if (key === 'main image' || key === 'image') product.mainImage = value;
                                 else if (key === 'sections') product.sections = value.split(',').map(s => s.trim());
                                 else if (key === 'postal class') product.postalClass = value;
-                                
-                                // APPLY 60% WHOLESALE PRICING
                                 else if (key === 'item cost') product.basePrice = parseFloat(value) * 0.60; 
+                                else if (key === 'stock') product.stock = isNaN(parseInt(value)) ? 10 : parseInt(value);
+                                else if (key === 'stock s') product.stockS = isNaN(parseInt(value)) ? 10 : parseInt(value);
+                                else if (key === 'stock m') product.stockM = isNaN(parseInt(value)) ? 10 : parseInt(value);
+                                else if (key === 'stock l') product.stockL = isNaN(parseInt(value)) ? 10 : parseInt(value);
+                                else if (key === 'stock xl') product.stockXL = isNaN(parseInt(value)) ? 10 : parseInt(value);
+                                else if (key === 'stock xxl') product.stockXXL = isNaN(parseInt(value)) ? 10 : parseInt(value);
                             }
                         });
                         
@@ -665,16 +688,28 @@
                 }
 
                 filteredProducts.forEach(product => {
+                    let actionButton = '';
+                    
+                    const isTshirt = product.sections.some(s => s.toLowerCase().includes('t-shirts'));
+
+                    if (isTshirt) {
+                        actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='product.html?id=${encodeURIComponent(product.id)}'">Add to Cart</button>`;
+                    } else if (product.stock <= 0) {
+                        actionButton = `<button class="add-cart-btn" disabled style="background:#222; color:#777; border-color:#333; cursor:not-allowed;">Out of Stock</button>`;
+                    } else {
+                        actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); addToCart('${product.id}', '${product.title.replace(/'/g, "\\'")}', ${product.basePrice}, '${product.postalClass}')">Add to Cart</button>`;
+                    }
+
                     shopGrid.innerHTML += `
                         <div class="product-card">
                             <a href="product.html?id=${product.id}">
                                 <div class="product-image">
-                                    <img src="${product.mainImage}" alt="${product.title}">
+                                    <img src="${product.mainImage}" alt="${product.title.replace(/"/g, '&quot;')}">
                                 </div>
                                 <div class="product-details">
                                     <h3 class="product-title">${product.title}</h3>
                                     <div class="product-prices"><p>£${product.basePrice.toFixed(2)}</p></div>
-                                    <button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); addToCart('${product.id}', '${product.title}', ${product.basePrice}, '${product.postalClass}')">Add to Cart</button>
+                                    ${actionButton}
                                 </div>
                             </a>
                         </div>
@@ -688,7 +723,7 @@
             }
 
             // ==========================================
-            // 4. SLIDE-OUT CART LOGIC
+            // SLIDE-OUT CART LOGIC
             // ==========================================
             let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
             cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
@@ -710,12 +745,33 @@
             if (cartOverlay) cartOverlay.addEventListener('click', closeCart);
             if (destSelect) destSelect.addEventListener('change', updateCartUI);
 
-            window.addToCart = function(id, title, price, postalClass) {
-                let existingItem = cart.find(item => item.id === id);
+            window.addToCart = function(id, title, price, postalClass, size = null) {
+                const productData = products.find(p => p.id === id);
+                let maxStock = 10;
+                
+                if (productData) {
+                    if (size === 'S') maxStock = productData.stockS;
+                    else if (size === 'M') maxStock = productData.stockM;
+                    else if (size === 'L') maxStock = productData.stockL;
+                    else if (size === 'XL') maxStock = productData.stockXL;
+                    else if (size === 'XXL') maxStock = productData.stockXXL;
+                    else maxStock = productData.stock;
+                }
+                
+                const cartItemId = size ? `${id}-${size}` : id;
+                let existingItem = cart.find(item => (item.cartItemId || item.id) === cartItemId);
+                let currentQty = existingItem ? existingItem.quantity : 0;
+
+                if (currentQty + 1 > maxStock) {
+                    document.getElementById('stock-alert-msg').textContent = `Apologies. We only have ${maxStock} of this item in stock.`;
+                    document.getElementById('stock-alert').style.display = 'flex';
+                    return; 
+                }
+
                 if (existingItem) {
                     existingItem.quantity += 1;
                 } else {
-                    cart.push({ id, title, price, postalClass, quantity: 1 });
+                    cart.push({ id, cartItemId, title, price, postalClass, size, quantity: 1 });
                 }
                 localStorage.setItem(cartKey, JSON.stringify(cart));
                 updateCartUI();
@@ -723,6 +779,25 @@
             };
 
             window.updateQuantity = function(index, delta) {
+                if (delta > 0) {
+                    const item = cart[index];
+                    const productData = products.find(p => p.id === item.id);
+                    let maxStock = 10;
+                    if (productData) {
+                        if (item.size === 'S') maxStock = productData.stockS;
+                        else if (item.size === 'M') maxStock = productData.stockM;
+                        else if (item.size === 'L') maxStock = productData.stockL;
+                        else if (item.size === 'XL') maxStock = productData.stockXL;
+                        else if (item.size === 'XXL') maxStock = productData.stockXXL;
+                        else maxStock = productData.stock;
+                    }
+                    if (item.quantity + delta > maxStock) {
+                        document.getElementById('stock-alert-msg').textContent = `Apologies. We only have ${maxStock} of this item in stock.`;
+                        document.getElementById('stock-alert').style.display = 'flex';
+                        return;
+                    }
+                }
+
                 cart[index].quantity += delta;
                 if (cart[index].quantity <= 0) {
                     cart.splice(index, 1);
@@ -764,11 +839,12 @@
                     itemsTotal += itemTotalCost;
                     cartItemCount += qty;
 
+                    const sizeLabel = item.size ? `<br><span style="font-size:0.8rem; color:#888; font-weight:normal;">Size: ${item.size} | £${item.price.toFixed(2)} each</span>` : `<br><span style="font-size:0.8rem; color:#888; font-weight:normal;">£${item.price.toFixed(2)} each</span>`;
+
                     container.innerHTML += `
                         <div class="cart-item">
                             <div class="cart-item-title">
-                                ${item.title} <br>
-                                <span style="font-size:0.8rem; color:#888; font-weight:normal;">£${item.price.toFixed(2)} each</span>
+                                ${item.title} ${sizeLabel}
                             </div>
                             <div class="cart-qty-controls">
                                 <button onclick="updateQuantity(${index}, -1)">-</button>
@@ -839,7 +915,7 @@
             updateCartUI();
 
             // ==========================================
-            // 5. PAYPAL INITIALIZATION
+            // PAYPAL INITIALIZATION
             // ==========================================
             try {
                 paypal.Buttons({
@@ -887,7 +963,7 @@
                         // 3. Build the Itemized Array for PayPal
                         const paypalItems = cart.map(item => {
                             return {
-                                name: item.title,
+                                name: item.title + (item.size ? ` (${item.size})` : ''),
                                 unit_amount: { currency_code: 'GBP', value: item.price.toFixed(2) },
                                 quantity: (item.quantity || 1).toString()
                             };
@@ -928,7 +1004,8 @@
                                 let orderBreakdown = "";
                                 cart.forEach(item => {
                                     const itemTotal = (item.price * (item.quantity || 1)).toFixed(2);
-                                    orderBreakdown += `${item.quantity || 1}x ${item.title} - £${itemTotal}\n`;
+                                    const sizeStr = item.size ? ` (Size: ${item.size})` : '';
+                                    orderBreakdown += `${item.quantity || 1}x ${item.title}${sizeStr} - £${itemTotal}\n`;
                                 });
 
                                 // 2. Prepare the variables to send to your EmailJS template
