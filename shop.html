@@ -27,6 +27,27 @@
             --header-bg: rgba(0, 0, 0, 0.85);
         }
 
+        /* Force scrollbar space to stop judder, but make the track invisible */
+        html {
+            overflow-y: scroll; 
+            scrollbar-color: #333333 transparent; /* Firefox support */
+        }
+
+        /* WebKit (Chrome, Safari, Edge) Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; /* This makes it invisible on short pages! */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333333; 
+            border-radius: 6px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-red); 
+        }
+
         body {
             font-family: var(--font-body);
             font-weight: 300;
