@@ -6,62 +6,103 @@
     <title>Shop | The Folklore Box</title>
     <meta name="description" content="Shop original British folklore artwork, prints, apparel, and wooden wares by The Folklore Box.">
     
-    <!-- Google Fonts -->
+    <!-- Google Fonts: Lato Light (300) and Spectral Regular (400) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;600&family=Spectral:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;600&family=Spectral:wght@400&display=swap" rel="stylesheet">
     
     <style>
-        :root {
-            --bg-color: #000000;
-            --text-color: #ffffff;
-            --accent-red: #cc0000;
+        /* Base Colors & Typography */
+        :root { 
+            --bg-color: #000000; 
+            --text-color: #ffffff; 
+            --accent-red: #cc0000; 
+            --header-bg: rgba(0, 0, 0, 0.85); 
         }
-
-        body {
-            font-family: 'Lato', sans-serif;
-            font-weight: 300;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
+        
+        body { 
+            font-family: 'Lato', sans-serif; 
+            font-weight: 300; 
+            background-color: var(--bg-color); 
+            color: var(--text-color); 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.6; 
+            overflow-x: hidden;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
             background-image: radial-gradient(circle at top, #1a1a1a 0%, #000000 100%);
             background-attachment: fixed;
         }
+        
+        h1, h2, h3, h4, h5, h6 { 
+            font-family: 'Spectral', serif; 
+            font-weight: 400; 
+            color: #ffffff; 
+        }
+
+        /* Fixed Header */
+        header { position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 3rem; background: var(--header-bg); border-bottom: 1px solid #333333; z-index: 1000; box-sizing: border-box; backdrop-filter: blur(8px); transition: all 0.3s ease; }
+        .logo img { max-width: 180px; height: auto; }
 
         /* Navigation */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 2rem 5%;
-            border-bottom: 1px solid #333;
+        nav ul { list-style: none; display: flex; align-items: center; gap: 2rem; margin: 0; padding: 0; }
+        nav a { text-decoration: none; color: #ffffff; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; transition: color 0.3s ease; font-family: 'Lato', sans-serif; white-space: nowrap; }
+        nav a:hover { color: var(--accent-red); }
+        .active-page { color: var(--accent-red) !important; }
+        #cart-toggle { color: var(--accent-red); border: 1px solid var(--accent-red); padding: 0.5rem 1rem; border-radius: 3px; }
+        #cart-toggle:hover { background: var(--accent-red); color: #ffffff; }
+
+        /* Dropdown */
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-content { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background-color: var(--accent-red); min-width: 180px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5); z-index: 1001; border-radius: 4px; flex-direction: column; margin-top: 1.5rem; padding: 0.5rem 0; }
+        .dropdown-content::before { content: ""; position: absolute; top: -1.5rem; left: 0; width: 100%; height: 1.5rem; }
+        .dropdown:hover .dropdown-content { display: flex; }
+        .dropdown-content a { padding: 10px 16px; display: block; color: #ffffff; text-align: center; }
+        .dropdown-content a:hover { background-color: #a30000; color: #ffffff; }
+        .dropdown-divider { height: 1px; background-color: #ffffff; margin: 0 15px; }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle { display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1005; }
+        .mobile-menu-toggle span { width: 25px; height: 3px; background-color: #ffffff; transition: all 0.3s ease; border-radius: 3px; }
+        
+        @media (max-width: 1100px) {
+            .mobile-menu-toggle { display: flex; }
+            nav ul { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background-color: rgba(0, 0, 0, 0.95); padding: 1rem 0; border-bottom: 1px solid #333; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+            nav ul.mobile-active { display: flex; }
+            nav ul li { width: 100%; text-align: center; padding: 0.8rem 0; }
+            .dropdown-content { position: static; transform: none; background-color: transparent; box-shadow: none; margin-top: 0; display: none; }
+            .dropdown-content::before { display: none; }
+            .mobile-menu-toggle.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .mobile-menu-toggle.open span:nth-child(2) { opacity: 0; }
+            .mobile-menu-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
         }
 
-        .logo-container img {
-            max-width: 150px;
-            height: auto;
-        }
+        /* --- Slide-Out Cart Styles --- */
+        .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 2001; display: none; backdrop-filter: blur(3px); }
+        .cart-overlay.active { display: block; }
+        .cart-sidebar { position: fixed; top: 0; right: -500px; width: 500px; max-width: 100vw; height: 100vh; background: #0a0a0a; border-left: 1px solid #222; z-index: 2002; transition: right 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); padding: 2rem; box-sizing: border-box; display: flex; flex-direction: column; overflow-y: auto; }
+        .cart-sidebar.open { right: 0; }
+        .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 1rem; margin-bottom: 1.5rem; flex-shrink: 0; }
+        .cart-header h2 { margin: 0; font-size: 2rem; }
+        .close-cart { font-size: 2.5rem; cursor: pointer; color: #fff; line-height: 1; transition: color 0.3s; }
+        .close-cart:hover { color: var(--accent-red); }
+        .cart-items-container { flex-grow: 1; margin-bottom: 1rem; padding-right: 0.5rem; overflow-y: visible; }
+        
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid #222; gap: 0.8rem; }
+        .cart-item-title { flex-grow: 1; font-weight: 600; font-size: 0.95rem; line-height: 1.3; }
+        .cart-qty-controls { display: flex; align-items: center; gap: 0.5rem; background: #111; padding: 0.2rem 0.5rem; border-radius: 3px; border: 1px solid #333; }
+        .cart-qty-controls button { background: none; border: none; color: #fff; cursor: pointer; font-size: 1.2rem; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
+        .cart-qty-controls button:hover { color: var(--accent-red); }
+        .cart-item-total { font-weight: bold; min-width: 60px; text-align: right; }
+        .remove-btn { background: none; border: none; color: #888; cursor: pointer; font-size: 1.5rem; padding: 0 0 0 0.5rem; transition: color 0.2s; }
+        .remove-btn:hover { color: var(--accent-red); }
+        
+        .cart-footer { border-top: 1px solid #333; padding-top: 1.5rem; flex-shrink: 0; }
+        .cart-total { font-size: 1.8rem; text-align: right; margin-bottom: 1.5rem; font-family: 'Spectral', serif; color: var(--accent-red); }
 
-        nav a {
-            color: var(--text-color);
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-left: 2rem;
-            transition: color 0.3s ease;
-        }
-
-        nav a:hover, nav a.active {
-            color: var(--accent-red);
-        }
-
-        /* Holding Message */
+        /* Holding Message specific styles */
         main {
             flex-grow: 1;
             display: flex;
@@ -69,24 +110,21 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 2rem;
+            padding: 120px 2rem 4rem; /* 120px top padding ensures it clears the fixed header */
         }
 
         .message-container {
             max-width: 600px;
         }
 
-        h1 {
-            font-family: 'Spectral', serif;
+        .message-container h1 {
             font-size: 3.5rem;
-            font-weight: 400;
             margin: 0 0 1rem 0;
             letter-spacing: 1px;
         }
 
-        p {
+        .message-container p {
             font-size: 1.2rem;
-            line-height: 1.6;
             color: #dddddd;
             margin: 0 auto 2rem auto;
         }
@@ -98,38 +136,6 @@
             margin: 0 auto 2rem auto;
         }
 
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 3rem 2rem;
-            border-top: 1px solid #333;
-            font-size: 0.9rem;
-            color: #888;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .social-links a {
-            color: #ffffff;
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 600;
-            transition: color 0.3s ease, transform 0.3s ease;
-            display: inline-block;
-        }
-
-        .social-links a:hover {
-            color: var(--accent-red);
-            transform: translateY(-2px);
-        }
-
-        /* Animation */
         .fade-in {
             animation: fadeIn 1.5s ease-in forwards;
         }
@@ -140,19 +146,20 @@
         }
 
         @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                gap: 1.5rem;
-            }
-            nav a {
-                margin: 0 1rem;
-            }
-            h1 { font-size: 2.5rem; }
+            .message-container h1 { font-size: 2.5rem; }
+            header { padding: 1.2rem 1.5rem; }
         }
+
+        /* Footer */
+        footer { background: #000000; color: #ffffff; padding: 4rem 2rem; text-align: center; border-top: 1px solid #222; margin-top: auto; }
+        footer a { color: #ffffff; text-decoration: none; margin: 0 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
+        footer a:hover { color: var(--accent-red); }
+        .social-links { margin-bottom: 2rem; }
     </style>
 </head>
 <body>
 
+    <!-- Header & Navigation (Fixed) -->
     <header id="main-header">
         <div class="logo"><a href="index.html"><img src="./The-folklore-box-logo.png" alt="The Folklore Box Logo"></a></div>
         <div class="mobile-menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
@@ -178,21 +185,163 @@
         </nav>
     </header>
 
+    <!-- Main Content Area -->
     <main class="fade-in">
         <div class="message-container">
-            <h1>The Folklore Box elves are currently stocking the shelves... </h1>
+            <h1>Stocking the shelves...</h1>
             <div class="divider"></div>
-            <p>Check back soon to browse a selection of original prints, T-Shirts, totes, and wooden decorations.</p>
+            <p>The shop is currently being prepared. Check back soon to browse the upcoming collection of original prints, apparel, and birch plywood wares.</p>
         </div>
     </main>
 
-    <footer class="fade-in">
-        <div class="social-links">
-            <a href="https://instagram.com/the_folklore_box" target="_blank">Instagram</a>
-            <a href="https://facebook.com/thefolklorebox" target="_blank">Facebook</a>
+    <!-- Slide-Out Shopping Cart -->
+    <div class="cart-overlay" id="cart-overlay"></div>
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h2 id="cart-title">Your Cart</h2>
+            <span class="close-cart" id="close-cart">&times;</span>
         </div>
-        <p>&copy; 2026 The Folklore Box. All rights reserved.</p>
+        <div class="cart-items-container" id="cart-items"></div>
+        <div class="cart-footer">
+            <div class="cart-total" id="cart-total">Total: £0.00</div>
+            <p style="text-align: center; color: #888; font-size: 0.9rem;">Checkout is completed securely via the Shop.</p>
+            <a href="shop.html" style="display: block; background: var(--accent-red); color: #fff; padding: 1rem; text-align: center; text-decoration: none; text-transform: uppercase; font-weight: bold; margin-top: 1rem;">Go to Shop</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="https://instagram.com/the_folklore_box" target="_blank">Instagram: @the_folklore_box</a> | 
+            <a href="https://facebook.com/thefolklorebox" target="_blank">Facebook: @thefolklorebox</a>
+        </div>
+        <div style="margin-bottom: 2rem;">
+            <a href="shop.html">Shop</a>
+            <a href="wholesale.html">Wholesale Enquiries</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <p style="font-size: 0.8rem; color: #555; font-family: 'Lato', sans-serif;">
+            &copy; 2026 The Folklore Box by Matt Willis. All rights reserved.
+        </p>
     </footer>
 
+    <!-- Interactive Scripts for Nav and Cart -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // --- Header Scroll Effect ---
+            const header = document.getElementById('main-header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.style.boxShadow = '0 2px 20px rgba(255, 0, 0, 0.1)';
+                    header.style.borderBottom = '1px solid var(--accent-red)';
+                } else {
+                    header.style.boxShadow = 'none';
+                    header.style.borderBottom = '1px solid #333333';
+                }
+            });
+
+            // --- Mobile Menu Toggle Script ---
+            const mobileToggle = document.getElementById('mobile-toggle');
+            const navList = document.getElementById('nav-list');
+            if (mobileToggle && navList) {
+                mobileToggle.addEventListener('click', () => {
+                    navList.classList.toggle('mobile-active');
+                    mobileToggle.classList.toggle('open');
+                });
+            }
+
+            // --- Smart Cart Detection Logic ---
+            const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
+            const cartKey = isWholesale ? 'folkloreWholesaleCart' : 'folkloreCart';
+            
+            if (isWholesale) {
+                const cartHeaderTitle = document.getElementById('cart-title');
+                if (cartHeaderTitle) cartHeaderTitle.textContent = 'Wholesale Cart';
+            }
+
+            let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+            cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
+            
+            const cartSidebar = document.getElementById('cart-sidebar');
+            const cartOverlay = document.getElementById('cart-overlay');
+            const cartToggle = document.getElementById('cart-toggle');
+            const closeCartBtn = document.getElementById('close-cart');
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartTotalElement = document.getElementById('cart-total');
+
+            const openCart = () => { cartSidebar.classList.add('open'); cartOverlay.classList.add('active'); };
+            const closeCartSidebar = () => { cartSidebar.classList.remove('open'); cartOverlay.classList.remove('active'); };
+
+            cartToggle.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
+            closeCartBtn.addEventListener('click', closeCartSidebar);
+            cartOverlay.addEventListener('click', closeCartSidebar);
+
+            window.updateQuantity = function(index, delta) {
+                cart[index].quantity += delta;
+                if (cart[index].quantity <= 0) {
+                    cart.splice(index, 1);
+                }
+                localStorage.setItem(cartKey, JSON.stringify(cart));
+                updateCartUI();
+            };
+
+            window.removeFromCart = function(index) { 
+                cart.splice(index, 1); 
+                localStorage.setItem(cartKey, JSON.stringify(cart)); 
+                updateCartUI(); 
+            };
+
+            const updateCartUI = () => {
+                cartItemsContainer.innerHTML = '';
+                let itemsTotal = 0;
+                let cartItemCount = 0;
+                
+                if (cart.length === 0) {
+                    cartItemsContainer.innerHTML = `<p style="color: #777; font-style: italic;">Your ${isWholesale ? 'wholesale ' : ''}cart is currently empty.</p>`;
+                    cartTotalElement.textContent = 'Total: £0.00';
+                    cartToggle.textContent = 'Cart (0)';
+                    return;
+                }
+
+                cart.forEach((item, index) => {
+                    const qty = item.quantity || 1;
+                    const itemTotalCost = item.price * qty;
+                    itemsTotal += itemTotalCost;
+                    cartItemCount += qty;
+
+                    cartItemsContainer.innerHTML += `
+                        <div class="cart-item">
+                            <div class="cart-item-title">
+                                ${item.title} <br>
+                                <span style="font-size:0.8rem; color:#888; font-weight:normal;">£${item.price.toFixed(2)} each</span>
+                            </div>
+                            <div class="cart-qty-controls">
+                                <button onclick="updateQuantity(${index}, -1)">-</button>
+                                <span>${qty}</span>
+                                <button onclick="updateQuantity(${index}, 1)">+</button>
+                            </div>
+                            <div class="cart-item-total">£${itemTotalCost.toFixed(2)}</div>
+                            <button class="remove-btn" onclick="removeFromCart(${index})" title="Remove item">&times;</button>
+                        </div>
+                    `;
+                });
+
+                cartTotalElement.textContent = `Total: £${itemsTotal.toFixed(2)}`;
+                cartToggle.textContent = `Cart (${cartItemCount})`;
+            };
+
+            window.addEventListener('pageshow', (event) => {
+                if (event.persisted) {
+                    const currentKey = typeof cartKey !== 'undefined' ? cartKey : 'folkloreCart';
+                    cart = JSON.parse(localStorage.getItem(currentKey)) || [];
+                    cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
+                    updateCartUI();
+                }
+            });
+            
+            updateCartUI();
+        });
+    </script>
 </body>
 </html>
