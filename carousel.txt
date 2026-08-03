@@ -13,7 +13,7 @@ Image: images/carousel-image-2.jpg
 Slide: 3
 Format: PODCAST
 Heading: Wooden Standing Decorations
-Description: Available from The Folklore Box
+Description: Available soon from The Folklore Box shop.
 Image: Carousel-3.jpg
 ---
 Slide: 4
