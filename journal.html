@@ -641,41 +641,59 @@
 
             // --- CART & MOBILE MENU INITIALIZATION ---
             
+// --- Smart Cart Detection Logic ---
             const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
             const cartKey = isWholesale ? 'folkloreWholesaleCart' : 'folkloreCart';
             
             if (isWholesale) {
-                document.getElementById('cart-title').textContent = 'Wholesale Cart';
+                const cartHeaderTitle = document.getElementById('cart-title');
+                if (cartHeaderTitle) cartHeaderTitle.textContent = 'Wholesale Cart';
             }
 
-            let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+            // CRUCIAL FIX: Changed from localStorage to sessionStorage
+            let cart = JSON.parse(sessionStorage.getItem(cartKey)) || [];
             cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
+            
+            const cartSidebar = document.getElementById('cart-sidebar');
+            const cartOverlay = document.getElementById('cart-overlay');
+            const cartToggle = document.getElementById('cart-toggle');
+            const closeCartBtn = document.getElementById('close-cart');
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartTotalElement = document.getElementById('cart-total');
+
+            const openCart = () => { if(cartSidebar) cartSidebar.classList.add('open'); if(cartOverlay) cartOverlay.classList.add('active'); };
+            const closeCartSidebar = () => { if(cartSidebar) cartSidebar.classList.remove('open'); if(cartOverlay) cartOverlay.classList.remove('active'); };
+
+            if(cartToggle) cartToggle.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
+            if(closeCartBtn) closeCartBtn.addEventListener('click', closeCartSidebar);
+            if(cartOverlay) cartOverlay.addEventListener('click', closeCartSidebar);
 
             window.updateQuantity = function(index, delta) {
                 cart[index].quantity += delta;
                 if (cart[index].quantity <= 0) {
                     cart.splice(index, 1);
                 }
-                localStorage.setItem(cartKey, JSON.stringify(cart));
+                sessionStorage.setItem(cartKey, JSON.stringify(cart));
                 updateCartUI();
             };
 
             window.removeFromCart = function(index) { 
                 cart.splice(index, 1); 
-                localStorage.setItem(cartKey, JSON.stringify(cart)); 
+                sessionStorage.setItem(cartKey, JSON.stringify(cart)); 
                 updateCartUI(); 
             };
 
             const updateCartUI = () => {
-                const container = document.getElementById('cart-items');
-                container.innerHTML = '';
+                if(!cartItemsContainer) return;
+                
+                cartItemsContainer.innerHTML = '';
                 let itemsTotal = 0;
                 let cartItemCount = 0;
                 
                 if (cart.length === 0) {
-                    container.innerHTML = `<p style="color: #777; font-style: italic;">Your ${isWholesale ? 'wholesale ' : ''}cart is currently empty.</p>`;
-                    document.getElementById('cart-total').textContent = 'Total: £0.00';
-                    document.getElementById('cart-toggle').textContent = 'Cart (0)';
+                    cartItemsContainer.innerHTML = `<p style="color: #777; font-style: italic;">Your ${isWholesale ? 'wholesale ' : ''}cart is currently empty.</p>`;
+                    if(cartTotalElement) cartTotalElement.textContent = 'Total: £0.00';
+                    if(cartToggle) cartToggle.textContent = 'Cart (0)';
                     return;
                 }
 
@@ -685,7 +703,7 @@
                     itemsTotal += itemTotalCost;
                     cartItemCount += qty;
 
-                    container.innerHTML += `
+                    cartItemsContainer.innerHTML += `
                         <div class="cart-item">
                             <div class="cart-item-title">
                                 ${item.title} <br>
@@ -702,19 +720,14 @@
                     `;
                 });
 
-                document.getElementById('cart-total').textContent = `Total: £${itemsTotal.toFixed(2)}`;
-                document.getElementById('cart-toggle').textContent = `Cart (${cartItemCount})`;
+                if(cartTotalElement) cartTotalElement.textContent = `Total: £${itemsTotal.toFixed(2)}`;
+                if(cartToggle) cartToggle.textContent = `Cart (${cartItemCount})`;
             };
 
-            document.getElementById('cart-toggle').addEventListener('click', (e) => { e.preventDefault(); document.getElementById('cart-sidebar').classList.add('open'); document.getElementById('cart-overlay').classList.add('active'); });
-            document.getElementById('close-cart').addEventListener('click', () => { document.getElementById('cart-sidebar').classList.remove('open'); document.getElementById('cart-overlay').classList.remove('active'); });
-            document.getElementById('cart-overlay').addEventListener('click', () => { document.getElementById('cart-sidebar').classList.remove('open'); document.getElementById('cart-overlay').classList.remove('active'); });
-            document.getElementById('mobile-toggle').addEventListener('click', () => { document.getElementById('nav-list').classList.toggle('mobile-active'); });
-            
             window.addEventListener('pageshow', (event) => {
                 if (event.persisted) {
                     const currentKey = typeof cartKey !== 'undefined' ? cartKey : 'folkloreCart';
-                    cart = JSON.parse(localStorage.getItem(currentKey)) || [];
+                    cart = JSON.parse(sessionStorage.getItem(currentKey)) || [];
                     cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
                     updateCartUI();
                 }
