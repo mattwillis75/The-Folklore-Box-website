@@ -5,28 +5,28 @@ Int Base: 0.00
 Int Additional: 0.00
 ---
 Class: First Class Letter
-UK Base: 0.00
-UK Additional: 0.00
-Int Base: 0.00
-Int Additional: 0.00
+UK Base: 2.50
+UK Additional: 0.20
+Int Base: 10.00
+Int Additional: 1.00
 ---
 Class: First Class Large Letter
-UK Base: 0.00
-UK Additional: 0.00
-Int Base: 0.00
-Int Additional: 0.00
+UK Base: 2.50
+UK Additional: 0.20
+Int Base: 10.00
+Int Additional: 1.00
 ---
 Class: First Class Small Parcel
-UK Base: 0.00
-UK Additional: 0.00
-Int Base: 0.00
-Int Additional: 0.00
+UK Base: 2.50
+UK Additional: 0.20
+Int Base: 10.00
+Int Additional: 1.00
 ---
 Class: First Class Medium Parcel
-UK Base: 0.00
-UK Additional: 0.00
-Int Base: 0.00
-Int Additional: 0.00
+UK Base: 2.50
+UK Additional: 0.20
+Int Base: 10.00
+Int Additional: 1.00
 ---
 Class: Second Class Letter
 UK Base: 1.50
@@ -35,20 +35,20 @@ Int Base: 10.00
 Int Additional: 2.00
 ---
 Class: Second Class Large Letter
-UK Base: 0.00
-UK Additional: 0.00
-Int Base: 0.00
-Int Additional: 0.00
+UK Base: 2.50
+UK Additional: 0.20
+Int Base: 12.00
+Int Additional: 1.00
 ---
 Class: Second Class Small Parcel
-UK Base: 3.00
-UK Additional: 1.00
-Int Base: 15.00
+UK Base: 2.50
+UK Additional: 0.20
+Int Base: 10.00
 Int Additional: 1.00
 ---
 Class: Second Class Medium Parcel
-UK Base: 0.00
-UK Additional: 0.00
-Int Base: 0.00
-Int Additional: 0.00
+UK Base: 2.50
+UK Additional: 0.20
+Int Base: 10.00
+Int Additional: 1.00
 ---
