@@ -9,6 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;600&family=Spectral:wght@400;700&display=swap" rel="stylesheet">
     
+    <!-- PayPal SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=BAAyFEECFHCgIYSVAcx3GUqT0FI1rHhhU_mwYJxRf6ngeAPN3zYdx3W4a1tCIEHivTFLxU7oFEeDD1NIIs&currency=GBP&locale=en_GB"></script>
+
     <style>
         /* Base Colors & Typography */
         :root {
@@ -34,7 +37,7 @@
             line-height: 1.6;
         }
 
-        /* Fixed Header from Index */
+        /* Fixed Header */
         header { position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 3rem; background: var(--header-bg); border-bottom: 1px solid var(--border-color); z-index: 2000; box-sizing: border-box; backdrop-filter: blur(8px); transition: all 0.3s ease; }
         .logo img { max-width: 180px; height: auto; }
 
@@ -72,170 +75,36 @@
         }
 
         /* Product Layout */
-        .container {
-            max-width: 1100px;
-            margin: 120px auto 60px; /* Top margin accounts for fixed header */
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            min-height: 500px;
-        }
+        .container { max-width: 1100px; margin: 120px auto 60px; padding: 0 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; min-height: 500px; }
+        @media (max-width: 800px) { .container { grid-template-columns: 1fr; } }
 
-        @media (max-width: 800px) {
-            .container { grid-template-columns: 1fr; }
-        }
+        .back-btn { background: transparent; color: var(--text-light); border: 1px solid var(--border-color); padding: 8px 20px; cursor: pointer; text-transform: uppercase; font-weight: 300; letter-spacing: 1px; border-radius: 3px; transition: border-color var(--transition-speed), color var(--transition-speed); text-decoration: none; display: inline-block; font-size: 0.9rem; }
+        .back-btn:hover { border-color: var(--accent-red); color: var(--accent-red); }
 
-        /* Back Button */
-        .back-btn {
-            background: transparent;
-            color: var(--text-light);
-            border: 1px solid var(--border-color);
-            padding: 8px 20px;
-            cursor: pointer;
-            text-transform: uppercase;
-            font-weight: 300;
-            letter-spacing: 1px;
-            border-radius: 3px;
-            transition: border-color var(--transition-speed), color var(--transition-speed);
-            text-decoration: none;
-            display: inline-block;
-            font-size: 0.9rem;
-        }
-
-        .back-btn:hover {
-            border-color: var(--accent-red);
-            color: var(--accent-red);
-        }
-
-        /* Image Gallery - 4:3 Ratio */
-        .gallery-main {
-            width: 100%;
-            aspect-ratio: 4 / 3;
-            height: auto;
-            background: #111;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            margin-bottom: 15px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .gallery-main img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .gallery-thumbs {
-            display: flex;
-            gap: 10px;
-            overflow-x: auto;
-        }
-
-        .gallery-thumbs img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border: 1px solid var(--border-color);
-            border-radius: 3px;
-            cursor: pointer;
-            transition: border-color var(--transition-speed);
-        }
-
-        .gallery-thumbs img:hover, .gallery-thumbs img.active {
-            border-color: var(--accent-red);
-        }
+        /* Image Gallery */
+        .gallery-main { width: 100%; aspect-ratio: 4 / 3; height: auto; background: #111; border: 1px solid var(--border-color); border-radius: 4px; margin-bottom: 15px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        .gallery-main img { width: 100%; height: 100%; object-fit: cover; }
+        .gallery-thumbs { display: flex; gap: 10px; overflow-x: auto; }
+        .gallery-thumbs img { width: 80px; height: 80px; object-fit: cover; border: 1px solid var(--border-color); border-radius: 3px; cursor: pointer; transition: border-color var(--transition-speed); }
+        .gallery-thumbs img:hover, .gallery-thumbs img.active { border-color: var(--accent-red); }
 
         /* Product Details */
-        .product-details {
-            display: flex;
-            flex-direction: column;
-        }
+        .product-details { display: flex; flex-direction: column; }
+        .product-title { font-family: var(--font-headings); font-size: 2.5rem; margin: 0 0 10px 0; line-height: 1.2; font-weight: 400; }
+        .product-price { font-size: 1.5rem; color: var(--text-muted); margin: 0 0 30px 0; }
+        .product-description { font-size: 1.1rem; margin-bottom: 30px; white-space: pre-wrap; }
 
-        .product-title {
-            font-family: var(--font-headings);
-            font-size: 2.5rem;
-            margin: 0 0 10px 0;
-            line-height: 1.2;
-            font-weight: 400;
-        }
-
-        .product-price {
-            font-size: 1.5rem;
-            color: var(--text-muted);
-            margin: 0 0 30px 0;
-        }
-
-        .product-description {
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-            white-space: pre-wrap;
-        }
-
-        .meta-list {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 30px 0;
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-            padding: 15px 0;
-        }
-
-        .meta-list li {
-            margin-bottom: 8px;
-            font-size: 0.95rem;
-            color: var(--text-muted);
-        }
+        .meta-list { list-style: none; padding: 0; margin: 0 0 30px 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 15px 0; }
+        .meta-list li { margin-bottom: 8px; font-size: 0.95rem; color: var(--text-muted); }
         .meta-list li strong { color: var(--text-light); }
 
         /* Form / Add to Cart */
-        .variant-select {
-            margin-bottom: 25px;
-        }
-
-        .variant-select label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-        }
-
-        .variant-select select {
-            width: 100%;
-            padding: 15px;
-            background: #111;
-            color: #fff;
-            border: 1px solid var(--border-color);
-            border-radius: 3px;
-            outline: none;
-            font-family: var(--font-body);
-            font-size: 1rem;
-            cursor: pointer;
-        }
-        
+        .variant-select { margin-bottom: 25px; }
+        .variant-select label { display: block; margin-bottom: 8px; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; }
+        .variant-select select { width: 100%; padding: 15px; background: #111; color: #fff; border: 1px solid var(--border-color); border-radius: 3px; outline: none; font-family: var(--font-body); font-size: 1rem; cursor: pointer; }
         .variant-select select:focus { border-color: var(--accent-red); }
 
-        .add-cart-btn {
-            width: 100%;
-            padding: 18px;
-            background: var(--accent-red);
-            color: #fff;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-            text-transform: uppercase;
-            font-weight: 300; /* Light weight */
-            letter-spacing: 1.5px;
-            font-size: 1.1rem;
-            transition: background var(--transition-speed);
-            font-family: var(--font-body);
-        }
-
+        .add-cart-btn { width: 100%; padding: 18px; background: var(--accent-red); color: #fff; border: none; border-radius: 3px; cursor: pointer; text-transform: uppercase; font-weight: 300; letter-spacing: 1.5px; font-size: 1.1rem; transition: background var(--transition-speed); font-family: var(--font-body); }
         .add-cart-btn:hover:not(:disabled) { background: #e60000; }
         .add-cart-btn:disabled { background: #333; color: #777; cursor: not-allowed; }
 
@@ -260,8 +129,7 @@
 
         .cart-footer { padding: 20px; border-top: 1px solid var(--border-color); background: var(--bg-color); }
         .cart-total-row { display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 600; margin-bottom: 20px; }
-        .checkout-btn { width: 100%; padding: 15px; background: var(--accent-red); color: #fff; border: none; border-radius: 3px; text-transform: uppercase; font-weight: 300; /* Light weight */ letter-spacing: 1px; cursor: pointer; font-size: 1rem; font-family: var(--font-body); }
-
+        
         /* Custom Stock Alert Modal */
         .stock-alert-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.8); z-index: 4000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
         .stock-alert-box { background: #0a0a0a; border: 1px solid var(--accent-red); padding: 2.5rem; border-radius: 4px; max-width: 400px; width: 90%; text-align: center; color: #fff; box-shadow: 0 10px 30px rgba(204,0,0,0.15); }
@@ -272,7 +140,7 @@
 </head>
 <body>
 
-    <!-- Header & Navigation (Fixed) -->
+    <!-- Header & Navigation -->
     <header id="main-header">
         <div class="logo"><a href="index.html"><img src="./The-folklore-box-logo.png" alt="The Folklore Box Logo"></a></div>
         <div class="mobile-menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
@@ -304,7 +172,7 @@
         </div>
     </div>
 
-    <!-- Smart Cart Panel -->
+    <!-- Smart Cart Panel with PayPal Integration -->
     <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
     <div class="cart-panel" id="cart-panel">
         <div class="cart-header">
@@ -319,7 +187,8 @@
                 <span>Subtotal</span>
                 <span id="cart-subtotal">£0.00</span>
             </div>
-            <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+            <!-- PayPal Button Target -->
+            <div id="paypal-button-container" style="margin-top: 15px;"></div>
         </div>
     </div>
 
@@ -333,7 +202,6 @@
     </div>
 
     <script>
-        // Mobile Menu Toggle Logic
         const mobileToggle = document.getElementById('mobile-toggle');
         const navList = document.getElementById('nav-list');
         if (mobileToggle && navList) {
@@ -343,7 +211,6 @@
             });
         }
 
-        // Header Scroll Effect
         const header = document.getElementById('main-header');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
@@ -355,7 +222,6 @@
             }
         });
 
-        // Extract Product ID from URL
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get('id');
         
@@ -365,7 +231,6 @@
         const cartKey = 'folklore_cart';
         let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
-        // Fetch Database with Cache Buster
         fetch('products.txt?v=' + new Date().getTime(), { cache: 'no-store' })
             .then(response => response.text())
             .then(text => {
@@ -399,7 +264,6 @@
                                     else if (key === 'postal class') product.postalClass = value;
                                     else if (key === 'item cost') product.basePrice = parseFloat(value.replace(/[^0-9.]/g, '')) || 0;
                                     
-                                    // Stock parsing
                                     else if (key === 'stock') product.stock = isNaN(parseInt(value)) ? 10 : parseInt(value);
                                     else if (key === 'stock s') product.stockS = isNaN(parseInt(value)) ? 10 : parseInt(value);
                                     else if (key === 'stock m') product.stockM = isNaN(parseInt(value)) ? 10 : parseInt(value);
@@ -419,7 +283,6 @@
                         
                         if(product.description) product.description = product.description.trim();
                         
-                        // Generate rock-solid unique ID
                         if (product.title) {
                             product.id = 'prod-' + product.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
                             allProducts.push(product);
@@ -507,7 +370,6 @@
                 }
             }
 
-            // Injected Back Button here
             document.getElementById('product-container').innerHTML = `
                 <div style="grid-column: 1 / -1; margin-bottom: -15px;">
                     <a href="shop.html" class="back-btn">&larr; Back to Shop</a>
@@ -636,6 +498,7 @@
             const cartContainer = document.getElementById('cart-items');
             const cartCountLabel = document.getElementById('cart-count');
             const cartSubtotalLabel = document.getElementById('cart-subtotal');
+            const paypalContainer = document.getElementById('paypal-button-container');
             
             cartContainer.innerHTML = '';
             let totalItems = 0;
@@ -643,7 +506,9 @@
 
             if (cart.length === 0) {
                 cartContainer.innerHTML = '<p style="color:var(--text-muted); text-align:center; margin-top:40px;">Your cart is empty.</p>';
+                paypalContainer.style.display = 'none';
             } else {
+                paypalContainer.style.display = 'block';
                 cart.forEach((item, index) => {
                     totalItems += item.quantity;
                     subtotal += item.price * item.quantity;
@@ -682,11 +547,46 @@
             document.getElementById('cart-panel').classList.remove('active');
         };
 
-        window.checkout = function() {
-            if(cart.length === 0) return;
-            // Redirect straight to checkout page instead of alerting
-            window.location.href = 'checkout.html';
-        };
+        // PayPal SDK Logic
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+                let total = 0;
+                let itemArray = cart.map(item => {
+                    let itemTotal = item.price * item.quantity;
+                    total += itemTotal;
+                    return {
+                        name: item.title + (item.size ? ` (${item.size})` : ''),
+                        unit_amount: { currency_code: 'GBP', value: item.price.toFixed(2) },
+                        quantity: item.quantity.toString()
+                    };
+                });
+                
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            currency_code: 'GBP',
+                            value: total.toFixed(2),
+                            breakdown: {
+                                item_total: { currency_code: 'GBP', value: total.toFixed(2) }
+                            }
+                        },
+                        items: itemArray
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    alert('Transaction completed successfully! Thank you for your order, ' + details.payer.name.given_name + '.');
+                    cart = [];
+                    saveAndRefreshCart();
+                    closeCart();
+                });
+            },
+            onError: function (err) {
+                console.error("PayPal Checkout Error:", err);
+            }
+        }).render('#paypal-button-container');
+
     </script>
 </body>
 </html>
