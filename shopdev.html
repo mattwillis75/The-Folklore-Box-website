@@ -377,13 +377,17 @@
                     actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); addToSmartCart('${product.id}', '${product.title.replace(/'/g, "\\'")}', ${product.basePrice}, '${product.postalClass}', null)">Add to Cart</button>`;
                 }
 
+                // UPDATED HTML STRUCTURE TO MATCH CSS
                 shopGrid.innerHTML += `
                     <div class="product-card">
                         <a href="product.html?id=${encodeURIComponent(product.id)}">
-                            <div class="product-image"><img src="${product.mainImage || 'placeholder.jpg'}" alt="${product.title.replace(/"/g, '&quot;')}"></div>
-                            <div class="product-info">
-                                <div><h3 class="product-title">${product.title}</h3></div>
-                                <div><p class="product-price">£${product.basePrice.toFixed(2)}</p>${actionButton}</div>
+                            <div class="product-image">
+                                <img src="${product.mainImage || 'placeholder.jpg'}" alt="${product.title.replace(/"/g, '&quot;')}">
+                            </div>
+                            <div class="product-details">
+                                <h3 class="product-title">${product.title}</h3>
+                                <div class="product-prices"><p>£${product.basePrice.toFixed(2)}</p></div>
+                                ${actionButton}
                             </div>
                         </a>
                     </div>
