@@ -554,7 +554,8 @@
 
         window.checkout = function() {
             if(cart.length === 0) return;
-            alert('Proceeding to checkout...'); 
+            // Redirect straight to checkout page instead of alerting
+            window.location.href = 'checkout.html';
         };
     </script>
 </body>
