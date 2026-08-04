@@ -455,7 +455,7 @@
         });
 
         const shopGrid = document.getElementById('shop-grid');
-        const filterBar = document.getElementById('filter-bar');
+        const filtersContainer = document.getElementById('filter-bar'); // Fix applied here!
         let products = [];
         let filteredProducts = [];
         let availableCategories = new Set();
@@ -535,27 +535,53 @@
                 });
                 
                 filteredProducts = [...products];
-                buildFilters();
-                renderGrid();
+                
+                // Construct Filters dynamically
+                if (uniqueSections.size === 0 && availableCategories.size > 0) {
+                    uniqueSections = availableCategories;
+                }
+                
+                if (uniqueSections.size > 0 && filtersContainer) {
+                    let filterHTML = `<button class="filter-btn active" onclick="filterCategory('All')">All Items</button>`;
+                    Array.from(uniqueSections).sort().forEach(sec => {
+                        filterHTML += `<button class="filter-btn" onclick="filterCategory('${sec.replace(/'/g, "\\'")}')">${sec}</button>`;
+                    });
+                    filtersContainer.innerHTML = filterHTML;
+                }
+                
+                renderGrid('All');
                 updateCartUI();
+                
             } catch (err) {
                 console.error("Error loading products:", err);
-                shopGrid.innerHTML = "<p>Unable to load shop inventory at this time.</p>";
+                if(shopGrid) shopGrid.innerHTML = "<p>Unable to load shop inventory at this time.</p>";
             }
         }
         
         // Boot up the page logic
         initializeShop();
 
-        function buildFilters() {
-            filterBar.innerHTML = `<button class="filter-btn active" onclick="filterCategory('All')">All Items</button>`;
-            Array.from(availableCategories).sort().forEach(category => {
-                filterBar.innerHTML += `<button class="filter-btn" onclick="filterCategory('${category.replace(/'/g, "\\'")}')">${category}</button>`;
-            });
-        }
+        window.filterCategory = function(category) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
 
-        function renderGrid() {
+            if (category === 'All') {
+                filteredProducts = [...products];
+            } else {
+                filteredProducts = products.filter(p => p.sections && p.sections.split(',').map(s=>s.trim()).includes(category));
+            }
+            renderGrid(category);
+        };
+
+        function renderGrid(filterValue) {
+            if(!shopGrid) return;
             shopGrid.innerHTML = '';
+            
+            if (filteredProducts.length === 0) {
+                shopGrid.innerHTML = '<p style="color: #fff; grid-column: 1 / -1; text-align: center;">No products found in this section.</p>';
+                return;
+            }
+
             filteredProducts.forEach(product => {
                 
                 let displayPrice = isWholesale ? Math.round(product.basePrice * 0.60 * 100) / 100 : product.basePrice;
@@ -564,7 +590,9 @@
                     : `<p>£${displayPrice.toFixed(2)}</p>`;
 
                 let actionButton = '';
-                if (product.sections && product.sections.toLowerCase().includes('t-shirts')) {
+                const isTshirt = product.sections && product.sections.toLowerCase().includes('t-shirts');
+
+                if (isTshirt) {
                     actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='product.html?id=${encodeURIComponent(product.id)}'">Add to Cart</button>`;
                 } else if (product.stock <= 0) {
                     actionButton = `<button class="add-cart-btn" disabled style="background:#222; color:#777; border-color:#333; cursor:not-allowed;">Out of Stock</button>`;
@@ -588,18 +616,6 @@
                 `;
             });
         }
-
-        window.filterCategory = function(category) {
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-
-            if (category === 'All') {
-                filteredProducts = [...products];
-            } else {
-                filteredProducts = products.filter(p => p.sections && p.sections.split(',').map(s=>s.trim()).includes(category));
-            }
-            renderGrid();
-        };
 
         window.addToSmartCart = function(id, title, price, postalClass, size = null) {
             const productData = products.find(p => p.id === id);
@@ -682,6 +698,8 @@
 
         function updateCartUI() {
             const container = document.getElementById('cart-items');
+            if(!container) return;
+            
             container.innerHTML = '';
             let itemsTotal = 0; let shippingTotal = 0; let finalTotal = 0;
             let cartItemCount = 0;
