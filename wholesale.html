@@ -13,18 +13,19 @@
     <style>
         /* Base Colors & Typography */
         :root { --bg-color: #000000; --secondary-bg: #0a0a0a; --text-color: #ffffff; --accent-red: #cc0000; --header-bg: rgba(0, 0, 0, 0.85); --text-light: #ffffff; --text-muted: #aaaaaa; --border-color: #333333; --transition-speed: 0.3s; --font-headings: 'Spectral', serif; --font-body: 'Lato', sans-serif;}
+        
         /* Force scrollbar space to stop judder, but make the track invisible */
         html {
             overflow-y: scroll; 
             scrollbar-color: #333333 transparent; /* Firefox support */
         }
 
-        /* WebKit (Chrome, Safari, Edge) Custom Scrollbar */
+        /* WebKit Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 12px;
         }
         ::-webkit-scrollbar-track {
-            background: transparent; /* This makes it invisible on short pages! */
+            background: transparent;
         }
         ::-webkit-scrollbar-thumb {
             background: #333333; 
@@ -33,6 +34,7 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--accent-red); 
         }
+
         body { 
             font-family: var(--font-body); 
             font-weight: 300; 
@@ -70,11 +72,18 @@
         .dropdown-content a:hover { background-color: #a30000; color: #ffffff; }
         .dropdown-divider { height: 1px; background-color: #ffffff; margin: 0 15px; }
 
+        /* Mobile Controls Wrapper */
+        .mobile-controls { display: none; align-items: center; gap: 15px; z-index: 2005; }
+        .mobile-cart-btn { color: var(--accent-red); border: 1px solid var(--accent-red); padding: 0.4rem 0.8rem; border-radius: 3px; text-decoration: none; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-body); transition: all 0.3s ease; }
+        .mobile-cart-btn:hover { background: var(--accent-red); color: #ffffff; }
+
         /* Mobile Menu */
-        .mobile-menu-toggle { display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 2005; }
+        .mobile-menu-toggle { display: flex; flex-direction: column; cursor: pointer; gap: 5px; }
         .mobile-menu-toggle span { width: 25px; height: 3px; background-color: #ffffff; transition: all 0.3s ease; border-radius: 3px; }
+        
         @media (max-width: 1100px) {
-            .mobile-menu-toggle { display: flex; }
+            .mobile-controls { display: flex; }
+            #nav-list li:last-child { display: none; }
             nav ul { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background-color: rgba(0, 0, 0, 0.95); padding: 1rem 0; border-bottom: 1px solid #333; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
             nav ul.mobile-active { display: flex; }
             nav ul li { width: 100%; text-align: center; padding: 0.8rem 0; }
@@ -252,7 +261,9 @@
         }
 
         @media (max-width: 600px) {
-            .shop-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; padding: 0 1.5rem 4rem; }
+            .mobile-cart-btn { font-size: 0.7rem; padding: 0.3rem 0.6rem; }
+            .mobile-controls { gap: 10px; }
+            .shop-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
             .product-card { min-height: 380px; }
             .product-card a { padding: 1rem; }
             .product-image { margin-bottom: 1rem; }
@@ -295,7 +306,10 @@
 
     <header id="main-header">
         <div class="logo"><a href="index.html"><img src="./The-folklore-box-logo.png" alt="The Folklore Box Logo"></a></div>
-        <div class="mobile-menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
+        <div class="mobile-controls">
+            <a href="#" id="mobile-cart-toggle" class="mobile-cart-btn" onclick="openCart(); return false;">Cart (<span id="mobile-cart-count">0</span>)</a>
+            <div class="mobile-menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
+        </div>
         <nav>
             <ul id="nav-list">
                 <li class="dropdown">
@@ -313,7 +327,7 @@
                 <li><a href="uk-folklore-map.html">Folklore Map</a></li>
                 <li><a href="journal.html">Journal</a></li>
                 <li><a href="wholesale.html" class="active-page">Wholesale</a></li>
-                <li><a href="#" id="cart-toggle">Cart (<span id="cart-count">0</span>)</a></li>
+                <li><a href="#" id="cart-toggle">Cart (0)</a></li>
             </ul>
         </nav>
     </header>
@@ -837,10 +851,13 @@
             const cartWarning = document.getElementById('cart-warning');
             const paypalContainer = document.getElementById('paypal-button-container');
 
-            const openCart = () => { cartSidebar.classList.add('open'); cartOverlay.classList.add('active'); };
-            const closeCart = () => { cartSidebar.classList.remove('open'); cartOverlay.classList.remove('active'); };
+            window.openCart = () => { cartSidebar.classList.add('open'); cartOverlay.classList.add('active'); };
+            window.closeCart = () => { cartSidebar.classList.remove('open'); cartOverlay.classList.remove('active'); };
 
             if (cartToggle) cartToggle.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
+            const mbCartToggle = document.getElementById('mobile-cart-toggle');
+            if (mbCartToggle) mbCartToggle.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
+            
             if (closeCartBtn) closeCartBtn.addEventListener('click', closeCart);
             if (cartOverlay) cartOverlay.addEventListener('click', closeCart);
             if (destSelect) destSelect.addEventListener('change', updateCartUI);
@@ -883,11 +900,16 @@
                 let cartItemCount = 0;
                 
                 if (cart.length === 0) {
-                    container.innerHTML = '<p style="color: #777; font-style: italic;">Your wholesale cart is currently empty.</p>';
+                    container.innerHTML = `<p style="color: #777; font-style: italic;">Your ${isWholesale ? 'wholesale ' : ''}cart is currently empty.</p>`;
                     document.getElementById('cart-subtotal').textContent = `£0.00`;
                     document.getElementById('cart-shipping-cost').textContent = `£0.00`;
                     document.getElementById('cart-total').textContent = `Total: £0.00`;
-                    document.getElementById('cart-toggle').textContent = `Cart (0)`;
+                    
+                    const dtToggle = document.getElementById('cart-toggle');
+                    const mbToggle = document.getElementById('mobile-cart-toggle');
+                    if(dtToggle) dtToggle.textContent = `Cart (0)`;
+                    if(mbToggle) mbToggle.textContent = `Cart (0)`;
+                    
                     cartWarning.style.display = 'block';
                     paypalContainer.classList.add('paypal-disabled');
                     return;
@@ -950,7 +972,11 @@
                 document.getElementById('cart-subtotal').textContent = `£${itemsTotal.toFixed(2)}`;
                 document.getElementById('cart-shipping-cost').textContent = `£${shippingTotal.toFixed(2)}`;
                 document.getElementById('cart-total').textContent = `Total: £${finalTotal.toFixed(2)}`;
-                document.getElementById('cart-toggle').textContent = `Cart (${cartItemCount})`;
+                
+                const dtToggle = document.getElementById('cart-toggle');
+                const mbToggle = document.getElementById('mobile-cart-toggle');
+                if(dtToggle) dtToggle.textContent = `Cart (${cartItemCount})`;
+                if(mbToggle) mbToggle.textContent = `Cart (${cartItemCount})`;
 
                 // Validation for Wholesale Minimum Spend (£75) applied only if user is logged in
                 if (isWholesale) {
