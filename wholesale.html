@@ -1017,72 +1017,83 @@
                     },
 
                     createOrder: function(data, actions) {
-                        let itemsTotal = 0; let shippingTotal = 0; let maxBase = 0; let maxBaseItem = null;
-                        const dest = destSelect.value;
-                        
-                        // 1. Calculate items and find heaviest shipping base
-                        cart.forEach(item => {
-                            const qty = item.quantity || 1;
-                            itemsTotal += item.price * qty;
-                            const rates = postalRates[item.postalClass];
-                            if(rates) {
-                                const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
-                                if(baseRate > maxBase) { maxBase = baseRate; maxBaseItem = item; }
-                            }
-                        });
+                let itemsTotal = 0; let shippingTotal = 0; let maxBase = 0; let maxBaseItem = null;
+                const dest = destSelect ? destSelect.value : 'uk';
+                
+                // 1. Calculate items and find heaviest shipping base
+                cart.forEach(item => {
+                    const qty = item.quantity || 1;
+                    itemsTotal += item.price * qty;
+                    const rates = postalRates[item.postalClass];
+                    if(rates) {
+                        const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                        if(baseRate > maxBase) { maxBase = baseRate; maxBaseItem = item; }
+                    }
+                });
 
-                        // 2. Calculate accurate grouped shipping
-                        let baseRateApplied = false;
-                        cart.forEach(item => {
-                            const rates = postalRates[item.postalClass];
-                            if(rates) {
-                                const qty = item.quantity || 1;
-                                const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
-                                const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
-                                if (item === maxBaseItem && !baseRateApplied) {
-                                    shippingTotal += baseRate + (addRate * (qty - 1));
-                                    baseRateApplied = true;
-                                } else {
-                                    shippingTotal += addRate * qty;
-                                }
-                            }
-                        });
-                        
-                        // 3. Build the Itemized Array for PayPal
-                        const paypalItems = cart.map(item => {
-                            return {
-                                name: item.title + (item.size ? ` (${item.size})` : ''),
-                                unit_amount: { currency_code: 'GBP', value: item.price.toFixed(2) },
-                                quantity: (item.quantity || 1).toString()
-                            };
-                        });
-                        
-                        // 4. Failsafe limit check
-                        const isWholesaleCheck = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
-                        if (isWholesaleCheck && itemsTotal < 75) { 
-                            alert("Minimum wholesale spend of £75 not met."); 
-                            return; 
+                // 2. Calculate accurate grouped shipping
+                let baseRateApplied = false;
+                cart.forEach(item => {
+                    const rates = postalRates[item.postalClass];
+                    if(rates) {
+                        const qty = item.quantity || 1;
+                        const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                        const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
+                        if (item === maxBaseItem && !baseRateApplied) {
+                            shippingTotal += baseRate + (addRate * (qty - 1));
+                            baseRateApplied = true;
+                        } else {
+                            shippingTotal += addRate * qty;
                         }
+                    }
+                });
+                
+                // 3. Build the Itemized Array for PayPal
+                const paypalItems = cart.map(item => {
+                    return {
+                        name: item.title + (item.size ? ` (${item.size})` : ''),
+                        unit_amount: { currency_code: 'GBP', value: item.price.toFixed(2) },
+                        quantity: (item.quantity || 1).toString()
+                    };
+                });
 
-                        let finalTotal = itemsTotal + shippingTotal;
-                        if (finalTotal === 0) { alert("Your cart is empty!"); return; }
+                // --- THE BULLETPROOF FIX ---
+                // Treat postage as a physical product to stop PayPal overriding it
+                if (shippingTotal > 0) {
+                    paypalItems.push({
+                        name: `Postage & Packaging (${dest === 'uk' ? 'UK' : 'International'})`,
+                        unit_amount: { currency_code: 'GBP', value: shippingTotal.toFixed(2) },
+                        quantity: "1"
+                    });
+                    itemsTotal += shippingTotal; // Add shipping cost to the item subtotal
+                    shippingTotal = 0; // Zero out the official shipping channel
+                }
 
-                        // 5. Send the detailed breakdown to PayPal
-                        return actions.order.create({
-                            purchase_units: [{ 
-                                amount: { 
-                                    currency_code: 'GBP', 
-                                    value: finalTotal.toFixed(2),
-                                    breakdown: {
-                                        item_total: { currency_code: 'GBP', value: itemsTotal.toFixed(2) },
-                                        shipping: { currency_code: 'GBP', value: shippingTotal.toFixed(2) }
-                                    }
-                                },
-                                items: paypalItems
-                            }],
-                            application_context: { shipping_preference: 'GET_FROM_FILE' }
-                        });
-                    },
+                // 4. Wholesale limit failsafe check
+                const isWholesaleMode = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
+                if (isWholesaleMode && itemsTotal < 75) { 
+                    alert("Minimum wholesale spend of £75 not met."); 
+                    return; 
+                }
+
+                let finalTotal = itemsTotal + shippingTotal; 
+                if (finalTotal === 0) { alert("Your cart is empty!"); return; }
+
+                // 5. Send the detailed breakdown to PayPal
+                return actions.order.create({
+                    purchase_units: [{ 
+                        amount: { 
+                            currency_code: 'GBP', 
+                            value: finalTotal.toFixed(2),
+                            breakdown: {
+                                item_total: { currency_code: 'GBP', value: itemsTotal.toFixed(2) },
+                                shipping: { currency_code: 'GBP', value: shippingTotal.toFixed(2) }
+                            }
+                        },
+                        items: paypalItems
+                    }]
+                });
+            },
                     onApprove: function(data, actions) {
                         return actions.order.capture().then(function(details) {
                             
