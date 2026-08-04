@@ -770,8 +770,10 @@
                 let itemsTotal = 0; let shippingTotal = 0; let maxBase = 0; let maxBaseItem = null;
                 const dest = destSelect ? destSelect.value : 'uk';
                 
+                // 1. Calculate items and find heaviest shipping base
                 cart.forEach(item => {
-                    itemsTotal += item.price * item.quantity;
+                    const qty = item.quantity || 1;
+                    itemsTotal += item.price * qty;
                     const rates = postalRates[item.postalClass];
                     if(rates) {
                         const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
@@ -779,6 +781,7 @@
                     }
                 });
 
+                // 2. Calculate accurate grouped shipping
                 let baseRateApplied = false;
                 cart.forEach(item => {
                     const rates = postalRates[item.postalClass];
@@ -795,6 +798,7 @@
                     }
                 });
                 
+                // 3. Build the Itemized Array for PayPal
                 const paypalItems = cart.map(item => {
                     return {
                         name: item.title + (item.size ? ` (${item.size})` : ''),
@@ -802,15 +806,30 @@
                         quantity: (item.quantity || 1).toString()
                     };
                 });
-                
-                if (isWholesale && itemsTotal < 75) { 
+
+                // --- THE BULLETPROOF FIX ---
+                // Treat postage as a physical product to stop PayPal overriding it
+                if (shippingTotal > 0) {
+                    paypalItems.push({
+                        name: `Postage & Packaging (${dest === 'uk' ? 'UK' : 'International'})`,
+                        unit_amount: { currency_code: 'GBP', value: shippingTotal.toFixed(2) },
+                        quantity: "1"
+                    });
+                    itemsTotal += shippingTotal; // Add shipping cost to the item subtotal
+                    shippingTotal = 0; // Zero out the official shipping channel
+                }
+
+                // 4. Wholesale limit failsafe check
+                const isWholesaleMode = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
+                if (isWholesaleMode && itemsTotal < 75) { 
                     alert("Minimum wholesale spend of £75 not met."); 
                     return; 
                 }
 
-                let finalTotal = itemsTotal + shippingTotal;
+                let finalTotal = itemsTotal + shippingTotal; 
                 if (finalTotal === 0) { alert("Your cart is empty!"); return; }
 
+                // 5. Send the detailed breakdown to PayPal
                 return actions.order.create({
                     purchase_units: [{ 
                         amount: { 
