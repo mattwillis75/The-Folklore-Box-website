@@ -790,6 +790,11 @@
             document.getElementById('cart-overlay').classList.remove('active');
         };
 
+        const dtCartToggle = document.getElementById('cart-toggle');
+        const mbCartToggle = document.getElementById('mobile-cart-toggle');
+        if (dtCartToggle) dtCartToggle.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
+        if (mbCartToggle) mbCartToggle.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
+
         // --- BROWSER BACK BUTTON FIX ---
         window.addEventListener('pageshow', (event) => {
             if (event.persisted) {
