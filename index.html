@@ -75,7 +75,7 @@
         }
 
         /* Layout */
-        main { padding-top: 200; }
+        main { padding-top: 200px; }
         .container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
         section { margin-bottom: 5rem; scroll-margin-top: 100px; }
 
@@ -416,6 +416,13 @@
 
     <!-- Interactive Scripts -->
     <script>
+
+        // --- 0. PREVENT SCROLL CREEP ON REFRESH ---
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+            window.scrollTo(0, 0);
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
             
             // --- 1. DYNAMIC CAROUSEL LOGIC (Matched to Working Norfolk App) ---
