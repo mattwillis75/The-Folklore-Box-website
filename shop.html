@@ -93,12 +93,18 @@
         .dropdown-content a:hover { background-color: #a30000; color: #ffffff; }
         .dropdown-divider { height: 1px; background-color: #ffffff; margin: 0 15px; }
 
+        /* Mobile Controls Wrapper */
+        .mobile-controls { display: none; align-items: center; gap: 15px; z-index: 1005; }
+        .mobile-cart-btn { color: var(--accent-red); border: 1px solid var(--accent-red); padding: 0.4rem 0.8rem; border-radius: 3px; text-decoration: none; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-body); transition: all 0.3s ease; }
+        .mobile-cart-btn:hover { background: var(--accent-red); color: #ffffff; }
+
         /* Mobile Menu */
-        .mobile-menu-toggle { display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1005; }
+        .mobile-menu-toggle { display: flex; flex-direction: column; cursor: pointer; gap: 5px; }
         .mobile-menu-toggle span { width: 25px; height: 3px; background-color: #ffffff; transition: all 0.3s ease; border-radius: 3px; }
         
         @media (max-width: 1100px) {
-            .mobile-menu-toggle { display: flex; }
+            .mobile-controls { display: flex; }
+            #nav-list li:last-child { display: none; } /* Hides duplicate desktop cart */
             nav ul { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background-color: rgba(0, 0, 0, 0.95); padding: 1rem 0; border-bottom: 1px solid #333; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
             nav ul.mobile-active { display: flex; }
             nav ul li { width: 100%; text-align: center; padding: 0.8rem 0; }
@@ -236,6 +242,8 @@
         }
 
         @media (max-width: 600px) {
+            .mobile-cart-btn { font-size: 0.7rem; padding: 0.3rem 0.6rem; }
+            .mobile-controls { gap: 10px; }
             .shop-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
             .product-card { min-height: 380px; }
             .product-card a { padding: 1rem; }
@@ -254,7 +262,10 @@
 
     <header id="main-header">
         <div class="logo"><a href="index.html"><img src="./The-folklore-box-logo.png" alt="The Folklore Box Logo"></a></div>
-        <div class="mobile-menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
+        <div class="mobile-controls">
+            <a href="#" id="mobile-cart-toggle" class="mobile-cart-btn" onclick="openCart(); return false;">Cart (0)</a>
+            <div class="mobile-menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
+        </div>
         <nav>
             <ul id="nav-list">
                 <li class="dropdown">
@@ -680,7 +691,12 @@
                 document.getElementById('cart-subtotal').textContent = `£0.00`;
                 document.getElementById('cart-shipping-cost').textContent = `£0.00`;
                 document.getElementById('cart-total').textContent = `Total: £0.00`;
-                document.getElementById('cart-toggle').textContent = `Cart (0)`;
+                
+                const dtToggle = document.getElementById('cart-toggle');
+                const mbToggle = document.getElementById('mobile-cart-toggle');
+                if(dtToggle) dtToggle.textContent = `Cart (0)`;
+                if(mbToggle) mbToggle.textContent = `Cart (0)`;
+
                 cartWarning.style.display = 'none';
                 paypalContainer.classList.add('paypal-disabled');
                 return;
@@ -743,7 +759,11 @@
             document.getElementById('cart-subtotal').textContent = `£${itemsTotal.toFixed(2)}`;
             document.getElementById('cart-shipping-cost').textContent = `£${shippingTotal.toFixed(2)}`;
             document.getElementById('cart-total').textContent = `Total: £${finalTotal.toFixed(2)}`;
-            document.getElementById('cart-toggle').textContent = `Cart (${cartItemCount})`;
+            
+            const dtToggle = document.getElementById('cart-toggle');
+            const mbToggle = document.getElementById('mobile-cart-toggle');
+            if(dtToggle) dtToggle.textContent = `Cart (${cartItemCount})`;
+            if(mbToggle) mbToggle.textContent = `Cart (${cartItemCount})`;
 
             // Validation for Wholesale Minimum Spend (£75) applied only if user is logged in
             if (isWholesale) {
