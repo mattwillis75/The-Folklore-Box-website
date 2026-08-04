@@ -704,11 +704,13 @@
         window.openCart = function() {
             document.getElementById('cart-overlay').classList.add('active');
             document.getElementById('cart-panel').classList.add('active');
+            document.body.style.overflow = 'hidden'; // Locks the background page
         };
 
         window.closeCart = function() {
             document.getElementById('cart-overlay').classList.remove('active');
             document.getElementById('cart-panel').classList.remove('active');
+            document.body.style.overflow = ''; // Unlocks the background page
         };
 
         // PayPal SDK Logic
