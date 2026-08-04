@@ -566,10 +566,14 @@
         // PayPal SDK Logic
         paypal.Buttons({
             createOrder: function(data, actions) {
-                let total = 0;
+                let itemsTotal = 0;
+                
+                // Define your shipping cost here!
+                let shippingTotal = 4.00; 
+
                 let itemArray = cart.map(item => {
                     let itemTotal = item.price * item.quantity;
-                    total += itemTotal;
+                    itemsTotal += itemTotal;
                     return {
                         name: item.title + (item.size ? ` (${item.size})` : ''),
                         unit_amount: { currency_code: 'GBP', value: item.price.toFixed(2) },
@@ -577,13 +581,23 @@
                     };
                 });
                 
+                // Calculate the grand total to charge the customer's card
+                let finalTotal = itemsTotal + shippingTotal;
+
+                if (finalTotal === 0) {
+                    alert("Your cart is empty!");
+                    return;
+                }
+
+                // Send the exact breakdown to PayPal
                 return actions.order.create({
                     purchase_units: [{
                         amount: {
                             currency_code: 'GBP',
-                            value: total.toFixed(2),
+                            value: finalTotal.toFixed(2),
                             breakdown: {
-                                item_total: { currency_code: 'GBP', value: total.toFixed(2) }
+                                item_total: { currency_code: 'GBP', value: itemsTotal.toFixed(2) },
+                                shipping: { currency_code: 'GBP', value: shippingTotal.toFixed(2) }
                             }
                         },
                         items: itemArray
