@@ -8,7 +8,7 @@ Slide: 2
 Format: EVENT
 Heading: Black Shuck Festival
 Description: Pictures from around and about the festival on the Journal page.
-Image: images/carousel-image-2.jpg
+Image: images/Carousel-2.jpg
 ---
 Slide: 3
 Format: GEEGAW
