@@ -152,12 +152,12 @@
         /* Smart Cart Side Panel */
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); backdrop-filter: blur(3px); z-index: 3000; opacity: 0; visibility: hidden; transition: opacity 0.3s; }
         
-        /* 100dvh dynamically handles mobile browser bars */
         .cart-panel { 
             position: fixed; top: 0; right: -400px; width: 100%; max-width: 400px; 
             height: 100vh; height: 100dvh; background: var(--secondary-bg); 
             border-left: 1px solid var(--border-color); z-index: 3001; 
-            transition: right 0.3s ease; display: flex; flex-direction: column; overflow: hidden; 
+            transition: right 0.3s ease; display: flex; flex-direction: column; 
+            overflow-y: auto; overflow-x: hidden;
         }
         
         .cart-overlay.active { opacity: 1; visibility: visible; }
@@ -166,14 +166,17 @@
         .cart-header h2 { margin: 0; font-family: var(--font-headings); font-weight: 400; }
         .close-cart-btn { background: none; border: none; color: var(--text-light); font-size: 1.5rem; cursor: pointer; }
         
-        /* Magic scrolling property */
-        .cart-items-container { flex-grow: 1; padding: 20px; overflow-y: auto; min-height: 0; }
+        /* Items Container */
+        .cart-items-container { 
+            flex-grow: 1; padding: 20px; overflow-y: auto; 
+            min-height: 150px; 
+        }
         
         /* Custom Cart Scrollbar */
-        .cart-items-container::-webkit-scrollbar { width: 8px; }
-        .cart-items-container::-webkit-scrollbar-track { background: #111111; border-radius: 4px; }
-        .cart-items-container::-webkit-scrollbar-thumb { background: #444444; border-radius: 4px; }
-        .cart-items-container::-webkit-scrollbar-thumb:hover { background: var(--accent-red); }
+        .cart-panel::-webkit-scrollbar, .cart-items-container::-webkit-scrollbar { width: 8px; }
+        .cart-panel::-webkit-scrollbar-track, .cart-items-container::-webkit-scrollbar-track { background: #111111; border-radius: 4px; }
+        .cart-panel::-webkit-scrollbar-thumb, .cart-items-container::-webkit-scrollbar-thumb { background: #444444; border-radius: 4px; }
+        .cart-panel::-webkit-scrollbar-thumb:hover, .cart-items-container::-webkit-scrollbar-thumb:hover { background: var(--accent-red); }
         
         .cart-item { display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); gap: 10px; }
         .cart-item-details { flex-grow: 1; }
@@ -704,13 +707,13 @@
         window.openCart = function() {
             document.getElementById('cart-overlay').classList.add('active');
             document.getElementById('cart-panel').classList.add('active');
-            document.body.style.overflow = 'hidden'; // Locks the background page
+            document.body.style.overflow = 'hidden';
         };
 
         window.closeCart = function() {
             document.getElementById('cart-overlay').classList.remove('active');
             document.getElementById('cart-panel').classList.remove('active');
-            document.body.style.overflow = ''; // Unlocks the background page
+            document.body.style.overflow = '';
         };
 
         // PayPal SDK Logic
