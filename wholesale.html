@@ -997,7 +997,7 @@
                     },
 
                     createOrder: function(data, actions) {
-                let itemsTotal = 0; let shippingTotal = 0; let maxBase = 0; let maxBaseItem = null;
+                let itemsTotal = 0; let shippingTotal = 0; let maxBase = -1; let maxBaseItem = null; // Start at -1
                 const dest = destSelect ? destSelect.value : 'uk';
                 
                 // 1. Calculate items and find heaviest shipping base
@@ -1019,7 +1019,9 @@
                         const qty = item.quantity || 1;
                         const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
                         const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
-                        if (item === maxBaseItem && !baseRateApplied) {
+                        
+                        // BULLETPROOF FIX: Identify by a hard ID rather than a loose reference
+                        if (maxBaseItem && item.cartItemId === maxBaseItem.cartItemId && !baseRateApplied) {
                             shippingTotal += baseRate + (addRate * (qty - 1));
                             baseRateApplied = true;
                         } else {
