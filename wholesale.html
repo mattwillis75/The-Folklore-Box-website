@@ -918,56 +918,36 @@
                 }
 
                 const dest = destSelect.value;
-                let maxBase = 0; let maxBaseItem = null;
+                let maxBase = -1; let maxBaseItem = null; // Start at -1 to catch £0.00 base rates
 
-                // Render items
-                cart.forEach((item, index) => {
+            // Render items & find largest postal base
+            cart.forEach((item, index) => {
+                // ... [HTML rendering code is here] ...
+                const rates = postalRates[item.postalClass];
+                if(rates) {
+                    const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                    if(baseRate > maxBase) { maxBase = baseRate; maxBaseItem = item; }
+                }
+            });
+
+            // Calculate precise dynamic shipping
+            let baseRateApplied = false;
+            cart.forEach((item) => {
+                const rates = postalRates[item.postalClass];
+                if(rates) {
                     const qty = item.quantity || 1;
-                    const itemTotalCost = item.price * qty;
-                    itemsTotal += itemTotalCost;
-                    cartItemCount += qty;
+                    const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                    const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
 
-                    const sizeLabel = item.size ? `<br><span style="font-size:0.8rem; color:#888; font-weight:normal;">Size: ${item.size} | £${item.price.toFixed(2)} each</span>` : `<br><span style="font-size:0.8rem; color:#888; font-weight:normal;">£${item.price.toFixed(2)} each</span>`;
-
-                    container.innerHTML += `
-                        <div class="cart-item">
-                            <div class="cart-item-title">
-                                ${item.title} ${sizeLabel}
-                            </div>
-                            <div class="cart-qty-controls">
-                                <button onclick="updateQuantity(${index}, -1)">-</button>
-                                <span>${qty}</span>
-                                <button onclick="updateQuantity(${index}, 1)">+</button>
-                            </div>
-                            <div class="cart-item-total">£${itemTotalCost.toFixed(2)}</div>
-                            <button class="remove-btn" onclick="removeFromCart(${index})" title="Remove item">&times;</button>
-                        </div>
-                    `;
-                    
-                    const rates = postalRates[item.postalClass];
-                    if(rates) {
-                        const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
-                        if(baseRate > maxBase) { maxBase = baseRate; maxBaseItem = item; }
+                    // BULLETPROOF FIX: Identify by a hard ID rather than a loose reference
+                    if (maxBaseItem && item.cartItemId === maxBaseItem.cartItemId && !baseRateApplied) {
+                        shippingTotal += baseRate + (addRate * (qty - 1));
+                        baseRateApplied = true;
+                    } else {
+                        shippingTotal += addRate * qty;
                     }
-                });
-
-                // Calculate shipping
-                let baseRateApplied = false;
-                cart.forEach((item) => {
-                    const rates = postalRates[item.postalClass];
-                    if(rates) {
-                        const qty = item.quantity || 1;
-                        const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
-                        const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
-
-                        if (item === maxBaseItem && !baseRateApplied) {
-                            shippingTotal += baseRate + (addRate * (qty - 1));
-                            baseRateApplied = true;
-                        } else {
-                            shippingTotal += addRate * qty;
-                        }
-                    }
-                });
+                }
+            });
 
                 finalTotal = itemsTotal + shippingTotal;
 
