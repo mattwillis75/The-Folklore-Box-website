@@ -443,7 +443,7 @@
                 if(!container) return;
 
                 try {
-                    const response = await fetch('carousel.txt', { cache: 'no-store' });
+                    const response = await fetch('carousel.txt?v=' + new Date().getTime(), { cache: 'no-store' });
                     if (!response.ok) return;
                     
                     const text = await response.text();
