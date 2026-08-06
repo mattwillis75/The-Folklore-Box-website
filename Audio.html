@@ -365,7 +365,43 @@
         return curve;
     }
 
-    // RECORDING TOGGLE
+    // PLAY & RECORD ROUTING
+    function startPlayback() {
+      if (isPlaying) return;
+      startedAt = audioCtx.currentTime - pausedAt;
+      
+      const hVal = parseFloat(humanizeSlider.value);
+      const aVal = parseFloat(analogSlider.value);
+      
+      tracks.forEach(track => {
+        if (track.type === 'audio') {
+          track.source = audioCtx.createBufferSource(); track.source.buffer = track.buffer; track.source.connect(track.inputNode); 
+          if (pausedAt < track.offset) { track.source.start(startedAt + track.offset, 0); } 
+          else { const skipAmount = pausedAt - track.offset; if (skipAmount < track.buffer.duration) track.source.start(0, skipAmount); }
+        } else if (track.type === 'synth') {
+          track.liveNodes = []; 
+          track.hits.forEach(hit => { 
+             if (hit.time >= pausedAt) { 
+                 triggerSynth(audioCtx, track.instrument, startedAt + hit.time, track.inputNode, track, hit.duration || 0.25, hVal, aVal); 
+             } 
+          });
+        } else if (track.type === 'melodic') {
+          track.liveNodes = [];
+          track.hits.forEach(hit => { 
+             if (hit.time >= pausedAt) { 
+                 triggerMelody(audioCtx, startedAt + hit.time, hit.freq, track.inputNode, track, hit.duration || 0.25, hVal, aVal); 
+             } 
+          });
+        }
+      });
+      isPlaying = true; playBtn.disabled = true; playBtn.innerHTML = "▶ Playing..."; stopBtn.disabled = false; updatePlayhead();
+    }
+
+    playBtn.addEventListener('click', async () => {
+      await initAudioEngine();
+      startPlayback();
+    });
+
     recordBtn.addEventListener('click', () => {
       isRecording = !isRecording;
       if (isRecording) {
@@ -434,12 +470,18 @@
         e.preventDefault();
         await initAudioEngine();
         
+        // Auto-Start Transport on first note if Armed
+        if (isRecording && !isPlaying) {
+            startPlayback();
+        }
+        
         const hVal = parseFloat(humanizeSlider.value);
         const aVal = parseFloat(analogSlider.value);
         
         btn.classList.add('active');
         triggerMelody(audioCtx, audioCtx.currentTime, note.freq, masterBus, { patch: melodyPatchSelect.value }, 2.0, hVal, aVal);
         
+        // Register the exact timestamp
         const hitTime = isPlaying ? (audioCtx.currentTime - startedAt) : pausedAt;
         activeTouches.set(btn, { note, noteOnTime: audioCtx.currentTime, hitTime });
       };
@@ -939,6 +981,10 @@
 
     function recalculateDuration() {
       let max = 5; 
+      // Prevent timeline from shrinking while actively live-recording
+      if (isRecording && isPlaying) {
+          max = Math.max(max, (audioCtx.currentTime - startedAt));
+      }
       tracks.forEach(t => {
         if (t.type === 'audio') max = Math.max(max, t.offset + t.buffer.duration);
         if (t.type === 'synth' && t.hits.length > 0) {
@@ -1103,44 +1149,33 @@
     function updatePlayhead() {
       if (!isPlaying) return;
       const currentPlaybackTime = audioCtx.currentTime - startedAt;
+      
+      // Auto-extend timeline infinitely if live recording
       if (currentPlaybackTime >= longestDuration) { 
-        stopBtn.click(); pausedAt = 0; playhead.style.left = HEADER_WIDTH + 'px'; 
-        document.getElementById('workspace').scrollLeft = 0; return; 
+        if (isRecording) {
+            longestDuration = Math.ceil(currentPlaybackTime) + 2;
+            drawRuler();
+        } else {
+            stopBtn.click(); pausedAt = 0; playhead.style.left = HEADER_WIDTH + 'px'; 
+            document.getElementById('workspace').scrollLeft = 0; return; 
+        }
       }
-      playhead.style.left = (HEADER_WIDTH + (currentPlaybackTime * pixelsPerSecond)) + 'px';
+      
+      const playheadX = HEADER_WIDTH + (currentPlaybackTime * pixelsPerSecond);
+      playhead.style.left = playheadX + 'px';
+      
+      // Smooth auto-scroll the workspace if the playhead nears the right edge
+      const workspace = document.getElementById('workspace');
+      if (playheadX > workspace.scrollLeft + workspace.clientWidth - 100) {
+          workspace.scrollLeft = playheadX - workspace.clientWidth + 100;
+      }
+      
       animFrameId = requestAnimationFrame(updatePlayhead);
     }
 
     playBtn.addEventListener('click', async () => {
       await initAudioEngine();
-      if (isPlaying || tracks.length === 0) return;
-      startedAt = audioCtx.currentTime - pausedAt;
-      
-      const hVal = parseFloat(humanizeSlider.value);
-      const aVal = parseFloat(analogSlider.value);
-      
-      tracks.forEach(track => {
-        if (track.type === 'audio') {
-          track.source = audioCtx.createBufferSource(); track.source.buffer = track.buffer; track.source.connect(track.inputNode); 
-          if (pausedAt < track.offset) { track.source.start(startedAt + track.offset, 0); } 
-          else { const skipAmount = pausedAt - track.offset; if (skipAmount < track.buffer.duration) track.source.start(0, skipAmount); }
-        } else if (track.type === 'synth') {
-          track.liveNodes = []; 
-          track.hits.forEach(hit => { 
-             if (hit.time >= pausedAt) { 
-                 triggerSynth(audioCtx, track.instrument, startedAt + hit.time, track.inputNode, track, hit.duration || 0.25, hVal, aVal); 
-             } 
-          });
-        } else if (track.type === 'melodic') {
-          track.liveNodes = [];
-          track.hits.forEach(hit => { 
-             if (hit.time >= pausedAt) { 
-                 triggerMelody(audioCtx, startedAt + hit.time, hit.freq, track.inputNode, track, hit.duration || 0.25, hVal, aVal); 
-             } 
-          });
-        }
-      });
-      isPlaying = true; playBtn.disabled = true; playBtn.innerHTML = "▶ Playing..."; stopBtn.disabled = false; updatePlayhead();
+      startPlayback();
     });
 
     stopBtn.addEventListener('click', () => {
