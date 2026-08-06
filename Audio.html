@@ -254,7 +254,7 @@
       { name: 'C5', freq: 523.25, color: 'white' }
     ];
 
-    function initAudioEngine() {
+    async function initAudioEngine() {
       if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         masterBus = audioCtx.createGain(); masterCompressor = audioCtx.createDynamicsCompressor(); convolver = audioCtx.createConvolver();
@@ -266,7 +266,7 @@
         convolver.connect(wetGainNode); dryGainNode.connect(masterGainNode); wetGainNode.connect(masterGainNode); masterGainNode.connect(audioCtx.destination);
       }
       if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
+        await audioCtx.resume(); // Await is crucial for iPadOS
       }
     }
 
@@ -293,11 +293,13 @@
     musicalNotes.forEach(note => {
       const btn = document.createElement('button');
       btn.innerText = note.name; btn.className = `key-btn key-${note.color}`;
-      btn.onmousedown = () => {
-        initAudioEngine();
+      // pointerdown works instantly for both iPad touch and desktop mouse
+      btn.addEventListener('pointerdown', async (e) => {
+        e.preventDefault(); // Prevents the iPad from firing duplicate ghost events
+        await initAudioEngine();
         triggerMelody(audioCtx, audioCtx.currentTime, note.freq, masterBus, { patch: melodyPatchSelect.value });
         recordedSequence.push(note); updateSequenceDisplay();
-      };
+      });
       keysContainer.appendChild(btn);
     });
 
@@ -807,7 +809,7 @@
     }
 
     playBtn.addEventListener('click', async () => {
-      initAudioEngine();
+      await initAudioEngine();
       if (isPlaying || tracks.length === 0) return;
       startedAt = audioCtx.currentTime - pausedAt;
       tracks.forEach(track => {
@@ -846,7 +848,7 @@
     });
 
     beatBtn.addEventListener('click', async () => {
-      initAudioEngine(); 
+      await initAudioEngine(); 
       const selectedInstrument = synthSelect.value, instrumentLabel = synthSelect.options[synthSelect.selectedIndex].text;
       saveState();
       if (!activeSynthTracks[selectedInstrument]) {
