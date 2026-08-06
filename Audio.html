@@ -266,7 +266,7 @@
         convolver.connect(wetGainNode); dryGainNode.connect(masterGainNode); wetGainNode.connect(masterGainNode); masterGainNode.connect(audioCtx.destination);
       }
       if (audioCtx.state === 'suspended') {
-        await audioCtx.resume(); // Await is crucial for iPadOS
+        await audioCtx.resume();
       }
     }
 
@@ -293,11 +293,10 @@
     musicalNotes.forEach(note => {
       const btn = document.createElement('button');
       btn.innerText = note.name; btn.className = `key-btn key-${note.color}`;
-      // pointerdown works instantly for both iPad touch and desktop mouse
       btn.addEventListener('pointerdown', async (e) => {
-        e.preventDefault(); // Prevents the iPad from firing duplicate ghost events
+        e.preventDefault();
         await initAudioEngine();
-        triggerMelody(audioCtx, audioCtx.currentTime, note.freq, masterBus, { patch: melodyPatchSelect.value });
+        triggerMelody(audioCtx, audioCtx.currentTime, note.freq, masterBus, { patch: melodyPatchSelect.value }, 1.0);
         recordedSequence.push(note); updateSequenceDisplay();
       });
       keysContainer.appendChild(btn);
@@ -306,9 +305,9 @@
     function updateSequenceDisplay() { sequenceDisplay.innerText = "Sequence: [" + recordedSequence.map(n => n.name).join(', ') + "]"; }
     clearSequenceBtn.addEventListener('click', () => { recordedSequence = []; updateSequenceDisplay(); });
 
-    insertSequenceBtn.addEventListener('click', () => {
+    insertSequenceBtn.addEventListener('click', async () => {
       if (recordedSequence.length === 0) return;
-      initAudioEngine(); saveState();
+      await initAudioEngine(); saveState();
 
       if (!activeMelodicTrack) {
         melodyTrackCount++;
@@ -326,7 +325,7 @@
 
       const gap = parseFloat(noteGapInput.value); let insertTime = pausedAt;
       recordedSequence.forEach(note => {
-        activeMelodicTrack.hits.push({ time: insertTime, freq: note.freq, name: note.name });
+        activeMelodicTrack.hits.push({ time: insertTime, freq: note.freq, name: note.name, duration: gap });
         insertTime += gap;
       });
 
@@ -420,18 +419,13 @@
             if (idx !== -1 && track.hits[idx] !== undefined) {
               let hit = track.hits[idx];
               time = hit.time;
-              data = { freq: hit.freq, name: hit.name };
+              data = { freq: hit.freq, name: hit.name, duration: hit.duration || 0.25 };
             }
           }
 
           if (time !== null && !isNaN(time) && data !== null) {
             if (time < minTime) minTime = time;
-            itemsToCopy.push({
-              trackId: track.id,
-              trackType: track.type,
-              time: time,
-              data: data
-            });
+            itemsToCopy.push({ trackId: track.id, trackType: track.type, time: time, data: data });
           }
         });
       }); 
@@ -447,12 +441,8 @@
 
       clipboard.forEach(item => {
         let track = tracks.find(t => t.id === item.trackId);
-        if (!track) {
-          track = tracks.find(t => t.type === item.trackType);
-        }
-        if (!track && tracks.length > 0) {
-          track = tracks[0];
-        }
+        if (!track) track = tracks.find(t => t.type === item.trackType);
+        if (!track && tracks.length > 0) track = tracks[0];
         if (!track) return; 
         
         let targetTime = pausedAt + item.relativeTime;
@@ -461,7 +451,7 @@
             track.hits.push(targetTime); 
             track.hits.sort((a,b)=>a-b);
         } else if (track.type === 'melodic') {
-            track.hits.push({ time: targetTime, freq: item.data.freq, name: item.data.name }); 
+            track.hits.push({ time: targetTime, freq: item.data.freq, name: item.data.name, duration: item.data.duration || 0.25 }); 
             track.hits.sort((a,b)=>a.time-b.time);
         } else if (track.type === 'audio') {
             const nodes = createChannelStripNodes();
@@ -524,11 +514,9 @@
         e.preventDefault(); 
         if (e.shiftKey) redo(); else undo(); 
       } else if (isCmdOrCtrl && key === 'c') {
-        e.preventDefault();
-        copySelection();
+        e.preventDefault(); copySelection();
       } else if (isCmdOrCtrl && key === 'v') {
-        e.preventDefault();
-        pasteSelection();
+        e.preventDefault(); pasteSelection();
       } else if (e.key === 'Backspace' || e.key === 'Delete') {
         deleteSelection();
       }
@@ -594,7 +582,6 @@
 
       track.fabCanvas.on('object:modified', function(e) {
           let wasPlaying = isPlaying; if (wasPlaying) stopBtn.click();
-          saveState();
           
           const obj = e.target;
           if (obj.type === 'activeSelection') {
@@ -610,7 +597,14 @@
               let newTime = obj.left / pixelsPerSecond;
               if (newTime < 0) newTime = 0;
               if (track.type === 'synth') track.hits[obj.drumIndex] = newTime;
-              else if (track.type === 'melodic') track.hits[obj.melodicIndex].time = newTime;
+              else if (track.type === 'melodic') {
+                  track.hits[obj.melodicIndex].time = newTime;
+                  // Capture the visual stretch and translate it into raw audio duration
+                  if (obj.scaleX !== 1) {
+                      let newDuration = (obj.width * obj.scaleX) / pixelsPerSecond;
+                      track.hits[obj.melodicIndex].duration = Math.max(0.1, newDuration);
+                  }
+              }
               else if (track.type === 'audio') track.offset = newTime;
           }
           
@@ -657,9 +651,14 @@
       tracks.forEach(t => {
         if (t.type === 'audio') max = Math.max(max, t.offset + t.buffer.duration);
         if (t.type === 'synth' && t.hits.length > 0) max = Math.max(max, Math.max(...t.hits) + 1.0);
-        if (t.type === 'melodic' && t.hits.length > 0) max = Math.max(max, Math.max(...t.hits.map(h => h.time)) + 1.0);
+        if (t.type === 'melodic' && t.hits.length > 0) {
+            t.hits.forEach(h => {
+                let end = h.time + (h.duration || 0.25);
+                if (end > max) max = end;
+            });
+        }
       });
-      longestDuration = max; drawRuler(); redrawAllTimelines();
+      longestDuration = max + 1; drawRuler(); redrawAllTimelines();
     }
 
     function redrawAllTimelines() { tracks.forEach(t => { 
@@ -672,11 +671,18 @@
       track.fabCanvas.clear();
       track.hits.forEach((hit, index) => {
         const xPos = hit.time * pixelsPerSecond;
+        const dur = hit.duration || 0.25;
+        const noteWidth = dur * pixelsPerSecond;
         const hitGroup = new fabric.Group([
-          new fabric.Rect({ left: 0, top: 0, width: 25, height: 100, fill: track.color }),
+          new fabric.Rect({ left: 0, top: 0, width: noteWidth, height: 100, fill: track.color }),
           new fabric.Text(hit.name, { left: 4, top: 40, fontSize: 10, fill: '#000', fontWeight: 'bold' })
-        ], { left: xPos, top: 5, hasControls: false, hasBorders: true, lockMovementY: true, hoverCursor: 'grab', moveCursor: 'grabbing', selectable: true });
+        ], { 
+          left: xPos, top: 5, hasControls: true, hasBorders: true, lockMovementY: true, 
+          hoverCursor: 'ew-resize', moveCursor: 'grabbing', selectable: true 
+        });
         hitGroup.melodicIndex = index;
+        // Restrict controls to ONLY the right edge for length stretching
+        hitGroup.setControlsVisibility({ mt: false, mb: false, ml: false, mr: true, tr: false, tl: false, br: false, bl: false, mtr: false });
         track.fabCanvas.add(hitGroup);
       });
     }
@@ -730,12 +736,12 @@
     async function decodeUploadedFile(file) { const arrayBuffer = await file.arrayBuffer(); return await audioCtx.decodeAudioData(arrayBuffer); }
 
     irInput.addEventListener('change', async () => {
-      initAudioEngine();
+      await initAudioEngine();
       if (irInput.files.length > 0) { convolver.buffer = await decodeUploadedFile(irInput.files[0]); irInput.value = ""; }
     });
 
     trackInput.addEventListener('change', async () => {
-      initAudioEngine();
+      await initAudioEngine();
       for (let file of trackInput.files) {
         const buffer = await decodeUploadedFile(file);
         saveState();
@@ -765,7 +771,7 @@
       const files = Array.from(e.target.files);
       const dawFile = files.find(f => f.name.endsWith('.daw') || f.name.endsWith('.json'));
       if (!dawFile) { alert("Please select a .daw project file along with your audio files!"); loadBtn.value = ""; return; }
-      initAudioEngine(); 
+      await initAudioEngine(); 
       if (isPlaying) stopBtn.click();
       audioContainer.innerHTML = ''; synthContainer.innerHTML = '';
       tracks = []; activeSynthTracks = {}; activeMelodicTrack = null; longestDuration = 5; undoStack = []; redoStack = []; melodyTrackCount = 0;
@@ -822,7 +828,7 @@
           track.hits.forEach(hitTime => { if (hitTime >= pausedAt) { triggerSynth(audioCtx, track.instrument, startedAt + hitTime, track.inputNode, track); } });
         } else if (track.type === 'melodic') {
           track.liveNodes = [];
-          track.hits.forEach(hit => { if (hit.time >= pausedAt) { triggerMelody(audioCtx, startedAt + hit.time, hit.freq, track.inputNode, track); } });
+          track.hits.forEach(hit => { if (hit.time >= pausedAt) { triggerMelody(audioCtx, startedAt + hit.time, hit.freq, track.inputNode, track, hit.duration || 0.25); } });
         }
       });
       isPlaying = true; playBtn.disabled = true; playBtn.innerHTML = "▶ Playing..."; stopBtn.disabled = false; updatePlayhead();
@@ -908,7 +914,7 @@
       }
     }
 
-    function triggerMelody(context, time, freq, destinationNode, liveTrackObj = null) {
+    function triggerMelody(context, time, freq, destinationNode, liveTrackObj = null, duration = 1.0) {
       const patch = liveTrackObj ? liveTrackObj.patch : 'square-pluck';
       const osc = context.createOscillator(); 
       const gain = context.createGain(); 
@@ -919,21 +925,28 @@
 
       if (patch === 'square-pluck') {
         osc.type = 'square'; filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(2000, time); filter.frequency.exponentialRampToValueAtTime(400, time + 0.3);
-        gain.gain.setValueAtTime(0.4, time); gain.gain.setTargetAtTime(0, time + 0.1, 0.2);
-        osc.start(time); osc.stop(time + 1.0);
+        filter.frequency.setValueAtTime(2000, time); 
+        filter.frequency.exponentialRampToValueAtTime(400, time + Math.min(0.3, duration));
+        gain.gain.setValueAtTime(0.4, time); 
+        gain.gain.setTargetAtTime(0, time + duration - 0.1, 0.1);
+        osc.start(time); osc.stop(time + duration);
         if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc: osc });
       } else if (patch === 'saw-brass') {
         osc.type = 'sawtooth'; filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(800, time); filter.frequency.linearRampToValueAtTime(3000, time + 0.2);
-        gain.gain.setValueAtTime(0, time); gain.gain.linearRampToValueAtTime(0.4, time + 0.1); gain.gain.setTargetAtTime(0, time + 0.3, 0.5);
-        osc.start(time); osc.stop(time + 1.5);
+        filter.frequency.setValueAtTime(800, time); 
+        filter.frequency.linearRampToValueAtTime(3000, time + Math.min(0.2, duration));
+        gain.gain.setValueAtTime(0, time); 
+        gain.gain.linearRampToValueAtTime(0.4, time + Math.min(0.1, duration / 2)); 
+        gain.gain.setTargetAtTime(0, time + duration - 0.2, 0.2);
+        osc.start(time); osc.stop(time + duration);
         if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc: osc });
       } else if (patch === 'sine-ghost') {
         osc.type = 'sine'; filter.type = 'lowpass';
         filter.frequency.setValueAtTime(1000, time);
-        gain.gain.setValueAtTime(0, time); gain.gain.linearRampToValueAtTime(0.5, time + 0.3); gain.gain.setTargetAtTime(0, time + 0.8, 0.5);
-        osc.start(time); osc.stop(time + 2.0);
+        gain.gain.setValueAtTime(0, time); 
+        gain.gain.linearRampToValueAtTime(0.5, time + Math.min(0.3, duration / 2)); 
+        gain.gain.setTargetAtTime(0, time + duration - 0.5, 0.5);
+        osc.start(time); osc.stop(time + duration);
         if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc: osc });
       } else if (patch === 'pwm-string') {
         const osc2 = context.createOscillator(); osc2.type = 'sawtooth';
@@ -941,9 +954,11 @@
         osc2.connect(filter);
         osc2.frequency.setValueAtTime(freq * 1.01, time); 
         filter.frequency.setValueAtTime(3000, time);
-        gain.gain.setValueAtTime(0, time); gain.gain.linearRampToValueAtTime(0.3, time + 0.2); gain.gain.setTargetAtTime(0, time + 0.5, 0.4);
-        osc.start(time); osc.stop(time + 1.5);
-        osc2.start(time); osc2.stop(time + 1.5);
+        gain.gain.setValueAtTime(0, time); 
+        gain.gain.linearRampToValueAtTime(0.3, time + Math.min(0.2, duration / 2)); 
+        gain.gain.setTargetAtTime(0, time + duration - 0.5, 0.4);
+        osc.start(time); osc.stop(time + duration);
+        osc2.start(time); osc2.stop(time + duration);
         if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc1: osc, osc2: osc2 });
       }
     }
@@ -964,7 +979,7 @@
         offTrackEQ.connect(offTrackPan); offTrackPan.connect(offTrackGain); offTrackGain.connect(offMasterBus);
         if (track.type === 'audio') { const source = offlineCtx.createBufferSource(); source.buffer = track.buffer; source.connect(offTrackEQ); source.start(track.offset); } 
         else if (track.type === 'synth') { track.hits.forEach(hitTime => { triggerSynth(offlineCtx, track.instrument, hitTime, offTrackEQ, null); }); }
-        else if (track.type === 'melodic') { track.hits.forEach(hit => { triggerMelody(offlineCtx, hit.time, hit.freq, offTrackEQ, track); }); }
+        else if (track.type === 'melodic') { track.hits.forEach(hit => { triggerMelody(offlineCtx, hit.time, hit.freq, offTrackEQ, track, hit.duration || 0.25); }); }
       });
       const renderedBuffer = await offlineCtx.startRendering(), wavData = audioBufferToWav(renderedBuffer);
       const blob = new window.Blob([new DataView(wavData)], { type: 'audio/wav' }), anchor = document.createElement('a');
