@@ -410,33 +410,39 @@
     // ALT+DRAG / MIDDLE-CLICK TIMELINE PANNING
     let isPanning = false, startX, startY, scrollLeft, scrollTop;
     const workspaceEl = document.getElementById('workspace');
+    
     window.addEventListener('mousedown', (e) => {
-        // Middle mouse button OR Left Click + Alt key
+        // Middle mouse button OR Left Click + Alt/Option key
         if (e.button === 1 || (e.button === 0 && e.altKey)) {
             isPanning = true;
             document.body.style.cursor = 'grabbing';
-            startX = e.pageX - workspaceEl.offsetLeft;
-            startY = e.pageY - workspaceEl.offsetTop;
+            startX = e.clientX;
+            startY = e.clientY;
             scrollLeft = workspaceEl.scrollLeft;
             scrollTop = workspaceEl.scrollTop;
             e.preventDefault();
+            e.stopPropagation();
         }
-    }, true); // Capture phase to beat canvas drag
+    }, { capture: true }); // Use capture phase so FabricJS doesn't eat the click
+
     window.addEventListener('mousemove', (e) => {
         if (!isPanning) return;
-        const x = e.pageX - workspaceEl.offsetLeft;
-        const y = e.pageY - workspaceEl.offsetTop;
-        const walkX = (x - startX);
-        const walkY = (y - startY);
+        e.preventDefault();
+        e.stopPropagation();
+        const walkX = (e.clientX - startX);
+        const walkY = (e.clientY - startY);
         workspaceEl.scrollLeft = scrollLeft - walkX;
         workspaceEl.scrollTop = scrollTop - walkY;
-    });
-    window.addEventListener('mouseup', () => {
+    }, { capture: true });
+
+    window.addEventListener('mouseup', (e) => {
         if (isPanning) {
             isPanning = false;
             document.body.style.cursor = 'default';
+            e.preventDefault();
+            e.stopPropagation();
         }
-    });
+    }, { capture: true });
 
     // PLAY & RECORD ROUTING
     function startPlayback() {
@@ -895,20 +901,9 @@
       const isCmdOrCtrl = e.metaKey || e.ctrlKey;
       const key = e.key.toLowerCase();
 
-      if (e.code === 'Space') { 
-        e.preventDefault(); 
-        if (isPlaying) stopBtn.click(); else playBtn.click(); 
-      } else if (isCmdOrCtrl && key === 'z') { 
-        e.preventDefault(); 
-        if (e.shiftKey) redo(); else undo(); 
-      } else if (isCmdOrCtrl && key === 'c') {
-        e.preventDefault(); copySelection();
-      } else if (isCmdOrCtrl && key === 'v') {
-        e.preventDefault(); pasteSelection();
-      } else if (e.key === 'Backspace' || e.key === 'Delete') {
-        deleteSelection();
-      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-          // ARROW KEY NUDGING
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+          e.preventDefault(); // Instantly stop the browser from scrolling the workspace
+          
           let nudgeAmount = e.key === 'ArrowLeft' ? -0.1 : 0.1;
           if (quantizeCheckbox && quantizeCheckbox.checked) {
               const gap = parseFloat(noteGapInput.value) || 0.25;
@@ -920,7 +915,6 @@
               const activeObj = track.fabCanvas.getActiveObject();
               if (activeObj) {
                   if(!nudged) saveState();
-                  e.preventDefault(); 
                   let objs = activeObj.type === 'activeSelection' ? activeObj.getObjects() : [activeObj];
                   
                   objs.forEach(obj => {
@@ -943,6 +937,18 @@
               }
           });
           if (nudged) recalculateDuration();
+      } else if (e.code === 'Space') { 
+        e.preventDefault(); 
+        if (isPlaying) stopBtn.click(); else playBtn.click(); 
+      } else if (isCmdOrCtrl && key === 'z') { 
+        e.preventDefault(); 
+        if (e.shiftKey) redo(); else undo(); 
+      } else if (isCmdOrCtrl && key === 'c') {
+        e.preventDefault(); copySelection();
+      } else if (isCmdOrCtrl && key === 'v') {
+        e.preventDefault(); pasteSelection();
+      } else if (e.key === 'Backspace' || e.key === 'Delete') {
+        deleteSelection();
       }
     });
 
