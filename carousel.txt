@@ -26,5 +26,5 @@ Slide: 5
 Format: GEEGAW
 Heading: SHUCK Zine
 Description: Available soon from The Folklore Box shop.
-Image: Carousel-5.jpg
+Image: images/Shuck Zine.jpg
 ---
