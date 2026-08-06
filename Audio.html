@@ -255,15 +255,19 @@
     ];
 
     function initAudioEngine() {
-      if (audioCtx) return; 
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      masterBus = audioCtx.createGain(); masterCompressor = audioCtx.createDynamicsCompressor(); convolver = audioCtx.createConvolver();
-      masterGainNode = audioCtx.createGain(); dryGainNode = audioCtx.createGain(); wetGainNode = audioCtx.createGain();
-      masterGainNode.gain.setValueAtTime(parseFloat(volumeSlider.value), audioCtx.currentTime);
-      const mix = parseFloat(mixSlider.value);
-      dryGainNode.gain.setValueAtTime(1.0 - mix, audioCtx.currentTime); wetGainNode.gain.setValueAtTime(mix, audioCtx.currentTime);
-      masterBus.connect(masterCompressor); masterCompressor.connect(dryGainNode); masterCompressor.connect(convolver);   
-      convolver.connect(wetGainNode); dryGainNode.connect(masterGainNode); wetGainNode.connect(masterGainNode); masterGainNode.connect(audioCtx.destination);
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        masterBus = audioCtx.createGain(); masterCompressor = audioCtx.createDynamicsCompressor(); convolver = audioCtx.createConvolver();
+        masterGainNode = audioCtx.createGain(); dryGainNode = audioCtx.createGain(); wetGainNode = audioCtx.createGain();
+        masterGainNode.gain.setValueAtTime(parseFloat(volumeSlider.value), audioCtx.currentTime);
+        const mix = parseFloat(mixSlider.value);
+        dryGainNode.gain.setValueAtTime(1.0 - mix, audioCtx.currentTime); wetGainNode.gain.setValueAtTime(mix, audioCtx.currentTime);
+        masterBus.connect(masterCompressor); masterCompressor.connect(dryGainNode); masterCompressor.connect(convolver);   
+        convolver.connect(wetGainNode); dryGainNode.connect(masterGainNode); wetGainNode.connect(masterGainNode); masterGainNode.connect(audioCtx.destination);
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
     }
 
     // --- KEYBOARD & SEQUENCE LOGIC ---
@@ -302,7 +306,7 @@
 
     insertSequenceBtn.addEventListener('click', () => {
       if (recordedSequence.length === 0) return;
-      initAudioEngine(); if (audioCtx.state === 'suspended') audioCtx.resume(); saveState();
+      initAudioEngine(); saveState();
 
       if (!activeMelodicTrack) {
         melodyTrackCount++;
@@ -385,7 +389,6 @@
       restoreState(redoStack.pop()); 
     }
 
-    // ROBUST CROSS-TRACK COPY & PASTE
     function copySelection() { 
       let itemsToCopy = [];
       let minTime = Infinity;
@@ -506,7 +509,6 @@
       if (redrawNeeded) recalculateDuration();
     }
 
-    // RELIABLE KEYBOARD SHORTCUT HANDLING
     document.addEventListener('keydown', (e) => {
       if (e.target.tagName === 'INPUT' && e.target.type !== 'range') return; 
       
@@ -537,7 +539,6 @@
       }
     }
 
-    // RULER SEEK LOGIC
     rulerCanvasContainer.addEventListener('mousedown', (e) => {
       if (isPlaying) stopBtn.click();
       const rect = rulerCanvasContainer.getBoundingClientRect();
@@ -807,7 +808,6 @@
 
     playBtn.addEventListener('click', async () => {
       initAudioEngine();
-      if (audioCtx.state === 'suspended') await audioCtx.resume();
       if (isPlaying || tracks.length === 0) return;
       startedAt = audioCtx.currentTime - pausedAt;
       tracks.forEach(track => {
@@ -846,7 +846,7 @@
     });
 
     beatBtn.addEventListener('click', async () => {
-      initAudioEngine(); if (audioCtx.state === 'suspended') await audioCtx.resume(); 
+      initAudioEngine(); 
       const selectedInstrument = synthSelect.value, instrumentLabel = synthSelect.options[synthSelect.selectedIndex].text;
       saveState();
       if (!activeSynthTracks[selectedInstrument]) {
