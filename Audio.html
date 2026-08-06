@@ -59,7 +59,7 @@
       padding: 5px 15px; border-bottom: 1px solid #333; width: 100vw;
     }
 
-    .track-wrapper { display: flex; height: 110px; border-bottom: 1px solid #2d2d2d; background: #1a1a1a; }
+    .track-wrapper { display: flex; height: 110px; border-bottom: 1px solid #2d2d2d; background: #1a1a1a; transition: transform 0.2s; }
 
     .track-header {
       box-sizing: border-box; 
@@ -67,7 +67,7 @@
       padding: 10px; border-right: 2px solid #000; display: flex; flex-direction: column; justify-content: center;
       box-shadow: 2px 0 5px rgba(0,0,0,0.5);
     }
-    .track-name { font-size: 0.85rem; font-weight: bold; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #ddd; }
+    .track-name { flex: 1; font-size: 0.85rem; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #ddd; }
     .track-control-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.65rem; color: #aaa; margin-bottom: 2px; font-weight: bold; }
     .track-control-row input { width: 140px; margin: 0; }
 
@@ -135,10 +135,8 @@
             <option value="kick">💥 Kick</option>
             <option value="snare">🥁 Snare</option>
             <option value="hihat">🎩 Hi-Hat</option>
-            <option value="bass">🎸 Synth Bass</option>
-            <option value="laser">🔫 Laser</option>
-            <option value="chime">✨ Chime</option>
           </select>
+          <button id="newDrumTrackBtn" class="btn-accent" style="background: #00aaff; border-color: #007acc;">➕ New</button>
           <button id="beatBtn" class="btn-accent">+ Seq</button>
         </div>
       </div>
@@ -193,7 +191,17 @@
           <button id="closeKeyboardBtn" style="background: transparent; border: none; font-size: 1.2rem; margin-left: 10px;">✖</button>
         </div>
       </div>
+      
       <div id="keys-container" style="display: flex; height: 120px; gap: 2px;"></div>
+      
+      <!-- Text Sequence Input Area -->
+      <div style="display: flex; align-items: center; gap: 10px; margin-top: 15px; border-top: 1px solid #444; padding-top: 15px;">
+        <span style="color: #ccc; font-size: 0.8rem;">Text Input:</span>
+        <input type="text" id="textSequenceInput" placeholder="C4, D#4, E4" style="padding: 4px; border-radius: 4px; border: 1px solid #555; width: 250px; background: #111; color: #00ffcc; font-family: monospace;">
+        <button id="addTextSequenceBtn" class="btn-primary" style="padding: 4px 10px;">Add Sequence String</button>
+        <span style="color: #666; font-size: 0.75rem;">(Comma separated notes)</span>
+      </div>
+
     </div>
   </div>
 
@@ -220,6 +228,7 @@
     const playBtn = document.getElementById('playBtn');
     const stopBtn = document.getElementById('stopBtn');
     const beatBtn = document.getElementById('beatBtn');
+    const newDrumTrackBtn = document.getElementById('newDrumTrackBtn');
     const synthSelect = document.getElementById('synthSelect');
     const exportBtn = document.getElementById('exportBtn');
     const volumeSlider = document.getElementById('volumeSlider');
@@ -243,6 +252,8 @@
     const sequenceDisplay = document.getElementById('sequence-display');
     const clearSequenceBtn = document.getElementById('clearSequenceBtn');
     const insertSequenceBtn = document.getElementById('insertSequenceBtn');
+    const textSequenceInput = document.getElementById('textSequenceInput');
+    const addTextSequenceBtn = document.getElementById('addTextSequenceBtn');
     const noteGapInput = document.getElementById('noteGapInput');
     const newMelodyTrackBtn = document.getElementById('newMelodyTrackBtn');
     const melodyPatchSelect = document.getElementById('melodyPatchSelect');
@@ -293,6 +304,12 @@
       setTimeout(() => newMelodyTrackBtn.innerHTML = "➕ New Track", 1500);
     });
     
+    newDrumTrackBtn.addEventListener('click', () => {
+      activeSynthTracks[synthSelect.value] = null;
+      newDrumTrackBtn.innerHTML = "✓ Ready";
+      setTimeout(() => newDrumTrackBtn.innerHTML = "➕ New", 1500);
+    });
+
     musicalNotes.forEach(note => {
       const btn = document.createElement('button');
       btn.innerText = note.name; btn.className = `key-btn key-${note.color}`;
@@ -307,6 +324,18 @@
 
     function updateSequenceDisplay() { sequenceDisplay.innerText = "Sequence: [" + recordedSequence.map(n => n.name).join(', ') + "]"; }
     clearSequenceBtn.addEventListener('click', () => { recordedSequence = []; updateSequenceDisplay(); });
+
+    addTextSequenceBtn.addEventListener('click', () => {
+      const val = textSequenceInput.value.trim();
+      if (!val) return;
+      const parts = val.split(',').map(s => s.trim().toUpperCase());
+      parts.forEach(p => {
+        const note = musicalNotes.find(n => n.name.toUpperCase() === p);
+        if (note) recordedSequence.push(note);
+      });
+      updateSequenceDisplay();
+      textSequenceInput.value = '';
+    });
 
     insertSequenceBtn.addEventListener('click', async () => {
       if (recordedSequence.length === 0) return;
@@ -334,6 +363,16 @@
 
       recordedSequence = []; updateSequenceDisplay(); recalculateDuration();
     });
+
+    function swapTrackOrder(id1, id2) {
+      const idx1 = tracks.findIndex(t => t.id === id1);
+      const idx2 = tracks.findIndex(t => t.id === id2);
+      if (idx1 > -1 && idx2 > -1) {
+          const temp = tracks[idx1];
+          tracks[idx1] = tracks[idx2];
+          tracks[idx2] = temp;
+      }
+    }
 
     function createChannelStripNodes() {
       const eqNode = audioCtx.createBiquadFilter(); eqNode.type = 'lowpass'; eqNode.frequency.value = 20000; 
@@ -549,11 +588,19 @@
       emptyState.style.display = 'none'; playhead.style.display = 'block'; rulerWrapper.style.display = 'flex';
       if (!track.id) track.id = Math.random().toString(36).substr(2, 9);
       
-      const trackWrapper = document.createElement('div'); trackWrapper.className = 'track-wrapper';
+      const trackWrapper = document.createElement('div'); 
+      trackWrapper.className = 'track-wrapper';
+      trackWrapper.dataset.trackId = track.id;
       
       trackWrapper.innerHTML = `
         <div class="track-header">
-          <div class="track-name" title="${track.name}">${track.name}</div>
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+            <div class="track-name" title="${track.name}">${track.name}</div>
+            <div style="display: flex; gap: 2px;">
+               <button class="move-up-btn" style="padding: 1px 4px; font-size: 0.6rem; background: #444; border:none; border-radius: 2px; color:white; cursor:pointer;" title="Move Up">▲</button>
+               <button class="move-down-btn" style="padding: 1px 4px; font-size: 0.6rem; background: #444; border:none; border-radius: 2px; color:white; cursor:pointer;" title="Move Down">▼</button>
+            </div>
+          </div>
           <div class="track-control-row"><span>VOL</span><input type="range" min="0" max="1" step="0.01" value="${track.gainNode.gain.value}" class="track-vol-slider" title="Volume"></div>
           <div class="track-control-row"><span>PAN</span><input type="range" min="-1" max="1" step="0.01" value="${track.panNode.pan.value}" class="track-pan-slider" title="L/R Panning"></div>
           <div class="track-control-row"><span>LPF</span><input type="range" min="100" max="20000" step="100" value="${track.eqNode.frequency.value}" class="track-eq-slider" title="Filter Cutoff"></div>
@@ -576,6 +623,22 @@
       track.fabCanvas = new fabric.Canvas(canvasElement, { selection: true, width: getTimelineWidth(), height: 110 });
       if (track.type === 'audio') track.hiddenCanvas = trackWrapper.querySelector('.hidden-canvas');
       track.color = color;
+
+      // REORDER LOGIC
+      trackWrapper.querySelector('.move-up-btn').addEventListener('click', () => {
+          const prev = trackWrapper.previousElementSibling;
+          if (prev && !prev.classList.contains('section-divider')) {
+              trackWrapper.parentNode.insertBefore(trackWrapper, prev);
+              swapTrackOrder(track.id, prev.dataset.trackId);
+          }
+      });
+      trackWrapper.querySelector('.move-down-btn').addEventListener('click', () => {
+          const next = trackWrapper.nextElementSibling;
+          if (next) {
+              trackWrapper.parentNode.insertBefore(trackWrapper, next.nextElementSibling);
+              swapTrackOrder(track.id, next.dataset.trackId);
+          }
+      });
 
       track.fabCanvas.on('selection:created', configureSelection);
       track.fabCanvas.on('selection:updated', configureSelection);
@@ -655,12 +718,33 @@
       const rCanvas = document.getElementById('rulerCanvas'), rWidth = getTimelineWidth();
       rCanvas.width = rWidth; const ctx = rCanvas.getContext('2d');
       ctx.clearRect(0,0, rWidth, 30); ctx.fillStyle = '#888'; ctx.font = '10px sans-serif';
-      for(let i=0; i<=longestDuration + 5; i++) {
-        const x = i * pixelsPerSecond;
-        ctx.fillRect(x, 15, 1, 15); ctx.fillText(i + 's', x + 3, 12);
-        if (pixelsPerSecond > 40) ctx.fillRect(x + (pixelsPerSecond/2), 20, 1, 10); 
+      
+      let subDiv = 1;
+      if (pixelsPerSecond >= 150) subDiv = 0.1;
+      else if (pixelsPerSecond >= 80) subDiv = 0.25;
+      else if (pixelsPerSecond >= 40) subDiv = 0.5;
+
+      const numSteps = Math.ceil((longestDuration + 5) / subDiv);
+      
+      for(let i=0; i<=numSteps; i++) {
+        const x = i * subDiv * pixelsPerSecond;
+        const isMajor = Math.abs((i * subDiv) - Math.round(i * subDiv)) < 0.01;
+        if (isMajor) {
+            ctx.fillRect(x, 15, 1, 15); 
+            ctx.fillText(Math.round(i * subDiv) + 's', x + 3, 12);
+        } else {
+            ctx.fillRect(x, 22, 1, 8);
+        }
       }
-      document.querySelectorAll('.track-canvas-container').forEach(c => c.style.width = rWidth + 'px');
+      
+      const bgSize = (subDiv * pixelsPerSecond) + 'px 100%';
+      const bgImage = 'linear-gradient(to right, rgba(255,255,255,0.07) 1px, transparent 1px)';
+      document.querySelectorAll('.track-canvas-container').forEach(c => {
+         c.style.width = rWidth + 'px';
+         c.style.backgroundImage = bgImage;
+         c.style.backgroundSize = bgSize;
+         c.style.backgroundPosition = '0 0';
+      });
       tracks.forEach(t => t.fabCanvas.setWidth(rWidth));
     }
 
