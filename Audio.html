@@ -135,9 +135,6 @@
             <option value="kick">💥 Kick</option>
             <option value="snare">🥁 Snare</option>
             <option value="hihat">🎩 Hi-Hat</option>
-            <option value="bass">🎸 Synth Bass</option>
-            <option value="laser">🔫 Laser</option>
-            <option value="chime">✨ Chime</option>
           </select>
           <button id="newDrumTrackBtn" class="btn-accent" style="background: #00aaff; border-color: #007acc;">➕ New</button>
           <button id="beatBtn" class="btn-accent">+ Seq</button>
@@ -187,7 +184,7 @@
           </select>
           <button id="newMelodyTrackBtn" class="btn-accent" style="background: #9933ff; border-color: #7a29cc;">➕ New Track</button>
           
-          <span style="color: #ccc; font-size: 0.8rem; margin-left: 10px;">Gap (sec):</span>
+          <span style="color: #ccc; font-size: 0.8rem; margin-left: 10px;">1 Beat = (sec):</span>
           <input type="number" id="noteGapInput" value="0.25" step="0.1" min="0.1" style="width: 50px; padding: 4px; border-radius: 4px; border: none;">
           <button id="insertSequenceBtn" class="btn-primary">Insert at Playhead</button>
           <button id="clearSequenceBtn">Clear Notes</button>
@@ -199,9 +196,9 @@
       
       <div style="display: flex; align-items: center; gap: 10px; margin-top: 15px; border-top: 1px solid #444; padding-top: 15px;">
         <span style="color: #ccc; font-size: 0.8rem;">Text Input:</span>
-        <input type="text" id="textSequenceInput" placeholder="C4, D#4, E4" style="padding: 4px; border-radius: 4px; border: 1px solid #555; width: 250px; background: #111; color: #00ffcc; font-family: monospace;">
+        <input type="text" id="textSequenceInput" placeholder="C4, D#4:2, E4:0.5" style="padding: 4px; border-radius: 4px; border: 1px solid #555; width: 300px; background: #111; color: #00ffcc; font-family: monospace;">
         <button id="addTextSequenceBtn" class="btn-primary" style="padding: 4px 10px;">Add Sequence String</button>
-        <span style="color: #666; font-size: 0.75rem;">(Comma separated notes)</span>
+        <span style="color: #666; font-size: 0.75rem;">(Format: Note:Beats e.g., C4, D#4:2)</span>
       </div>
 
     </div>
@@ -319,12 +316,15 @@
         e.preventDefault();
         await initAudioEngine();
         triggerMelody(audioCtx, audioCtx.currentTime, note.freq, masterBus, { patch: melodyPatchSelect.value }, 1.0);
-        recordedSequence.push(note); updateSequenceDisplay();
+        recordedSequence.push({ ...note, beats: 1 }); updateSequenceDisplay();
       });
       keysContainer.appendChild(btn);
     });
 
-    function updateSequenceDisplay() { sequenceDisplay.innerText = "Sequence: [" + recordedSequence.map(n => n.name).join(', ') + "]"; }
+    function updateSequenceDisplay() { 
+      sequenceDisplay.innerText = "Sequence: [" + recordedSequence.map(n => n.beats && n.beats !== 1 ? `${n.name}:${n.beats}` : n.name).join(', ') + "]"; 
+    }
+    
     clearSequenceBtn.addEventListener('click', () => { recordedSequence = []; updateSequenceDisplay(); });
 
     addTextSequenceBtn.addEventListener('click', () => {
@@ -332,8 +332,12 @@
       if (!val) return;
       const parts = val.split(',').map(s => s.trim().toUpperCase());
       parts.forEach(p => {
-        const note = musicalNotes.find(n => n.name.toUpperCase() === p);
-        if (note) recordedSequence.push(note);
+        const subParts = p.split(':');
+        const noteName = subParts[0].trim();
+        const beats = subParts.length > 1 ? parseFloat(subParts[1]) : 1;
+        
+        const note = musicalNotes.find(n => n.name.toUpperCase() === noteName);
+        if (note) recordedSequence.push({ ...note, beats: isNaN(beats) ? 1 : beats });
       });
       updateSequenceDisplay();
       textSequenceInput.value = '';
@@ -357,10 +361,13 @@
         activeMelodicTrack.patch = melodyPatchSelect.value;
       }
 
-      const gap = parseFloat(noteGapInput.value); let insertTime = pausedAt;
+      const gap = parseFloat(noteGapInput.value); 
+      let insertTime = pausedAt;
+      
       recordedSequence.forEach(note => {
-        activeMelodicTrack.hits.push({ time: insertTime, freq: note.freq, name: note.name, duration: gap });
-        insertTime += gap;
+        const duration = gap * (note.beats || 1);
+        activeMelodicTrack.hits.push({ time: insertTime, freq: note.freq, name: note.name, duration: duration });
+        insertTime += duration;
       });
 
       recordedSequence = []; updateSequenceDisplay(); recalculateDuration();
@@ -601,6 +608,7 @@
             <div style="display: flex; gap: 2px;">
                <button class="move-up-btn" style="padding: 1px 4px; font-size: 0.6rem; background: #444; border:none; border-radius: 2px; color:white; cursor:pointer;" title="Move Up">▲</button>
                <button class="move-down-btn" style="padding: 1px 4px; font-size: 0.6rem; background: #444; border:none; border-radius: 2px; color:white; cursor:pointer;" title="Move Down">▼</button>
+               <button class="delete-track-btn" style="padding: 1px 4px; font-size: 0.6rem; background: #900; border:none; border-radius: 2px; color:white; cursor:pointer; margin-left: 4px;" title="Delete Track">✖</button>
             </div>
           </div>
           <div class="track-control-row"><span>VOL</span><input type="range" min="0" max="1" step="0.01" value="${track.gainNode.gain.value}" class="track-vol-slider" title="Volume"></div>
@@ -626,7 +634,7 @@
       if (track.type === 'audio') track.hiddenCanvas = trackWrapper.querySelector('.hidden-canvas');
       track.color = color;
 
-      // REORDER LOGIC
+      // REORDER & DELETE LOGIC
       trackWrapper.querySelector('.move-up-btn').addEventListener('click', () => {
           const prev = trackWrapper.previousElementSibling;
           if (prev && !prev.classList.contains('section-divider')) {
@@ -639,6 +647,18 @@
           if (next) {
               trackWrapper.parentNode.insertBefore(trackWrapper, next.nextElementSibling);
               swapTrackOrder(track.id, next.dataset.trackId);
+          }
+      });
+      trackWrapper.querySelector('.delete-track-btn').addEventListener('click', () => {
+          if(confirm(`Are you sure you want to delete ${track.name}?`)) {
+              saveState();
+              trackWrapper.remove();
+              tracks = tracks.filter(t => t.id !== track.id);
+              if (activeMelodicTrack && activeMelodicTrack.id === track.id) activeMelodicTrack = null;
+              for (let key in activeSynthTracks) {
+                  if (activeSynthTracks[key] && activeSynthTracks[key].id === track.id) activeSynthTracks[key] = null;
+              }
+              recalculateDuration();
           }
       });
 
@@ -1044,26 +1064,26 @@
       if (patch === 'square-pluck') {
         osc.type = 'square'; filter.type = 'lowpass';
         filter.frequency.setValueAtTime(2000, time); 
-        filter.frequency.exponentialRampToValueAtTime(400, time + duration * 0.3);
+        filter.frequency.exponentialRampToValueAtTime(400, time + Math.min(0.3, duration));
         gain.gain.setValueAtTime(0.4, time); 
-        gain.gain.setTargetAtTime(0, time + duration * 0.9, duration * 0.1);
+        gain.gain.setTargetAtTime(0, time + duration - 0.1, 0.1);
         osc.start(time); osc.stop(time + duration);
         if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc: osc });
       } else if (patch === 'saw-brass') {
         osc.type = 'sawtooth'; filter.type = 'lowpass';
         filter.frequency.setValueAtTime(800, time); 
-        filter.frequency.linearRampToValueAtTime(3000, time + duration * 0.2);
+        filter.frequency.linearRampToValueAtTime(3000, time + Math.min(0.2, duration));
         gain.gain.setValueAtTime(0, time); 
-        gain.gain.linearRampToValueAtTime(0.4, time + duration * 0.1); 
-        gain.gain.setTargetAtTime(0, time + duration * 0.8, duration * 0.2);
+        gain.gain.linearRampToValueAtTime(0.4, time + Math.min(0.1, duration / 2)); 
+        gain.gain.setTargetAtTime(0, time + duration - 0.2, 0.2);
         osc.start(time); osc.stop(time + duration);
         if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc: osc });
       } else if (patch === 'sine-ghost') {
         osc.type = 'sine'; filter.type = 'lowpass';
         filter.frequency.setValueAtTime(1000, time);
         gain.gain.setValueAtTime(0, time); 
-        gain.gain.linearRampToValueAtTime(0.5, time + duration * 0.3); 
-        gain.gain.setTargetAtTime(0, time + duration * 0.5, duration * 0.5);
+        gain.gain.linearRampToValueAtTime(0.5, time + Math.min(0.3, duration / 2)); 
+        gain.gain.setTargetAtTime(0, time + duration - 0.5, 0.5);
         osc.start(time); osc.stop(time + duration);
         if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc: osc });
       } else if (patch === 'pwm-string') {
@@ -1073,8 +1093,8 @@
         osc2.frequency.setValueAtTime(freq * 1.01, time); 
         filter.frequency.setValueAtTime(3000, time);
         gain.gain.setValueAtTime(0, time); 
-        gain.gain.linearRampToValueAtTime(0.3, time + duration * 0.2); 
-        gain.gain.setTargetAtTime(0, time + duration * 0.6, duration * 0.4);
+        gain.gain.linearRampToValueAtTime(0.3, time + Math.min(0.2, duration / 2)); 
+        gain.gain.setTargetAtTime(0, time + duration - 0.5, 0.4);
         osc.start(time); osc.stop(time + duration);
         osc2.start(time); osc2.stop(time + duration);
         if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc1: osc, osc2: osc2 });
