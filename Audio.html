@@ -117,6 +117,7 @@
       justify-content: center;
       padding-bottom: 6px;
       user-select: none;
+      touch-action: none; /* Prevents scrolling when dragging across keys */
     }
     .key-btn:active, .key-btn.active { opacity: 0.7; background: #ff3366 !important; color: white !important; }
     .key-white { background: #eee; color: #111; min-width: 26px; height: 100%; }
@@ -468,9 +469,9 @@
       
       const handleKeyStart = async (e) => {
         e.preventDefault();
+        btn.setPointerCapture(e.pointerId); // Prevent wiggle cut-offs
         await initAudioEngine();
         
-        // Auto-Start Transport on first note if Armed
         if (isRecording && !isPlaying) {
             startPlayback();
         }
@@ -481,7 +482,6 @@
         btn.classList.add('active');
         triggerMelody(audioCtx, audioCtx.currentTime, note.freq, masterBus, { patch: melodyPatchSelect.value }, 2.0, hVal, aVal);
         
-        // Register the exact timestamp
         const hitTime = isPlaying ? (audioCtx.currentTime - startedAt) : pausedAt;
         activeTouches.set(btn, { note, noteOnTime: audioCtx.currentTime, hitTime });
       };
@@ -489,23 +489,27 @@
       const handleKeyEnd = (e) => {
         if (!activeTouches.has(btn)) return;
         e.preventDefault();
+        btn.releasePointerCapture(e.pointerId);
         btn.classList.remove('active');
         
         const touch = activeTouches.get(btn);
         activeTouches.delete(btn);
         
-        const heldDuration = Math.max(0.08, audioCtx.currentTime - touch.noteOnTime);
+        const gap = parseFloat(noteGapInput.value) || 0.25;
+        const rawDur = audioCtx.currentTime - touch.noteOnTime;
         
         if (isRecording) {
             saveState();
             ensureMelodicTrackExists();
             activeMelodicTrack.patch = melodyPatchSelect.value;
+            // Snaps short mouse clicks up to exactly 1 beat length so they aren't microscopic
+            const heldDuration = Math.max(gap, rawDur);
+            
             activeMelodicTrack.hits.push({ time: touch.hitTime, freq: touch.note.freq, name: touch.note.name, duration: heldDuration });
             activeMelodicTrack.hits.sort((a,b) => a.time - b.time);
             recalculateDuration();
         } else {
-            const gap = parseFloat(noteGapInput.value);
-            const calculatedBeats = Math.max(0.25, parseFloat((heldDuration / gap).toFixed(2)));
+            const calculatedBeats = Math.max(0.25, parseFloat((rawDur / gap).toFixed(2)));
             recordedSequence.push({ ...touch.note, beats: calculatedBeats }); 
             updateSequenceDisplay();
         }
@@ -513,7 +517,7 @@
 
       btn.addEventListener('pointerdown', handleKeyStart);
       btn.addEventListener('pointerup', handleKeyEnd);
-      btn.addEventListener('pointerleave', handleKeyEnd);
+      btn.addEventListener('pointercancel', handleKeyEnd);
       
       keysContainer.appendChild(btn);
     });
