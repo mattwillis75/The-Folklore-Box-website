@@ -87,13 +87,33 @@
       background: #252526; padding: 15px; border-top: 2px solid #444; z-index: 1005;
       box-shadow: 0 -4px 10px rgba(0,0,0,0.5);
     }
+    
+    /* SCROLLABLE 88-KEY CONTAINER */
+    #keys-container {
+      display: flex;
+      height: 130px;
+      gap: 2px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scroll-behavior: smooth;
+    }
     .key-btn {
-      flex: 1; border: 1px solid #111; cursor: pointer; font-weight: bold; font-size: 0.9rem;
-      border-radius: 0 0 4px 4px; transition: background 0.1s;
+      flex: 0 0 auto;
+      border: 1px solid #111;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 0.65rem;
+      border-radius: 0 0 4px 4px;
+      transition: background 0.1s;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 6px;
+      user-select: none;
     }
     .key-btn:active { opacity: 0.7; }
-    .key-white { background: #eee; color: #111; }
-    .key-black { background: #222; color: #eee; }
+    .key-white { background: #eee; color: #111; min-width: 26px; height: 100%; }
+    .key-black { background: #222; color: #eee; min-width: 18px; height: 65%; align-self: flex-start; border-color: #000; }
   </style>
 </head>
 <body>
@@ -192,14 +212,14 @@
         </div>
       </div>
       
-      <div id="keys-container" style="display: flex; height: 120px; gap: 2px;"></div>
+      <div id="keys-container"></div>
       
       <!-- Text Sequence Input Area -->
       <div style="display: flex; align-items: center; gap: 10px; margin-top: 15px; border-top: 1px solid #444; padding-top: 15px;">
         <span style="color: #ccc; font-size: 0.8rem;">Text Input:</span>
-        <input type="text" id="textSequenceInput" placeholder="C4, D#4:2 E4" style="padding: 4px; border-radius: 4px; border: 1px solid #555; width: 300px; background: #111; color: #00ffcc; font-family: monospace;">
+        <input type="text" id="textSequenceInput" placeholder="A0:2, C4, D#4:2 E4, C8" style="padding: 4px; border-radius: 4px; border: 1px solid #555; width: 320px; background: #111; color: #00ffcc; font-family: monospace;">
         <button id="addTextSequenceBtn" class="btn-primary" style="padding: 4px 10px;">Add Sequence String</button>
-        <span style="color: #666; font-size: 0.75rem;">(Format: Note:Beats | Space = Rest)</span>
+        <span style="color: #666; font-size: 0.75rem;">(Format: Note:Beats | Space = Rest | Range: A0-C8)</span>
       </div>
 
     </div>
@@ -258,15 +278,21 @@
     const newMelodyTrackBtn = document.getElementById('newMelodyTrackBtn');
     const melodyPatchSelect = document.getElementById('melodyPatchSelect');
 
-    const musicalNotes = [
-      { name: 'C4', freq: 261.63, color: 'white' }, { name: 'C#4', freq: 277.18, color: 'black' },
-      { name: 'D4', freq: 293.66, color: 'white' }, { name: 'D#4', freq: 311.13, color: 'black' },
-      { name: 'E4', freq: 329.63, color: 'white' }, { name: 'F4', freq: 349.23, color: 'white' },
-      { name: 'F#4', freq: 369.99, color: 'black' }, { name: 'G4', freq: 392.00, color: 'white' },
-      { name: 'G#4', freq: 415.30, color: 'black' }, { name: 'A4', freq: 440.00, color: 'white' },
-      { name: 'A#4', freq: 466.16, color: 'black' }, { name: 'B4', freq: 493.88, color: 'white' },
-      { name: 'C5', freq: 523.25, color: 'white' }
-    ];
+    // DYNAMIC 88-KEY GENERATOR (A0 to C8)
+    const noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+    const musicalNotes = [];
+    for (let midi = 21; midi <= 108; midi++) {
+      const noteName = noteNames[midi % 12];
+      const octave = Math.floor(midi / 12) - 1;
+      const fullName = noteName + octave;
+      const freq = 440 * Math.pow(2, (midi - 69) / 12);
+      const isBlack = noteName.includes('#');
+      musicalNotes.push({
+        name: fullName,
+        freq: parseFloat(freq.toFixed(2)),
+        color: isBlack ? 'black' : 'white'
+      });
+    }
 
     async function initAudioEngine() {
       if (!audioCtx) {
@@ -285,7 +311,14 @@
     }
 
     // --- KEYBOARD & SEQUENCE LOGIC ---
-    toggleKeyboardBtn.addEventListener('click', () => keyboardPanel.style.display = 'block');
+    toggleKeyboardBtn.addEventListener('click', () => {
+      keyboardPanel.style.display = 'block';
+      // Auto-scroll keyboard panel to Middle C (C4)
+      setTimeout(() => {
+        const c4Key = Array.from(keysContainer.children).find(b => b.innerText === 'C4');
+        if (c4Key) c4Key.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }, 50);
+    });
     closeKeyboardBtn.addEventListener('click', () => keyboardPanel.style.display = 'none');
     
     melodyPatchSelect.addEventListener('change', (e) => {
@@ -310,9 +343,12 @@
       setTimeout(() => newDrumTrackBtn.innerHTML = "➕ New", 1500);
     });
 
+    // BUILD 88 KEY BUTTONS
     musicalNotes.forEach(note => {
       const btn = document.createElement('button');
-      btn.innerText = note.name; btn.className = `key-btn key-${note.color}`;
+      btn.innerText = note.name; 
+      btn.className = `key-btn key-${note.color}`;
+      btn.title = `${note.name} (${note.freq} Hz)`;
       btn.addEventListener('pointerdown', async (e) => {
         e.preventDefault();
         await initAudioEngine();
@@ -335,7 +371,6 @@
       const val = textSequenceInput.value.trim();
       if (!val) return;
       
-      // Normalize commas and condense spaces
       let normalized = val.replace(/\s*,\s*/g, ',');
       normalized = normalized.replace(/\s+/g, ' ');
       
@@ -357,7 +392,6 @@
           }
         });
         
-        // Add a 1-beat rest for the space separating groups
         if (index < groups.length - 1) {
             recordedSequence.push({ isRest: true, name: '-', beats: 1 });
         }
