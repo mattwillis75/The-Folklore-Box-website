@@ -135,6 +135,9 @@
             <option value="kick">💥 Kick</option>
             <option value="snare">🥁 Snare</option>
             <option value="hihat">🎩 Hi-Hat</option>
+            <option value="bass">🎸 Synth Bass</option>
+            <option value="laser">🔫 Laser</option>
+            <option value="chime">✨ Chime</option>
           </select>
           <button id="newDrumTrackBtn" class="btn-accent" style="background: #00aaff; border-color: #007acc;">➕ New</button>
           <button id="beatBtn" class="btn-accent">+ Seq</button>
@@ -194,7 +197,6 @@
       
       <div id="keys-container" style="display: flex; height: 120px; gap: 2px;"></div>
       
-      <!-- Text Sequence Input Area -->
       <div style="display: flex; align-items: center; gap: 10px; margin-top: 15px; border-top: 1px solid #444; padding-top: 15px;">
         <span style="color: #ccc; font-size: 0.8rem;">Text Input:</span>
         <input type="text" id="textSequenceInput" placeholder="C4, D#4, E4" style="padding: 4px; border-radius: 4px; border: 1px solid #555; width: 250px; background: #111; color: #00ffcc; font-family: monospace;">
@@ -649,6 +651,7 @@
 
       track.fabCanvas.on('object:modified', function(e) {
           let wasPlaying = isPlaying; if (wasPlaying) stopBtn.click();
+          saveState();
           
           const obj = e.target;
           if (obj.type === 'activeSelection') {
@@ -981,39 +984,45 @@
     function triggerSynth(context, instrumentType, time, destinationNode, liveTrackObj = null, duration = 0.25) {
       if (instrumentType === 'kick') {
         const osc = context.createOscillator(); const gain = context.createGain(); osc.connect(gain); gain.connect(destinationNode);
-        osc.frequency.setValueAtTime(150, time); osc.frequency.exponentialRampToValueAtTime(40, time + 0.1); 
+        osc.frequency.setValueAtTime(150, time); osc.frequency.exponentialRampToValueAtTime(40, time + Math.min(0.15, duration * 0.5)); 
         gain.gain.setValueAtTime(1, time); gain.gain.exponentialRampToValueAtTime(0.01, time + duration);
         osc.start(time); osc.stop(time + duration); if (liveTrackObj) liveTrackObj.liveNodes.push({ osc });
       } else if (instrumentType === 'snare') {
-        const bufferSize = Math.floor(context.sampleRate * 0.2); const noiseBuffer = context.createBuffer(1, bufferSize, context.sampleRate);
+        const bufferSize = Math.floor(context.sampleRate * Math.max(0.2, duration)); 
+        const noiseBuffer = context.createBuffer(1, bufferSize, context.sampleRate);
         const output = noiseBuffer.getChannelData(0); for (let i = 0; i < bufferSize; i++) output[i] = Math.random() * 2 - 1;
         const noiseSource = context.createBufferSource(); noiseSource.buffer = noiseBuffer;
         const noiseFilter = context.createBiquadFilter(); noiseFilter.type = 'highpass'; noiseFilter.frequency.value = 1000;
-        const noiseGain = context.createGain(); noiseGain.gain.setValueAtTime(1, time); noiseGain.gain.exponentialRampToValueAtTime(0.01, time + Math.max(0.2, duration));
+        const noiseGain = context.createGain(); noiseGain.gain.setValueAtTime(1, time); 
+        noiseGain.gain.exponentialRampToValueAtTime(0.01, time + duration);
         noiseSource.connect(noiseFilter); noiseFilter.connect(noiseGain); noiseGain.connect(destinationNode);
         const osc = context.createOscillator(); osc.type = 'triangle'; const oscGain = context.createGain();
-        osc.frequency.setValueAtTime(250, time); osc.frequency.exponentialRampToValueAtTime(60, time + 0.1);
-        oscGain.gain.setValueAtTime(1, time); oscGain.gain.exponentialRampToValueAtTime(0.01, time + Math.max(0.2, duration));
+        osc.frequency.setValueAtTime(250, time); osc.frequency.exponentialRampToValueAtTime(60, time + duration * 0.3);
+        oscGain.gain.setValueAtTime(1, time); oscGain.gain.exponentialRampToValueAtTime(0.01, time + duration);
         osc.connect(oscGain); oscGain.connect(destinationNode);
-        noiseSource.start(time); osc.start(time); noiseSource.stop(time + Math.max(0.2, duration)); osc.stop(time + Math.max(0.2, duration));
+        noiseSource.start(time); osc.start(time); noiseSource.stop(time + duration); osc.stop(time + duration);
         if (liveTrackObj) liveTrackObj.liveNodes.push({ noise: noiseSource, osc: osc });
       } else if (instrumentType === 'hihat') {
-        const bufferSize = Math.floor(context.sampleRate * 0.1); const noiseBuffer = context.createBuffer(1, bufferSize, context.sampleRate);
+        const bufferSize = Math.floor(context.sampleRate * Math.max(0.1, duration)); 
+        const noiseBuffer = context.createBuffer(1, bufferSize, context.sampleRate);
         const output = noiseBuffer.getChannelData(0); for (let i = 0; i < bufferSize; i++) output[i] = Math.random() * 2 - 1;
         const noiseSource = context.createBufferSource(); noiseSource.buffer = noiseBuffer;
         const noiseFilter = context.createBiquadFilter(); noiseFilter.type = 'highpass'; noiseFilter.frequency.value = 5000; 
-        const noiseGain = context.createGain(); noiseGain.gain.setValueAtTime(0.8, time); noiseGain.gain.exponentialRampToValueAtTime(0.01, time + Math.max(0.1, duration));
+        const noiseGain = context.createGain(); noiseGain.gain.setValueAtTime(0.8, time); 
+        noiseGain.gain.exponentialRampToValueAtTime(0.01, time + duration);
         noiseSource.connect(noiseFilter); noiseFilter.connect(noiseGain); noiseGain.connect(destinationNode);
-        noiseSource.start(time); noiseSource.stop(time + Math.max(0.1, duration)); if (liveTrackObj) liveTrackObj.liveNodes.push({ noise: noiseSource });
+        noiseSource.start(time); noiseSource.stop(time + duration); if (liveTrackObj) liveTrackObj.liveNodes.push({ noise: noiseSource });
       } else if (instrumentType === 'bass') {
         const osc = context.createOscillator(); osc.type = 'sawtooth'; const filter = context.createBiquadFilter(); filter.type = 'lowpass'; const gain = context.createGain();
         osc.connect(filter); filter.connect(gain); gain.connect(destinationNode);
-        osc.frequency.setValueAtTime(55, time); filter.frequency.setValueAtTime(800, time); filter.frequency.exponentialRampToValueAtTime(100, time + Math.min(0.3, duration));
-        gain.gain.setValueAtTime(1, time); gain.gain.setTargetAtTime(0, time + duration - 0.1, 0.2);
-        osc.start(time); osc.stop(time + duration + 0.5); if (liveTrackObj) liveTrackObj.liveNodes.push({ osc });
+        osc.frequency.setValueAtTime(55, time); filter.frequency.setValueAtTime(800, time); 
+        filter.frequency.exponentialRampToValueAtTime(100, time + duration * 0.5);
+        gain.gain.setValueAtTime(1, time); gain.gain.setTargetAtTime(0, time + duration * 0.8, duration * 0.2);
+        osc.start(time); osc.stop(time + duration); if (liveTrackObj) liveTrackObj.liveNodes.push({ osc });
       } else if (instrumentType === 'laser') {
         const osc = context.createOscillator(); const gain = context.createGain(); osc.connect(gain); gain.connect(destinationNode);
-        osc.frequency.setValueAtTime(800, time); osc.frequency.exponentialRampToValueAtTime(10, time + Math.min(0.3, duration)); 
+        osc.frequency.setValueAtTime(800, time); 
+        osc.frequency.exponentialRampToValueAtTime(10, time + duration); 
         gain.gain.setValueAtTime(0.5, time); gain.gain.exponentialRampToValueAtTime(0.01, time + duration);
         osc.start(time); osc.stop(time + duration); if (liveTrackObj) liveTrackObj.liveNodes.push({ osc });
       } else if (instrumentType === 'chime') {
@@ -1035,26 +1044,26 @@
       if (patch === 'square-pluck') {
         osc.type = 'square'; filter.type = 'lowpass';
         filter.frequency.setValueAtTime(2000, time); 
-        filter.frequency.exponentialRampToValueAtTime(400, time + Math.min(0.3, duration));
+        filter.frequency.exponentialRampToValueAtTime(400, time + duration * 0.3);
         gain.gain.setValueAtTime(0.4, time); 
-        gain.gain.setTargetAtTime(0, time + duration - 0.1, 0.1);
+        gain.gain.setTargetAtTime(0, time + duration * 0.9, duration * 0.1);
         osc.start(time); osc.stop(time + duration);
         if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc: osc });
       } else if (patch === 'saw-brass') {
         osc.type = 'sawtooth'; filter.type = 'lowpass';
         filter.frequency.setValueAtTime(800, time); 
-        filter.frequency.linearRampToValueAtTime(3000, time + Math.min(0.2, duration));
+        filter.frequency.linearRampToValueAtTime(3000, time + duration * 0.2);
         gain.gain.setValueAtTime(0, time); 
-        gain.gain.linearRampToValueAtTime(0.4, time + Math.min(0.1, duration / 2)); 
-        gain.gain.setTargetAtTime(0, time + duration - 0.2, 0.2);
+        gain.gain.linearRampToValueAtTime(0.4, time + duration * 0.1); 
+        gain.gain.setTargetAtTime(0, time + duration * 0.8, duration * 0.2);
         osc.start(time); osc.stop(time + duration);
         if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc: osc });
       } else if (patch === 'sine-ghost') {
         osc.type = 'sine'; filter.type = 'lowpass';
         filter.frequency.setValueAtTime(1000, time);
         gain.gain.setValueAtTime(0, time); 
-        gain.gain.linearRampToValueAtTime(0.5, time + Math.min(0.3, duration / 2)); 
-        gain.gain.setTargetAtTime(0, time + duration - 0.5, 0.5);
+        gain.gain.linearRampToValueAtTime(0.5, time + duration * 0.3); 
+        gain.gain.setTargetAtTime(0, time + duration * 0.5, duration * 0.5);
         osc.start(time); osc.stop(time + duration);
         if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc: osc });
       } else if (patch === 'pwm-string') {
@@ -1064,8 +1073,8 @@
         osc2.frequency.setValueAtTime(freq * 1.01, time); 
         filter.frequency.setValueAtTime(3000, time);
         gain.gain.setValueAtTime(0, time); 
-        gain.gain.linearRampToValueAtTime(0.3, time + Math.min(0.2, duration / 2)); 
-        gain.gain.setTargetAtTime(0, time + duration - 0.5, 0.4);
+        gain.gain.linearRampToValueAtTime(0.3, time + duration * 0.2); 
+        gain.gain.setTargetAtTime(0, time + duration * 0.6, duration * 0.4);
         osc.start(time); osc.stop(time + duration);
         osc2.start(time); osc2.stop(time + duration);
         if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc1: osc, osc2: osc2 });
