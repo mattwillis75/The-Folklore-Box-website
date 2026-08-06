@@ -221,6 +221,12 @@
             <option value="saw-brass">🎺 Autobahn (Brass)</option>
             <option value="pwm-string">🎻 Trans-Europe (Strings)</option>
             <option value="sine-ghost">👻 Radioactivity (Sine)</option>
+            <option value="acoustic-guitar">🎸 Acoustic Guitar</option>
+            <option value="electric-guitar">⚡ Electric Guitar</option>
+            <option value="bass-guitar">🎸 Bass Guitar</option>
+            <option value="harp">👼 Harp</option>
+            <option value="e-piano">🎹 Electric Piano</option>
+            <option value="midi-drums">🥁 Drum Kit (Standard MIDI)</option>
           </select>
           <button id="newMelodyTrackBtn" class="btn-accent" style="background: #9933ff; border-color: #7a29cc;">➕ New Track</button>
           
@@ -332,6 +338,20 @@
       if (audioCtx.state === 'suspended') {
         await audioCtx.resume();
       }
+    }
+
+    // Mathematical Distortion Curve for Electric Guitar
+    let distCurve = null;
+    function getDistortionCurve(amount = 50) {
+        if (distCurve) return distCurve;
+        const n_samples = 44100; const curve = new Float32Array(n_samples);
+        const deg = Math.PI / 180;
+        for (let i = 0; i < n_samples; ++i) {
+            const x = i * 2 / n_samples - 1;
+            curve[i] = (3 + amount) * x * 20 * deg / (Math.PI + amount * Math.abs(x));
+        }
+        distCurve = curve;
+        return curve;
     }
 
     // --- KEYBOARD & SEQUENCE LOGIC ---
@@ -1003,7 +1023,7 @@
         nodes.gainNode.gain.value = tData.vol; nodes.panNode.pan.value = tData.pan; nodes.eqNode.frequency.value = tData.eq;
         if (tData.type === 'synth') {
           let mappedHits = tData.hits.map(h => typeof h === 'number' ? { time: h, duration: 0.25 } : h);
-          const newTrack = { id: tData.id, type: 'synth', instrument: tData.instrument, hits: mappedHits, inputNode: nodes.inputNode, eqNode: nodes.eqNode, panNode: nodes.panNode, gainNode: nodes.gainNode, name: tData.name, liveNodes: [] };
+          const newTrack = { id: tData.id, type: 'synth', instrument: tData.instrument, hits: mappedHits, inputNode: nodes.inputNode, eqNode: nodes.eqNode, panNode: nodes.panNode, gainNode: nodes.nodes, name: tData.name, liveNodes: [] };
           tracks.push(newTrack); activeSynthTracks[tData.instrument] = newTrack; createTrackUI(newTrack, tData.color);
         } else if (tData.type === 'melodic') {
           if (tData.trackId && tData.trackId > melodyTrackCount) melodyTrackCount = tData.trackId;
@@ -1179,6 +1199,32 @@
       const velocity = 1.0 - (Math.random() * 0.3 * humanize);
       
       const patch = liveTrackObj ? liveTrackObj.patch : 'square-pluck';
+      
+      // Standard MIDI Drum Kit Routing
+      if (patch === 'midi-drums') {
+          // Reverse calculate MIDI note number from frequency
+          const midiNote = Math.round(69 + 12 * Math.log2(freq / 440));
+          
+          if (midiNote === 35 || midiNote === 36) { // B1 or C2 -> Kick
+              triggerSynth(context, 'kick', hTime, destinationNode, liveTrackObj, duration, humanize, analog);
+          } else if (midiNote === 38 || midiNote === 40) { // D2 or E2 -> Snare
+              triggerSynth(context, 'snare', hTime, destinationNode, liveTrackObj, duration, humanize, analog);
+          } else if (midiNote === 42 || midiNote === 44) { // F#2 or G#2 -> Closed Hat
+              triggerSynth(context, 'hihat', hTime, destinationNode, liveTrackObj, 0.1, humanize, analog); 
+          } else if (midiNote === 46) { // A#2 -> Open Hat
+              triggerSynth(context, 'hihat', hTime, destinationNode, liveTrackObj, 0.4, humanize, analog); 
+          } else {
+              // Fallback Woodblock
+              const osc = context.createOscillator(); const gain = context.createGain();
+              osc.connect(gain); gain.connect(destinationNode);
+              osc.frequency.setValueAtTime(freq, hTime); osc.frequency.exponentialRampToValueAtTime(freq * 0.8, hTime + 0.1);
+              gain.gain.setValueAtTime(0.7 * velocity, hTime); gain.gain.exponentialRampToValueAtTime(0.01, hTime + 0.2);
+              osc.start(hTime); osc.stop(hTime + 0.2);
+              if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc: osc });
+          }
+          return; // Exit early since drums bypass the melodic oscillators below
+      }
+      
       const osc = context.createOscillator(); 
       const gain = context.createGain(); 
       const filter = context.createBiquadFilter();
@@ -1190,54 +1236,110 @@
       
       // Analog Wow and Flutter LFO
       if (analog > 0) {
-          const lfo = context.createOscillator();
-          lfo.type = 'sine';
+          const lfo = context.createOscillator(); lfo.type = 'sine';
           lfo.frequency.setValueAtTime(1.5 + Math.random() * 3.5, hTime); 
-          const lfoGain = context.createGain();
-          lfoGain.gain.setValueAtTime(freq * 0.02 * analog, hTime); 
-          lfo.connect(lfoGain);
-          lfoGain.connect(osc.frequency);
-          lfo.start(hTime);
-          lfo.stop(hTime + duration);
+          const lfoGain = context.createGain(); lfoGain.gain.setValueAtTime(freq * 0.02 * analog, hTime); 
+          lfo.connect(lfoGain); lfoGain.connect(osc.frequency);
+          lfo.start(hTime); lfo.stop(hTime + duration);
           if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc: lfo });
       }
 
-      if (patch === 'square-pluck') {
+      if (patch === 'acoustic-guitar') {
+        osc.type = 'triangle'; filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(3000, hTime); 
+        filter.frequency.exponentialRampToValueAtTime(300, hTime + duration * 0.5);
+        gain.gain.setValueAtTime(0.8 * velocity, hTime); 
+        gain.gain.exponentialRampToValueAtTime(0.01, hTime + duration);
+        
+        // Add pluck transient
+        const noise = context.createBufferSource();
+        const noiseBuffer = context.createBuffer(1, context.sampleRate * 0.05, context.sampleRate);
+        const output = noiseBuffer.getChannelData(0); for (let i = 0; i < noiseBuffer.length; i++) output[i] = Math.random() * 2 - 1;
+        noise.buffer = noiseBuffer;
+        const noiseFilter = context.createBiquadFilter(); noiseFilter.type = 'highpass'; noiseFilter.frequency.value = 4000;
+        const noiseGain = context.createGain(); noiseGain.gain.setValueAtTime(0.3 * velocity, hTime); noiseGain.gain.exponentialRampToValueAtTime(0.01, hTime + 0.05);
+        noise.connect(noiseFilter); noiseFilter.connect(noiseGain); noiseGain.connect(destinationNode);
+        noise.start(hTime); noise.stop(hTime + 0.05);
+        if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ noise: noise });
+        
+        osc.start(hTime); osc.stop(hTime + duration);
+        if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc: osc });
+        
+      } else if (patch === 'electric-guitar') {
+        osc.type = 'sawtooth'; filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(1000, hTime); 
+        filter.frequency.linearRampToValueAtTime(4000, hTime + 0.1);
+        filter.frequency.exponentialRampToValueAtTime(800, hTime + duration);
+        
+        // Insert custom distortion wave shaper
+        const dist = context.createWaveShaper();
+        dist.curve = getDistortionCurve(400); dist.oversample = '4x';
+        osc.disconnect(); osc.connect(dist); dist.connect(filter);
+        
+        gain.gain.setValueAtTime(0, hTime); 
+        gain.gain.linearRampToValueAtTime(0.6 * velocity, hTime + 0.02); 
+        gain.gain.exponentialRampToValueAtTime(0.01, hTime + duration);
+        osc.start(hTime); osc.stop(hTime + duration);
+        if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc: osc });
+        
+      } else if (patch === 'bass-guitar') {
+        osc.type = 'triangle'; filter.type = 'lowpass';
+        
+        // Add deep sub-oscillator
+        const subOsc = context.createOscillator(); subOsc.type = 'sine'; subOsc.frequency.setValueAtTime(freq / 2, hTime); subOsc.connect(filter);
+        
+        filter.frequency.setValueAtTime(1200, hTime); filter.frequency.exponentialRampToValueAtTime(200, hTime + Math.min(0.2, duration));
+        gain.gain.setValueAtTime(0.8 * velocity, hTime); gain.gain.exponentialRampToValueAtTime(0.01, hTime + duration);
+        osc.start(hTime); osc.stop(hTime + duration);
+        subOsc.start(hTime); subOsc.stop(hTime + duration);
+        if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc: osc, osc2: subOsc });
+        
+      } else if (patch === 'harp') {
+        osc.type = 'sine'; filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(2000, hTime);
+        gain.gain.setValueAtTime(0.8 * velocity, hTime); 
+        gain.gain.exponentialRampToValueAtTime(0.001, hTime + duration * 1.5); 
+        osc.start(hTime); osc.stop(hTime + duration * 1.5);
+        if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc: osc });
+        
+      } else if (patch === 'e-piano') {
+        osc.type = 'sine'; filter.type = 'lowpass';
+        
+        // FM Synthesis for bell-like attack
+        const fmOsc = context.createOscillator(); fmOsc.type = 'triangle'; fmOsc.frequency.setValueAtTime(freq * 2.01, hTime); 
+        const fmGain = context.createGain(); fmGain.gain.setValueAtTime(freq * 1.5, hTime); fmGain.gain.exponentialRampToValueAtTime(1, hTime + 0.2);
+        fmOsc.connect(fmGain); fmGain.connect(osc.frequency);
+        
+        filter.frequency.setValueAtTime(3000, hTime);
+        gain.gain.setValueAtTime(0.7 * velocity, hTime); gain.gain.exponentialRampToValueAtTime(0.01, hTime + duration);
+        osc.start(hTime); osc.stop(hTime + duration);
+        fmOsc.start(hTime); fmOsc.stop(hTime + duration);
+        if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc: osc, osc2: fmOsc });
+        
+      } else if (patch === 'square-pluck') {
         osc.type = 'square'; filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(2000, hTime); 
-        filter.frequency.exponentialRampToValueAtTime(400, hTime + Math.min(0.3, duration));
-        gain.gain.setValueAtTime(0.4 * velocity, hTime); 
-        gain.gain.setTargetAtTime(0, hTime + duration - 0.1, 0.1);
+        filter.frequency.setValueAtTime(2000, hTime); filter.frequency.exponentialRampToValueAtTime(400, hTime + Math.min(0.3, duration));
+        gain.gain.setValueAtTime(0.4 * velocity, hTime); gain.gain.setTargetAtTime(0, hTime + duration - 0.1, 0.1);
         osc.start(hTime); osc.stop(hTime + duration);
         if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc: osc });
       } else if (patch === 'saw-brass') {
         osc.type = 'sawtooth'; filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(800, hTime); 
-        filter.frequency.linearRampToValueAtTime(3000, hTime + Math.min(0.2, duration));
-        gain.gain.setValueAtTime(0, hTime); 
-        gain.gain.linearRampToValueAtTime(0.4 * velocity, hTime + Math.min(0.1, duration / 2)); 
-        gain.gain.setTargetAtTime(0, hTime + duration - 0.2, 0.2);
+        filter.frequency.setValueAtTime(800, hTime); filter.frequency.linearRampToValueAtTime(3000, hTime + Math.min(0.2, duration));
+        gain.gain.setValueAtTime(0, hTime); gain.gain.linearRampToValueAtTime(0.4 * velocity, hTime + Math.min(0.1, duration / 2)); gain.gain.setTargetAtTime(0, hTime + duration - 0.2, 0.2);
         osc.start(hTime); osc.stop(hTime + duration);
         if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc: osc });
       } else if (patch === 'sine-ghost') {
         osc.type = 'sine'; filter.type = 'lowpass';
         filter.frequency.setValueAtTime(1000, hTime);
-        gain.gain.setValueAtTime(0, hTime); 
-        gain.gain.linearRampToValueAtTime(0.5 * velocity, hTime + Math.min(0.3, duration / 2)); 
-        gain.gain.setTargetAtTime(0, hTime + duration - 0.5, 0.5);
+        gain.gain.setValueAtTime(0, hTime); gain.gain.linearRampToValueAtTime(0.5 * velocity, hTime + Math.min(0.3, duration / 2)); gain.gain.setTargetAtTime(0, hTime + duration - 0.5, 0.5);
         osc.start(hTime); osc.stop(hTime + duration);
         if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc: osc });
       } else if (patch === 'pwm-string') {
         const osc2 = context.createOscillator(); osc2.type = 'sawtooth';
         osc.type = 'sawtooth'; filter.type = 'lowpass';
-        osc2.connect(filter);
-        osc2.frequency.setValueAtTime(freq * 1.01, hTime); 
-        filter.frequency.setValueAtTime(3000, hTime);
-        gain.gain.setValueAtTime(0, hTime); 
-        gain.gain.linearRampToValueAtTime(0.3 * velocity, hTime + Math.min(0.2, duration / 2)); 
-        gain.gain.setTargetAtTime(0, hTime + duration - 0.5, 0.4);
-        osc.start(hTime); osc.stop(hTime + duration);
-        osc2.start(hTime); osc2.stop(hTime + duration);
+        osc2.connect(filter); osc2.frequency.setValueAtTime(freq * 1.01, hTime); filter.frequency.setValueAtTime(3000, hTime);
+        gain.gain.setValueAtTime(0, hTime); gain.gain.linearRampToValueAtTime(0.3 * velocity, hTime + Math.min(0.2, duration / 2)); gain.gain.setTargetAtTime(0, hTime + duration - 0.5, 0.4);
+        osc.start(hTime); osc.stop(hTime + duration); osc2.start(hTime); osc2.stop(hTime + duration);
         if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc1: osc, osc2: osc2 });
       }
     }
