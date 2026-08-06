@@ -95,18 +95,17 @@
       box-shadow: 0 -4px 10px rgba(0,0,0,0.5);
     }
     
-    /* SCROLLABLE 88-KEY CONTAINER */
+    /* TRUE OVERLAPPING CSS PIANO KEYBOARD */
     #keys-container {
       display: flex;
-      height: 130px;
-      gap: 2px;
+      height: 140px;
       overflow-x: auto;
       padding-bottom: 8px;
+      padding-top: 5px;
       scroll-behavior: smooth;
+      background: #111;
     }
     .key-btn {
-      flex: 0 0 auto;
-      border: 1px solid #111;
       cursor: pointer;
       font-weight: bold;
       font-size: 0.65rem;
@@ -118,10 +117,25 @@
       padding-bottom: 6px;
       user-select: none;
       touch-action: none; /* Prevents scrolling when dragging across keys */
+      flex-shrink: 0;
     }
-    .key-btn:active, .key-btn.active { opacity: 0.7; background: #ff3366 !important; color: white !important; }
-    .key-white { background: #eee; color: #111; min-width: 26px; height: 100%; }
-    .key-black { background: #222; color: #eee; min-width: 18px; height: 65%; align-self: flex-start; border-color: #000; }
+    .key-white { 
+      background: #fff; color: #111; 
+      width: 36px; height: 100%; 
+      border: 1px solid #ccc;
+      z-index: 1; position: relative;
+    }
+    .key-black { 
+      background: #222; color: #eee; 
+      width: 22px; height: 65%; 
+      border: 1px solid #000;
+      z-index: 2; position: relative;
+      /* Negative margins pull the white keys underneath the black keys! */
+      margin-left: -11px; margin-right: -11px; 
+    }
+    .key-btn:active, .key-btn.active { 
+      background: #ff3366 !important; color: white !important; 
+    }
   </style>
 </head>
 <body>
@@ -419,7 +433,11 @@
       keyboardPanel.style.display = 'block';
       setTimeout(() => {
         const c4Key = Array.from(keysContainer.children).find(b => b.innerText === 'C4');
-        if (c4Key) c4Key.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        if (c4Key) {
+            // Adjust scroll slightly to the left so middle C isn't flush against the left edge
+            const scrollPos = c4Key.offsetLeft - (keysContainer.clientWidth / 2) + 30;
+            keysContainer.scrollTo({ left: scrollPos, behavior: 'smooth' });
+        }
       }, 50);
     });
     closeKeyboardBtn.addEventListener('click', () => keyboardPanel.style.display = 'none');
@@ -472,6 +490,7 @@
         btn.setPointerCapture(e.pointerId); // Prevent wiggle cut-offs
         await initAudioEngine();
         
+        // Auto-Start Transport on first note if Armed
         if (isRecording && !isPlaying) {
             startPlayback();
         }
@@ -482,6 +501,7 @@
         btn.classList.add('active');
         triggerMelody(audioCtx, audioCtx.currentTime, note.freq, masterBus, { patch: melodyPatchSelect.value }, 2.0, hVal, aVal);
         
+        // Register the exact timestamp
         const hitTime = isPlaying ? (audioCtx.currentTime - startedAt) : pausedAt;
         activeTouches.set(btn, { note, noteOnTime: audioCtx.currentTime, hitTime });
       };
@@ -502,13 +522,14 @@
             saveState();
             ensureMelodicTrackExists();
             activeMelodicTrack.patch = melodyPatchSelect.value;
-            // Snaps short mouse clicks up to exactly 1 beat length so they aren't microscopic
+            // Snap minimum duration to gap length to prevent microscopic notes
             const heldDuration = Math.max(gap, rawDur);
             
             activeMelodicTrack.hits.push({ time: touch.hitTime, freq: touch.note.freq, name: touch.note.name, duration: heldDuration });
             activeMelodicTrack.hits.sort((a,b) => a.time - b.time);
             recalculateDuration();
         } else {
+            // STEP SEQUENCER MODE
             const calculatedBeats = Math.max(0.25, parseFloat((rawDur / gap).toFixed(2)));
             recordedSequence.push({ ...touch.note, beats: calculatedBeats }); 
             updateSequenceDisplay();
