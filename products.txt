@@ -159,7 +159,7 @@ Stock XXL: 10
 Description: This listing is for my Black Shuck hanging decoration, laser cut into black painted birch plywood from an original illustration. the front and back are both painted black and it comes with a red velvet ribbon. 
 ---
 Title: SHUCK Issue 1 - The Dark
-Main Image: ./shuck-issue1-1.jpg
+Main Image: images/shuck-product-image-issue-1.jpg
 Images: ./shuck-issue1-2.jpg, ./shuck-issue1-3.jpg, ./shuck-issue1-4.jpg
 Sections: Zines
 Size: 
@@ -172,7 +172,7 @@ Issue #1 - The Dark Issue#2 - Love Issue#3 - Cursed Issue#4 - Feasting Issue #5 
 Issue#7 - Witches
 ---
 Title: SHUCK Issue 2 - Love
-Main Image: ./shuck-issue2-1.jpg
+Main Image: images/shuck-product-image-issue-2.jpg
 Images: ./shuck-issue2-2.jpg, ./shuck-issue2-3.jpg, ./shuck-issue2-4.jpg
 Sections: Zines
 Size: 
@@ -187,7 +187,7 @@ Issue#7 - Witches
 SHUCK #2 - LOVE - Articles include a feature about Norfolk's very own Jack Valentine (and his mischievous counterpart Snatch Valentine), some classic Norfolk ghost stories, a love spell, a divination board, the story of St Agnes and a Black Shuck paper doll and much more.
 ---
 Title: SHUCK Issue 3 - Cursed
-Main Image: ./shuck-issue3-1.jpg
+Main Image: images/shuck-product-image-issue-3.jpg
 Images: ./shuck-issue3-2.jpg, ./shuck-issue3-3.jpg, ./shuck-issue3-4.jpg
 Sections: Zines
 Size: 
@@ -202,7 +202,7 @@ Issue#7 - Witches
 SHUCK #3 - CURSED - Inside you'll find tales of cursed mummies, stones and the infamous cursed goat's head of Strumpshaw Fen, as well as ways to protect yourself from curses and a map of cursed Norfolk.
 ---
 Title: SHUCK Issue 4 - Feasting
-Main Image: ./shuck-issue4-1.jpg
+Main Image: images/shuck-product-image-issue-4.jpg
 Images: ./shuck-issue4-2.jpg, ./shuck-issue4-3.jpg
 Sections: Zines
 Size: 
@@ -217,7 +217,7 @@ Issue#7 - Witches
 SHUCK #4 - FEASTING - Inside you'll find, among other things, tales of a night the Devil paid a visit to a feast, a mysterious local secret society, a recipe to honour St Edmund and a spell for abundance.
 ---
 Title: SHUCK Issue 5 - The Deep
-Main Image: ./shuck-issue5-1.jpg
+Main Image: images/shuck-product-image-issue-5.jpg
 Images: ./shuck-issue5-2.jpg, ./shuck-issue5-3.jpg
 Sections: Zines
 Size: 
@@ -232,7 +232,7 @@ Issue#7 - Witches
 SHUCK #5 - THE DEEP - Inside you'll find tales of lost villages, nearly decapitated smugglers, mermaids, lunar botanicals, and the Yow Yows.
 ---
 Title: SHUCK Issue 6 - Beasts
-Main Image: ./shuck-issue6-1.jpg
+Main Image: images/shuck-product-image-issue-6.jpg
 Images: ./shuck-issue6-2.jpg, ./shuck-issue6-3.jpg
 Sections: Zines
 Size: 
@@ -247,7 +247,7 @@ Issue#7 - Witches
 SHUCK #6 - BEASTS
 ---
 Title: SHUCK Issue 7 - Witches
-Main Image: ./shuck-issue7-1.jpg
+Main Image: images/shuck-product-image-issue-7.jpg
 Images: ./shuck-issue7-2.jpg, ./shuck-issue7-3.jpg, ./shuck-issue7-4.jpg
 Sections: Zines
 Size: 
