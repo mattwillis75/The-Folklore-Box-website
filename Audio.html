@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <title>Multitrack Web Audio DAW</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
+  <!-- Added lamejs for client-side MP3 encoding -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lamejs/1.2.1/lame.min.js"></script>
   
   <style>
     body { 
@@ -171,7 +173,17 @@
       <div class="control-stack"><span class="toolbar-label">Vol</span><input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.8"></div>
       <div class="control-stack"><span class="toolbar-label">Rev</span><input type="range" id="mixSlider" min="0" max="1" step="0.01" value="0.3"></div>
     </div>
-    <div class="toolbar-group" style="border-right: none; margin-left: auto;"><button id="exportBtn">⬇ WAV</button></div>
+    
+    <!-- EXPORT DROPDOWN -->
+    <div class="toolbar-group" style="border-right: none; margin-left: auto;">
+      <div style="display: flex; gap: 5px; align-items: center;">
+        <select id="exportFormatSelect" style="height: 100%;">
+          <option value="wav">.WAV</option>
+          <option value="mp3">.MP3</option>
+        </select>
+        <button id="exportBtn">⬇ Export</button>
+      </div>
+    </div>
   </div>
 
   <div id="workspace">
@@ -251,6 +263,7 @@
     const newDrumTrackBtn = document.getElementById('newDrumTrackBtn');
     const synthSelect = document.getElementById('synthSelect');
     const exportBtn = document.getElementById('exportBtn');
+    const exportFormatSelect = document.getElementById('exportFormatSelect');
     const volumeSlider = document.getElementById('volumeSlider');
     const mixSlider = document.getElementById('mixSlider');
     const timelineUI = document.getElementById('timelineUI');
@@ -1161,6 +1174,40 @@
       }
     }
 
+    async function encodeMp3(buffer) {
+        return new Promise((resolve) => {
+            const channels = buffer.numberOfChannels;
+            const sampleRate = buffer.sampleRate;
+            const kbps = 192; 
+            const mp3encoder = new lamejs.Mp3Encoder(channels, sampleRate, kbps);
+            const mp3Data = [];
+
+            const left = buffer.getChannelData(0);
+            const right = channels > 1 ? buffer.getChannelData(1) : left;
+            const sampleBlockSize = 1152;
+            
+            const leftInt16 = new Int16Array(left.length);
+            const rightInt16 = new Int16Array(right.length);
+            
+            for (let i = 0; i < left.length; i++) {
+                leftInt16[i] = left[i] < 0 ? left[i] * 32768 : left[i] * 32767;
+                rightInt16[i] = right[i] < 0 ? right[i] * 32768 : right[i] * 32767;
+            }
+
+            for (let i = 0; i < left.length; i += sampleBlockSize) {
+                const leftChunk = leftInt16.subarray(i, i + sampleBlockSize);
+                const rightChunk = rightInt16.subarray(i, i + sampleBlockSize);
+                const mp3buf = mp3encoder.encodeBuffer(leftChunk, rightChunk);
+                if (mp3buf.length > 0) mp3Data.push(new Int8Array(mp3buf));
+            }
+            
+            const mp3buf = mp3encoder.flush();
+            if (mp3buf.length > 0) mp3Data.push(new Int8Array(mp3buf));
+            
+            resolve(new Blob(mp3Data, { type: 'audio/mp3' }));
+        });
+    }
+
     exportBtn.addEventListener('click', async () => {
       if (longestDuration === 0 || tracks.length === 0) { alert("Nothing to export!"); return; }
       exportBtn.textContent = "Rendering..."; exportBtn.disabled = true;
@@ -1170,6 +1217,7 @@
       offMasterGain.gain.value = parseFloat(volumeSlider.value); const mix = parseFloat(mixSlider.value); offDryGain.gain.value = 1.0 - mix; offWetGain.gain.value = mix;
       if (convolver && convolver.buffer) offConvolver.buffer = convolver.buffer;
       offMasterBus.connect(offCompressor); offCompressor.connect(offDryGain); offCompressor.connect(offConvolver); offConvolver.connect(offWetGain); offDryGain.connect(offMasterGain); offWetGain.connect(offMasterGain); offMasterGain.connect(offlineCtx.destination);
+      
       tracks.forEach(track => {
         const offTrackEQ = offlineCtx.createBiquadFilter(); offTrackEQ.type = 'lowpass'; offTrackEQ.frequency.value = track.eqNode.frequency.value;
         const offTrackPan = offlineCtx.createStereoPanner(); offTrackPan.pan.value = track.panNode.pan.value;
@@ -1179,9 +1227,26 @@
         else if (track.type === 'synth') { track.hits.forEach(hit => { triggerSynth(offlineCtx, track.instrument, hit.time, offTrackEQ, null, hit.duration || 0.25); }); }
         else if (track.type === 'melodic') { track.hits.forEach(hit => { triggerMelody(offlineCtx, hit.time, hit.freq, offTrackEQ, track, hit.duration || 0.25); }); }
       });
-      const renderedBuffer = await offlineCtx.startRendering(), wavData = audioBufferToWav(renderedBuffer);
-      const blob = new window.Blob([new DataView(wavData)], { type: 'audio/wav' }), anchor = document.createElement('a');
-      anchor.href = window.URL.createObjectURL(blob); anchor.download = 'My_DAW_Mix.wav'; anchor.click(); exportBtn.textContent = "⬇ WAV"; exportBtn.disabled = false;
+      
+      const renderedBuffer = await offlineCtx.startRendering();
+      const exportFormat = exportFormatSelect.value;
+      const anchor = document.createElement('a');
+      
+      if (exportFormat === 'mp3') {
+          exportBtn.textContent = "Encoding MP3...";
+          const mp3Blob = await encodeMp3(renderedBuffer);
+          anchor.href = window.URL.createObjectURL(mp3Blob); 
+          anchor.download = 'My_DAW_Mix.mp3';
+      } else {
+          const wavData = audioBufferToWav(renderedBuffer);
+          const blob = new window.Blob([new DataView(wavData)], { type: 'audio/wav' });
+          anchor.href = window.URL.createObjectURL(blob); 
+          anchor.download = 'My_DAW_Mix.wav';
+      }
+      
+      anchor.click(); 
+      exportBtn.textContent = "⬇ Export"; 
+      exportBtn.disabled = false;
     });
 
     function audioBufferToWav(buffer) {
