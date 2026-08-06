@@ -194,11 +194,12 @@
       
       <div id="keys-container" style="display: flex; height: 120px; gap: 2px;"></div>
       
+      <!-- Text Sequence Input Area -->
       <div style="display: flex; align-items: center; gap: 10px; margin-top: 15px; border-top: 1px solid #444; padding-top: 15px;">
         <span style="color: #ccc; font-size: 0.8rem;">Text Input:</span>
-        <input type="text" id="textSequenceInput" placeholder="C4, D#4:2, E4:0.5" style="padding: 4px; border-radius: 4px; border: 1px solid #555; width: 300px; background: #111; color: #00ffcc; font-family: monospace;">
+        <input type="text" id="textSequenceInput" placeholder="C4, D#4:2 E4" style="padding: 4px; border-radius: 4px; border: 1px solid #555; width: 300px; background: #111; color: #00ffcc; font-family: monospace;">
         <button id="addTextSequenceBtn" class="btn-primary" style="padding: 4px 10px;">Add Sequence String</button>
-        <span style="color: #666; font-size: 0.75rem;">(Format: Note:Beats e.g., C4, D#4:2)</span>
+        <span style="color: #666; font-size: 0.75rem;">(Format: Note:Beats | Space = Rest)</span>
       </div>
 
     </div>
@@ -322,7 +323,10 @@
     });
 
     function updateSequenceDisplay() { 
-      sequenceDisplay.innerText = "Sequence: [" + recordedSequence.map(n => n.beats && n.beats !== 1 ? `${n.name}:${n.beats}` : n.name).join(', ') + "]"; 
+      sequenceDisplay.innerText = "Sequence: [" + recordedSequence.map(n => {
+        if (n.isRest) return n.beats && n.beats !== 1 ? `REST:${n.beats}` : `REST`;
+        return n.beats && n.beats !== 1 ? `${n.name}:${n.beats}` : n.name;
+      }).join(', ') + "]"; 
     }
     
     clearSequenceBtn.addEventListener('click', () => { recordedSequence = []; updateSequenceDisplay(); });
@@ -330,15 +334,35 @@
     addTextSequenceBtn.addEventListener('click', () => {
       const val = textSequenceInput.value.trim();
       if (!val) return;
-      const parts = val.split(',').map(s => s.trim().toUpperCase());
-      parts.forEach(p => {
-        const subParts = p.split(':');
-        const noteName = subParts[0].trim();
-        const beats = subParts.length > 1 ? parseFloat(subParts[1]) : 1;
+      
+      // Normalize commas and condense spaces
+      let normalized = val.replace(/\s*,\s*/g, ',');
+      normalized = normalized.replace(/\s+/g, ' ');
+      
+      const groups = normalized.split(' ');
+      
+      groups.forEach((group, index) => {
+        const parts = group.split(',');
+        parts.forEach(p => {
+          if (!p) return;
+          const subParts = p.split(':');
+          const noteName = subParts[0].trim().toUpperCase();
+          const beats = subParts.length > 1 ? parseFloat(subParts[1]) : 1;
+          
+          if (noteName === 'REST' || noteName === '-') {
+              recordedSequence.push({ isRest: true, name: '-', beats: isNaN(beats) ? 1 : beats });
+          } else {
+              const note = musicalNotes.find(n => n.name.toUpperCase() === noteName);
+              if (note) recordedSequence.push({ ...note, beats: isNaN(beats) ? 1 : beats });
+          }
+        });
         
-        const note = musicalNotes.find(n => n.name.toUpperCase() === noteName);
-        if (note) recordedSequence.push({ ...note, beats: isNaN(beats) ? 1 : beats });
+        // Add a 1-beat rest for the space separating groups
+        if (index < groups.length - 1) {
+            recordedSequence.push({ isRest: true, name: '-', beats: 1 });
+        }
       });
+      
       updateSequenceDisplay();
       textSequenceInput.value = '';
     });
@@ -366,7 +390,9 @@
       
       recordedSequence.forEach(note => {
         const duration = gap * (note.beats || 1);
-        activeMelodicTrack.hits.push({ time: insertTime, freq: note.freq, name: note.name, duration: duration });
+        if (!note.isRest) {
+            activeMelodicTrack.hits.push({ time: insertTime, freq: note.freq, name: note.name, duration: duration });
+        }
         insertTime += duration;
       });
 
