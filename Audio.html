@@ -54,7 +54,8 @@
 
     #workspace { flex: 1; display: flex; flex-direction: column; overflow: auto; background: #1e1e1e; position: relative; scroll-behavior: smooth;}
     
-    #timelineUI { display: flex; flex-direction: column; padding-bottom: 50px; position: relative; min-height: 100%; width: max-content; }
+    /* Added massive padding-bottom so tracks aren't permanently hidden behind the fixed keyboard */
+    #timelineUI { display: flex; flex-direction: column; padding-bottom: 300px; position: relative; min-height: 100%; width: max-content; }
 
     #ruler-wrapper { display: flex; height: 30px; border-bottom: 1px solid #333; background: #222; position: sticky; top: 0; z-index: 1001; cursor: pointer; }
     #ruler-header { box-sizing: border-box; width: 220px; min-width: 220px; background: #2a2d2e; border-right: 2px solid #000; position: sticky; left: 0; z-index: 1002; cursor: default; }
@@ -89,9 +90,10 @@
     
     #empty-state { position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: #555; pointer-events: none; }
 
+    /* KEYBOARD PANEL IS NOW FIXED TO VIEWPORT */
     #keyboard-panel {
-      display: none; position: absolute; bottom: 0; left: 0; right: 0; 
-      background: #252526; padding: 15px; border-top: 2px solid #444; z-index: 1005;
+      display: none; position: fixed; bottom: 0; left: 0; right: 0; 
+      background: #252526; padding: 15px; border-top: 2px solid #444; z-index: 2005;
       box-shadow: 0 -4px 10px rgba(0,0,0,0.5);
     }
     
@@ -116,7 +118,7 @@
       justify-content: center;
       padding-bottom: 6px;
       user-select: none;
-      touch-action: none; /* Prevents scrolling when dragging across keys */
+      touch-action: none; 
       flex-shrink: 0;
     }
     .key-white { 
@@ -130,7 +132,6 @@
       width: 22px; height: 65%; 
       border: 1px solid #000;
       z-index: 2; position: relative;
-      /* Negative margins pull the white keys underneath the black keys! */
       margin-left: -11px; margin-right: -11px; 
     }
     .key-btn:active, .key-btn.active { 
@@ -232,48 +233,48 @@
       
       <div id="playhead"></div>
     </div>
+  </div> <!-- WORKSPACE ENDS HERE -->
 
-    <div id="keyboard-panel">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-        <span style="color: #00ffcc; font-weight: bold; font-family: monospace; font-size: 1.1rem;" id="sequence-display">Sequence: []</span>
-        <div style="display: flex; align-items: center; gap: 10px;">
-          <select id="melodyPatchSelect">
-            <option value="square-pluck">🤖 The Robots (Pluck)</option>
-            <option value="saw-brass">🎺 Autobahn (Brass)</option>
-            <option value="pwm-string">🎻 Trans-Europe (Strings)</option>
-            <option value="sine-ghost">👻 Radioactivity (Sine)</option>
-            <option value="acoustic-guitar">🎸 Acoustic Guitar</option>
-            <option value="electric-guitar">⚡ Electric Guitar</option>
-            <option value="bass-guitar">🎸 Bass Guitar</option>
-            <option value="harp">👼 Harp</option>
-            <option value="e-piano">🎹 Electric Piano</option>
-            <option value="midi-drums">🥁 Drum Kit (Standard MIDI)</option>
-          </select>
-          <button id="newMelodyTrackBtn" class="btn-accent" style="background: #9933ff; border-color: #7a29cc;">➕ New Track</button>
-          
-          <span style="color: #ccc; font-size: 0.8rem; margin-left: 10px;">1 Beat = (sec):</span>
-          <input type="number" id="noteGapInput" value="0.25" step="0.1" min="0.1" style="width: 50px; padding: 4px; border-radius: 4px; border: none;">
-          
-          <label style="color: #00ffcc; font-size: 0.8rem; margin-left: 5px; display: flex; align-items: center; gap: 4px; cursor: pointer; font-weight: bold;">
-            <input type="checkbox" id="quantizeCheckbox" style="accent-color: #ff3366;" checked> Auto-Quantize
-          </label>
+  <!-- FIXED KEYBOARD CONTAINER -->
+  <div id="keyboard-panel">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+      <span style="color: #00ffcc; font-weight: bold; font-family: monospace; font-size: 1.1rem;" id="sequence-display">Sequence: []</span>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <select id="melodyPatchSelect">
+          <option value="square-pluck">🤖 The Robots (Pluck)</option>
+          <option value="saw-brass">🎺 Autobahn (Brass)</option>
+          <option value="pwm-string">🎻 Trans-Europe (Strings)</option>
+          <option value="sine-ghost">👻 Radioactivity (Sine)</option>
+          <option value="acoustic-guitar">🎸 Acoustic Guitar</option>
+          <option value="electric-guitar">⚡ Electric Guitar</option>
+          <option value="bass-guitar">🎸 Bass Guitar</option>
+          <option value="harp">👼 Harp</option>
+          <option value="e-piano">🎹 Electric Piano</option>
+          <option value="midi-drums">🥁 Drum Kit (Standard MIDI)</option>
+        </select>
+        <button id="newMelodyTrackBtn" class="btn-accent" style="background: #9933ff; border-color: #7a29cc;">➕ New Track</button>
+        
+        <span style="color: #ccc; font-size: 0.8rem; margin-left: 10px;">1 Beat = (sec):</span>
+        <input type="number" id="noteGapInput" value="0.25" step="0.1" min="0.1" style="width: 50px; padding: 4px; border-radius: 4px; border: none;">
+        
+        <label style="color: #00ffcc; font-size: 0.8rem; margin-left: 5px; display: flex; align-items: center; gap: 4px; cursor: pointer; font-weight: bold;">
+          <input type="checkbox" id="quantizeCheckbox" style="accent-color: #ff3366;" checked> Auto-Quantize
+        </label>
 
-          <button id="insertSequenceBtn" class="btn-primary" style="margin-left: 5px;">Insert Step Seq</button>
-          <button id="clearSequenceBtn">Clear Notes</button>
-          <button id="closeKeyboardBtn" style="background: transparent; border: none; font-size: 1.2rem; margin-left: 10px;">✖</button>
-        </div>
+        <button id="insertSequenceBtn" class="btn-primary" style="margin-left: 5px;">Insert Step Seq</button>
+        <button id="clearSequenceBtn">Clear Notes</button>
+        <button id="closeKeyboardBtn" style="background: transparent; border: none; font-size: 1.2rem; margin-left: 10px;">✖</button>
       </div>
-      
-      <div id="keys-container"></div>
-      
-      <!-- Text Sequence Input Area -->
-      <div style="display: flex; align-items: center; gap: 10px; margin-top: 15px; border-top: 1px solid #444; padding-top: 15px;">
-        <span style="color: #ccc; font-size: 0.8rem;">Text Input:</span>
-        <input type="text" id="textSequenceInput" placeholder="A0:2, C4, D#4:2 E4, C8" style="padding: 4px; border-radius: 4px; border: 1px solid #555; width: 320px; background: #111; color: #00ffcc; font-family: monospace;">
-        <button id="addTextSequenceBtn" class="btn-primary" style="padding: 4px 10px;">Add Sequence String</button>
-        <span style="color: #666; font-size: 0.75rem;">(Format: Note:Beats | Space = Rest | Range: A0-C8)</span>
-      </div>
-
+    </div>
+    
+    <div id="keys-container"></div>
+    
+    <!-- Text Sequence Input Area -->
+    <div style="display: flex; align-items: center; gap: 10px; margin-top: 15px; border-top: 1px solid #444; padding-top: 15px;">
+      <span style="color: #ccc; font-size: 0.8rem;">Text Input:</span>
+      <input type="text" id="textSequenceInput" placeholder="A0:2, C4, D#4:2 E4, C8" style="padding: 4px; border-radius: 4px; border: 1px solid #555; width: 320px; background: #111; color: #00ffcc; font-family: monospace;">
+      <button id="addTextSequenceBtn" class="btn-primary" style="padding: 4px 10px;">Add Sequence String</button>
+      <span style="color: #666; font-size: 0.75rem;">(Format: Note:Beats | Space = Rest | Range: A0-C8)</span>
     </div>
   </div>
 
@@ -292,6 +293,7 @@
     let isRecording = false;
     let isDraggingPlayhead = false;
     let recordedSequence = []; 
+    let replacingNote = null; // Stores target when double clicking a note
     
     // REAL-TIME KEY RECORDING TOUCH MAP
     const activeTouches = new Map();
@@ -356,9 +358,28 @@
       });
     }
 
+    // IPAD / SAFARI GLOBAL AUDIO UNLOCKER
+    let audioUnlocked = false;
+    function unlockAudio() {
+        if (audioUnlocked) return;
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        // Play silent buffer to force unlock
+        const buffer = audioCtx.createBuffer(1, 1, 22050);
+        const source = audioCtx.createBufferSource();
+        source.buffer = buffer;
+        source.connect(audioCtx.destination);
+        if (source.start) source.start(0);
+        audioUnlocked = true;
+        ['touchstart', 'touchend', 'click'].forEach(evt => document.removeEventListener(evt, unlockAudio, true));
+    }
+    ['touchstart', 'touchend', 'click'].forEach(evt => document.addEventListener(evt, unlockAudio, true));
+
     async function initAudioEngine() {
       if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (!masterBus) {
         masterBus = audioCtx.createGain(); masterCompressor = audioCtx.createDynamicsCompressor(); convolver = audioCtx.createConvolver();
         masterGainNode = audioCtx.createGain(); dryGainNode = audioCtx.createGain(); wetGainNode = audioCtx.createGain();
         masterGainNode.gain.setValueAtTime(parseFloat(volumeSlider.value), audioCtx.currentTime);
@@ -385,6 +406,37 @@
         distCurve = curve;
         return curve;
     }
+
+    // ALT+DRAG / MIDDLE-CLICK TIMELINE PANNING
+    let isPanning = false, startX, startY, scrollLeft, scrollTop;
+    const workspaceEl = document.getElementById('workspace');
+    window.addEventListener('mousedown', (e) => {
+        // Middle mouse button OR Left Click + Alt key
+        if (e.button === 1 || (e.button === 0 && e.altKey)) {
+            isPanning = true;
+            document.body.style.cursor = 'grabbing';
+            startX = e.pageX - workspaceEl.offsetLeft;
+            startY = e.pageY - workspaceEl.offsetTop;
+            scrollLeft = workspaceEl.scrollLeft;
+            scrollTop = workspaceEl.scrollTop;
+            e.preventDefault();
+        }
+    }, true); // Capture phase to beat canvas drag
+    window.addEventListener('mousemove', (e) => {
+        if (!isPanning) return;
+        const x = e.pageX - workspaceEl.offsetLeft;
+        const y = e.pageY - workspaceEl.offsetTop;
+        const walkX = (x - startX);
+        const walkY = (y - startY);
+        workspaceEl.scrollLeft = scrollLeft - walkX;
+        workspaceEl.scrollTop = scrollTop - walkY;
+    });
+    window.addEventListener('mouseup', () => {
+        if (isPanning) {
+            isPanning = false;
+            document.body.style.cursor = 'default';
+        }
+    });
 
     // PLAY & RECORD ROUTING
     function startPlayback() {
@@ -495,21 +547,38 @@
       
       const handleKeyStart = async (e) => {
         e.preventDefault();
-        btn.setPointerCapture(e.pointerId); // Prevent wiggle cut-offs
+        btn.setPointerCapture(e.pointerId); 
         await initAudioEngine();
+        
+        const hVal = parseFloat(humanizeSlider.value);
+        const aVal = parseFloat(analogSlider.value);
+        
+        // DOUBLE CLICK REPLACE LOGIC
+        if (replacingNote) {
+            const targetTrack = replacingNote.track;
+            const hit = targetTrack.hits[replacingNote.index];
+            hit.freq = note.freq; hit.name = note.name;
+            
+            const textObj = replacingNote.obj.item(1);
+            if (textObj && textObj.type === 'text') textObj.set('text', note.name);
+            
+            replacingNote.obj.set('strokeWidth', 1);
+            replacingNote.obj.set('stroke', '#000');
+            targetTrack.fabCanvas.requestRenderAll();
+            
+            // Preview sound
+            triggerMelody(audioCtx, audioCtx.currentTime, note.freq, masterBus, targetTrack, 0.5, hVal, aVal);
+            replacingNote = null;
+            return; 
+        }
         
         if (isRecording && !isPlaying) {
             startPlayback();
         }
         
-        const hVal = parseFloat(humanizeSlider.value);
-        const aVal = parseFloat(analogSlider.value);
-        
         btn.classList.add('active');
         
-        // Pass a dummy object so we can intercept the live audio nodes and fade them out on release!
         const dummyTrackObj = { patch: melodyPatchSelect.value, liveNodes: [] };
-        // Trigger with a massive duration so the envelope sustains infinitely while you hold it
         triggerMelody(audioCtx, audioCtx.currentTime, note.freq, masterBus, dummyTrackObj, 10.0, hVal, aVal);
         
         const hitTime = isPlaying ? (audioCtx.currentTime - startedAt) : pausedAt;
@@ -529,7 +598,7 @@
         const releaseTime = audioCtx.currentTime;
         const rawDur = releaseTime - touch.noteOnTime;
         
-        // INTERCEPT & FADE OUT LIVE AUDIO NODES IMMEDIATELY ON FINGER LIFT
+        // INTERCEPT & FADE OUT LIVE AUDIO NODES IMMEDIATELY
         touch.dummyTrackObj.liveNodes.forEach(n => {
             if (n.gain) {
                 try {
@@ -550,11 +619,11 @@
             activeMelodicTrack.patch = melodyPatchSelect.value;
             
             let finalTime = touch.hitTime;
-            let finalDur = Math.max(0.1, rawDur); // Allow small blocks to reflect staccato playing
+            let finalDur = Math.max(0.1, rawDur); 
             
             // AUTO QUANTIZE LOGIC
             if (quantizeCheckbox.checked) {
-                const snapInterval = gap / 4; // Snaps to 16th-note boundaries (relative to beat gap)
+                const snapInterval = gap / 4; 
                 finalTime = Math.round(finalTime / snapInterval) * snapInterval;
                 finalDur = Math.round(finalDur / snapInterval) * snapInterval;
                 finalDur = Math.max(snapInterval, finalDur); 
@@ -838,6 +907,42 @@
         e.preventDefault(); pasteSelection();
       } else if (e.key === 'Backspace' || e.key === 'Delete') {
         deleteSelection();
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+          // ARROW KEY NUDGING
+          let nudgeAmount = e.key === 'ArrowLeft' ? -0.1 : 0.1;
+          if (quantizeCheckbox && quantizeCheckbox.checked) {
+              const gap = parseFloat(noteGapInput.value) || 0.25;
+              nudgeAmount = e.key === 'ArrowLeft' ? -(gap/4) : (gap/4);
+          }
+          let nudged = false;
+          tracks.forEach(track => {
+              if (!track.fabCanvas) return;
+              const activeObj = track.fabCanvas.getActiveObject();
+              if (activeObj) {
+                  if(!nudged) saveState();
+                  e.preventDefault(); 
+                  let objs = activeObj.type === 'activeSelection' ? activeObj.getObjects() : [activeObj];
+                  
+                  objs.forEach(obj => {
+                      let newTime = (obj.left / pixelsPerSecond) + nudgeAmount;
+                      if (newTime < 0) newTime = 0;
+                      obj.set('left', newTime * pixelsPerSecond);
+                      obj.setCoords();
+                      
+                      if (track.type === 'synth' && obj.drumIndex !== undefined) {
+                          track.hits[obj.drumIndex].time = newTime;
+                      } else if (track.type === 'melodic' && obj.melodicIndex !== undefined) {
+                          track.hits[obj.melodicIndex].time = newTime;
+                      } else if (track.type === 'audio') {
+                          track.offset = newTime;
+                      }
+                  });
+                  if (track.type === 'synth' || track.type === 'melodic') track.hits.sort((a,b)=>a.time-b.time);
+                  track.fabCanvas.requestRenderAll();
+                  nudged = true;
+              }
+          });
+          if (nudged) recalculateDuration();
       }
     });
 
@@ -1037,8 +1142,31 @@
           if (wasPlaying) playBtn.click();
       });
 
+      // DOUBLE CLICK TO REPLACE
       track.fabCanvas.on('mouse:dblclick', function(opt) {
+        if (opt.target && track.type === 'melodic') {
+            if (replacingNote && replacingNote.obj === opt.target) {
+                // Cancel
+                opt.target.set('strokeWidth', 1);
+                opt.target.set('stroke', '#000');
+                track.fabCanvas.requestRenderAll();
+                replacingNote = null;
+                return;
+            }
+            if (replacingNote) {
+                replacingNote.obj.set('strokeWidth', 1);
+                replacingNote.obj.set('stroke', '#000');
+                if (replacingNote.track.fabCanvas) replacingNote.track.fabCanvas.requestRenderAll();
+            }
+            opt.target.set('strokeWidth', 3);
+            opt.target.set('stroke', '#ff0000');
+            track.fabCanvas.requestRenderAll();
+            replacingNote = { track: track, obj: opt.target, index: opt.target.melodicIndex };
+            return;
+        }
         if (opt.target) return; 
+        
+        // Default dbl click behavior (move playhead)
         if (isPlaying) stopBtn.click();
         const workspaceRect = timelineUI.getBoundingClientRect();
         let newX = (opt.e.clientX - workspaceRect.left) - HEADER_WIDTH;
@@ -1120,12 +1248,20 @@
         const dur = hit.duration || 0.25;
         const noteWidth = dur * pixelsPerSecond;
         const hitGroup = new fabric.Group([
-          new fabric.Rect({ left: 0, top: 0, width: noteWidth, height: 110, fill: track.color }),
+          new fabric.Rect({ left: 0, top: 0, width: noteWidth, height: 110, fill: track.color, stroke: '#000', strokeWidth: 1 }),
           new fabric.Text(hit.name, { left: 4, top: 40, fontSize: 10, fill: '#000', fontWeight: 'bold' })
         ], { 
           left: xPos, top: 5, hasControls: true, hasBorders: true, lockMovementY: true, 
           hoverCursor: 'ew-resize', moveCursor: 'grabbing', selectable: true 
         });
+        
+        // Re-apply highlight if this note is currently selected for replacement
+        if (replacingNote && replacingNote.track.id === track.id && replacingNote.index === index) {
+            hitGroup.set('strokeWidth', 3);
+            hitGroup.set('stroke', '#ff0000');
+            replacingNote.obj = hitGroup; 
+        }
+
         hitGroup.melodicIndex = index;
         hitGroup.setControlsVisibility({ mt: false, mb: false, ml: false, mr: true, tr: false, tl: false, br: false, bl: false, mtr: false });
         track.fabCanvas.add(hitGroup);
@@ -1404,7 +1540,6 @@
       
       const patch = liveTrackObj ? liveTrackObj.patch : 'square-pluck';
       
-      // Standard MIDI Drum Kit Routing
       if (patch === 'midi-drums') {
           const midiNote = Math.round(69 + 12 * Math.log2(freq / 440));
           
