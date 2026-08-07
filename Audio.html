@@ -503,24 +503,24 @@
     });
 
     function updatePlayhead() {
-    if (!isPlaying) return;
+      if (!isPlaying) return;
 
-    // Calculate current time and convert to pixels
-    const currentAudioTime = audioCtx.currentTime - startedAt;
-    const newPos = HEADER_WIDTH + (currentAudioTime * pixelsPerSecond);
+      // Calculate current time and convert to pixels
+      const currentAudioTime = audioCtx.currentTime - startedAt;
+      const newPos = HEADER_WIDTH + (currentAudioTime * pixelsPerSecond);
 
-    // Update playhead position
-    playhead.style.left = newPos + 'px';
+      // Update playhead position
+      playhead.style.left = newPos + 'px';
 
-    // Auto-stop if it reaches the end of the timeline
-    if (currentAudioTime >= longestDuration) {
-        stopBtn.click();
-        return;
+      // Auto-stop if it reaches the end of the timeline
+      if (currentAudioTime >= longestDuration) {
+          stopBtn.click();
+          return;
+      }
+
+      // Request the next animation frame
+      animFrameId = requestAnimationFrame(updatePlayhead);
     }
-
-    // Request the next animation frame
-    animFrameId = requestAnimationFrame(updatePlayhead);
-}
 
     function startPlayback() {
       if (isPlaying) return;
@@ -577,7 +577,13 @@
                 }
                 track.liveNodes.push({ source });
             });
-        }
+        } else if (track.type === 'synth') {
+          track.liveNodes = []; 
+          track.hits.forEach(hit => { 
+             if (hit.time + (hit.duration || 0.25) > pausedAt) { 
+                 triggerSynth(audioCtx, track.instrument, startedAt + hit.time, track.inputNode, track, hit.duration || 0.25, hVal, aVal); 
+             } 
+          });
         } else if (track.type === 'melodic') {
           track.liveNodes = [];
           track.hits.forEach(hit => { 
@@ -663,40 +669,40 @@
     });
 
     beatBtn.addEventListener('click', () => {
-  initAudioEngineSync();
-  saveState();
+      initAudioEngineSync();
+      saveState();
 
-  const selectedInstrument = synthSelect.value;
-  let targetTrack = activeSynthTracks[selectedInstrument];
+      const selectedInstrument = synthSelect.value;
+      let targetTrack = activeSynthTracks[selectedInstrument];
 
-  // Auto-create the track if it doesn't exist yet
-  if (!targetTrack) {
-    newDrumTrackBtn.click();
-    targetTrack = activeSynthTracks[selectedInstrument];
-  }
+      // Auto-create the track if it doesn't exist yet
+      if (!targetTrack) {
+        newDrumTrackBtn.click();
+        targetTrack = activeSynthTracks[selectedInstrument];
+      }
 
-  // Get the current playhead position and the set beat gap
-  let insertTime = pausedAt;
-  const gap = parseFloat(noteGapInput.value) || 0.25;
+      // Get the current playhead position and the set beat gap
+      let insertTime = pausedAt;
+      const gap = parseFloat(noteGapInput.value) || 0.25;
 
-  // Insert a 4-beat sequence
-  for (let i = 0; i < 4; i++) {
-    targetTrack.hits.push({ 
-      time: insertTime, 
-      // Set duration slightly shorter than the gap so the blocks don't visually overlap
-      duration: gap * 0.8 
+      // Insert a 4-beat sequence
+      for (let i = 0; i < 4; i++) {
+        targetTrack.hits.push({ 
+          time: insertTime, 
+          // Set duration slightly shorter than the gap so the blocks don't visually overlap
+          duration: gap * 0.8 
+        });
+        insertTime += gap;
+      }
+
+      // Keep the array sorted by time and update the timeline UI
+      targetTrack.hits.sort((a, b) => a.time - b.time);
+      recalculateDuration();
+
+      // Provide visual feedback on the button click
+      beatBtn.innerHTML = "✓ Seq";
+      setTimeout(() => beatBtn.innerHTML = "+ Seq", 1500);
     });
-    insertTime += gap;
-  }
-
-  // Keep the array sorted by time and update the timeline UI
-  targetTrack.hits.sort((a, b) => a.time - b.time);
-  recalculateDuration();
-
-  // Provide visual feedback on the button click
-  beatBtn.innerHTML = "✓ Seq";
-  setTimeout(() => beatBtn.innerHTML = "+ Seq", 1500);
-});
 
     function ensureMelodicTrackExists() {
       if (!activeMelodicTrack) {
@@ -1962,11 +1968,7 @@
           metronomeNodes = [];
           
           tracks.forEach(track => {
-            if (track.type === 'audio' && track.source) {
-              try { track.source.stop(); } catch(e) {}
-              try { track.source.disconnect(); } catch(e) {}
-              track.source = null;
-            }else if ((track.type === 'audio' || track.type === 'synth' || track.type === 'melodic') && track.liveNodes) {
+            if ((track.type === 'audio' || track.type === 'synth' || track.type === 'melodic') && track.liveNodes) {
               track.liveNodes.forEach(nodes => {
                 Object.values(nodes).forEach(n => {
                     if (n && n.stop) { try { n.stop(); } catch(e){} }
@@ -2074,7 +2076,7 @@
       const numOfChan = buffer.numberOfChannels, length = buffer.length * numOfChan * 2 + 44, outBuffer = new ArrayBuffer(length), view = new DataView(outBuffer);
       const channels = []; let i, sample, offset = 0, pos = 0;
       function setUint16(data) { view.setUint16(pos, data, true); pos += 2; } function setUint32(data) { view.setUint32(pos, data, true); pos += 4; }
-      setUint32(0x46464952); setUint32(length - 8); setUint32(0x45564157); setUint32(0x20746d66); setUint32(16); setUint16(1); setUint16(numOfChan); setUint32(buffer.sampleRate); setUint32(buffer.sampleRate * 2 * numOfChan); setUint16(numOfChan * 2); setUint16(16); setUint32(0x61746164); setUint32(length - pos - 4);                   
+      setUint32(0x46464952); setUint32(length - 8); setUint32(0x45564157); setUint32(0x20746d66); setUint32(16); setUint16(1); setUint16(numOfChan); setUint32(buffer.sampleRate); setUint32(buffer.sampleRate * 2 * numOfChan); setUint16(numOfChan * 2); setUint16(16); setUint32(0x61746164); setUint32(length - pos - 4);                    
       for (i = 0; i < buffer.numberOfChannels; i++) channels.push(buffer.getChannelData(i));
       while (pos < length) {
         for (i = 0; i < numOfChan; i++) { sample = Math.max(-1, Math.min(1, channels[i][offset])); sample = (0.5 + sample < 0 ? sample * 32768 : sample * 32767) | 0; view.setInt16(pos, sample, true); pos += 2; } offset++;
