@@ -187,12 +187,6 @@
     </div>
     <div class="toolbar-group">
       <div class="control-stack">
-        <span class="toolbar-label">Zoom</span>
-        <div style="display: flex; gap: 5px;"><button id="zoomOutBtn">🔍 -</button><button id="zoomInBtn">🔍 +</button></div>
-      </div>
-    </div>
-    <div class="toolbar-group">
-      <div class="control-stack">
         <span class="toolbar-label">Drum Machine</span>
         <div style="display: flex; gap: 5px;">
           <select id="synthSelect">
@@ -215,7 +209,20 @@
       </div>
     </div>
     <div class="toolbar-group">
-      <div class="control-stack"><span class="toolbar-label">Master Vol</span><input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.8"></div>
+      <div class="control-stack"><span class="toolbar-label">Master / Reverb</span>
+        <div style="display: flex; gap: 5px;">
+            <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.8" title="Master Volume">
+            <input type="range" id="mixSlider" min="0" max="1" step="0.01" value="0.3" title="Reverb Mix">
+        </div>
+      </div>
+    </div>
+    <div class="toolbar-group">
+      <div class="control-stack"><span class="toolbar-label">Humanize / Analog</span>
+        <div style="display: flex; gap: 5px;">
+            <input type="range" id="humanizeSlider" min="0" max="1" step="0.01" value="0.2" title="Adds micro-timing variations">
+            <input type="range" id="analogSlider" min="0" max="1" step="0.01" value="0.3" title="Adds pitch drift and saturation">
+        </div>
+      </div>
     </div>
     <div class="toolbar-group" style="border-right: none; margin-left: auto;">
       <div style="display: flex; gap: 5px; align-items: center; margin-top: 15px;">
@@ -282,6 +289,8 @@
         <span style="color: #ccc; font-size: 0.8rem; margin-left: 15px;">Key Size:</span>
         <input type="range" id="keySizeSlider" min="0.5" max="2" step="0.1" value="1" style="width: 80px; accent-color: #ff3366;">
     </div>
+    
+    <div id="keys-container"></div>
   </div>
 
   <script>
@@ -324,10 +333,13 @@
     const synthSelect = document.getElementById('synthSelect');
     const exportBtn = document.getElementById('exportBtn');
     const exportFormatSelect = document.getElementById('exportFormatSelect');
+    
+    // Sliders restored to UI
     const volumeSlider = document.getElementById('volumeSlider');
     const mixSlider = document.getElementById('mixSlider');
     const humanizeSlider = document.getElementById('humanizeSlider');
     const analogSlider = document.getElementById('analogSlider');
+    
     const quantizeCheckbox = document.getElementById('quantizeCheckbox');
     const keySizeSlider = document.getElementById('keySizeSlider');
     const timelineLengthInput = document.getElementById('timelineLengthInput');
@@ -416,8 +428,10 @@
     }, { capture: true });
 
     window.addEventListener('mousemove', (e) => {
-        if (!isPanning) return; hasDraggedDuringSpace = true; e.preventDefault(); e.stopPropagation();
-        workspaceEl.scrollLeft = scrollLeft - (e.clientX - startX); workspaceEl.scrollTop = scrollTop - (e.clientY - startY);
+        if (isPanning) {
+            hasDraggedDuringSpace = true; e.preventDefault(); e.stopPropagation();
+            workspaceEl.scrollLeft = scrollLeft - (e.clientX - startX); workspaceEl.scrollTop = scrollTop - (e.clientY - startY);
+        }
     }, { capture: true });
 
     window.addEventListener('mouseup', (e) => {
@@ -461,6 +475,10 @@
           if (activeObj && activeObj.type === 'activeSelection') {
               saveState();
               const objs = activeObj.getObjects();
+              
+              // Discard active object before querying relative coordinates
+              track.fabCanvas.discardActiveObject();
+              
               objs.sort((a,b) => a.left - b.left);
               const startLeft = objs[0].left;
               const endLeft = objs[objs.length - 1].left;
@@ -477,8 +495,6 @@
                   const newLeft = startLeft + (totalSpan * fraction);
                   const deltaAmount = (newLeft - obj.left) / pixelsPerSecond;
                   
-                  obj.set('left', newLeft); obj.setCoords();
-                  
                   if (track.type === 'synth') track.hits[obj.drumIndex].time += deltaAmount;
                   if (track.type === 'melodic') track.hits[obj.melodicIndex].time += deltaAmount;
                   if (track.type === 'audio') {
@@ -489,10 +505,10 @@
               
               if (track.type === 'synth' || track.type === 'melodic') track.hits.sort((a,b)=>a.time-b.time);
               if (track.type === 'audio') track.clips.sort((a,b)=>a.time-b.time);
-              
-              track.fabCanvas.requestRenderAll();
           }
        });
+       // Redraw purely from data to prevent UI ghosting
+       redrawAllTimelines();
        recalculateDuration();
     });
 
@@ -506,9 +522,13 @@
             let objs = (activeObj.type === 'activeSelection') ? activeObj.getObjects() : [activeObj];
             if (objs.length === 0) return;
             
+            // Discard active object before duplicating
+            track.fabCanvas.discardActiveObject();
+            
             objs.sort((a,b) => a.left - b.left);
             const selStart = objs[0].left / pixelsPerSecond;
-            const selEnd = (objs[objs.length-1].left + (objs[objs.length-1].width * objs[objs.length-1].scaleX)) / pixelsPerSecond;
+            const lastObj = objs[objs.length-1];
+            const selEnd = (lastObj.left + (lastObj.width * lastObj.scaleX)) / pixelsPerSecond;
             const selDuration = selEnd - selStart;
             
             let gap = parseFloat(repeatGap.value);
@@ -547,11 +567,8 @@
             
             if (track.type === 'synth' || track.type === 'melodic') track.hits.sort((a,b)=>a.time-b.time);
             if (track.type === 'audio') track.clips.sort((a,b)=>a.time-b.time);
-            
-            if (track.type === 'audio') drawAudioTrack(track);
-            else if (track.type === 'synth') drawDrumTrack(track);
-            else if (track.type === 'melodic') drawMelodicTrack(track);
         });
+        redrawAllTimelines();
         recalculateDuration();
     }
     
@@ -572,8 +589,8 @@
       initAudioEngineSync();
       startedAt = audioCtx.currentTime - pausedAt;
       
-      const hVal = parseFloat(humanizeSlider.value);
-      const aVal = parseFloat(analogSlider.value);
+      const hVal = humanizeSlider ? parseFloat(humanizeSlider.value) : 0;
+      const aVal = analogSlider ? parseFloat(analogSlider.value) : 0;
       
       if (isMetronomeActive) {
           const gap = parseFloat(noteGapInput.value) || 0.25;
@@ -717,7 +734,9 @@
         initAudioEngineSync();
         if (btn.dataset.pressed !== 'true') return;
         
-        const hVal = parseFloat(humanizeSlider.value), aVal = parseFloat(analogSlider.value);
+        const hVal = humanizeSlider ? parseFloat(humanizeSlider.value) : 0;
+        const aVal = analogSlider ? parseFloat(analogSlider.value) : 0;
+        
         if (replacingNote) {
             const targetTrack = replacingNote.track, hit = targetTrack.hits[replacingNote.index];
             hit.freq = note.freq; hit.name = note.name;
@@ -1055,6 +1074,28 @@
       isDraggingPlayhead = true;
     });
 
+    playhead.addEventListener('mousedown', (e) => { 
+        isDraggingPlayhead = true; 
+        if (isPlaying) stopBtn.click(); 
+        e.stopPropagation(); 
+    });
+
+    window.addEventListener('mousemove', (e) => {
+        if (isDraggingPlayhead) {
+            const workspaceRect = timelineUI.getBoundingClientRect();
+            let newX = (e.clientX - workspaceRect.left) - HEADER_WIDTH;
+            if (newX < 0) newX = 0;
+            let newTime = newX / pixelsPerSecond;
+            if (newTime > longestDuration) newTime = longestDuration;
+            pausedAt = newTime;
+            playhead.style.left = (HEADER_WIDTH + newX) + 'px';
+        }
+    });
+
+    window.addEventListener('mouseup', () => { 
+        if (isDraggingPlayhead) isDraggingPlayhead = false; 
+    });
+
     function createTrackUI(track, color) {
       emptyState.style.display = 'none'; playhead.style.display = 'block'; rulerWrapper.style.display = 'flex';
       if (!track.id) track.id = Math.random().toString(36).substr(2, 9);
@@ -1345,8 +1386,14 @@
     async function decodeUploadedFile(file) {
         const arrayBuffer = await file.arrayBuffer();
         return new Promise((resolve, reject) => {
-            const decodePromise = audioCtx.decodeAudioData(arrayBuffer, resolve, reject);
-            if (decodePromise !== undefined) decodePromise.then(resolve).catch(reject);
+            try {
+                const decodePromise = audioCtx.decodeAudioData(arrayBuffer, resolve, reject);
+                if (decodePromise) {
+                    decodePromise.then(resolve).catch(reject);
+                }
+            } catch (e) {
+                reject(e);
+            }
         });
     }
 
@@ -1354,7 +1401,7 @@
 
     trackInput.addEventListener('change', async () => {
       initAudioEngineSync();
-      for (let file of trackInput.files) {
+      for (let file of Array.from(trackInput.files)) {
         const buffer = await decodeUploadedFile(file); saveState();
         const nodes = createChannelStripNodes();
         const newClip = { id: Math.random().toString(36).substr(2, 9), buffer: buffer, time: 0, bufferOffset: 0, duration: buffer.duration, originalDuration: buffer.duration, fileName: file.name };
@@ -1528,7 +1575,7 @@
     exportBtn.addEventListener('click', async () => {
       if (longestDuration === 0 || tracks.length === 0) { alert("Nothing to export!"); return; }
       exportBtn.textContent = "Rendering..."; exportBtn.disabled = true;
-      const hVal = parseFloat(humanizeSlider.value), aVal = parseFloat(analogSlider.value);
+      const hVal = humanizeSlider ? parseFloat(humanizeSlider.value) : 0, aVal = analogSlider ? parseFloat(analogSlider.value) : 0;
       const sampleRate = audioCtx ? audioCtx.sampleRate : 44100; const offlineCtx = new OfflineAudioContext(2, sampleRate * longestDuration, sampleRate);
       const offMasterBus = offlineCtx.createGain(), offCompressor = offlineCtx.createDynamicsCompressor(), offConvolver = offlineCtx.createConvolver();
       const offMasterGain = offlineCtx.createGain(), offDryGain = offlineCtx.createGain(), offWetGain = offlineCtx.createGain();
