@@ -291,6 +291,7 @@
 
   <script>
     // --- STATE MANAGEMENT ---
+    let isRazorToolActive = false;
     let startedAt = 0, pausedAt = 0, longestDuration = 5, animFrameId = null;  
     let pixelsPerSecond = 100; 
     const HEADER_WIDTH = 220; 
@@ -553,16 +554,30 @@
       
       tracks.forEach(track => {
         if (track.type === 'audio') {
-          track.source = audioCtx.createBufferSource(); track.source.buffer = track.buffer; track.source.connect(track.inputNode); 
-          if (pausedAt < track.offset) { track.source.start(startedAt + track.offset, 0); } 
-          else { const skipAmount = pausedAt - track.offset; if (skipAmount < track.buffer.duration) track.source.start(0, skipAmount); }
-        } else if (track.type === 'synth') {
-          track.liveNodes = []; 
-          track.hits.forEach(hit => { 
-             if (hit.time + (hit.duration || 0.25) > pausedAt) { 
-                 triggerSynth(audioCtx, track.instrument, startedAt + hit.time, track.inputNode, track, hit.duration || 0.25, hVal, aVal); 
-             } 
-          });
+            track.liveNodes = [];
+            const audioObjects = track.fabCanvas.getObjects();
+            
+            audioObjects.forEach(obj => {
+                const source = audioCtx.createBufferSource(); 
+                source.buffer = track.buffer; 
+                source.connect(track.inputNode);
+                
+                // Calculate time data from the Fabric object's visual properties
+                const startTimelineTime = startedAt + (obj.left / pixelsPerSecond);
+                const cropOffsetTime = (obj.cropX || 0) * obj.scaleX / pixelsPerSecond;
+                const playDuration = (obj.width * obj.scaleX) / pixelsPerSecond;
+                
+                if (pausedAt < (obj.left / pixelsPerSecond)) {
+                    source.start(startTimelineTime, cropOffsetTime, playDuration);
+                } else {
+                    const skipAmount = pausedAt - (obj.left / pixelsPerSecond);
+                    if (skipAmount < playDuration) {
+                        source.start(0, cropOffsetTime + skipAmount, playDuration - skipAmount);
+                    }
+                }
+                track.liveNodes.push({ source });
+            });
+        }
         } else if (track.type === 'melodic') {
           track.liveNodes = [];
           track.hits.forEach(hit => { 
@@ -1069,6 +1084,15 @@
           document.body.style.cursor = 'grab';
           tracks.forEach(t => { 
               if(t.fabCanvas) { t.fabCanvas.selection = false; t.fabCanvas.defaultCursor = 'grab'; } 
+      if (key === 'r') {
+          isRazorToolActive = !isRazorToolActive;
+          const cursorStyle = isRazorToolActive ? 'crosshair' : 'default';
+          document.body.style.cursor = cursorStyle;
+          tracks.forEach(t => { 
+              if(t.fabCanvas) {
+                  t.fabCanvas.defaultCursor = cursorStyle;
+                  t.fabCanvas.selection = !isRazorToolActive; 
+              }
           });
           return;
       }
@@ -1332,7 +1356,42 @@
       track.fabCanvas.on('selection:updated', configureSelection);
 
       track.fabCanvas.on('mouse:down', function(opt) {
-        if (opt.target) saveState();
+        if (opt.target) {
+            saveState();
+            
+            // --- NEW RAZOR TOOL LOGIC ---
+            if (isRazorToolActive && track.type === 'audio') {
+                const origObj = opt.target;
+                const pointer = track.fabCanvas.getPointer(opt.e);
+                
+                // Calculate where the blade struck relative to the clip's left edge
+                const cutX = pointer.x - origObj.left;
+                
+                // Prevent cutting tiny slivers at the very edges
+                if (cutX > 5 && cutX < (origObj.width * origObj.scaleX) - 5) {
+                    
+                    origObj.clone(function(clonedObj) {
+                        const origCropX = origObj.cropX || 0;
+                        
+                        // 1. Shrink the original object (The Left Piece)
+                        origObj.set({
+                            width: cutX / origObj.scaleX
+                        });
+                        
+                        // 2. Adjust and crop the cloned object (The Right Piece)
+                        clonedObj.set({
+                            left: origObj.left + cutX,
+                            cropX: origCropX + (cutX / origObj.scaleX), 
+                            width: ((origObj.width * origObj.scaleX) - cutX) / clonedObj.scaleX,
+                        });
+                        
+                        track.fabCanvas.add(clonedObj);
+                        track.fabCanvas.requestRenderAll();
+                    });
+                }
+                return; // Exit so we don't trigger standard dragging
+            }
+        }
       });
 
       track.fabCanvas.on('object:modified', function(e) {
@@ -1887,7 +1946,7 @@
               try { track.source.stop(); } catch(e) {}
               try { track.source.disconnect(); } catch(e) {}
               track.source = null;
-            } else if ((track.type === 'synth' || track.type === 'melodic') && track.liveNodes) {
+            }else if ((track.type === 'audio' || track.type === 'synth' || track.type === 'melodic') && track.liveNodes) {
               track.liveNodes.forEach(nodes => {
                 Object.values(nodes).forEach(n => {
                     if (n && n.stop) { try { n.stop(); } catch(e){} }
