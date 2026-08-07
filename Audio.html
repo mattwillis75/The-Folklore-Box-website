@@ -76,15 +76,24 @@
       padding: 5px 15px; border-bottom: 1px solid #333; width: 100vw;
     }
 
-    .track-wrapper { display: flex; height: 125px; border-bottom: 1px solid #2d2d2d; background: #1a1a1a; transition: transform 0.2s; }
+    /* Track highlighting functionality */
+    .track-wrapper { display: flex; height: 125px; border-bottom: 1px solid #2d2d2d; background: #1a1a1a; transition: background 0.2s, border-left 0.1s; border-left: 4px solid transparent; }
+    .track-wrapper.active-track { border-left: 4px solid #ff3366; background: #252525; }
 
     .track-header {
       box-sizing: border-box; 
-      width: 220px; min-width: 220px; position: sticky; left: 0; background: #2a2d2e; z-index: 1000;
+      width: 216px; min-width: 216px; position: sticky; left: 0; background: #2a2d2e; z-index: 1000;
       padding: 10px; border-right: 2px solid #000; display: flex; flex-direction: column; justify-content: center;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+      box-shadow: 2px 0 5px rgba(0,0,0,0.5); cursor: pointer;
     }
-    .track-name { flex: 1; font-size: 0.85rem; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #ddd; }
+    
+    /* Editable Name CSS */
+    .track-name { 
+      flex: 1; font-size: 0.85rem; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #ddd; 
+      -webkit-user-select: text; user-select: text; cursor: text; padding: 2px; border-radius: 3px; border: 1px solid transparent;
+    }
+    .track-name:focus { outline: none; border: 1px solid #ff3366; background: #111; }
+    
     .track-control-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.65rem; color: #aaa; margin-bottom: 2px; font-weight: bold; }
     .track-control-row input { width: 140px; margin: 0; }
 
@@ -161,7 +170,13 @@
       </div>
     </div>
     <div class="toolbar-group">
-      <div class="control-stack"><span class="toolbar-label">Import Audio</span><label class="file-btn">+ Audio<input type="file" id="trackUpload" accept="audio/*" multiple></label></div>
+      <div class="control-stack">
+          <span class="toolbar-label">Audio Tracks</span>
+          <div style="display: flex; gap: 5px;">
+              <label class="file-btn">+ Audio<input type="file" id="trackUpload" accept="audio/*" multiple></label>
+              <button id="newAudioTrackBtn" class="btn-accent" style="background: #ff8800; border-color: #cc6600;">+ Empty Track</button>
+          </div>
+      </div>
       <div class="control-stack"><span class="toolbar-label">Reverb Space</span><label class="file-btn">+ IR<input type="file" id="irUpload" accept="audio/*"></label></div>
     </div>
     <div class="toolbar-group">
@@ -193,7 +208,7 @@
             <option value="laser">🔫 Laser</option>
             <option value="chime">✨ Chime</option>
           </select>
-          <button id="newDrumTrackBtn" class="btn-accent" style="background: #00aaff; border-color: #007acc;">➕ New Track</button>
+          <button id="newDrumTrackBtn" class="btn-accent" style="background: #00aaff; border-color: #007acc;">➕ Track</button>
           <button id="beatBtn" class="btn-accent">+ Seq</button>
         </div>
       </div>
@@ -292,7 +307,6 @@
   <script>
     // --- STATE MANAGEMENT ---
     let isRazorToolActive = false;
-    // New Scissors Cursor string for the Razor Tool
     const scissorsCursor = "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" style=\"font-size: 20px\"><text y=\"18\">✂️</text></svg>') 0 10, crosshair";
 
     let startedAt = 0, pausedAt = 0, longestDuration = 5, animFrameId = null;  
@@ -303,6 +317,7 @@
     let tracks = []; 
     let activeSynthTracks = {}; 
     let activeMelodicTrack = null; 
+    let activeTrackId = null;
     let melodyTrackCount = 0;
     let isPlaying = false;
     let isRecording = false;
@@ -319,6 +334,7 @@
     let undoStack = [], redoStack = [], clipboard = null;
 
     const trackInput = document.getElementById('trackUpload');
+    const newAudioTrackBtn = document.getElementById('newAudioTrackBtn');
     const irInput = document.getElementById('irUpload');
     const playBtn = document.getElementById('playBtn');
     const recordBtn = document.getElementById('recordBtn');
@@ -386,7 +402,6 @@
     }
 
     // --- BULLETPROOF AUDIO SYNC ENGINE ---
-    // Enforces strict synchronous wakeup to bypass iPad/Safari muting bugs
     function initAudioEngineSync() {
       if (!audioCtx) {
         const AC = window.AudioContext || window.webkitAudioContext;
@@ -508,20 +523,15 @@
     function updatePlayhead() {
       if (!isPlaying) return;
 
-      // Calculate current time and convert to pixels
       const currentAudioTime = audioCtx.currentTime - startedAt;
       const newPos = HEADER_WIDTH + (currentAudioTime * pixelsPerSecond);
 
-      // Update playhead position
       playhead.style.left = newPos + 'px';
 
-      // Auto-stop if it reaches the end of the timeline
       if (currentAudioTime >= longestDuration) {
           stopBtn.click();
           return;
       }
-
-      // Request the next animation frame
       animFrameId = requestAnimationFrame(updatePlayhead);
     }
 
@@ -534,7 +544,6 @@
       const hVal = parseFloat(humanizeSlider.value);
       const aVal = parseFloat(analogSlider.value);
       
-      // Schedule Metronome
       if (isMetronomeActive) {
           const gap = parseFloat(noteGapInput.value) || 0.25;
           const totalBeats = Math.ceil((longestDuration + 10) / gap);
@@ -559,9 +568,7 @@
         if (track.type === 'audio') {
             track.liveNodes = [];
             
-            // Loop through all clips in the track's data array
             track.clips.forEach(clip => {
-                // Only schedule clips that appear after the playhead
                 if (clip.time + clip.duration > pausedAt) {
                     const source = audioCtx.createBufferSource(); 
                     source.buffer = clip.buffer; 
@@ -652,6 +659,20 @@
       newMelodyTrackBtn.innerHTML = "✓ Ready";
       setTimeout(() => newMelodyTrackBtn.innerHTML = "➕ New Track", 1500);
     });
+
+    newAudioTrackBtn.addEventListener('click', () => {
+      initAudioEngineSync();
+      saveState();
+      const nodes = createChannelStripNodes();
+      const newTrack = { 
+        id: Math.random().toString(36).substr(2, 9), type: 'audio', clips: [], 
+        inputNode: nodes.inputNode, eqNode: nodes.eqNode, panNode: nodes.panNode, gainNode: nodes.gainNode, 
+        name: 'Empty Audio Track', liveNodes: [] 
+      };
+      tracks.push(newTrack); 
+      createTrackUI(newTrack, colors[tracks.length % colors.length]);
+      recalculateDuration();
+    });
     
     newDrumTrackBtn.addEventListener('click', () => {
       initAudioEngineSync();
@@ -681,31 +702,25 @@
       const selectedInstrument = synthSelect.value;
       let targetTrack = activeSynthTracks[selectedInstrument];
 
-      // Auto-create the track if it doesn't exist yet
       if (!targetTrack) {
         newDrumTrackBtn.click();
         targetTrack = activeSynthTracks[selectedInstrument];
       }
 
-      // Get the current playhead position and the set beat gap
       let insertTime = pausedAt;
       const gap = parseFloat(noteGapInput.value) || 0.25;
 
-      // Insert a 4-beat sequence
       for (let i = 0; i < 4; i++) {
         targetTrack.hits.push({ 
           time: insertTime, 
-          // Set duration slightly shorter than the gap so the blocks don't visually overlap
           duration: gap * 0.8 
         });
         insertTime += gap;
       }
 
-      // Keep the array sorted by time and update the timeline UI
       targetTrack.hits.sort((a, b) => a.time - b.time);
       recalculateDuration();
 
-      // Provide visual feedback on the button click
       beatBtn.innerHTML = "✓ Seq";
       setTimeout(() => beatBtn.innerHTML = "+ Seq", 1500);
     });
@@ -948,7 +963,7 @@
     function restoreState(state) {
       if (isPlaying) stopBtn.click();
       audioContainer.innerHTML = ''; synthContainer.innerHTML = '';
-      tracks = []; activeSynthTracks = {}; activeMelodicTrack = null;
+      tracks = []; activeSynthTracks = {}; activeMelodicTrack = null; activeTrackId = null;
       state.forEach(tData => {
         const nodes = createChannelStripNodes();
         nodes.gainNode.gain.value = tData.vol; nodes.panNode.pan.value = tData.pan; nodes.eqNode.frequency.value = tData.eq;
@@ -1032,22 +1047,25 @@
       saveState();
 
       clipboard.forEach(item => {
-        let track = tracks.find(t => t.id === item.trackId);
-        if (!track) track = tracks.find(t => t.type === item.trackType);
-        if (!track && tracks.length > 0) track = tracks[0];
-        if (!track) return; 
-        
         let targetTime = pausedAt + item.relativeTime;
+        
+        // Attempt to paste into the currently highlighted/active track
+        let targetTrack = tracks.find(t => t.id === activeTrackId && t.type === item.trackType);
+        
+        // Fallbacks if the active track is the wrong type or nothing is active
+        if (!targetTrack) targetTrack = tracks.find(t => t.id === item.trackId);
+        if (!targetTrack && tracks.length > 0) targetTrack = tracks.find(t => t.type === item.trackType);
+        
+        if (!targetTrack) return; 
 
-        if (track.type === 'synth') {
-            track.hits.push({ time: targetTime, duration: item.data.duration || 0.25 }); 
-            track.hits.sort((a,b)=>a.time-b.time);
-        } else if (track.type === 'melodic') {
-            track.hits.push({ time: targetTime, freq: item.data.freq, name: item.data.name, duration: item.data.duration || 0.25 }); 
-            track.hits.sort((a,b)=>a.time-b.time);
-        } else if (track.type === 'audio') {
-            // Adds the clip to the same track's clips array
-            track.clips.push({
+        if (item.trackType === 'synth') {
+            targetTrack.hits.push({ time: targetTime, duration: item.data.duration || 0.25 }); 
+            targetTrack.hits.sort((a,b)=>a.time-b.time);
+        } else if (item.trackType === 'melodic') {
+            targetTrack.hits.push({ time: targetTime, freq: item.data.freq, name: item.data.name, duration: item.data.duration || 0.25 }); 
+            targetTrack.hits.sort((a,b)=>a.time-b.time);
+        } else if (item.trackType === 'audio') {
+            targetTrack.clips.push({
                 id: Math.random().toString(36).substr(2, 9), 
                 buffer: item.data.clip.buffer, 
                 time: targetTime, 
@@ -1057,7 +1075,7 @@
                 waveformURL: item.data.clip.waveformURL, 
                 fileName: item.data.clip.fileName
             });
-            track.clips.sort((a,b)=>a.time-b.time);
+            targetTrack.clips.sort((a,b)=>a.time-b.time);
         }
       });
       redrawAllTimelines();
@@ -1101,6 +1119,7 @@
 
     document.addEventListener('keydown', (e) => {
       if (e.target.tagName === 'INPUT' && e.target.type !== 'range') return; 
+      if (e.target.isContentEditable) return; 
       
       const isCmdOrCtrl = e.metaKey || e.ctrlKey;
       const key = e.key.toLowerCase();
@@ -1207,6 +1226,7 @@
 
     document.addEventListener('keyup', (e) => {
         if (e.target.tagName === 'INPUT' && e.target.type !== 'range') return;
+        if (e.target.isContentEditable) return; 
         
         if (e.key === 'Alt') {
             if (!isSpaceDown) {
@@ -1308,8 +1328,8 @@
       trackWrapper.innerHTML = `
         <div class="track-header">
           <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
-            <div class="track-name" title="${track.name}">${track.name}</div>
-            <div style="display: flex; gap: 2px;">
+            <div class="track-name" title="${track.name}" contenteditable="true" spellcheck="false">${track.name}</div>
+            <div style="display: flex; gap: 2px; margin-left: 5px;">
                <button class="move-up-btn" style="padding: 1px 4px; font-size: 0.6rem; background: #444; border:none; border-radius: 2px; color:white; cursor:pointer;" title="Move Up">▲</button>
                <button class="move-down-btn" style="padding: 1px 4px; font-size: 0.6rem; background: #444; border:none; border-radius: 2px; color:white; cursor:pointer;" title="Move Down">▼</button>
                <button class="delete-track-btn" style="padding: 1px 4px; font-size: 0.6rem; background: #900; border:none; border-radius: 2px; color:white; cursor:pointer; margin-left: 4px;" title="Delete Track">✖</button>
@@ -1322,7 +1342,6 @@
         </div>
         <div class="track-canvas-container" style="width: ${getTimelineWidth()}px">
           <canvas class="fab-canvas"></canvas>
-          <canvas class="hidden-canvas" style="display: none;"></canvas>
         </div>
       `;
       
@@ -1337,6 +1356,20 @@
       const canvasElement = trackWrapper.querySelector('.fab-canvas');
       track.fabCanvas = new fabric.Canvas(canvasElement, { selection: !isRazorToolActive, defaultCursor: isRazorToolActive ? scissorsCursor : 'default', width: getTimelineWidth(), height: 125 });
       track.color = color;
+
+      // Active Track Selection Logic
+      const headerEl = trackWrapper.querySelector('.track-header');
+      headerEl.addEventListener('mousedown', () => {
+          document.querySelectorAll('.track-wrapper').forEach(tw => tw.classList.remove('active-track'));
+          trackWrapper.classList.add('active-track');
+          activeTrackId = track.id;
+      });
+      if (!activeTrackId) { trackWrapper.classList.add('active-track'); activeTrackId = track.id; }
+
+      // Editable Track Name Logic
+      const nameEl = trackWrapper.querySelector('.track-name');
+      nameEl.addEventListener('blur', (e) => { track.name = e.target.innerText; saveState(); });
+      nameEl.addEventListener('keydown', (e) => { e.stopPropagation(); if(e.key === 'Enter') { e.preventDefault(); e.target.blur(); } });
 
       const patchSelect = trackWrapper.querySelector('.track-patch-select');
       if (patchSelect) {
@@ -1360,25 +1393,29 @@
           });
       }
 
-      trackWrapper.querySelector('.move-up-btn').addEventListener('click', () => {
+      trackWrapper.querySelector('.move-up-btn').addEventListener('click', (e) => {
+          e.stopPropagation();
           const prev = trackWrapper.previousElementSibling;
           if (prev && !prev.classList.contains('section-divider')) {
               trackWrapper.parentNode.insertBefore(trackWrapper, prev);
               swapTrackOrder(track.id, prev.dataset.trackId);
           }
       });
-      trackWrapper.querySelector('.move-down-btn').addEventListener('click', () => {
+      trackWrapper.querySelector('.move-down-btn').addEventListener('click', (e) => {
+          e.stopPropagation();
           const next = trackWrapper.nextElementSibling;
           if (next) {
               trackWrapper.parentNode.insertBefore(trackWrapper, next.nextElementSibling);
               swapTrackOrder(track.id, next.dataset.trackId);
           }
       });
-      trackWrapper.querySelector('.delete-track-btn').addEventListener('click', () => {
+      trackWrapper.querySelector('.delete-track-btn').addEventListener('click', (e) => {
+          e.stopPropagation();
           if(confirm(`Are you sure you want to delete ${track.name}?`)) {
               saveState();
               trackWrapper.remove();
               tracks = tracks.filter(t => t.id !== track.id);
+              if (activeTrackId === track.id) activeTrackId = null;
               if (activeMelodicTrack && activeMelodicTrack.id === track.id) activeMelodicTrack = null;
               for (let key in activeSynthTracks) {
                   if (activeSynthTracks[key] && activeSynthTracks[key].id === track.id) activeSynthTracks[key] = null;
@@ -1636,7 +1673,7 @@
                 clip.waveformURL = hCanvas.toDataURL();
             }
             
-            // Build the visible block based on crop settings
+            // Build the visible block based on crop settings and add cut borders
             fabric.Image.fromURL(clip.waveformURL, function(img) {
                 img.set({ 
                     left: clip.time * pixelsPerSecond, 
@@ -1648,7 +1685,9 @@
                     lockMovementY: true, 
                     hoverCursor: isRazorToolActive ? scissorsCursor : 'grab', 
                     moveCursor: 'grabbing', 
-                    selectable: true 
+                    selectable: true,
+                    stroke: 'rgba(255, 255, 255, 0.4)', // Draws visible cut boundaries
+                    strokeWidth: 1
                 });
                 img.clipId = clip.id; 
                 track.fabCanvas.add(img); 
@@ -1694,14 +1733,12 @@
       const arrayBuffer = await file.arrayBuffer();
       
       return new Promise((resolve, reject) => {
-          // We pass the success and error callbacks for Safari's webkitAudioContext
           const decodePromise = audioCtx.decodeAudioData(
               arrayBuffer,
               (decodedData) => resolve(decodedData),
               (error) => reject(error)
           );
           
-          // If the browser returns a Promise (modern AudioContext), we resolve that instead
           if (decodePromise !== undefined) {
               decodePromise.then(resolve).catch(reject);
           }
@@ -1720,7 +1757,6 @@
         saveState();
         const nodes = createChannelStripNodes();
         
-        // Upgrade: Audio tracks now use a 'clips' array to support slicing
         const newClip = {
             id: Math.random().toString(36).substr(2, 9),
             buffer: buffer,
@@ -1765,7 +1801,7 @@
       initAudioEngineSync(); 
       if (isPlaying) stopBtn.click();
       audioContainer.innerHTML = ''; synthContainer.innerHTML = '';
-      tracks = []; activeSynthTracks = {}; activeMelodicTrack = null; longestDuration = 5; undoStack = []; redoStack = []; melodyTrackCount = 0;
+      tracks = []; activeSynthTracks = {}; activeMelodicTrack = null; activeTrackId = null; longestDuration = 5; undoStack = []; redoStack = []; melodyTrackCount = 0;
       
       const project = JSON.parse(await dawFile.text());
       volumeSlider.value = project.master.vol; masterGainNode.gain.value = parseFloat(project.master.vol);
