@@ -218,7 +218,7 @@ SHUCK #4 - FEASTING - Inside you'll find, among other things, tales of a night t
 ---
 Title: SHUCK Issue 5 - The Deep
 Main Image: images/shuck-product-image-issue-5.jpg
-Images: ./shuck-issue5-2.jpg, ./shuck-issue5-3.jpg
+Images: ./shuck-issue5-3.jpg
 Sections: Zines
 Size: 
 Materials: 
