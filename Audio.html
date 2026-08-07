@@ -97,6 +97,7 @@
     
     #empty-state { position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: #555; pointer-events: none; }
 
+    /* KEYBOARD PANEL IS NOW FIXED TO VIEWPORT */
     #keyboard-panel {
       display: none; position: fixed; bottom: 0; left: 0; right: 0; 
       background: #252526; padding: 15px; border-top: 2px solid #444; z-index: 2005;
@@ -203,13 +204,11 @@
       <div class="control-stack"><span class="toolbar-label">Vol/Rev</span><input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.8"></div>
       <div class="control-stack"><span class="toolbar-label" style="visibility: hidden;">Rev</span><input type="range" id="mixSlider" min="0" max="1" step="0.01" value="0.3"></div>
     </div>
-    <!-- ORGANIC VARIABLES -->
     <div class="toolbar-group">
       <div class="control-stack"><span class="toolbar-label">Humanize</span><input type="range" id="humanizeSlider" min="0" max="1" step="0.01" value="0.2" title="Adds micro-timing and volume variations"></div>
       <div class="control-stack"><span class="toolbar-label">Analog Warmth</span><input type="range" id="analogSlider" min="0" max="1" step="0.01" value="0.3" title="Adds pitch drift (wow/flutter) and filter saturation"></div>
     </div>
     
-    <!-- EXPORT DROPDOWN -->
     <div class="toolbar-group" style="border-right: none; margin-left: auto;">
       <div style="display: flex; gap: 5px; align-items: center;">
         <select id="exportFormatSelect" style="height: 100%;">
@@ -242,7 +241,6 @@
 
   <!-- FIXED KEYBOARD CONTAINER -->
   <div id="keyboard-panel">
-    <!-- ROW 1: Sequences and Transport -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
       <div id="sequence-display" style="flex: 1; color: #00ffcc; font-weight: bold; font-family: monospace; font-size: 1rem; overflow-x: auto; white-space: nowrap; background: #1a1a1a; padding: 6px; border-radius: 4px; border: 1px solid #444; margin-right: 15px; scrollbar-width: none;">Seq: []</div>
       <div style="display: flex; align-items: center; gap: 5px; flex-shrink: 0;">
@@ -252,7 +250,6 @@
       </div>
     </div>
     
-    <!-- ROW 2: Settings -->
     <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
         <select id="melodyPatchSelect">
           <option value="square-pluck">🤖 The Robots (Pluck)</option>
@@ -373,7 +370,6 @@
         if (audioUnlocked) return;
         if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         
-        // This command tells iOS Safari to bypass the side mute-switch and prevent background suspending
         if (navigator.audioSession) {
             try { navigator.audioSession.type = 'playback'; } catch(e) {}
         }
@@ -410,7 +406,6 @@
       }
     }
 
-    // Mathematical Distortion Curve for Electric Guitar
     let distCurve = null;
     function getDistortionCurve(amount = 50) {
         if (distCurve) return distCurve;
@@ -431,13 +426,11 @@
         document.documentElement.style.setProperty('--keyboard-height', (140 * scale) + 'px');
     });
 
-    // --- ALT+DRAG / SPACEBAR PANNING LOGIC ---
     let isPanning = false, startX, startY, scrollLeft, scrollTop;
     let isSpaceDown = false;
     let hasDraggedDuringSpace = false;
     const workspaceEl = document.getElementById('workspace');
 
-    // Use capture phase to intercept the mouse BEFORE fabric.js tries to draw a blue selection box
     window.addEventListener('mousedown', (e) => {
         if (isSpaceDown || e.button === 1 || e.altKey) {
             isPanning = true;
@@ -521,7 +514,6 @@
       }
     });
 
-    // --- KEYBOARD & SEQUENCE LOGIC ---
     toggleKeyboardBtn.addEventListener('click', () => {
       keyboardPanel.style.display = 'block';
       setTimeout(() => {
@@ -573,7 +565,7 @@
       }
     }
 
-    // BUILD 88 KEY BUTTONS WITH TRUE NOTE-ON/OFF CAPTURE
+    // BUILD 88 KEY BUTTONS WITH FIXED ASYNC CAPTURE
     musicalNotes.forEach(note => {
       const btn = document.createElement('button');
       btn.innerText = note.name; 
@@ -582,8 +574,20 @@
       
       const handleKeyStart = async (e) => {
         e.preventDefault();
-        btn.setPointerCapture(e.pointerId); 
-        await initAudioEngine();
+        
+        // Sync UI updates immediately to prevent rapid-tap sticking
+        btn.classList.add('active');
+        try { btn.setPointerCapture(e.pointerId); } catch(err) {}
+        
+        // Ensure audio engine is ready without blocking the UI state
+        if (!audioCtx || audioCtx.state !== 'running') {
+            await initAudioEngine();
+        }
+        
+        // Did the user let go while we were awaiting the audio engine? Abort if so.
+        if (!btn.classList.contains('active')) {
+            return; 
+        }
         
         const hVal = parseFloat(humanizeSlider.value);
         const aVal = parseFloat(analogSlider.value);
@@ -609,8 +613,6 @@
             startPlayback();
         }
         
-        btn.classList.add('active');
-        
         const dummyTrackObj = { patch: melodyPatchSelect.value, liveNodes: [] };
         triggerMelody(audioCtx, audioCtx.currentTime, note.freq, masterBus, dummyTrackObj, 10.0, hVal, aVal);
         
@@ -619,24 +621,26 @@
       };
 
       const handleKeyEnd = (e) => {
-        if (!activeTouches.has(btn)) return;
         e.preventDefault();
-        btn.releasePointerCapture(e.pointerId);
+        
+        // Sync UI clear immediately
         btn.classList.remove('active');
+        try { btn.releasePointerCapture(e.pointerId); } catch(err) {}
+
+        // Check if we actually started playing a note
+        if (!activeTouches.has(btn)) return;
         
         const touch = activeTouches.get(btn);
         activeTouches.delete(btn);
         
         const gap = parseFloat(noteGapInput.value) || 0.25;
-        const releaseTime = Math.max(audioCtx.currentTime, touch.noteOnTime + 0.05); // Enforces a minimum safety gap for iOS
+        const releaseTime = Math.max(audioCtx.currentTime, touch.noteOnTime + 0.05); 
         const rawDur = releaseTime - touch.noteOnTime;
         
-        // INTERCEPT & FADE OUT LIVE AUDIO NODES IMMEDIATELY
         touch.dummyTrackObj.liveNodes.forEach(n => {
             if (n.gain) {
                 try {
                     n.gain.gain.cancelScheduledValues(releaseTime);
-                    // Safe setTargetAtTime approach preventing iOS Safari lockups on overlapping ramps
                     n.gain.gain.setTargetAtTime(0, releaseTime, 0.03);
                 } catch(err) {}
             }
@@ -674,6 +678,7 @@
       btn.addEventListener('pointerdown', handleKeyStart);
       btn.addEventListener('pointerup', handleKeyEnd);
       btn.addEventListener('pointercancel', handleKeyEnd);
+      btn.addEventListener('pointerout', handleKeyEnd);
       
       keysContainer.appendChild(btn);
     });
@@ -924,35 +929,11 @@
       if (redrawNeeded) recalculateDuration();
     }
 
-    // --- KEYBOARD & GLOBAL SHORTCUTS ---
     document.addEventListener('keydown', (e) => {
       if (e.target.tagName === 'INPUT' && e.target.type !== 'range') return; 
       
       const isCmdOrCtrl = e.metaKey || e.ctrlKey;
       const key = e.key.toLowerCase();
-      
-      // ALT PANNING TOGGLE
-      if (e.key === 'Alt') {
-          document.body.style.cursor = 'grab';
-          tracks.forEach(t => { 
-              if(t.fabCanvas) { t.fabCanvas.selection = false; t.fabCanvas.defaultCursor = 'grab'; } 
-          });
-          return;
-      }
-      
-      // SPACEBAR PANNING TOGGLE
-      if (e.code === 'Space') {
-          e.preventDefault();
-          if (!e.repeat) {
-              isSpaceDown = true;
-              hasDraggedDuringSpace = false;
-              document.body.style.cursor = 'grab';
-              tracks.forEach(t => { 
-                  if(t.fabCanvas) { t.fabCanvas.selection = false; t.fabCanvas.defaultCursor = 'grab'; } 
-              });
-          }
-          return;
-      }
 
       if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
           e.preventDefault(); 
@@ -962,60 +943,37 @@
               const gap = parseFloat(noteGapInput.value) || 0.25;
               nudgeAmount = e.key === 'ArrowLeft' ? -(gap/4) : (gap/4);
           }
-          
           let nudged = false;
           tracks.forEach(track => {
               if (!track.fabCanvas) return;
               const activeObj = track.fabCanvas.getActiveObject();
               if (activeObj) {
                   if(!nudged) saveState();
-                  
-                  let deltaX = nudgeAmount * pixelsPerSecond;
-                  let newLeft = activeObj.left + deltaX;
-                  
-                  if (newLeft < 0) {
-                      newLeft = 0;
-                      deltaX = 0 - activeObj.left;
-                      nudgeAmount = deltaX / pixelsPerSecond;
-                  }
-                  
-                  activeObj.set('left', newLeft);
-                  activeObj.setCoords();
-                  track.fabCanvas.requestRenderAll();
-                  
                   let objs = activeObj.type === 'activeSelection' ? activeObj.getObjects() : [activeObj];
+                  
                   objs.forEach(obj => {
+                      let newTime = (obj.left / pixelsPerSecond) + nudgeAmount;
+                      if (newTime < 0) newTime = 0;
+                      obj.set('left', newTime * pixelsPerSecond);
+                      obj.setCoords();
+                      
                       if (track.type === 'synth' && obj.drumIndex !== undefined) {
-                          track.hits[obj.drumIndex].time += nudgeAmount;
+                          track.hits[obj.drumIndex].time = newTime;
                       } else if (track.type === 'melodic' && obj.melodicIndex !== undefined) {
-                          track.hits[obj.melodicIndex].time += nudgeAmount;
+                          track.hits[obj.melodicIndex].time = newTime;
                       } else if (track.type === 'audio') {
-                          track.offset += nudgeAmount;
+                          track.offset = newTime;
                       }
                   });
-                  
                   if (track.type === 'synth' || track.type === 'melodic') track.hits.sort((a,b)=>a.time-b.time);
+                  track.fabCanvas.requestRenderAll();
                   nudged = true;
               }
           });
-          
-          if (nudged) {
-              // Expand timeline if needed without dropping the canvas selection
-              let max = 5; 
-              tracks.forEach(t => {
-                  if (t.type === 'audio') max = Math.max(max, t.offset + t.buffer.duration);
-                  if (t.type === 'synth' && t.hits.length > 0) t.hits.forEach(h => { let end = h.time + (h.duration || 0.25); if (end > max) max = end; });
-                  if (t.type === 'melodic' && t.hits.length > 0) t.hits.forEach(h => { let end = h.time + (h.duration || 0.25); if (end > max) max = end; });
-              });
-              if (max + 1 > longestDuration) {
-                  longestDuration = max + 1;
-                  drawRuler();
-                  document.querySelectorAll('.track-canvas-container').forEach(c => {
-                     c.style.width = getTimelineWidth() + 'px';
-                  });
-                  tracks.forEach(t => t.fabCanvas.setWidth(getTimelineWidth()));
-              }
-          }
+          if (nudged) recalculateDuration();
+      } else if (e.code === 'Space') { 
+        e.preventDefault(); 
+        if (isPlaying) stopBtn.click(); else playBtn.click(); 
       } else if (isCmdOrCtrl && key === 'z') { 
         e.preventDefault(); 
         if (e.shiftKey) redo(); else undo(); 
@@ -1026,38 +984,6 @@
       } else if (e.key === 'Backspace' || e.key === 'Delete') {
         deleteSelection();
       }
-    });
-
-    document.addEventListener('keyup', (e) => {
-        if (e.target.tagName === 'INPUT' && e.target.type !== 'range') return;
-        
-        if (e.key === 'Alt') {
-            if (!isSpaceDown) {
-                document.body.style.cursor = 'default';
-                tracks.forEach(t => { 
-                    if(t.fabCanvas) { t.fabCanvas.selection = true; t.fabCanvas.defaultCursor = 'default'; } 
-                });
-            }
-            return;
-        }
-        
-        if (e.code === 'Space') {
-            e.preventDefault();
-            isSpaceDown = false;
-            
-            if (!e.altKey) {
-                document.body.style.cursor = 'default';
-                tracks.forEach(t => { 
-                    if(t.fabCanvas) { t.fabCanvas.selection = true; t.fabCanvas.defaultCursor = 'default'; } 
-                });
-            }
-            
-            if (!hasDraggedDuringSpace) {
-                if (isPlaying) stopBtn.click(); else playBtn.click();
-            }
-            hasDraggedDuringSpace = false;
-            return;
-        }
     });
 
     function configureSelection(e) {
@@ -1148,7 +1074,6 @@
       if (track.type === 'audio') track.hiddenCanvas = trackWrapper.querySelector('.hidden-canvas');
       track.color = color;
 
-      // TRACK EFFECTS LISTENERS
       const patchSelect = trackWrapper.querySelector('.track-patch-select');
       if (patchSelect) {
           patchSelect.addEventListener('change', (e) => {
@@ -1171,7 +1096,6 @@
           });
       }
 
-      // REORDER & DELETE LOGIC
       trackWrapper.querySelector('.move-up-btn').addEventListener('click', () => {
           const prev = trackWrapper.previousElementSibling;
           if (prev && !prev.classList.contains('section-divider')) {
@@ -1252,7 +1176,6 @@
           if (track.type === 'synth') track.hits.sort((a,b)=>a.time-b.time);
           if (track.type === 'melodic') track.hits.sort((a,b)=>a.time-b.time);
           
-          // Expand ruler but do not drop selection
           let max = 5; 
           tracks.forEach(t => {
               if (t.type === 'audio') max = Math.max(max, t.offset + t.buffer.duration);
@@ -1268,7 +1191,6 @@
           if (wasPlaying) playBtn.click();
       });
 
-      // DOUBLE CLICK TO REPLACE
       track.fabCanvas.on('mouse:dblclick', function(opt) {
         if (opt.target && track.type === 'melodic') {
             if (replacingNote && replacingNote.obj === opt.target) {
@@ -1291,7 +1213,6 @@
         }
         if (opt.target) return; 
         
-        // Default dbl click behavior (move playhead)
         if (isPlaying) stopBtn.click();
         const workspaceRect = timelineUI.getBoundingClientRect();
         let newX = (opt.e.clientX - workspaceRect.left) - HEADER_WIDTH;
@@ -1344,7 +1265,6 @@
 
     function recalculateDuration() {
       let max = 5; 
-      // Prevent timeline from shrinking while actively live-recording
       if (isRecording && isPlaying) {
           max = Math.max(max, (audioCtx.currentTime - startedAt));
       }
@@ -1380,7 +1300,6 @@
           hoverCursor: 'ew-resize', moveCursor: 'grabbing', selectable: true 
         });
         
-        // Re-apply highlight if this note is currently selected for replacement
         if (replacingNote && replacingNote.track.id === track.id && replacingNote.index === index) {
             hitGroup.set('strokeWidth', 3);
             hitGroup.set('stroke', '#ff0000');
