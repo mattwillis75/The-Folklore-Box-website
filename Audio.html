@@ -501,8 +501,29 @@
         }
     });
 
+    function updatePlayhead() {
+    if (!isPlaying) return;
+
+    // Calculate current time and convert to pixels
+    const currentAudioTime = audioCtx.currentTime - startedAt;
+    const newPos = HEADER_WIDTH + (currentAudioTime * pixelsPerSecond);
+
+    // Update playhead position
+    playhead.style.left = newPos + 'px';
+
+    // Auto-stop if it reaches the end of the timeline
+    if (currentAudioTime >= longestDuration) {
+        stopBtn.click();
+        return;
+    }
+
+    // Request the next animation frame
+    animFrameId = requestAnimationFrame(updatePlayhead);
+}
+
     function startPlayback() {
       if (isPlaying) return;
+      if (document.activeElement) document.activeElement.blur();
       initAudioEngineSync();
       startedAt = audioCtx.currentTime - pausedAt;
       
@@ -1816,6 +1837,7 @@
 
     stopBtn.addEventListener('click', () => {
       if (!isPlaying) return;
+      if (document.activeElement) document.activeElement.blur();
       pausedAt = audioCtx.currentTime - startedAt;
       
       try {
