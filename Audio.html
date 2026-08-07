@@ -58,10 +58,7 @@
     .btn-accent { background: #ff3366; border-color: #cc0033; }
     .btn-save { background: #238636; border-color: #2ea043; }
     .btn-save:hover:not(:disabled) { background: #2ea043; border-color: #3fb950; }
-    
-    #playBtn { width: 90px; }
-    #recordBtn { width: 90px; }
-    #stopBtn { width: 80px; }
+   
 
     .btn-record { background: #a00; border-color: #600; color: #fff; }
     .btn-record.recording { background: #ff0033; border-color: #ff3366; box-shadow: 0 0 10px #ff0033; animation: pulse 1.5s infinite; }
@@ -143,58 +140,57 @@
   <div id="toolbar">
     <div class="toolbar-group">
       <div class="control-stack">
-        <span class="toolbar-label">Session Data</span>
+        <span class="toolbar-label">Session</span>
         <div style="display: flex; gap: 5px;">
-          <button id="saveBtn" class="btn-save">💾 Save .daw</button>
-          <label class="file-btn" title="Select your .daw file AND original audio files">📂 Load<input type="file" id="loadBtn" accept=".daw,audio/*" multiple></label>
+          <button id="saveBtn" class="btn-save" title="Save .daw">💾</button>
+          <label class="file-btn" title="Load .daw & Audio">📂<input type="file" id="loadBtn" accept=".daw,audio/*" multiple></label>
         </div>
       </div>
     </div>
     
-    <!-- NEW: Timeline Length Block -->
     <div class="toolbar-group">
       <div class="control-stack">
-        <span class="toolbar-label">Timeline (s)</span>
+        <span class="toolbar-label">Time (s)</span>
         <div style="display: flex; gap: 5px;">
            <input type="number" id="timelineLengthInput" value="5" min="1" step="0.5" title="Total Duration" style="width: 50px; padding: 4px; border-radius: 4px; border: 1px solid #555; background: #111; color: white;">
-           <button id="setTimelineLengthBtn" class="btn-primary" style="padding: 4px 8px;">Set</button>
+           <button id="setTimelineLengthBtn" class="btn-primary" style="padding: 4px 8px;" title="Set Duration">⏱️</button>
         </div>
       </div>
     </div>
 
     <div class="toolbar-group">
       <div class="control-stack">
-          <span class="toolbar-label">Audio Tracks</span>
+          <span class="toolbar-label">Audio</span>
           <div style="display: flex; gap: 5px;">
-              <label class="file-btn">+ Audio<input type="file" id="trackUpload" accept="audio/*" multiple></label>
-              <button id="newAudioTrackBtn" class="btn-accent" style="background: #ff8800; border-color: #cc6600;">+ Empty Track</button>
+              <label class="file-btn" title="Upload Audio File">🎵<input type="file" id="trackUpload" accept="audio/*" multiple></label>
+              <button id="newAudioTrackBtn" class="btn-accent" style="background: #ff8800; border-color: #cc6600;" title="Add Empty Audio Track">➕</button>
           </div>
       </div>
-      <div class="control-stack"><span class="toolbar-label">Reverb Space</span><label class="file-btn">+ IR<input type="file" id="irUpload" accept="audio/*"></label></div>
+      <div class="control-stack"><span class="toolbar-label">Reverb</span><label class="file-btn" title="Add Impulse Response">🌌<input type="file" id="irUpload" accept="audio/*"></label></div>
     </div>
+    
     <div class="toolbar-group">
       <div class="control-stack">
         <span class="toolbar-label">Transport</span>
         <div style="display: flex; gap: 5px;">
-          <button id="playBtn" class="btn-primary">▶ Play</button>
-          <button id="recordBtn" class="btn-record">🔴 Rec</button>
-          <button id="stopBtn" disabled>⏸ Pause</button>
-          <button id="metronomeBtn" style="background: #333; border-color: #555;">🔔 Click Off</button>
+          <button id="playBtn" class="btn-primary" title="Play">▶</button>
+          <button id="recordBtn" class="btn-record" title="Record">🔴</button>
+          <button id="stopBtn" disabled title="Pause">⏸</button>
+          <button id="metronomeBtn" style="background: #333; border-color: #555;" title="Toggle Click Track">🔕</button>
         </div>
       </div>
     </div>
 
-    <!-- NEW: Arrange / Distribute Block -->
     <div class="toolbar-group">
       <div class="control-stack">
         <span class="toolbar-label">Arrange</span>
         <div style="display: flex; gap: 5px;">
-            <select id="distributeType" style="width: 85px;">
-                <option value="linear">Linear</option>
-                <option value="accelerate">Accel.</option>
-                <option value="decelerate">Decel.</option>
+            <select id="distributeType" style="width: 65px;" title="Distribution Type">
+                <option value="linear">Lin</option>
+                <option value="accelerate">Acc</option>
+                <option value="decelerate">Dec</option>
             </select>
-            <button id="distributeBtn" class="btn-primary" title="Space selected items evenly">Distribute</button>
+            <button id="distributeBtn" class="btn-primary" title="Space selected items evenly">↔️</button>
         </div>
       </div>
     </div>
@@ -202,48 +198,52 @@
     <div class="toolbar-group">
       <div class="control-stack">
         <span class="toolbar-label">Zoom</span>
-        <div style="display: flex; gap: 5px;"><button id="zoomOutBtn">🔍 -</button><button id="zoomInBtn">🔍 +</button></div>
+        <div style="display: flex; gap: 5px;"><button id="zoomOutBtn" title="Zoom Out">🔍-</button><button id="zoomInBtn" title="Zoom In">🔍+</button></div>
       </div>
     </div>
+    
     <div class="toolbar-group">
       <div class="control-stack">
-        <span class="toolbar-label">Drum Machine</span>
+        <span class="toolbar-label">Drums</span>
         <div style="display: flex; gap: 5px;">
-          <select id="synthSelect">
-            <option value="kick">💥 Kick</option>
-            <option value="snare">🥁 Snare</option>
-            <option value="hihat">🎩 Hi-Hat</option>
-            <option value="bass">🎸 Synth Bass</option>
-            <option value="laser">🔫 Laser</option>
-            <option value="chime">✨ Chime</option>
+          <select id="synthSelect" style="width: 60px;" title="Select Drum Sound">
+            <option value="kick">💥</option>
+            <option value="snare">🥁</option>
+            <option value="hihat">🎩</option>
+            <option value="bass">🎸</option>
+            <option value="laser">🔫</option>
+            <option value="chime">✨</option>
           </select>
-          <button id="newDrumTrackBtn" class="btn-accent" style="background: #00aaff; border-color: #007acc;">➕ Track</button>
-          <button id="beatBtn" class="btn-accent">+ Seq</button>
+          <button id="newDrumTrackBtn" class="btn-accent" style="background: #00aaff; border-color: #007acc;" title="Add Drum Track">➕</button>
+          <button id="beatBtn" class="btn-accent" title="Add Sequence">🎼</button>
         </div>
       </div>
     </div>
+    
     <div class="toolbar-group">
       <div class="control-stack">
         <span class="toolbar-label">Melody</span>
-        <button id="toggleKeyboardBtn" class="btn-accent" style="background: #9933ff; border-color: #7a29cc;">🎹 Keyboard</button>
+        <button id="toggleKeyboardBtn" class="btn-accent" style="background: #9933ff; border-color: #7a29cc;" title="Toggle Keyboard">🎹</button>
       </div>
     </div>
+    
     <div class="toolbar-group">
-      <div class="control-stack"><span class="toolbar-label">Vol/Rev</span><input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.8"></div>
-      <div class="control-stack"><span class="toolbar-label" style="visibility: hidden;">Rev</span><input type="range" id="mixSlider" min="0" max="1" step="0.01" value="0.3"></div>
+      <div class="control-stack"><span class="toolbar-label">Vol/Rev</span><input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.8" style="width: 60px;"></div>
+      <div class="control-stack"><span class="toolbar-label" style="visibility: hidden;">Rev</span><input type="range" id="mixSlider" min="0" max="1" step="0.01" value="0.3" style="width: 60px;"></div>
     </div>
+    
     <div class="toolbar-group">
-      <div class="control-stack"><span class="toolbar-label">Humanize</span><input type="range" id="humanizeSlider" min="0" max="1" step="0.01" value="0.2" title="Adds micro-timing and volume variations"></div>
-      <div class="control-stack"><span class="toolbar-label">Analog Warmth</span><input type="range" id="analogSlider" min="0" max="1" step="0.01" value="0.3" title="Adds pitch drift (wow/flutter) and filter saturation"></div>
+      <div class="control-stack"><span class="toolbar-label">Feel</span><input type="range" id="humanizeSlider" min="0" max="1" step="0.01" value="0.2" style="width: 50px;" title="Humanize (Micro-timing)"></div>
+      <div class="control-stack"><span class="toolbar-label" style="visibility: hidden;">An</span><input type="range" id="analogSlider" min="0" max="1" step="0.01" value="0.3" style="width: 50px;" title="Analog Warmth"></div>
     </div>
     
     <div class="toolbar-group" style="border-right: none; margin-left: auto;">
       <div style="display: flex; gap: 5px; align-items: center;">
         <select id="exportFormatSelect" style="height: 100%;">
-          <option value="wav">.WAV</option>
-          <option value="mp3">.MP3</option>
+          <option value="wav">WAV</option>
+          <option value="mp3">MP3</option>
         </select>
-        <button id="exportBtn">⬇ Export</button>
+        <button id="exportBtn" title="Export Audio">⬇</button>
       </div>
     </div>
   </div>
@@ -525,10 +525,10 @@
         isMetronomeActive = !isMetronomeActive;
         if (isMetronomeActive) {
             metronomeBtn.style.background = '#007acc';
-            metronomeBtn.innerText = '🔔 Click On';
+            metronomeBtn.innerText = '🔔';
         } else {
             metronomeBtn.style.background = '#333';
-            metronomeBtn.innerText = '🔔 Click Off';
+            metronomeBtn.innerText = '🔕';
         }
     });
 
@@ -710,7 +710,7 @@
           });
         }
       });
-      isPlaying = true; playBtn.disabled = true; playBtn.innerHTML = "▶ Playing..."; stopBtn.disabled = false; updatePlayhead();
+      isPlaying = true; playBtn.disabled = true; playBtn.innerHTML = "▶"; stopBtn.disabled = false; updatePlayhead();
     }
 
     playBtn.addEventListener('click', () => {
@@ -723,10 +723,10 @@
       isRecording = !isRecording;
       if (isRecording) {
         recordBtn.classList.add('recording');
-        recordBtn.innerText = '🔴 Recording';
+        recordBtn.innerText = '🔴';
       } else {
         recordBtn.classList.remove('recording');
-        recordBtn.innerText = '🔴 Rec';
+        recordBtn.innerText = '🔴';
       }
     });
 
@@ -761,7 +761,7 @@
       activeMelodicTrack = null;
       ensureMelodicTrackExists();
       newMelodyTrackBtn.innerHTML = "✓ Ready";
-      setTimeout(() => newMelodyTrackBtn.innerHTML = "➕ New Track", 1500);
+      setTimeout(() => newMelodyTrackBtn.innerHTML = "➕", 1500);
     });
 
     newAudioTrackBtn.addEventListener('click', () => {
@@ -796,7 +796,7 @@
       recalculateDuration();
       
       newDrumTrackBtn.innerHTML = "✓ Ready";
-      setTimeout(() => newDrumTrackBtn.innerHTML = "➕ New Track", 1500);
+      setTimeout(() => newDrumTrackBtn.innerHTML = "➕", 1500);
     });
 
     beatBtn.addEventListener('click', () => {
@@ -825,8 +825,8 @@
       targetTrack.hits.sort((a, b) => a.time - b.time);
       recalculateDuration();
 
-      beatBtn.innerHTML = "✓ Seq";
-      setTimeout(() => beatBtn.innerHTML = "+ Seq", 1500);
+      beatBtn.innerHTML = "✓";
+      setTimeout(() => beatBtn.innerHTML = "🎼", 1500);
     });
 
     function ensureMelodicTrackExists() {
@@ -2204,7 +2204,7 @@
       
       isPlaying = false; 
       playBtn.disabled = false; 
-      playBtn.innerHTML = "▶ Play"; 
+      playBtn.innerHTML = "▶"; 
       stopBtn.disabled = true; 
       cancelAnimationFrame(animFrameId);
     });
@@ -2245,7 +2245,7 @@
 
     exportBtn.addEventListener('click', async () => {
       if (longestDuration === 0 || tracks.length === 0) { alert("Nothing to export!"); return; }
-      exportBtn.textContent = "Rendering..."; exportBtn.disabled = true;
+      exportBtn.textContent = "⏳"; exportBtn.disabled = true;
       
       const hVal = parseFloat(humanizeSlider.value);
       const aVal = parseFloat(analogSlider.value);
@@ -2279,7 +2279,7 @@
       const anchor = document.createElement('a');
       
       if (exportFormat === 'mp3') {
-          exportBtn.textContent = "Encoding MP3...";
+          exportBtn.textContent = "⏳";
           const mp3Blob = await encodeMp3(renderedBuffer);
           anchor.href = window.URL.createObjectURL(mp3Blob); 
           anchor.download = 'My_DAW_Mix.mp3';
@@ -2291,7 +2291,7 @@
       }
       
       anchor.click(); 
-      exportBtn.textContent = "⬇ Export"; 
+      exportBtn.textContent = "⬇"; 
       exportBtn.disabled = false;
     });
 
