@@ -171,6 +171,7 @@
           <button id="playBtn" class="btn-primary">▶ Play</button>
           <button id="recordBtn" class="btn-record">🔴 Rec</button>
           <button id="stopBtn" disabled>⏸ Pause</button>
+          <button id="metronomeBtn" style="background: #333; border-color: #555;">🔔 Click Off</button>
         </div>
       </div>
     </div>
@@ -305,6 +306,10 @@
     let recordedSequence = []; 
     let replacingNote = null; 
     
+    // Metronome Variables
+    let isMetronomeActive = false;
+    let metronomeNodes = [];
+    
     const activeTouches = new Map();
     const colors = ['#00ffcc', '#00aaff', '#ffff00', '#ffaa00', '#ff3366', '#aaff00'];
     let undoStack = [], redoStack = [], clipboard = null;
@@ -314,6 +319,7 @@
     const playBtn = document.getElementById('playBtn');
     const recordBtn = document.getElementById('recordBtn');
     const stopBtn = document.getElementById('stopBtn');
+    const metronomeBtn = document.getElementById('metronomeBtn');
     const beatBtn = document.getElementById('beatBtn');
     const newDrumTrackBtn = document.getElementById('newDrumTrackBtn');
     const synthSelect = document.getElementById('synthSelect');
@@ -375,36 +381,28 @@
         }, gcTime);
     }
 
-    let audioUnlocked = false;
-    const unlockEvents = ['touchstart', 'touchend', 'mousedown', 'keydown'];
-    
-    async function unlockAudio() {
-        if (audioUnlocked) return;
-        audioUnlocked = true;
-        
-        await initAudioEngine();
-        if(!audioCtx) return;
-        
-        const buffer = audioCtx.createBuffer(1, 1, 22050);
-        const source = audioCtx.createBufferSource();
-        source.buffer = buffer;
-        source.connect(audioCtx.destination);
-        if (source.start) source.start(0);
-        
-        unlockEvents.forEach(evt => document.removeEventListener(evt, unlockAudio, true));
-    }
-    unlockEvents.forEach(evt => document.addEventListener(evt, unlockAudio, true));
-
-    async function initAudioEngine() {
+    // --- BULLETPROOF AUDIO SYNC ENGINE ---
+    // Enforces strict synchronous wakeup to bypass iPad/Safari muting bugs
+    function initAudioEngineSync() {
       if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const AC = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AC();
         if (navigator.audioSession) {
             try { navigator.audioSession.type = 'playback'; } catch(e) {}
         }
       }
+      
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+
       if (!masterBus) {
-        masterBus = audioCtx.createGain(); masterCompressor = audioCtx.createDynamicsCompressor(); convolver = audioCtx.createConvolver();
-        masterGainNode = audioCtx.createGain(); dryGainNode = audioCtx.createGain(); wetGainNode = audioCtx.createGain();
+        masterBus = audioCtx.createGain(); 
+        masterCompressor = audioCtx.createDynamicsCompressor(); 
+        convolver = audioCtx.createConvolver();
+        masterGainNode = audioCtx.createGain(); 
+        dryGainNode = audioCtx.createGain(); 
+        wetGainNode = audioCtx.createGain();
         
         const vol = volumeSlider ? parseFloat(volumeSlider.value) : 0.8;
         masterGainNode.gain.setValueAtTime(vol, audioCtx.currentTime);
@@ -413,13 +411,24 @@
         dryGainNode.gain.setValueAtTime(1.0 - mix, audioCtx.currentTime); 
         wetGainNode.gain.setValueAtTime(mix, audioCtx.currentTime);
         
-        masterBus.connect(masterCompressor); masterCompressor.connect(dryGainNode); masterCompressor.connect(convolver);   
-        convolver.connect(wetGainNode); dryGainNode.connect(masterGainNode); wetGainNode.connect(masterGainNode); masterGainNode.connect(audioCtx.destination);
-      }
-      if (audioCtx.state === 'suspended') {
-        try { await audioCtx.resume(); } catch(e) {}
+        masterBus.connect(masterCompressor); 
+        masterCompressor.connect(dryGainNode); 
+        masterCompressor.connect(convolver);   
+        convolver.connect(wetGainNode); 
+        dryGainNode.connect(masterGainNode); 
+        wetGainNode.connect(masterGainNode); 
+        masterGainNode.connect(audioCtx.destination);
       }
     }
+
+    // Globally intercept any interactions to ensure iOS audio is awake
+    ['touchstart', 'mousedown', 'keydown'].forEach(evt => {
+        document.addEventListener(evt, () => {
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }, { capture: true, passive: true });
+    });
 
     let distCurve = null;
     function getDistortionCurve(amount = 50) {
@@ -480,12 +489,46 @@
         }
     }, { capture: true });
 
+    metronomeBtn.addEventListener('click', () => {
+        initAudioEngineSync();
+        isMetronomeActive = !isMetronomeActive;
+        if (isMetronomeActive) {
+            metronomeBtn.style.background = '#007acc';
+            metronomeBtn.innerText = '🔔 Click On';
+        } else {
+            metronomeBtn.style.background = '#333';
+            metronomeBtn.innerText = '🔔 Click Off';
+        }
+    });
+
     function startPlayback() {
       if (isPlaying) return;
+      initAudioEngineSync();
       startedAt = audioCtx.currentTime - pausedAt;
       
       const hVal = parseFloat(humanizeSlider.value);
       const aVal = parseFloat(analogSlider.value);
+      
+      // Schedule Metronome
+      if (isMetronomeActive) {
+          const gap = parseFloat(noteGapInput.value) || 0.25;
+          const totalBeats = Math.ceil((longestDuration + 10) / gap);
+          for(let i=0; i<totalBeats; i++) {
+              const clickTime = startedAt + (i * gap);
+              if (clickTime >= audioCtx.currentTime) {
+                  const osc = audioCtx.createOscillator();
+                  const gain = audioCtx.createGain();
+                  osc.type = 'square';
+                  osc.frequency.setValueAtTime(i % 4 === 0 ? 1200 : 800, clickTime);
+                  osc.frequency.exponentialRampToValueAtTime(100, clickTime + 0.05);
+                  gain.gain.setValueAtTime(0.3, clickTime);
+                  gain.gain.exponentialRampToValueAtTime(0.001, clickTime + 0.05);
+                  osc.connect(gain); gain.connect(masterBus);
+                  osc.start(clickTime); osc.stop(clickTime + 0.05);
+                  metronomeNodes.push({osc, gain});
+              }
+          }
+      }
       
       tracks.forEach(track => {
         if (track.type === 'audio') {
@@ -511,13 +554,13 @@
       isPlaying = true; playBtn.disabled = true; playBtn.innerHTML = "▶ Playing..."; stopBtn.disabled = false; updatePlayhead();
     }
 
-    playBtn.addEventListener('click', async () => {
-      await initAudioEngine();
+    playBtn.addEventListener('click', () => {
+      initAudioEngineSync();
       startPlayback();
     });
 
-    recordBtn.addEventListener('click', async () => {
-      await initAudioEngine();
+    recordBtn.addEventListener('click', () => {
+      initAudioEngineSync();
       isRecording = !isRecording;
       if (isRecording) {
         recordBtn.classList.add('recording');
@@ -553,8 +596,8 @@
       }
     });
 
-    newMelodyTrackBtn.addEventListener('click', async () => {
-      await initAudioEngine();
+    newMelodyTrackBtn.addEventListener('click', () => {
+      initAudioEngineSync();
       saveState();
       activeMelodicTrack = null;
       ensureMelodicTrackExists();
@@ -562,8 +605,8 @@
       setTimeout(() => newMelodyTrackBtn.innerHTML = "➕ New Track", 1500);
     });
     
-    newDrumTrackBtn.addEventListener('click', async () => {
-      await initAudioEngine();
+    newDrumTrackBtn.addEventListener('click', () => {
+      initAudioEngineSync();
       saveState();
       
       const selectedInstrument = synthSelect.value;
@@ -603,7 +646,7 @@
       btn.className = `key-btn key-${note.color}`;
       btn.title = `${note.name} (${note.freq} Hz)`;
       
-      const handleKeyStart = async (e) => {
+      const handleKeyStart = (e) => {
         if (e.type === 'touchstart') e.preventDefault(); 
         
         if (btn.dataset.pressed === 'true') return;
@@ -614,9 +657,7 @@
             try { btn.setPointerCapture(e.pointerId); } catch(err) {}
         }
         
-        if (!masterBus || !audioCtx || audioCtx.state !== 'running') {
-            await initAudioEngine();
-        }
+        initAudioEngineSync();
         
         if (btn.dataset.pressed !== 'true') return;
         
@@ -707,12 +748,10 @@
         }
       };
 
-      btn.addEventListener('mousedown', handleKeyStart);
-      btn.addEventListener('touchstart', handleKeyStart, { passive: false });
-      btn.addEventListener('mouseup', handleKeyEnd);
-      btn.addEventListener('mouseleave', handleKeyEnd);
-      btn.addEventListener('touchend', handleKeyEnd, { passive: false });
-      btn.addEventListener('touchcancel', handleKeyEnd, { passive: false });
+      btn.addEventListener('pointerdown', handleKeyStart);
+      btn.addEventListener('pointerup', handleKeyEnd);
+      btn.addEventListener('pointercancel', handleKeyEnd);
+      btn.addEventListener('pointerleave', handleKeyEnd);
       
       keysContainer.appendChild(btn);
     });
@@ -763,9 +802,9 @@
       textSequenceInput.value = '';
     });
 
-    insertSequenceBtn.addEventListener('click', async () => {
+    insertSequenceBtn.addEventListener('click', () => {
       if (recordedSequence.length === 0) return;
-      await initAudioEngine(); saveState();
+      initAudioEngineSync(); saveState();
       ensureMelodicTrackExists();
       activeMelodicTrack.patch = melodyPatchSelect.value;
 
@@ -1480,12 +1519,12 @@
     async function decodeUploadedFile(file) { const arrayBuffer = await file.arrayBuffer(); return await audioCtx.decodeAudioData(arrayBuffer); }
 
     irInput.addEventListener('change', async () => {
-      await initAudioEngine();
+      initAudioEngineSync();
       if (irInput.files.length > 0) { convolver.buffer = await decodeUploadedFile(irInput.files[0]); irInput.value = ""; }
     });
 
     trackInput.addEventListener('change', async () => {
-      await initAudioEngine();
+      initAudioEngineSync();
       for (let file of trackInput.files) {
         const buffer = await decodeUploadedFile(file);
         saveState();
@@ -1515,7 +1554,7 @@
       const files = Array.from(e.target.files);
       const dawFile = files.find(f => f.name.endsWith('.daw') || f.name.endsWith('.json'));
       if (!dawFile) { alert("Please select a .daw project file along with your audio files!"); loadBtn.value = ""; return; }
-      await initAudioEngine(); 
+      initAudioEngineSync(); 
       if (isPlaying) stopBtn.click();
       audioContainer.innerHTML = ''; synthContainer.innerHTML = '';
       tracks = []; activeSynthTracks = {}; activeMelodicTrack = null; longestDuration = 5; undoStack = []; redoStack = []; melodyTrackCount = 0;
@@ -1774,6 +1813,46 @@
         gc(context, hTime, duration, [osc, osc2, gain, filter, lfo, lfoGain]);
       }
     }
+
+    stopBtn.addEventListener('click', () => {
+      if (!isPlaying) return;
+      pausedAt = audioCtx.currentTime - startedAt;
+      
+      try {
+          metronomeNodes.forEach(n => {
+              try { n.osc.stop(); n.osc.disconnect(); n.gain.disconnect(); } catch(e){}
+          });
+          metronomeNodes = [];
+          
+          tracks.forEach(track => {
+            if (track.type === 'audio' && track.source) {
+              try { track.source.stop(); } catch(e) {}
+              try { track.source.disconnect(); } catch(e) {}
+              track.source = null;
+            } else if ((track.type === 'synth' || track.type === 'melodic') && track.liveNodes) {
+              track.liveNodes.forEach(nodes => {
+                Object.values(nodes).forEach(n => {
+                    if (n && n.stop) { try { n.stop(); } catch(e){} }
+                    if (n && n.disconnect) { try { n.disconnect(); } catch(e){} }
+                    if (n && n.gain) { 
+                        try { 
+                            n.gain.cancelScheduledValues(audioCtx.currentTime); 
+                            n.gain.setTargetAtTime(0, audioCtx.currentTime, 0.03); 
+                        } catch(e){} 
+                    }
+                });
+              });
+              track.liveNodes = [];
+            }
+          });
+      } catch(e) { console.error(e); }
+      
+      isPlaying = false; 
+      playBtn.disabled = false; 
+      playBtn.innerHTML = "▶ Play"; 
+      stopBtn.disabled = true; 
+      cancelAnimationFrame(animFrameId);
+    });
 
     async function encodeMp3(buffer) {
         return new Promise((resolve) => {
