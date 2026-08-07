@@ -23,15 +23,14 @@
     
     #toolbar {
       background: #252526; border-bottom: 1px solid #000; padding: 10px 20px;
-      display: flex; flex-wrap: nowrap; /* Forces everything onto one line */
+      display: flex; flex-wrap: nowrap; 
       align-items: flex-end; gap: 15px; z-index: 2000;
       box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-      overflow-x: auto; /* Allows horizontal scrolling if the screen is narrow */
-      -webkit-overflow-scrolling: touch; /* Smooth scrolling for mobile */
-      scrollbar-width: none; /* Hides the scrollbar in Firefox */
+      overflow-x: auto; 
+      -webkit-overflow-scrolling: touch; 
+      scrollbar-width: none; 
     }
 
-    /* Hides the scrollbar in Chrome, Safari, and Edge for a cleaner look */
     #toolbar::-webkit-scrollbar {
       display: none; 
     }
@@ -39,9 +38,8 @@
     .toolbar-group { 
       display: flex; align-items: center; gap: 10px; padding-right: 15px; 
       border-right: 1px solid #444; height: 100%; 
-      flex-shrink: 0; /* Prevents the browser from squishing the groups together */
+      flex-shrink: 0; 
     }
-    
     .toolbar-group:last-child { border-right: none; }
     .toolbar-label { font-size: 0.7rem; text-transform: uppercase; color: #888; font-weight: bold; margin-bottom: 4px; }
     .control-stack { display: flex; flex-direction: column; justify-content: flex-end; }
@@ -58,7 +56,6 @@
     .btn-accent { background: #ff3366; border-color: #cc0033; }
     .btn-save { background: #238636; border-color: #2ea043; }
     .btn-save:hover:not(:disabled) { background: #2ea043; border-color: #3fb950; }
-   
 
     .btn-record { background: #a00; border-color: #600; color: #fff; }
     .btn-record.recording { background: #ff0033; border-color: #ff3366; box-shadow: 0 0 10px #ff0033; animation: pulse 1.5s infinite; }
@@ -88,7 +85,11 @@
       padding: 5px 15px; border-bottom: 1px solid #333; width: 100vw;
     }
 
-    .track-wrapper { display: flex; height: 125px; border-bottom: 1px solid #2d2d2d; background: #1a1a1a; transition: background 0.2s, border-left 0.1s; border-left: 4px solid transparent; }
+    .track-wrapper { 
+      display: flex; height: 125px; border-bottom: 1px solid #2d2d2d; background: #1a1a1a; 
+      transition: background 0.2s, border-left 0.1s; border-left: 4px solid transparent; 
+      position: relative;
+    }
     .track-wrapper.active-track { border-left: 4px solid #ff3366; background: #252525; }
 
     .track-header {
@@ -290,7 +291,7 @@
           <option value="e-piano">🎹 Electric Piano</option>
           <option value="midi-drums">🥁 Drum Kit (Standard MIDI)</option>
         </select>
-        <button id="newMelodyTrackBtn" class="btn-accent" style="background: #9933ff; border-color: #7a29cc;">➕ New Track</button>
+        <button id="newMelodyTrackBtn" class="btn-accent" style="background: #9933ff; border-color: #7a29cc;">➕</button>
         
         <span style="color: #ccc; font-size: 0.8rem; margin-left: 10px;">1 Beat = (sec):</span>
         <input type="number" id="noteGapInput" value="0.25" step="0.1" min="0.1" style="width: 50px; padding: 4px; border-radius: 4px; border: none;">
@@ -586,7 +587,6 @@
               saveState();
               const objs = activeObj.getObjects();
               
-              // Discard active object before querying exact absolute left coords
               track.fabCanvas.discardActiveObject();
               
               objs.sort((a,b) => a.left - b.left);
@@ -760,7 +760,7 @@
       saveState();
       activeMelodicTrack = null;
       ensureMelodicTrackExists();
-      newMelodyTrackBtn.innerHTML = "✓ Ready";
+      newMelodyTrackBtn.innerHTML = "✓";
       setTimeout(() => newMelodyTrackBtn.innerHTML = "➕", 1500);
     });
 
@@ -770,7 +770,9 @@
       const nodes = createChannelStripNodes();
       const newTrack = { 
         id: Math.random().toString(36).substr(2, 9), type: 'audio', clips: [], 
-        inputNode: nodes.inputNode, eqNode: nodes.eqNode, panNode: nodes.panNode, gainNode: nodes.gainNode, 
+        inputNode: nodes.inputNode, eqNode: nodes.eqNode, 
+        delayNode: nodes.delayNode, feedbackNode: nodes.feedbackNode, delayMixNode: nodes.delayMixNode,
+        panNode: nodes.panNode, gainNode: nodes.gainNode, 
         name: 'Empty Audio Track', liveNodes: [] 
       };
       tracks.push(newTrack); 
@@ -787,7 +789,9 @@
       const nodes = createChannelStripNodes();
       const newTrack = { 
         id: Math.random().toString(36).substr(2, 9), type: 'synth', instrument: selectedInstrument, hits: [], 
-        inputNode: nodes.inputNode, eqNode: nodes.eqNode, panNode: nodes.panNode, gainNode: nodes.gainNode, 
+        inputNode: nodes.inputNode, eqNode: nodes.eqNode, 
+        delayNode: nodes.delayNode, feedbackNode: nodes.feedbackNode, delayMixNode: nodes.delayMixNode,
+        panNode: nodes.panNode, gainNode: nodes.gainNode, 
         name: instrumentLabel, liveNodes: [] 
       };
       tracks.push(newTrack); 
@@ -795,7 +799,7 @@
       createTrackUI(newTrack, colors[tracks.length % colors.length]);
       recalculateDuration();
       
-      newDrumTrackBtn.innerHTML = "✓ Ready";
+      newDrumTrackBtn.innerHTML = "✓";
       setTimeout(() => newDrumTrackBtn.innerHTML = "➕", 1500);
     });
 
@@ -836,7 +840,9 @@
         const patchName = melodyPatchSelect.options[melodyPatchSelect.selectedIndex].text;
         const newTrack = { 
           id: Math.random().toString(36).substr(2, 9), type: 'melodic', hits: [], 
-          inputNode: nodes.inputNode, eqNode: nodes.eqNode, panNode: nodes.panNode, gainNode: nodes.gainNode, 
+          inputNode: nodes.inputNode, eqNode: nodes.eqNode, 
+          delayNode: nodes.delayNode, feedbackNode: nodes.feedbackNode, delayMixNode: nodes.delayMixNode,
+          panNode: nodes.panNode, gainNode: nodes.gainNode, 
           name: '🎹 Melody ' + melodyTrackCount + ' (' + patchName + ')', liveNodes: [], patch: melodyPatchSelect.value, trackId: melodyTrackCount 
         };
         tracks.push(newTrack); activeMelodicTrack = newTrack; createTrackUI(newTrack, '#9933ff');
@@ -1036,11 +1042,37 @@
     }
 
     function createChannelStripNodes() {
-      const eqNode = audioCtx.createBiquadFilter(); eqNode.type = 'lowpass'; eqNode.frequency.value = 20000; 
-      const panNode = audioCtx.createStereoPanner(); panNode.pan.value = 0; 
-      const gainNode = audioCtx.createGain(); gainNode.gain.value = 1.0;
-      eqNode.connect(panNode); panNode.connect(gainNode); gainNode.connect(masterBus);
-      return { eqNode, panNode, gainNode, inputNode: eqNode };
+      const eqNode = audioCtx.createBiquadFilter(); 
+      eqNode.type = 'lowpass'; 
+      eqNode.frequency.value = 20000; 
+      
+      // Delay Effect Nodes
+      const delayNode = audioCtx.createDelay(5.0); 
+      delayNode.delayTime.value = 0.3; 
+      const feedbackNode = audioCtx.createGain(); 
+      feedbackNode.gain.value = 0.0; 
+      const delayMixNode = audioCtx.createGain(); 
+      delayMixNode.gain.value = 0.0; 
+      
+      const panNode = audioCtx.createStereoPanner(); 
+      panNode.pan.value = 0; 
+      const gainNode = audioCtx.createGain(); 
+      gainNode.gain.value = 1.0;
+
+      // ROUTING
+      eqNode.connect(panNode); 
+
+      // Wet path (Delay loop)
+      eqNode.connect(delayNode);
+      delayNode.connect(feedbackNode);
+      feedbackNode.connect(delayNode); 
+      delayNode.connect(delayMixNode);
+      delayMixNode.connect(panNode); 
+
+      panNode.connect(gainNode); 
+      gainNode.connect(masterBus);
+      
+      return { eqNode, delayNode, feedbackNode, delayMixNode, panNode, gainNode, inputNode: eqNode };
     }
 
     function getTimelineWidth() { return Math.max(window.innerWidth - HEADER_WIDTH, longestDuration * pixelsPerSecond + 300); }
@@ -1051,6 +1083,7 @@
               id: t.id || Math.random().toString(36).substr(2, 9), 
               type: t.type, name: t.name, color: t.color, trackId: t.trackId,
               vol: t.gainNode.gain.value, pan: t.panNode.pan.value, eq: t.eqNode.frequency.value, 
+              delayTime: t.delayNode.delayTime.value, delayFdbk: t.feedbackNode.gain.value, delayMix: t.delayMixNode.gain.value,
               instrument: t.instrument, patch: t.patch
           };
           if (t.type === 'audio') return { ...base, clips: t.clips.map(c => ({...c})) };
@@ -1071,14 +1104,16 @@
       state.forEach(tData => {
         const nodes = createChannelStripNodes();
         nodes.gainNode.gain.value = tData.vol; nodes.panNode.pan.value = tData.pan; nodes.eqNode.frequency.value = tData.eq;
+        nodes.delayNode.delayTime.value = tData.delayTime || 0.3; nodes.feedbackNode.gain.value = tData.delayFdbk || 0; nodes.delayMixNode.gain.value = tData.delayMix || 0;
+        
         if (tData.type === 'synth') {
-          const newTrack = { id: tData.id || Math.random().toString(36).substr(2, 9), type: 'synth', instrument: tData.instrument, hits: [...tData.hits], inputNode: nodes.inputNode, eqNode: nodes.eqNode, panNode: nodes.panNode, gainNode: nodes.gainNode, name: tData.name, liveNodes: [] };
+          const newTrack = { id: tData.id || Math.random().toString(36).substr(2, 9), type: 'synth', instrument: tData.instrument, hits: [...tData.hits], inputNode: nodes.inputNode, eqNode: nodes.eqNode, delayNode: nodes.delayNode, feedbackNode: nodes.feedbackNode, delayMixNode: nodes.delayMixNode, panNode: nodes.panNode, gainNode: nodes.gainNode, name: tData.name, liveNodes: [] };
           tracks.push(newTrack); activeSynthTracks[tData.instrument] = newTrack; createTrackUI(newTrack, tData.color);
         } else if (tData.type === 'melodic') {
-          const newTrack = { id: tData.id || Math.random().toString(36).substr(2, 9), type: 'melodic', patch: tData.patch, trackId: tData.trackId, hits: tData.hits.map(h => ({...h})), inputNode: nodes.inputNode, eqNode: nodes.eqNode, panNode: nodes.panNode, gainNode: nodes.gainNode, name: tData.name, liveNodes: [] };
+          const newTrack = { id: tData.id || Math.random().toString(36).substr(2, 9), type: 'melodic', patch: tData.patch, trackId: tData.trackId, hits: tData.hits.map(h => ({...h})), inputNode: nodes.inputNode, eqNode: nodes.eqNode, delayNode: nodes.delayNode, feedbackNode: nodes.feedbackNode, delayMixNode: nodes.delayMixNode, panNode: nodes.panNode, gainNode: nodes.gainNode, name: tData.name, liveNodes: [] };
           tracks.push(newTrack); activeMelodicTrack = newTrack; createTrackUI(newTrack, tData.color);
         } else if (tData.type === 'audio') {
-          const newTrack = { id: tData.id || Math.random().toString(36).substr(2, 9), type: 'audio', clips: tData.clips, inputNode: nodes.inputNode, eqNode: nodes.eqNode, panNode: nodes.panNode, gainNode: nodes.gainNode, name: tData.name, liveNodes: [] };
+          const newTrack = { id: tData.id || Math.random().toString(36).substr(2, 9), type: 'audio', clips: tData.clips, inputNode: nodes.inputNode, eqNode: nodes.eqNode, delayNode: nodes.delayNode, feedbackNode: nodes.feedbackNode, delayMixNode: nodes.delayMixNode, panNode: nodes.panNode, gainNode: nodes.gainNode, name: tData.name, liveNodes: [] };
           tracks.push(newTrack); createTrackUI(newTrack, tData.color);
         }
       });
@@ -1153,10 +1188,8 @@
       clipboard.forEach(item => {
         let targetTime = pausedAt + item.relativeTime;
         
-        // Attempt to paste into the currently highlighted/active track
         let targetTrack = tracks.find(t => t.id === activeTrackId && t.type === item.trackType);
         
-        // Fallbacks if the active track is the wrong type or nothing is active
         if (!targetTrack) targetTrack = tracks.find(t => t.id === item.trackId);
         if (!targetTrack && tracks.length > 0) targetTrack = tracks.find(t => t.type === item.trackType);
         
@@ -1436,6 +1469,7 @@
             <div style="display: flex; gap: 2px; margin-left: 5px;">
                <button class="move-up-btn" style="padding: 1px 4px; font-size: 0.6rem; background: #444; border:none; border-radius: 2px; color:white; cursor:pointer;" title="Move Up">▲</button>
                <button class="move-down-btn" style="padding: 1px 4px; font-size: 0.6rem; background: #444; border:none; border-radius: 2px; color:white; cursor:pointer;" title="Move Down">▼</button>
+               <button class="fx-btn" style="padding: 1px 4px; font-size: 0.6rem; background: #007acc; border:none; border-radius: 2px; color:white; cursor:pointer; margin-left: 4px;" title="Track FX">🎛️</button>
                <button class="delete-track-btn" style="padding: 1px 4px; font-size: 0.6rem; background: #900; border:none; border-radius: 2px; color:white; cursor:pointer; margin-left: 4px;" title="Delete Track">✖</button>
             </div>
           </div>
@@ -1444,6 +1478,15 @@
           <div class="track-control-row"><span>PAN</span><input type="range" min="-1" max="1" step="0.01" value="${track.panNode.pan.value}" class="track-pan-slider" title="L/R Panning"></div>
           <div class="track-control-row"><span>LPF</span><input type="range" min="100" max="20000" step="100" value="${track.eqNode.frequency.value}" class="track-eq-slider" title="Filter Cutoff"></div>
         </div>
+        
+        <div class="fx-panel" style="display: none; position: absolute; left: 225px; top: 10px; background: #252526; border: 1px solid #007acc; padding: 10px; z-index: 2000; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.8); width: 180px;">
+            <div style="font-size: 0.7rem; color: #00ffcc; margin-bottom: 8px; font-weight: bold; letter-spacing: 1px;">DELAY / ECHO</div>
+            <div class="track-control-row"><span>TIME</span><input type="range" min="0.01" max="2.0" step="0.01" value="${track.delayNode.delayTime.value}" class="track-delay-time-slider" title="Delay Time"></div>
+            <div class="track-control-row"><span>FDBK</span><input type="range" min="0" max="0.9" step="0.01" value="${track.feedbackNode.gain.value}" class="track-delay-fdbk-slider" title="Feedback Amount"></div>
+            <div class="track-control-row"><span>MIX</span><input type="range" min="0" max="1" step="0.01" value="${track.delayMixNode.gain.value}" class="track-delay-mix-slider" title="Wet/Dry Mix"></div>
+            <button class="fx-close-btn" style="margin-top: 10px; width: 100%; background: #444; color: white; border: none; padding: 4px; cursor: pointer; border-radius: 2px; font-size: 0.7rem;">Close</button>
+        </div>
+
         <div class="track-canvas-container" style="width: ${getTimelineWidth()}px">
           <canvas class="fab-canvas"></canvas>
         </div>
@@ -1460,6 +1503,25 @@
       const canvasElement = trackWrapper.querySelector('.fab-canvas');
       track.fabCanvas = new fabric.Canvas(canvasElement, { selection: !isRazorToolActive, defaultCursor: isRazorToolActive ? scissorsCursor : 'default', width: getTimelineWidth(), height: 125 });
       track.color = color;
+
+      const fxBtn = trackWrapper.querySelector('.fx-btn');
+      const fxPanel = trackWrapper.querySelector('.fx-panel');
+      const fxCloseBtn = trackWrapper.querySelector('.fx-close-btn');
+
+      fxBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          document.querySelectorAll('.fx-panel').forEach(p => p.style.display = 'none');
+          fxPanel.style.display = 'block';
+      });
+
+      fxCloseBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          fxPanel.style.display = 'none';
+      });
+
+      trackWrapper.querySelector('.track-delay-time-slider').addEventListener('input', (e) => track.delayNode.delayTime.setTargetAtTime(parseFloat(e.target.value), audioCtx.currentTime, 0.05));
+      trackWrapper.querySelector('.track-delay-fdbk-slider').addEventListener('input', (e) => track.feedbackNode.gain.setTargetAtTime(parseFloat(e.target.value), audioCtx.currentTime, 0.05));
+      trackWrapper.querySelector('.track-delay-mix-slider').addEventListener('input', (e) => track.delayMixNode.gain.setTargetAtTime(parseFloat(e.target.value), audioCtx.currentTime, 0.05));
 
       // Active Track Selection Logic
       const headerEl = trackWrapper.querySelector('.track-header');
@@ -1535,15 +1597,13 @@
         if (opt.target) {
             saveState();
             
-            // --- NEW RAZOR TOOL LOGIC ---
+            // --- RAZOR TOOL LOGIC ---
             if (isRazorToolActive && track.type === 'audio') {
                 const origObj = opt.target;
                 const pointer = track.fabCanvas.getPointer(opt.e);
                 
-                // Calculate where the blade struck relative to the clip's left edge
                 const cutX = pointer.x - origObj.left;
                 
-                // Prevent cutting tiny slivers at the very edges
                 if (cutX > 5 && cutX < (origObj.width * origObj.scaleX) - 5) {
                     
                     const clipIdx = track.clips.findIndex(c => c.id === origObj.clipId);
@@ -1551,7 +1611,6 @@
                         const origClip = track.clips[clipIdx];
                         const cutTime = cutX / pixelsPerSecond;
                         
-                        // Create the right-hand piece
                         const rightClip = {
                             id: Math.random().toString(36).substr(2, 9), 
                             buffer: origClip.buffer, 
@@ -1563,15 +1622,13 @@
                             fileName: origClip.fileName
                         };
                         
-                        // Shrink the left-hand piece
                         origClip.duration = cutTime;
                         
-                        // Push the right piece into the tracks data and redraw
                         track.clips.push(rightClip);
                         drawAudioTrack(track);
                     }
                 }
-                return; // Exit so we don't trigger standard dragging
+                return; 
             }
         }
       });
@@ -1760,7 +1817,6 @@
     function drawAudioTrack(track) {
         track.fabCanvas.clear();
         track.clips.forEach(clip => {
-            // NEW: Generate the waveform if it's missing OR if the zoom level has changed
             if (!clip.waveformURL || clip.lastPPS !== pixelsPerSecond) {
                 const drawWidth = clip.originalDuration * pixelsPerSecond;
                 const hCanvas = document.createElement('canvas'); 
@@ -1778,10 +1834,9 @@
                     ctx.fillRect(i, (1 + min) * amp, 1, Math.max(1, (max - min) * amp));
                 }
                 clip.waveformURL = hCanvas.toDataURL();
-                clip.lastPPS = pixelsPerSecond; // Record the zoom scale used to render this image
+                clip.lastPPS = pixelsPerSecond;
             }
             
-            // Build the visible block based on crop settings and add cut borders
             fabric.Image.fromURL(clip.waveformURL, function(img) {
                 img.set({ 
                     left: clip.time * pixelsPerSecond, 
@@ -1869,7 +1924,6 @@
         saveState();
         const nodes = createChannelStripNodes();
         
-        // Upgrade: Audio tracks now use a 'clips' array to support slicing
         const newClip = {
             id: Math.random().toString(36).substr(2, 9),
             buffer: buffer,
@@ -1883,7 +1937,9 @@
         const newTrack = { 
             id: Math.random().toString(36).substr(2, 9), 
             type: 'audio', clips: [newClip], 
-            inputNode: nodes.inputNode, eqNode: nodes.eqNode, panNode: nodes.panNode, gainNode: nodes.gainNode, 
+            inputNode: nodes.inputNode, eqNode: nodes.eqNode, 
+            delayNode: nodes.delayNode, feedbackNode: nodes.feedbackNode, delayMixNode: nodes.delayMixNode,
+            panNode: nodes.panNode, gainNode: nodes.gainNode, 
             name: file.name, liveNodes: [] 
         };
         
@@ -1897,7 +1953,11 @@
       const projectData = {
         master: { vol: volumeSlider.value, mix: mixSlider.value, duration: userDefinedDuration },
         tracks: tracks.map(t => {
-          const baseData = { id: t.id, type: t.type, name: t.name, color: t.color, vol: t.gainNode.gain.value, pan: t.panNode.pan.value, eq: t.eqNode.frequency.value };
+          const baseData = { 
+              id: t.id, type: t.type, name: t.name, color: t.color, 
+              vol: t.gainNode.gain.value, pan: t.panNode.pan.value, eq: t.eqNode.frequency.value,
+              delayTime: t.delayNode.delayTime.value, delayFdbk: t.feedbackNode.gain.value, delayMix: t.delayMixNode.gain.value
+          };
           if (t.type === 'audio') return { ...baseData, clips: t.clips.map(c => ({id: c.id, time: c.time, bufferOffset: c.bufferOffset, duration: c.duration, originalDuration: c.originalDuration, fileName: c.fileName})) };
           if (t.type === 'synth') return { ...baseData, instrument: t.instrument, hits: t.hits };
           if (t.type === 'melodic') return { ...baseData, hits: t.hits, patch: t.patch, trackId: t.trackId };
@@ -1925,13 +1985,15 @@
       for (let tData of project.tracks) {
         const nodes = createChannelStripNodes();
         nodes.gainNode.gain.value = tData.vol; nodes.panNode.pan.value = tData.pan; nodes.eqNode.frequency.value = tData.eq;
+        nodes.delayNode.delayTime.value = tData.delayTime || 0.3; nodes.feedbackNode.gain.value = tData.delayFdbk || 0; nodes.delayMixNode.gain.value = tData.delayMix || 0;
+
         if (tData.type === 'synth') {
           let mappedHits = tData.hits.map(h => typeof h === 'number' ? { time: h, duration: 0.25 } : h);
-          const newTrack = { id: tData.id, type: 'synth', instrument: tData.instrument, hits: mappedHits, inputNode: nodes.inputNode, eqNode: nodes.eqNode, panNode: nodes.panNode, gainNode: nodes.gainNode, name: tData.name, liveNodes: [] };
+          const newTrack = { id: tData.id, type: 'synth', instrument: tData.instrument, hits: mappedHits, inputNode: nodes.inputNode, eqNode: nodes.eqNode, delayNode: nodes.delayNode, feedbackNode: nodes.feedbackNode, delayMixNode: nodes.delayMixNode, panNode: nodes.panNode, gainNode: nodes.gainNode, name: tData.name, liveNodes: [] };
           tracks.push(newTrack); activeSynthTracks[tData.instrument] = newTrack; createTrackUI(newTrack, tData.color);
         } else if (tData.type === 'melodic') {
           if (tData.trackId && tData.trackId > melodyTrackCount) melodyTrackCount = tData.trackId;
-          const newTrack = { id: tData.id, type: 'melodic', patch: tData.patch, trackId: tData.trackId, hits: tData.hits, inputNode: nodes.inputNode, eqNode: nodes.eqNode, panNode: nodes.panNode, gainNode: nodes.gainNode, name: tData.name, liveNodes: [] };
+          const newTrack = { id: tData.id, type: 'melodic', patch: tData.patch, trackId: tData.trackId, hits: tData.hits, inputNode: nodes.inputNode, eqNode: nodes.eqNode, delayNode: nodes.delayNode, feedbackNode: nodes.feedbackNode, delayMixNode: nodes.delayMixNode, panNode: nodes.panNode, gainNode: nodes.gainNode, name: tData.name, liveNodes: [] };
           tracks.push(newTrack); activeMelodicTrack = newTrack; createTrackUI(newTrack, tData.color);
         } else if (tData.type === 'audio') {
           const restoredClips = [];
@@ -1940,7 +2002,7 @@
               if (matchingFile) restoredClips.push({ ...c, buffer: await decodeUploadedFile(matchingFile) });
               else alert(`Missing audio file: ${c.fileName}. Clip skipped.`);
           }
-          const newTrack = { id: tData.id, type: 'audio', clips: restoredClips, inputNode: nodes.inputNode, eqNode: nodes.eqNode, panNode: nodes.panNode, gainNode: nodes.gainNode, name: tData.name, liveNodes: [] };
+          const newTrack = { id: tData.id, type: 'audio', clips: restoredClips, inputNode: nodes.inputNode, eqNode: nodes.eqNode, delayNode: nodes.delayNode, feedbackNode: nodes.feedbackNode, delayMixNode: nodes.delayMixNode, panNode: nodes.panNode, gainNode: nodes.gainNode, name: tData.name, liveNodes: [] };
           tracks.push(newTrack); createTrackUI(newTrack, tData.color);
         }
       }
@@ -2261,9 +2323,25 @@
       
       tracks.forEach(track => {
         const offTrackEQ = offlineCtx.createBiquadFilter(); offTrackEQ.type = 'lowpass'; offTrackEQ.frequency.value = track.eqNode.frequency.value;
+        
+        const offTrackDelay = offlineCtx.createDelay(5.0); offTrackDelay.delayTime.value = track.delayNode.delayTime.value;
+        const offTrackFeedback = offlineCtx.createGain(); offTrackFeedback.gain.value = track.feedbackNode.gain.value;
+        const offTrackDelayMix = offlineCtx.createGain(); offTrackDelayMix.gain.value = track.delayMixNode.gain.value;
+
         const offTrackPan = offlineCtx.createStereoPanner(); offTrackPan.pan.value = track.panNode.pan.value;
         const offTrackGain = offlineCtx.createGain(); offTrackGain.gain.value = track.gainNode.gain.value;
-        offTrackEQ.connect(offTrackPan); offTrackPan.connect(offTrackGain); offTrackGain.connect(offMasterBus);
+        
+        offTrackEQ.connect(offTrackPan); 
+        
+        offTrackEQ.connect(offTrackDelay);
+        offTrackDelay.connect(offTrackFeedback);
+        offTrackFeedback.connect(offTrackDelay);
+        offTrackDelay.connect(offTrackDelayMix);
+        offTrackDelayMix.connect(offTrackPan);
+        
+        offTrackPan.connect(offTrackGain); 
+        offTrackGain.connect(offMasterBus);
+        
         if (track.type === 'audio') { 
             track.clips.forEach(c => {
                 const source = offlineCtx.createBufferSource(); 
