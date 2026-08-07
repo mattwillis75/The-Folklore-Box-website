@@ -647,6 +647,42 @@
       setTimeout(() => newDrumTrackBtn.innerHTML = "➕ New Track", 1500);
     });
 
+    beatBtn.addEventListener('click', () => {
+  initAudioEngineSync();
+  saveState();
+
+  const selectedInstrument = synthSelect.value;
+  let targetTrack = activeSynthTracks[selectedInstrument];
+
+  // Auto-create the track if it doesn't exist yet
+  if (!targetTrack) {
+    newDrumTrackBtn.click();
+    targetTrack = activeSynthTracks[selectedInstrument];
+  }
+
+  // Get the current playhead position and the set beat gap
+  let insertTime = pausedAt;
+  const gap = parseFloat(noteGapInput.value) || 0.25;
+
+  // Insert a 4-beat sequence
+  for (let i = 0; i < 4; i++) {
+    targetTrack.hits.push({ 
+      time: insertTime, 
+      // Set duration slightly shorter than the gap so the blocks don't visually overlap
+      duration: gap * 0.8 
+    });
+    insertTime += gap;
+  }
+
+  // Keep the array sorted by time and update the timeline UI
+  targetTrack.hits.sort((a, b) => a.time - b.time);
+  recalculateDuration();
+
+  // Provide visual feedback on the button click
+  beatBtn.innerHTML = "✓ Seq";
+  setTimeout(() => beatBtn.innerHTML = "+ Seq", 1500);
+});
+
     function ensureMelodicTrackExists() {
       if (!activeMelodicTrack) {
         melodyTrackCount++;
