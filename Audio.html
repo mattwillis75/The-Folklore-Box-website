@@ -4,12 +4,10 @@
   <meta charset="UTF-8">
   <title>Multitrack Web Audio DAW</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
-  <!-- Added lamejs for client-side MP3 encoding -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lamejs/1.2.1/lame.min.js"></script>
   
   <style>
     :root {
-      /* DYNAMIC KEY SIZE VARIABLES */
       --white-key-width: 36px;
       --keyboard-height: 140px;
     }
@@ -46,7 +44,6 @@
     .btn-save { background: #238636; border-color: #2ea043; }
     .btn-save:hover:not(:disabled) { background: #2ea043; border-color: #3fb950; }
     
-    /* RECORD BUTTON ACTIVE PULSE */
     .btn-record { background: #a00; border-color: #600; color: #fff; }
     .btn-record.recording { background: #ff0033; border-color: #ff3366; box-shadow: 0 0 10px #ff0033; animation: pulse 1.5s infinite; }
     @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
@@ -97,7 +94,6 @@
     
     #empty-state { position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: #555; pointer-events: none; }
 
-    /* KEYBOARD PANEL IS NOW FIXED TO VIEWPORT */
     #keyboard-panel {
       display: none; position: fixed; bottom: 0; left: 0; right: 0; 
       background: #252526; padding: 15px; border-top: 2px solid #444; z-index: 2005;
@@ -112,6 +108,7 @@
       padding-top: 5px;
       scroll-behavior: smooth;
       background: #111;
+      touch-action: pan-x;
     }
     .key-btn {
       cursor: pointer;
@@ -124,6 +121,7 @@
       justify-content: center;
       padding-bottom: 6px;
       user-select: none;
+      -webkit-user-select: none;
       touch-action: none; 
       flex-shrink: 0;
     }
@@ -140,7 +138,7 @@
       z-index: 2; position: relative;
       margin-left: calc(var(--white-key-width) * -0.305); margin-right: calc(var(--white-key-width) * -0.305); 
     }
-    .key-btn:active, .key-btn.active { 
+    .key-btn.active { 
       background: #ff3366 !important; color: white !important; 
     }
   </style>
@@ -239,7 +237,6 @@
     </div>
   </div> 
 
-  <!-- FIXED KEYBOARD CONTAINER -->
   <div id="keyboard-panel">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
       <div id="sequence-display" style="flex: 1; color: #00ffcc; font-weight: bold; font-family: monospace; font-size: 1rem; overflow-x: auto; white-space: nowrap; background: #1a1a1a; padding: 6px; border-radius: 4px; border: 1px solid #444; margin-right: 15px; scrollbar-width: none;">Seq: []</div>
@@ -366,24 +363,24 @@
 
     // IPAD / SAFARI GLOBAL AUDIO UNLOCKER
     let audioUnlocked = false;
-    function unlockAudio() {
+    const unlockEvents = ['touchstart', 'touchend', 'mousedown', 'keydown'];
+    
+    async function unlockAudio() {
         if (audioUnlocked) return;
-        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        audioUnlocked = true;
         
-        if (navigator.audioSession) {
-            try { navigator.audioSession.type = 'playback'; } catch(e) {}
-        }
+        await initAudioEngine();
         
-        if (audioCtx.state === 'suspended') audioCtx.resume();
+        // Play silent buffer to force unlock
         const buffer = audioCtx.createBuffer(1, 1, 22050);
         const source = audioCtx.createBufferSource();
         source.buffer = buffer;
         source.connect(audioCtx.destination);
         if (source.start) source.start(0);
-        audioUnlocked = true;
-        ['touchstart', 'touchend', 'click'].forEach(evt => document.removeEventListener(evt, unlockAudio, true));
+        
+        unlockEvents.forEach(evt => document.removeEventListener(evt, unlockAudio, true));
     }
-    ['touchstart', 'touchend', 'click'].forEach(evt => document.addEventListener(evt, unlockAudio, true));
+    unlockEvents.forEach(evt => document.addEventListener(evt, unlockAudio, true));
 
     async function initAudioEngine() {
       if (!audioCtx) {
@@ -402,7 +399,7 @@
         convolver.connect(wetGainNode); dryGainNode.connect(masterGainNode); wetGainNode.connect(masterGainNode); masterGainNode.connect(audioCtx.destination);
       }
       if (audioCtx.state === 'suspended') {
-        await audioCtx.resume();
+        try { await audioCtx.resume(); } catch(e) {}
       }
     }
 
@@ -419,7 +416,6 @@
         return curve;
     }
 
-    // --- ADJUSTABLE KEY SIZE LOGIC ---
     keySizeSlider.addEventListener('input', (e) => {
         const scale = parseFloat(e.target.value);
         document.documentElement.style.setProperty('--white-key-width', (36 * scale) + 'px');
@@ -565,7 +561,7 @@
       }
     }
 
-    // BUILD 88 KEY BUTTONS WITH FIXED ASYNC CAPTURE
+    // TOUCH/MOUSE EVENT LOGIC
     musicalNotes.forEach(note => {
       const btn = document.createElement('button');
       btn.innerText = note.name; 
@@ -573,21 +569,19 @@
       btn.title = `${note.name} (${note.freq} Hz)`;
       
       const handleKeyStart = async (e) => {
-        e.preventDefault();
+        if (e.type === 'touchstart') e.preventDefault(); // Prevents iOS double-firing mousedown
         
-        // Sync UI updates immediately to prevent rapid-tap sticking
+        // Strict lock to prevent double execution on rapid taps
+        if (btn.dataset.pressed === 'true') return;
+        btn.dataset.pressed = 'true';
         btn.classList.add('active');
-        try { btn.setPointerCapture(e.pointerId); } catch(err) {}
         
-        // Ensure audio engine is ready without blocking the UI state
-        if (!audioCtx || audioCtx.state !== 'running') {
+        if (!masterBus || !audioCtx || audioCtx.state !== 'running') {
             await initAudioEngine();
         }
         
-        // Did the user let go while we were awaiting the audio engine? Abort if so.
-        if (!btn.classList.contains('active')) {
-            return; 
-        }
+        // Abort if the user lifted their finger during the await
+        if (btn.dataset.pressed !== 'true') return;
         
         const hVal = parseFloat(humanizeSlider.value);
         const aVal = parseFloat(analogSlider.value);
@@ -621,13 +615,11 @@
       };
 
       const handleKeyEnd = (e) => {
-        e.preventDefault();
+        if (e && (e.type === 'touchend' || e.type === 'touchcancel')) e.preventDefault();
         
-        // Sync UI clear immediately
+        btn.dataset.pressed = 'false';
         btn.classList.remove('active');
-        try { btn.releasePointerCapture(e.pointerId); } catch(err) {}
-
-        // Check if we actually started playing a note
+        
         if (!activeTouches.has(btn)) return;
         
         const touch = activeTouches.get(btn);
@@ -675,10 +667,12 @@
         }
       };
 
-      btn.addEventListener('pointerdown', handleKeyStart);
-      btn.addEventListener('pointerup', handleKeyEnd);
-      btn.addEventListener('pointercancel', handleKeyEnd);
-      btn.addEventListener('pointerout', handleKeyEnd);
+      btn.addEventListener('mousedown', handleKeyStart);
+      btn.addEventListener('touchstart', handleKeyStart, { passive: false });
+      btn.addEventListener('mouseup', handleKeyEnd);
+      btn.addEventListener('mouseleave', handleKeyEnd);
+      btn.addEventListener('touchend', handleKeyEnd, { passive: false });
+      btn.addEventListener('touchcancel', handleKeyEnd, { passive: false });
       
       keysContainer.appendChild(btn);
     });
@@ -934,6 +928,27 @@
       
       const isCmdOrCtrl = e.metaKey || e.ctrlKey;
       const key = e.key.toLowerCase();
+      
+      if (e.key === 'Alt') {
+          document.body.style.cursor = 'grab';
+          tracks.forEach(t => { 
+              if(t.fabCanvas) { t.fabCanvas.selection = false; t.fabCanvas.defaultCursor = 'grab'; } 
+          });
+          return;
+      }
+      
+      if (e.code === 'Space') {
+          e.preventDefault();
+          if (!e.repeat) {
+              isSpaceDown = true;
+              hasDraggedDuringSpace = false;
+              document.body.style.cursor = 'grab';
+              tracks.forEach(t => { 
+                  if(t.fabCanvas) { t.fabCanvas.selection = false; t.fabCanvas.defaultCursor = 'grab'; } 
+              });
+          }
+          return;
+      }
 
       if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
           e.preventDefault(); 
@@ -943,37 +958,59 @@
               const gap = parseFloat(noteGapInput.value) || 0.25;
               nudgeAmount = e.key === 'ArrowLeft' ? -(gap/4) : (gap/4);
           }
+          
           let nudged = false;
           tracks.forEach(track => {
               if (!track.fabCanvas) return;
               const activeObj = track.fabCanvas.getActiveObject();
               if (activeObj) {
                   if(!nudged) saveState();
-                  let objs = activeObj.type === 'activeSelection' ? activeObj.getObjects() : [activeObj];
                   
+                  let deltaX = nudgeAmount * pixelsPerSecond;
+                  let newLeft = activeObj.left + deltaX;
+                  
+                  if (newLeft < 0) {
+                      newLeft = 0;
+                      deltaX = 0 - activeObj.left;
+                      nudgeAmount = deltaX / pixelsPerSecond;
+                  }
+                  
+                  activeObj.set('left', newLeft);
+                  activeObj.setCoords();
+                  track.fabCanvas.requestRenderAll();
+                  
+                  let objs = activeObj.type === 'activeSelection' ? activeObj.getObjects() : [activeObj];
                   objs.forEach(obj => {
-                      let newTime = (obj.left / pixelsPerSecond) + nudgeAmount;
-                      if (newTime < 0) newTime = 0;
-                      obj.set('left', newTime * pixelsPerSecond);
-                      obj.setCoords();
-                      
                       if (track.type === 'synth' && obj.drumIndex !== undefined) {
-                          track.hits[obj.drumIndex].time = newTime;
+                          track.hits[obj.drumIndex].time += nudgeAmount;
                       } else if (track.type === 'melodic' && obj.melodicIndex !== undefined) {
-                          track.hits[obj.melodicIndex].time = newTime;
+                          track.hits[obj.melodicIndex].time += nudgeAmount;
                       } else if (track.type === 'audio') {
-                          track.offset = newTime;
+                          track.offset += nudgeAmount;
                       }
                   });
+                  
                   if (track.type === 'synth' || track.type === 'melodic') track.hits.sort((a,b)=>a.time-b.time);
-                  track.fabCanvas.requestRenderAll();
                   nudged = true;
               }
           });
-          if (nudged) recalculateDuration();
-      } else if (e.code === 'Space') { 
-        e.preventDefault(); 
-        if (isPlaying) stopBtn.click(); else playBtn.click(); 
+          
+          if (nudged) {
+              let max = 5; 
+              tracks.forEach(t => {
+                  if (t.type === 'audio') max = Math.max(max, t.offset + t.buffer.duration);
+                  if (t.type === 'synth' && t.hits.length > 0) t.hits.forEach(h => { let end = h.time + (h.duration || 0.25); if (end > max) max = end; });
+                  if (t.type === 'melodic' && t.hits.length > 0) t.hits.forEach(h => { let end = h.time + (h.duration || 0.25); if (end > max) max = end; });
+              });
+              if (max + 1 > longestDuration) {
+                  longestDuration = max + 1;
+                  drawRuler();
+                  document.querySelectorAll('.track-canvas-container').forEach(c => {
+                     c.style.width = getTimelineWidth() + 'px';
+                  });
+                  tracks.forEach(t => t.fabCanvas.setWidth(getTimelineWidth()));
+              }
+          }
       } else if (isCmdOrCtrl && key === 'z') { 
         e.preventDefault(); 
         if (e.shiftKey) redo(); else undo(); 
@@ -984,6 +1021,38 @@
       } else if (e.key === 'Backspace' || e.key === 'Delete') {
         deleteSelection();
       }
+    });
+
+    document.addEventListener('keyup', (e) => {
+        if (e.target.tagName === 'INPUT' && e.target.type !== 'range') return;
+        
+        if (e.key === 'Alt') {
+            if (!isSpaceDown) {
+                document.body.style.cursor = 'default';
+                tracks.forEach(t => { 
+                    if(t.fabCanvas) { t.fabCanvas.selection = true; t.fabCanvas.defaultCursor = 'default'; } 
+                });
+            }
+            return;
+        }
+        
+        if (e.code === 'Space') {
+            e.preventDefault();
+            isSpaceDown = false;
+            
+            if (!e.altKey) {
+                document.body.style.cursor = 'default';
+                tracks.forEach(t => { 
+                    if(t.fabCanvas) { t.fabCanvas.selection = true; t.fabCanvas.defaultCursor = 'default'; } 
+                });
+            }
+            
+            if (!hasDraggedDuringSpace) {
+                if (isPlaying) stopBtn.click(); else playBtn.click();
+            }
+            hasDraggedDuringSpace = false;
+            return;
+        }
     });
 
     function configureSelection(e) {
@@ -1191,6 +1260,7 @@
           if (wasPlaying) playBtn.click();
       });
 
+      // DOUBLE CLICK TO REPLACE
       track.fabCanvas.on('mouse:dblclick', function(opt) {
         if (opt.target && track.type === 'melodic') {
             if (replacingNote && replacingNote.obj === opt.target) {
