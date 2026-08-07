@@ -44,6 +44,11 @@
     .btn-save { background: #238636; border-color: #2ea043; }
     .btn-save:hover:not(:disabled) { background: #2ea043; border-color: #3fb950; }
     
+    /* Fixed widths prevent the toolbar from re-wrapping when text changes */
+    #playBtn { width: 120px; }
+    #recordBtn { width: 120px; }
+    #stopBtn { width: 90px; }
+
     .btn-record { background: #a00; border-color: #600; color: #fff; }
     .btn-record.recording { background: #ff0033; border-color: #ff3366; box-shadow: 0 0 10px #ff0033; animation: pulse 1.5s infinite; }
     @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
@@ -361,8 +366,6 @@
       });
     }
 
-    // --- ROBUST GARBAGE COLLECTOR ---
-    // Cleans up all generated Web Audio nodes to prevent iPad Safari memory limits
     function gc(context, hTime, duration, nodesArray) {
         const gcTime = (Math.max(0, hTime - context.currentTime) + duration + 2.0) * 1000;
         setTimeout(() => {
@@ -372,7 +375,6 @@
         }, gcTime);
     }
 
-    // --- IPAD / SAFARI GLOBAL AUDIO UNLOCKER ---
     let audioUnlocked = false;
     const unlockEvents = ['touchstart', 'touchend', 'mousedown', 'keydown'];
     
@@ -493,7 +495,6 @@
         } else if (track.type === 'synth') {
           track.liveNodes = []; 
           track.hits.forEach(hit => { 
-             // Time-clamp to prevent scheduling in the past 
              if (hit.time + (hit.duration || 0.25) > pausedAt) { 
                  triggerSynth(audioCtx, track.instrument, startedAt + hit.time, track.inputNode, track, hit.duration || 0.25, hVal, aVal); 
              } 
@@ -512,9 +513,6 @@
 
     playBtn.addEventListener('click', async () => {
       await initAudioEngine();
-      if (audioCtx && audioCtx.state === 'suspended') {
-         try { await audioCtx.resume(); } catch(e) {}
-      }
       startPlayback();
     });
 
@@ -599,7 +597,6 @@
       }
     }
 
-    // SAFE TOUCH/POINTER LOGIC
     musicalNotes.forEach(note => {
       const btn = document.createElement('button');
       btn.innerText = note.name; 
@@ -607,21 +604,21 @@
       btn.title = `${note.name} (${note.freq} Hz)`;
       
       const handleKeyStart = async (e) => {
-        e.preventDefault();
-        
-        if (e.pointerId !== undefined) {
-            try { btn.setPointerCapture(e.pointerId); } catch(err) {}
-        }
+        if (e.type === 'touchstart') e.preventDefault(); 
         
         if (btn.dataset.pressed === 'true') return;
         btn.dataset.pressed = 'true';
         btn.classList.add('active');
         
+        if (e.pointerId !== undefined) {
+            try { btn.setPointerCapture(e.pointerId); } catch(err) {}
+        }
+        
         if (!masterBus || !audioCtx || audioCtx.state !== 'running') {
             await initAudioEngine();
         }
         
-        if (btn.dataset.pressed !== 'true') return; // Abort if lifted early
+        if (btn.dataset.pressed !== 'true') return;
         
         const hVal = parseFloat(humanizeSlider.value);
         const aVal = parseFloat(analogSlider.value);
@@ -648,17 +645,18 @@
         }
         
         const dummyTrackObj = { patch: melodyPatchSelect.value, liveNodes: [] };
-        triggerMelody(audioCtx, audioCtx.currentTime, note.freq, masterBus, dummyTrackObj, 10.0, 0, aVal);
+        triggerMelody(audioCtx, audioCtx.currentTime, note.freq, masterBus, dummyTrackObj, 10.0, 0, aVal); 
         
         const hitTime = isPlaying ? (audioCtx.currentTime - startedAt) : pausedAt;
         activeTouches.set(btn, { note, noteOnTime: audioCtx.currentTime, hitTime, dummyTrackObj });
       };
 
       const handleKeyEnd = (e) => {
-        e.preventDefault();
+        if (e && (e.type === 'touchend' || e.type === 'touchcancel')) e.preventDefault();
         
         btn.dataset.pressed = 'false';
         btn.classList.remove('active');
+        
         if (e.pointerId !== undefined) {
             try { btn.releasePointerCapture(e.pointerId); } catch(err) {}
         }
@@ -672,7 +670,6 @@
         const releaseTime = Math.max(audioCtx.currentTime, touch.noteOnTime + 0.05); 
         const rawDur = releaseTime - touch.noteOnTime;
         
-        // INTERCEPT & FADE OUT LIVE AUDIO NODES IMMEDIATELY
         touch.dummyTrackObj.liveNodes.forEach(nodes => {
             Object.values(nodes).forEach(n => {
                 if (n && n.stop) { try { n.stop(releaseTime + 0.3); } catch(err){} }
@@ -710,10 +707,12 @@
         }
       };
 
-      btn.addEventListener('pointerdown', handleKeyStart);
-      btn.addEventListener('pointerup', handleKeyEnd);
-      btn.addEventListener('pointercancel', handleKeyEnd);
-      btn.addEventListener('pointerleave', handleKeyEnd);
+      btn.addEventListener('mousedown', handleKeyStart);
+      btn.addEventListener('touchstart', handleKeyStart, { passive: false });
+      btn.addEventListener('mouseup', handleKeyEnd);
+      btn.addEventListener('mouseleave', handleKeyEnd);
+      btn.addEventListener('touchend', handleKeyEnd, { passive: false });
+      btn.addEventListener('touchcancel', handleKeyEnd, { passive: false });
       
       keysContainer.appendChild(btn);
     });
@@ -1420,6 +1419,7 @@
         hitGroup.setControlsVisibility({ mt: false, mb: false, ml: false, mr: true, tr: false, tl: false, br: false, bl: false, mtr: false });
         track.fabCanvas.add(hitGroup);
       });
+      track.fabCanvas.requestRenderAll();
     }
 
     function drawWaveform(track) {
@@ -1440,6 +1440,7 @@
       fabric.Image.fromURL(hCanvas.toDataURL(), function(img) {
         img.set({ left: track.offset * pixelsPerSecond, top: 5, hasControls: false, hasBorders: true, lockMovementY: true, hoverCursor: 'grab', moveCursor: 'grabbing', selectable: true });
         track.fabCanvas.add(img);
+        track.fabCanvas.requestRenderAll();
       });
     }
 
@@ -1458,6 +1459,7 @@
         hitRect.setControlsVisibility({ mt: false, mb: false, ml: false, mr: true, tr: false, tl: false, br: false, bl: false, mtr: false });
         track.fabCanvas.add(hitRect);
       });
+      track.fabCanvas.requestRenderAll();
     }
 
     playhead.addEventListener('mousedown', (e) => { isDraggingPlayhead = true; if (isPlaying) stopBtn.click(); e.stopPropagation(); });
@@ -1545,31 +1547,6 @@
       }
       recalculateDuration(); loadBtn.value = "";
     });
-
-    function updatePlayhead() {
-      if (!isPlaying) return;
-      const currentPlaybackTime = audioCtx.currentTime - startedAt;
-      
-      if (currentPlaybackTime >= longestDuration) { 
-        if (isRecording) {
-            longestDuration = Math.ceil(currentPlaybackTime) + 2;
-            drawRuler();
-        } else {
-            stopBtn.click(); pausedAt = 0; playhead.style.left = HEADER_WIDTH + 'px'; 
-            document.getElementById('workspace').scrollLeft = 0; return; 
-        }
-      }
-      
-      const playheadX = HEADER_WIDTH + (currentPlaybackTime * pixelsPerSecond);
-      playhead.style.left = playheadX + 'px';
-      
-      const workspace = document.getElementById('workspace');
-      if (playheadX > workspace.scrollLeft + workspace.clientWidth - 100) {
-          workspace.scrollLeft = playheadX - workspace.clientWidth + 100;
-      }
-      
-      animFrameId = requestAnimationFrame(updatePlayhead);
-    }
 
     function triggerSynth(context, instrumentType, time, destinationNode, liveTrackObj = null, duration = 0.25, humanize = 0, analog = 0) {
       const hTime = Math.max(context.currentTime, time + (Math.random() * 0.04 - 0.02) * humanize);
@@ -1797,41 +1774,6 @@
         gc(context, hTime, duration, [osc, osc2, gain, filter, lfo, lfoGain]);
       }
     }
-
-    stopBtn.addEventListener('click', () => {
-      if (!isPlaying) return;
-      pausedAt = audioCtx.currentTime - startedAt;
-      
-      try {
-          tracks.forEach(track => {
-            if (track.type === 'audio' && track.source) {
-              try { track.source.stop(); } catch(e) {}
-              try { track.source.disconnect(); } catch(e) {}
-              track.source = null;
-            } else if ((track.type === 'synth' || track.type === 'melodic') && track.liveNodes) {
-              track.liveNodes.forEach(nodes => {
-                Object.values(nodes).forEach(n => {
-                    if (n && n.stop) { try { n.stop(); } catch(e){} }
-                    if (n && n.disconnect) { try { n.disconnect(); } catch(e){} }
-                    if (n && n.gain) { 
-                        try { 
-                            n.gain.cancelScheduledValues(audioCtx.currentTime); 
-                            n.gain.setTargetAtTime(0, audioCtx.currentTime, 0.03); 
-                        } catch(e){} 
-                    }
-                });
-              });
-              track.liveNodes = [];
-            }
-          });
-      } catch(e) { console.error(e); }
-      
-      isPlaying = false; 
-      playBtn.disabled = false; 
-      playBtn.innerHTML = "▶ Play"; 
-      stopBtn.disabled = true; 
-      cancelAnimationFrame(animFrameId);
-    });
 
     async function encodeMp3(buffer) {
         return new Promise((resolve) => {
