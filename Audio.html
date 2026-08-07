@@ -23,18 +23,18 @@
     
     #toolbar {
       background: #252526; border-bottom: 1px solid #000; padding: 10px 20px;
-      display: flex; flex-wrap: wrap; align-items: center; gap: 15px; z-index: 2000;
+      display: flex; flex-wrap: wrap; align-items: flex-end; gap: 15px; z-index: 2000;
       box-shadow: 0 4px 6px rgba(0,0,0,0.3);
     }
-    .toolbar-group { display: flex; align-items: center; gap: 10px; padding-right: 15px; border-right: 1px solid #444; }
+    .toolbar-group { display: flex; align-items: center; gap: 10px; padding-right: 15px; border-right: 1px solid #444; height: 100%; }
     .toolbar-group:last-child { border-right: none; }
     .toolbar-label { font-size: 0.7rem; text-transform: uppercase; color: #888; font-weight: bold; margin-bottom: 4px; }
-    .control-stack { display: flex; flex-direction: column; }
+    .control-stack { display: flex; flex-direction: column; justify-content: flex-end; }
     
     button, .file-btn { 
       padding: 6px 10px; font-size: 0.8rem; font-weight: bold; cursor: pointer; 
       background: #3a3d41; color: #fff; border: 1px solid #555; border-radius: 4px;
-      display: inline-block; text-align: center; transition: all 0.2s;
+      display: inline-flex; align-items: center; justify-content: center; text-align: center; transition: all 0.2s; height: 28px; box-sizing: border-box;
     }
     button:disabled { opacity: 0.4; cursor: not-allowed; }
     button:hover:not(:disabled), .file-btn:hover { background: #505459; border-color: #777; }
@@ -44,20 +44,20 @@
     .btn-save { background: #238636; border-color: #2ea043; }
     .btn-save:hover:not(:disabled) { background: #2ea043; border-color: #3fb950; }
     
-    /* Fixed widths prevent the toolbar from re-wrapping when text changes */
-    #playBtn { width: 120px; }
-    #recordBtn { width: 120px; }
-    #stopBtn { width: 90px; }
+    #playBtn { width: 90px; }
+    #recordBtn { width: 90px; }
+    #stopBtn { width: 80px; }
 
     .btn-record { background: #a00; border-color: #600; color: #fff; }
     .btn-record.recording { background: #ff0033; border-color: #ff3366; box-shadow: 0 0 10px #ff0033; animation: pulse 1.5s infinite; }
     @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
 
     input[type="file"] { display: none; } 
-    input[type="range"] { width: 80px; cursor: pointer; accent-color: #007acc; }
+    input[type="range"] { width: 80px; cursor: pointer; accent-color: #007acc; margin: 0; padding: 0; }
+    input[type="number"] { outline: none; }
     
     select {
-      padding: 6px; background: #3a3d41; color: white; 
+      padding: 4px 6px; background: #3a3d41; color: white; height: 28px; box-sizing: border-box;
       border: 1px solid #555; border-radius: 4px; outline: none;
       font-size: 0.8rem; font-weight: bold; cursor: pointer;
     }
@@ -76,7 +76,6 @@
       padding: 5px 15px; border-bottom: 1px solid #333; width: 100vw;
     }
 
-    /* Track highlighting functionality */
     .track-wrapper { display: flex; height: 125px; border-bottom: 1px solid #2d2d2d; background: #1a1a1a; transition: background 0.2s, border-left 0.1s; border-left: 4px solid transparent; }
     .track-wrapper.active-track { border-left: 4px solid #ff3366; background: #252525; }
 
@@ -87,7 +86,6 @@
       box-shadow: 2px 0 5px rgba(0,0,0,0.5); cursor: pointer;
     }
     
-    /* Editable Name CSS */
     .track-name { 
       flex: 1; font-size: 0.85rem; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #ddd; 
       -webkit-user-select: text; user-select: text; cursor: text; padding: 2px; border-radius: 3px; border: 1px solid transparent;
@@ -95,7 +93,7 @@
     .track-name:focus { outline: none; border: 1px solid #ff3366; background: #111; }
     
     .track-control-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.65rem; color: #aaa; margin-bottom: 2px; font-weight: bold; }
-    .track-control-row input { width: 140px; margin: 0; }
+    .track-control-row input { width: 130px; margin: 0; }
 
     .track-canvas-container { position: relative; background: #111; }
     .canvas-container { margin: 0; padding: 0; height: 100%; display: flex; align-items: center; }
@@ -115,46 +113,14 @@
     }
     
     #keys-container {
-      display: flex;
-      height: var(--keyboard-height);
-      overflow-x: auto;
-      padding-bottom: 8px;
-      padding-top: 5px;
-      scroll-behavior: smooth;
-      background: #111;
-      touch-action: pan-x;
+      display: flex; height: var(--keyboard-height); overflow-x: auto; padding-bottom: 8px; padding-top: 5px; scroll-behavior: smooth; background: #111; touch-action: pan-x;
     }
     .key-btn {
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 0.65rem;
-      border-radius: 0 0 4px 4px;
-      transition: background 0.1s;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      padding-bottom: 6px;
-      user-select: none;
-      -webkit-user-select: none;
-      touch-action: none; 
-      flex-shrink: 0;
+      cursor: pointer; font-weight: bold; font-size: 0.65rem; border-radius: 0 0 4px 4px; transition: background 0.1s; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 6px; user-select: none; -webkit-user-select: none; touch-action: none; flex-shrink: 0;
     }
-    .key-white { 
-      background: #fff; color: #111; 
-      width: var(--white-key-width); height: 100%; 
-      border: 1px solid #ccc;
-      z-index: 1; position: relative;
-    }
-    .key-black { 
-      background: #222; color: #eee; 
-      width: calc(var(--white-key-width) * 0.61); height: 65%; 
-      border: 1px solid #000;
-      z-index: 2; position: relative;
-      margin-left: calc(var(--white-key-width) * -0.305); margin-right: calc(var(--white-key-width) * -0.305); 
-    }
-    .key-btn.active { 
-      background: #ff3366 !important; color: white !important; 
-    }
+    .key-white { background: #fff; color: #111; width: var(--white-key-width); height: 100%; border: 1px solid #ccc; z-index: 1; position: relative; }
+    .key-black { background: #222; color: #eee; width: calc(var(--white-key-width) * 0.61); height: 65%; border: 1px solid #000; z-index: 2; position: relative; margin-left: calc(var(--white-key-width) * -0.305); margin-right: calc(var(--white-key-width) * -0.305); }
+    .key-btn.active { background: #ff3366 !important; color: white !important; }
   </style>
 </head>
 <body>
@@ -169,6 +135,18 @@
         </div>
       </div>
     </div>
+    
+    <!-- NEW: Timeline Length Block -->
+    <div class="toolbar-group">
+      <div class="control-stack">
+        <span class="toolbar-label">Timeline (s)</span>
+        <div style="display: flex; gap: 5px;">
+           <input type="number" id="timelineLengthInput" value="5" min="1" step="0.5" title="Total Duration" style="width: 50px; padding: 4px; border-radius: 4px; border: 1px solid #555; background: #111; color: white;">
+           <button id="setTimelineLengthBtn" class="btn-primary" style="padding: 4px 8px;">Set</button>
+        </div>
+      </div>
+    </div>
+
     <div class="toolbar-group">
       <div class="control-stack">
           <span class="toolbar-label">Audio Tracks</span>
@@ -190,6 +168,22 @@
         </div>
       </div>
     </div>
+
+    <!-- NEW: Arrange / Distribute Block -->
+    <div class="toolbar-group">
+      <div class="control-stack">
+        <span class="toolbar-label">Arrange</span>
+        <div style="display: flex; gap: 5px;">
+            <select id="distributeType" style="width: 85px;">
+                <option value="linear">Linear</option>
+                <option value="accelerate">Accel.</option>
+                <option value="decelerate">Decel.</option>
+            </select>
+            <button id="distributeBtn" class="btn-primary" title="Space selected items evenly">Distribute</button>
+        </div>
+      </div>
+    </div>
+
     <div class="toolbar-group">
       <div class="control-stack">
         <span class="toolbar-label">Zoom</span>
@@ -309,7 +303,7 @@
     let isRazorToolActive = false;
     const scissorsCursor = "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" style=\"font-size: 20px\"><text y=\"18\">✂️</text></svg>') 0 10, crosshair";
 
-    let startedAt = 0, pausedAt = 0, longestDuration = 5, animFrameId = null;  
+    let startedAt = 0, pausedAt = 0, longestDuration = 5, userDefinedDuration = 5, animFrameId = null;  
     let pixelsPerSecond = 100; 
     const HEADER_WIDTH = 220; 
 
@@ -325,7 +319,6 @@
     let recordedSequence = []; 
     let replacingNote = null; 
     
-    // Metronome Variables
     let isMetronomeActive = false;
     let metronomeNodes = [];
     
@@ -333,6 +326,7 @@
     const colors = ['#00ffcc', '#00aaff', '#ffff00', '#ffaa00', '#ff3366', '#aaff00'];
     let undoStack = [], redoStack = [], clipboard = null;
 
+    // Element references
     const trackInput = document.getElementById('trackUpload');
     const newAudioTrackBtn = document.getElementById('newAudioTrackBtn');
     const irInput = document.getElementById('irUpload');
@@ -351,6 +345,11 @@
     const analogSlider = document.getElementById('analogSlider');
     const quantizeCheckbox = document.getElementById('quantizeCheckbox');
     const keySizeSlider = document.getElementById('keySizeSlider');
+    
+    const timelineLengthInput = document.getElementById('timelineLengthInput');
+    const setTimelineLengthBtn = document.getElementById('setTimelineLengthBtn');
+    const distributeBtn = document.getElementById('distributeBtn');
+    const distributeType = document.getElementById('distributeType');
     
     const timelineUI = document.getElementById('timelineUI');
     const audioContainer = document.getElementById('audio-tracks-container');
@@ -401,7 +400,6 @@
         }, gcTime);
     }
 
-    // --- BULLETPROOF AUDIO SYNC ENGINE ---
     function initAudioEngineSync() {
       if (!audioCtx) {
         const AC = window.AudioContext || window.webkitAudioContext;
@@ -440,7 +438,6 @@
       }
     }
 
-    // Globally intercept any interactions to ensure iOS audio is awake
     ['touchstart', 'mousedown', 'keydown'].forEach(evt => {
         document.addEventListener(evt, () => {
             if (audioCtx && audioCtx.state === 'suspended') {
@@ -520,6 +517,97 @@
         }
     });
 
+    // --- TIMELINE LENGTH LOGIC ---
+    setTimelineLengthBtn.addEventListener('click', () => {
+        const newLen = parseFloat(timelineLengthInput.value);
+        if (isNaN(newLen) || newLen <= 0) return;
+        
+        let hasObjectsPast = false;
+        tracks.forEach(t => {
+            if (t.type === 'audio') {
+                t.clips.forEach(c => { if (c.time + c.duration > newLen) hasObjectsPast = true; });
+            } else {
+                t.hits.forEach(h => { if (h.time + (h.duration || 0.25) > newLen) hasObjectsPast = true; });
+            }
+        });
+        
+        if (hasObjectsPast && newLen < longestDuration) {
+            if(!confirm("Warning: Tracks exist past this new length. To shrink the timeline, out-of-bounds items will be deleted or trimmed. Continue?")) {
+                timelineLengthInput.value = longestDuration.toFixed(1);
+                return;
+            }
+            
+            // Execute the slicing/trimming
+            saveState();
+            tracks.forEach(t => {
+                if (t.type === 'audio') {
+                    t.clips = t.clips.filter(c => c.time < newLen);
+                    t.clips.forEach(c => {
+                        if (c.time + c.duration > newLen) {
+                            c.duration = newLen - c.time;
+                        }
+                    });
+                } else {
+                    t.hits = t.hits.filter(h => h.time < newLen);
+                    t.hits.forEach(h => {
+                        if (h.time + (h.duration || 0.25) > newLen) {
+                            h.duration = newLen - h.time;
+                        }
+                    });
+                }
+            });
+        }
+        
+        userDefinedDuration = newLen;
+        recalculateDuration();
+    });
+
+    // --- DISTRIBUTE LOGIC ---
+    distributeBtn.addEventListener('click', () => {
+       tracks.forEach(track => {
+          if (!track.fabCanvas) return;
+          const activeObj = track.fabCanvas.getActiveObject();
+          if (activeObj && activeObj.type === 'activeSelection') {
+              saveState();
+              const objs = activeObj.getObjects();
+              
+              // Discard active object before querying exact absolute left coords
+              track.fabCanvas.discardActiveObject();
+              
+              objs.sort((a,b) => a.left - b.left);
+              const startLeft = objs[0].left;
+              const endLeft = objs[objs.length - 1].left;
+              const totalSpan = endLeft - startLeft;
+              const n = objs.length;
+              const type = distributeType.value;
+              
+              if (n > 2) {
+                  objs.forEach((obj, i) => {
+                      if (i === 0 || i === n - 1) return;
+                      let fraction = i / (n - 1);
+                      if (type === 'accelerate') fraction = Math.pow(fraction, 2);
+                      if (type === 'decelerate') fraction = 1 - Math.pow(1 - fraction, 2);
+                      
+                      const newLeft = startLeft + (totalSpan * fraction);
+                      const deltaAmount = (newLeft - obj.left) / pixelsPerSecond;
+                      
+                      if (track.type === 'synth') track.hits[obj.drumIndex].time += deltaAmount;
+                      if (track.type === 'melodic') track.hits[obj.melodicIndex].time += deltaAmount;
+                      if (track.type === 'audio') {
+                          const clip = track.clips.find(c => c.id === obj.clipId);
+                          if (clip) clip.time += deltaAmount;
+                      }
+                  });
+              }
+              
+              if (track.type === 'synth' || track.type === 'melodic') track.hits.sort((a,b)=>a.time-b.time);
+              if (track.type === 'audio') track.clips.sort((a,b)=>a.time-b.time);
+          }
+       });
+       redrawAllTimelines();
+       recalculateDuration();
+    });
+
     function updatePlayhead() {
       if (!isPlaying) return;
 
@@ -532,6 +620,7 @@
           stopBtn.click();
           return;
       }
+
       animFrameId = requestAnimationFrame(updatePlayhead);
     }
 
@@ -1602,7 +1691,7 @@
     }
 
     function recalculateDuration() {
-      let max = 5; 
+      let max = userDefinedDuration; 
       if (isRecording && isPlaying) {
           max = Math.max(max, (audioCtx.currentTime - startedAt));
       }
@@ -1615,7 +1704,9 @@
             t.hits.forEach(h => { let end = h.time + (h.duration || 0.25); if (end > max) max = end; });
         }
       });
-      longestDuration = max + 1; drawRuler(); redrawAllTimelines();
+      longestDuration = max; 
+      timelineLengthInput.value = longestDuration.toFixed(1);
+      drawRuler(); redrawAllTimelines();
     }
 
     function redrawAllTimelines() { tracks.forEach(t => { 
@@ -1733,14 +1824,18 @@
       const arrayBuffer = await file.arrayBuffer();
       
       return new Promise((resolve, reject) => {
-          const decodePromise = audioCtx.decodeAudioData(
-              arrayBuffer,
-              (decodedData) => resolve(decodedData),
-              (error) => reject(error)
-          );
-          
-          if (decodePromise !== undefined) {
-              decodePromise.then(resolve).catch(reject);
+          try {
+              const decodePromise = audioCtx.decodeAudioData(
+                  arrayBuffer,
+                  (decodedData) => resolve(decodedData),
+                  (error) => reject(error)
+              );
+              
+              if (decodePromise !== undefined) {
+                  decodePromise.then(resolve).catch(reject);
+              }
+          } catch (e) {
+              reject(e);
           }
       });
     }
@@ -1752,11 +1847,12 @@
 
     trackInput.addEventListener('change', async () => {
       initAudioEngineSync();
-      for (let file of trackInput.files) {
+      for (let file of Array.from(trackInput.files)) {
         const buffer = await decodeUploadedFile(file);
         saveState();
         const nodes = createChannelStripNodes();
         
+        // Upgrade: Audio tracks now use a 'clips' array to support slicing
         const newClip = {
             id: Math.random().toString(36).substr(2, 9),
             buffer: buffer,
@@ -1782,7 +1878,7 @@
     saveBtn.addEventListener('click', () => {
       if (tracks.length === 0) return alert("Nothing to save!");
       const projectData = {
-        master: { vol: volumeSlider.value, mix: mixSlider.value },
+        master: { vol: volumeSlider.value, mix: mixSlider.value, duration: userDefinedDuration },
         tracks: tracks.map(t => {
           const baseData = { id: t.id, type: t.type, name: t.name, color: t.color, vol: t.gainNode.gain.value, pan: t.panNode.pan.value, eq: t.eqNode.frequency.value };
           if (t.type === 'audio') return { ...baseData, clips: t.clips.map(c => ({id: c.id, time: c.time, bufferOffset: c.bufferOffset, duration: c.duration, originalDuration: c.originalDuration, fileName: c.fileName})) };
@@ -1807,6 +1903,7 @@
       volumeSlider.value = project.master.vol; masterGainNode.gain.value = parseFloat(project.master.vol);
       mixSlider.value = project.master.mix; const mix = parseFloat(project.master.mix);
       dryGainNode.gain.value = 1.0 - mix; wetGainNode.gain.value = mix;
+      if (project.master.duration) userDefinedDuration = project.master.duration;
 
       for (let tData of project.tracks) {
         const nodes = createChannelStripNodes();
