@@ -1632,7 +1632,23 @@
     zoomInBtn.addEventListener('click', () => { pixelsPerSecond += 25; recalculateDuration(); });
     zoomOutBtn.addEventListener('click', () => { pixelsPerSecond = Math.max(25, pixelsPerSecond - 25); recalculateDuration(); });
 
-    async function decodeUploadedFile(file) { const arrayBuffer = await file.arrayBuffer(); return await audioCtx.decodeAudioData(arrayBuffer); }
+    async function decodeUploadedFile(file) {
+    const arrayBuffer = await file.arrayBuffer();
+    
+    return new Promise((resolve, reject) => {
+        // We pass the success and error callbacks for Safari's webkitAudioContext
+        const decodePromise = audioCtx.decodeAudioData(
+            arrayBuffer,
+            (decodedData) => resolve(decodedData),
+            (error) => reject(error)
+        );
+        
+        // If the browser returns a Promise (modern AudioContext), we resolve that instead
+        if (decodePromise !== undefined) {
+            decodePromise.then(resolve).catch(reject);
+        }
+    });
+}
 
     irInput.addEventListener('change', async () => {
       initAudioEngineSync();
