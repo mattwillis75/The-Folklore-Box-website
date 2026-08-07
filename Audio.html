@@ -361,7 +361,18 @@
       });
     }
 
-    // IPAD / SAFARI GLOBAL AUDIO UNLOCKER
+    // --- ROBUST GARBAGE COLLECTOR ---
+    // Cleans up all generated Web Audio nodes to prevent iPad Safari memory limits
+    function gc(context, hTime, duration, nodesArray) {
+        const gcTime = (Math.max(0, hTime - context.currentTime) + duration + 2.0) * 1000;
+        setTimeout(() => {
+            nodesArray.forEach(node => {
+                if (node) { try { node.disconnect(); } catch(e){} }
+            });
+        }, gcTime);
+    }
+
+    // --- IPAD / SAFARI GLOBAL AUDIO UNLOCKER ---
     let audioUnlocked = false;
     const unlockEvents = ['touchstart', 'touchend', 'mousedown', 'keydown'];
     
@@ -372,7 +383,6 @@
         await initAudioEngine();
         if(!audioCtx) return;
         
-        // Play silent buffer to force unlock
         const buffer = audioCtx.createBuffer(1, 1, 22050);
         const source = audioCtx.createBufferSource();
         source.buffer = buffer;
@@ -468,7 +478,6 @@
         }
     }, { capture: true });
 
-
     function startPlayback() {
       if (isPlaying) return;
       startedAt = audioCtx.currentTime - pausedAt;
@@ -484,14 +493,15 @@
         } else if (track.type === 'synth') {
           track.liveNodes = []; 
           track.hits.forEach(hit => { 
-             if (hit.time >= pausedAt) { 
+             // Time-clamp to prevent scheduling in the past 
+             if (hit.time + (hit.duration || 0.25) > pausedAt) { 
                  triggerSynth(audioCtx, track.instrument, startedAt + hit.time, track.inputNode, track, hit.duration || 0.25, hVal, aVal); 
              } 
           });
         } else if (track.type === 'melodic') {
           track.liveNodes = [];
           track.hits.forEach(hit => { 
-             if (hit.time >= pausedAt) { 
+             if (hit.time + (hit.duration || 0.25) > pausedAt) { 
                  triggerMelody(audioCtx, startedAt + hit.time, hit.freq, track.inputNode, track, hit.duration || 0.25, hVal, aVal); 
              } 
           });
@@ -502,10 +512,14 @@
 
     playBtn.addEventListener('click', async () => {
       await initAudioEngine();
+      if (audioCtx && audioCtx.state === 'suspended') {
+         try { await audioCtx.resume(); } catch(e) {}
+      }
       startPlayback();
     });
 
-    recordBtn.addEventListener('click', () => {
+    recordBtn.addEventListener('click', async () => {
+      await initAudioEngine();
       isRecording = !isRecording;
       if (isRecording) {
         recordBtn.classList.add('recording');
@@ -541,24 +555,19 @@
       }
     });
 
-    newMelodyTrackBtn.addEventListener('click', () => {
+    newMelodyTrackBtn.addEventListener('click', async () => {
+      await initAudioEngine();
       saveState();
-      melodyTrackCount++;
-      const nodes = createChannelStripNodes();
-      const patchName = melodyPatchSelect.options[melodyPatchSelect.selectedIndex].text;
-      const newTrack = { 
-        id: Math.random().toString(36).substr(2, 9), type: 'melodic', hits: [], 
-        inputNode: nodes.inputNode, eqNode: nodes.eqNode, panNode: nodes.panNode, gainNode: nodes.gainNode, 
-        name: '🎹 Melody ' + melodyTrackCount + ' (' + patchName + ')', liveNodes: [], patch: melodyPatchSelect.value, trackId: melodyTrackCount 
-      };
-      tracks.push(newTrack); 
-      activeMelodicTrack = newTrack; 
-      createTrackUI(newTrack, '#9933ff');
-      recalculateDuration();
+      activeMelodicTrack = null;
+      ensureMelodicTrackExists();
+      newMelodyTrackBtn.innerHTML = "✓ Ready";
+      setTimeout(() => newMelodyTrackBtn.innerHTML = "➕ New Track", 1500);
     });
     
-    newDrumTrackBtn.addEventListener('click', () => {
+    newDrumTrackBtn.addEventListener('click', async () => {
+      await initAudioEngine();
       saveState();
+      
       const selectedInstrument = synthSelect.value;
       const instrumentLabel = synthSelect.options[synthSelect.selectedIndex].text;
       const nodes = createChannelStripNodes();
@@ -571,6 +580,9 @@
       activeSynthTracks[selectedInstrument] = newTrack; 
       createTrackUI(newTrack, colors[tracks.length % colors.length]);
       recalculateDuration();
+      
+      newDrumTrackBtn.innerHTML = "✓ Ready";
+      setTimeout(() => newDrumTrackBtn.innerHTML = "➕ New Track", 1500);
     });
 
     function ensureMelodicTrackExists() {
@@ -587,7 +599,7 @@
       }
     }
 
-    // TOUCH/MOUSE EVENT LOGIC
+    // SAFE TOUCH/POINTER LOGIC
     musicalNotes.forEach(note => {
       const btn = document.createElement('button');
       btn.innerText = note.name; 
@@ -595,7 +607,11 @@
       btn.title = `${note.name} (${note.freq} Hz)`;
       
       const handleKeyStart = async (e) => {
-        if (e.type === 'touchstart') e.preventDefault(); 
+        e.preventDefault();
+        
+        if (e.pointerId !== undefined) {
+            try { btn.setPointerCapture(e.pointerId); } catch(err) {}
+        }
         
         if (btn.dataset.pressed === 'true') return;
         btn.dataset.pressed = 'true';
@@ -605,7 +621,7 @@
             await initAudioEngine();
         }
         
-        if (btn.dataset.pressed !== 'true') return;
+        if (btn.dataset.pressed !== 'true') return; // Abort if lifted early
         
         const hVal = parseFloat(humanizeSlider.value);
         const aVal = parseFloat(analogSlider.value);
@@ -632,17 +648,20 @@
         }
         
         const dummyTrackObj = { patch: melodyPatchSelect.value, liveNodes: [] };
-        triggerMelody(audioCtx, audioCtx.currentTime, note.freq, masterBus, dummyTrackObj, 10.0, 0, aVal); // Clamped humanize to 0 for live play
+        triggerMelody(audioCtx, audioCtx.currentTime, note.freq, masterBus, dummyTrackObj, 10.0, 0, aVal);
         
         const hitTime = isPlaying ? (audioCtx.currentTime - startedAt) : pausedAt;
         activeTouches.set(btn, { note, noteOnTime: audioCtx.currentTime, hitTime, dummyTrackObj });
       };
 
       const handleKeyEnd = (e) => {
-        if (e && (e.type === 'touchend' || e.type === 'touchcancel')) e.preventDefault();
+        e.preventDefault();
         
         btn.dataset.pressed = 'false';
         btn.classList.remove('active');
+        if (e.pointerId !== undefined) {
+            try { btn.releasePointerCapture(e.pointerId); } catch(err) {}
+        }
         
         if (!activeTouches.has(btn)) return;
         
@@ -653,17 +672,17 @@
         const releaseTime = Math.max(audioCtx.currentTime, touch.noteOnTime + 0.05); 
         const rawDur = releaseTime - touch.noteOnTime;
         
-        touch.dummyTrackObj.liveNodes.forEach(n => {
-            if (n.gain) {
-                try {
-                    n.gain.gain.cancelScheduledValues(releaseTime);
-                    n.gain.gain.setTargetAtTime(0, releaseTime, 0.03);
-                } catch(err) {}
-            }
-            if (n.osc) { try { n.osc.stop(releaseTime + 0.3); } catch(err){} }
-            if (n.osc1) { try { n.osc1.stop(releaseTime + 0.3); } catch(err){} }
-            if (n.osc2) { try { n.osc2.stop(releaseTime + 0.3); } catch(err){} }
-            if (n.noise) { try { n.noise.stop(releaseTime + 0.3); } catch(err){} }
+        // INTERCEPT & FADE OUT LIVE AUDIO NODES IMMEDIATELY
+        touch.dummyTrackObj.liveNodes.forEach(nodes => {
+            Object.values(nodes).forEach(n => {
+                if (n && n.stop) { try { n.stop(releaseTime + 0.3); } catch(err){} }
+                if (n && n.gain) { 
+                    try { 
+                        n.gain.cancelScheduledValues(releaseTime); 
+                        n.gain.setTargetAtTime(0, releaseTime, 0.03); 
+                    } catch(err){} 
+                }
+            });
         });
         
         if (isRecording) {
@@ -691,12 +710,10 @@
         }
       };
 
-      btn.addEventListener('mousedown', handleKeyStart);
-      btn.addEventListener('touchstart', handleKeyStart, { passive: false });
-      btn.addEventListener('mouseup', handleKeyEnd);
-      btn.addEventListener('mouseleave', handleKeyEnd);
-      btn.addEventListener('touchend', handleKeyEnd, { passive: false });
-      btn.addEventListener('touchcancel', handleKeyEnd, { passive: false });
+      btn.addEventListener('pointerdown', handleKeyStart);
+      btn.addEventListener('pointerup', handleKeyEnd);
+      btn.addEventListener('pointercancel', handleKeyEnd);
+      btn.addEventListener('pointerleave', handleKeyEnd);
       
       keysContainer.appendChild(btn);
     });
@@ -1284,7 +1301,6 @@
           if (wasPlaying) playBtn.click();
       });
 
-      // DOUBLE CLICK TO REPLACE
       track.fabCanvas.on('mouse:dblclick', function(opt) {
         if (opt.target && track.type === 'melodic') {
             if (replacingNote && replacingNote.obj === opt.target) {
@@ -1565,6 +1581,7 @@
         osc.frequency.setValueAtTime(150 + pitchDrift, hTime); osc.frequency.exponentialRampToValueAtTime(40, hTime + Math.min(0.15, duration * 0.5)); 
         gain.gain.setValueAtTime(1 * velocity, hTime); gain.gain.exponentialRampToValueAtTime(0.01, hTime + duration);
         osc.start(hTime); osc.stop(hTime + duration); if (liveTrackObj) liveTrackObj.liveNodes.push({ osc, gain });
+        gc(context, hTime, duration, [osc, gain]);
       } else if (instrumentType === 'snare') {
         const bufferSize = Math.floor(context.sampleRate * Math.max(0.2, duration)); 
         const noiseBuffer = context.createBuffer(1, bufferSize, context.sampleRate);
@@ -1581,6 +1598,7 @@
         osc.connect(oscGain); oscGain.connect(destinationNode);
         noiseSource.start(hTime); osc.start(hTime); noiseSource.stop(hTime + duration); osc.stop(hTime + duration);
         if (liveTrackObj) liveTrackObj.liveNodes.push({ noise: noiseSource, osc: osc, gain: oscGain });
+        gc(context, hTime, duration, [noiseSource, noiseFilter, noiseGain, osc, oscGain]);
       } else if (instrumentType === 'hihat') {
         const bufferSize = Math.floor(context.sampleRate * Math.max(0.1, duration)); 
         const noiseBuffer = context.createBuffer(1, bufferSize, context.sampleRate);
@@ -1592,16 +1610,17 @@
         noiseGain.gain.exponentialRampToValueAtTime(0.01, hTime + duration);
         noiseSource.connect(noiseFilter); noiseFilter.connect(noiseGain); noiseGain.connect(destinationNode);
         noiseSource.start(hTime); noiseSource.stop(hTime + duration); if (liveTrackObj) liveTrackObj.liveNodes.push({ noise: noiseSource, gain: noiseGain });
+        gc(context, hTime, duration, [noiseSource, noiseFilter, noiseGain]);
       } else if (instrumentType === 'bass') {
         const osc = context.createOscillator(); osc.type = 'sawtooth'; const filter = context.createBiquadFilter(); filter.type = 'lowpass'; const gain = context.createGain();
         osc.connect(filter); filter.connect(gain); gain.connect(destinationNode);
         
         filter.Q.setValueAtTime(1 + (analog * 5), hTime);
-        
+        let lfo, lfoGain;
         if (analog > 0) {
-            const lfo = context.createOscillator(); lfo.type = 'sine';
+            lfo = context.createOscillator(); lfo.type = 'sine';
             lfo.frequency.setValueAtTime(2 + Math.random() * 3, hTime);
-            const lfoGain = context.createGain(); lfoGain.gain.setValueAtTime(55 * 0.015 * analog, hTime);
+            lfoGain = context.createGain(); lfoGain.gain.setValueAtTime(55 * 0.015 * analog, hTime);
             lfo.connect(lfoGain); lfoGain.connect(osc.frequency);
             lfo.start(hTime); lfo.stop(hTime + duration);
             if (liveTrackObj) liveTrackObj.liveNodes.push({ osc: lfo });
@@ -1611,16 +1630,19 @@
         filter.frequency.exponentialRampToValueAtTime(100, hTime + duration * 0.5);
         gain.gain.setValueAtTime(1 * velocity, hTime); gain.gain.setTargetAtTime(0, hTime + duration * 0.8, duration * 0.2);
         osc.start(hTime); osc.stop(hTime + duration); if (liveTrackObj) liveTrackObj.liveNodes.push({ osc, gain });
+        gc(context, hTime, duration, [osc, filter, gain, lfo, lfoGain]);
       } else if (instrumentType === 'laser') {
         const osc = context.createOscillator(); const gain = context.createGain(); osc.connect(gain); gain.connect(destinationNode);
         osc.frequency.setValueAtTime(800, hTime); 
         osc.frequency.exponentialRampToValueAtTime(10, hTime + duration); 
         gain.gain.setValueAtTime(0.5 * velocity, hTime); gain.gain.exponentialRampToValueAtTime(0.01, hTime + duration);
         osc.start(hTime); osc.stop(hTime + duration); if (liveTrackObj) liveTrackObj.liveNodes.push({ osc, gain });
+        gc(context, hTime, duration, [osc, gain]);
       } else if (instrumentType === 'chime') {
         const osc = context.createOscillator(); osc.type = 'sine'; const gain = context.createGain(); osc.connect(gain); gain.connect(destinationNode);
         osc.frequency.setValueAtTime(1200, hTime); gain.gain.setValueAtTime(0.5 * velocity, hTime); gain.gain.exponentialRampToValueAtTime(0.01, hTime + duration); 
         osc.start(hTime); osc.stop(hTime + duration); if (liveTrackObj) liveTrackObj.liveNodes.push({ osc, gain });
+        gc(context, hTime, duration, [osc, gain]);
       }
     }
 
@@ -1648,6 +1670,7 @@
               gain.gain.setValueAtTime(0.7 * velocity, hTime); gain.gain.exponentialRampToValueAtTime(0.01, hTime + 0.2);
               osc.start(hTime); osc.stop(hTime + 0.2);
               if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc, gain });
+              gc(context, hTime, 0.2, [osc, gain]);
           }
           return;
       }
@@ -1661,10 +1684,11 @@
       
       filter.Q.setValueAtTime(1 + (analog * 6), hTime);
       
+      let lfo, lfoGain;
       if (analog > 0) {
-          const lfo = context.createOscillator(); lfo.type = 'sine';
+          lfo = context.createOscillator(); lfo.type = 'sine';
           lfo.frequency.setValueAtTime(1.5 + Math.random() * 3.5, hTime); 
-          const lfoGain = context.createGain(); lfoGain.gain.setValueAtTime(freq * 0.02 * analog, hTime); 
+          lfoGain = context.createGain(); lfoGain.gain.setValueAtTime(freq * 0.02 * analog, hTime); 
           lfo.connect(lfoGain); lfoGain.connect(osc.frequency);
           lfo.start(hTime); lfo.stop(hTime + duration);
           if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc: lfo });
@@ -1688,6 +1712,7 @@
         
         osc.start(hTime); osc.stop(hTime + duration);
         if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc, gain, noise });
+        gc(context, hTime, duration, [osc, gain, filter, noise, noiseFilter, noiseGain, lfo, lfoGain]);
         
       } else if (patch === 'electric-guitar') {
         osc.type = 'sawtooth'; filter.type = 'lowpass';
@@ -1704,6 +1729,7 @@
         gain.gain.exponentialRampToValueAtTime(0.01, hTime + duration);
         osc.start(hTime); osc.stop(hTime + duration);
         if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc, gain });
+        gc(context, hTime, duration, [osc, gain, filter, dist, lfo, lfoGain]);
         
       } else if (patch === 'bass-guitar') {
         osc.type = 'triangle'; filter.type = 'lowpass';
@@ -1715,6 +1741,7 @@
         osc.start(hTime); osc.stop(hTime + duration);
         subOsc.start(hTime); subOsc.stop(hTime + duration);
         if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc, osc2: subOsc, gain });
+        gc(context, hTime, duration, [osc, gain, filter, subOsc, lfo, lfoGain]);
         
       } else if (patch === 'harp') {
         osc.type = 'sine'; filter.type = 'lowpass';
@@ -1723,6 +1750,7 @@
         gain.gain.exponentialRampToValueAtTime(0.001, hTime + duration * 1.5); 
         osc.start(hTime); osc.stop(hTime + duration * 1.5);
         if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc, gain });
+        gc(context, hTime, duration * 1.5, [osc, gain, filter, lfo, lfoGain]);
         
       } else if (patch === 'e-piano') {
         osc.type = 'sine'; filter.type = 'lowpass';
@@ -1736,6 +1764,7 @@
         osc.start(hTime); osc.stop(hTime + duration);
         fmOsc.start(hTime); fmOsc.stop(hTime + duration);
         if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc, osc2: fmOsc, gain });
+        gc(context, hTime, duration, [osc, gain, filter, fmOsc, fmGain, lfo, lfoGain]);
         
       } else if (patch === 'square-pluck') {
         osc.type = 'square'; filter.type = 'lowpass';
@@ -1743,18 +1772,21 @@
         gain.gain.setValueAtTime(0.4 * velocity, hTime); gain.gain.setTargetAtTime(0, hTime + duration - 0.1, 0.1);
         osc.start(hTime); osc.stop(hTime + duration);
         if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc, gain });
+        gc(context, hTime, duration, [osc, gain, filter, lfo, lfoGain]);
       } else if (patch === 'saw-brass') {
         osc.type = 'sawtooth'; filter.type = 'lowpass';
         filter.frequency.setValueAtTime(800, hTime); filter.frequency.linearRampToValueAtTime(3000, hTime + Math.min(0.2, duration));
         gain.gain.setValueAtTime(0, hTime); gain.gain.linearRampToValueAtTime(0.4 * velocity, hTime + Math.min(0.1, duration / 2)); gain.gain.setTargetAtTime(0, hTime + duration - 0.2, 0.2);
         osc.start(hTime); osc.stop(hTime + duration);
         if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc, gain });
+        gc(context, hTime, duration, [osc, gain, filter, lfo, lfoGain]);
       } else if (patch === 'sine-ghost') {
         osc.type = 'sine'; filter.type = 'lowpass';
         filter.frequency.setValueAtTime(1000, hTime);
         gain.gain.setValueAtTime(0, hTime); gain.gain.linearRampToValueAtTime(0.5 * velocity, hTime + Math.min(0.3, duration / 2)); gain.gain.setTargetAtTime(0, hTime + duration - 0.5, 0.5);
         osc.start(hTime); osc.stop(hTime + duration);
         if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc, gain });
+        gc(context, hTime, duration, [osc, gain, filter, lfo, lfoGain]);
       } else if (patch === 'pwm-string') {
         const osc2 = context.createOscillator(); osc2.type = 'sawtooth';
         osc.type = 'sawtooth'; filter.type = 'lowpass';
@@ -1762,8 +1794,44 @@
         gain.gain.setValueAtTime(0, hTime); gain.gain.linearRampToValueAtTime(0.3 * velocity, hTime + Math.min(0.2, duration / 2)); gain.gain.setTargetAtTime(0, hTime + duration - 0.5, 0.4);
         osc.start(hTime); osc.stop(hTime + duration); osc2.start(hTime); osc2.stop(hTime + duration);
         if (liveTrackObj && liveTrackObj.liveNodes) liveTrackObj.liveNodes.push({ osc1: osc, osc2: osc2, gain });
+        gc(context, hTime, duration, [osc, osc2, gain, filter, lfo, lfoGain]);
       }
     }
+
+    stopBtn.addEventListener('click', () => {
+      if (!isPlaying) return;
+      pausedAt = audioCtx.currentTime - startedAt;
+      
+      try {
+          tracks.forEach(track => {
+            if (track.type === 'audio' && track.source) {
+              try { track.source.stop(); } catch(e) {}
+              try { track.source.disconnect(); } catch(e) {}
+              track.source = null;
+            } else if ((track.type === 'synth' || track.type === 'melodic') && track.liveNodes) {
+              track.liveNodes.forEach(nodes => {
+                Object.values(nodes).forEach(n => {
+                    if (n && n.stop) { try { n.stop(); } catch(e){} }
+                    if (n && n.disconnect) { try { n.disconnect(); } catch(e){} }
+                    if (n && n.gain) { 
+                        try { 
+                            n.gain.cancelScheduledValues(audioCtx.currentTime); 
+                            n.gain.setTargetAtTime(0, audioCtx.currentTime, 0.03); 
+                        } catch(e){} 
+                    }
+                });
+              });
+              track.liveNodes = [];
+            }
+          });
+      } catch(e) { console.error(e); }
+      
+      isPlaying = false; 
+      playBtn.disabled = false; 
+      playBtn.innerHTML = "▶ Play"; 
+      stopBtn.disabled = true; 
+      cancelAnimationFrame(animFrameId);
+    });
 
     async function encodeMp3(buffer) {
         return new Promise((resolve) => {
