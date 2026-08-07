@@ -1760,14 +1760,15 @@
     function drawAudioTrack(track) {
         track.fabCanvas.clear();
         track.clips.forEach(clip => {
-            // Generate the waveform image once per file
-            if (!clip.waveformURL) {
+            // NEW: Generate the waveform if it's missing OR if the zoom level has changed
+            if (!clip.waveformURL || clip.lastPPS !== pixelsPerSecond) {
                 const drawWidth = clip.originalDuration * pixelsPerSecond;
                 const hCanvas = document.createElement('canvas'); 
                 hCanvas.width = Math.max(1, drawWidth); hCanvas.height = 100;
                 const ctx = hCanvas.getContext('2d'); ctx.clearRect(0, 0, drawWidth, 100);
                 const rawData = clip.buffer.getChannelData(0), step = Math.ceil(rawData.length / drawWidth), amp = 50; 
                 ctx.fillStyle = track.color;
+                
                 for (let i = 0; i < drawWidth; i++) {
                     let min = 1.0, max = -1.0;
                     for (let j = 0; j < step; j++) {
@@ -1777,6 +1778,7 @@
                     ctx.fillRect(i, (1 + min) * amp, 1, Math.max(1, (max - min) * amp));
                 }
                 clip.waveformURL = hCanvas.toDataURL();
+                clip.lastPPS = pixelsPerSecond; // Record the zoom scale used to render this image
             }
             
             // Build the visible block based on crop settings and add cut borders
@@ -1792,7 +1794,7 @@
                     hoverCursor: isRazorToolActive ? scissorsCursor : 'grab', 
                     moveCursor: 'grabbing', 
                     selectable: true,
-                    stroke: 'rgba(255, 255, 255, 0.4)', // Draws visible cut boundaries
+                    stroke: 'rgba(255, 255, 255, 0.4)',
                     strokeWidth: 1
                 });
                 img.clipId = clip.id; 
