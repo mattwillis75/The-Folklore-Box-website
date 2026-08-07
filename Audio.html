@@ -1084,6 +1084,10 @@
           document.body.style.cursor = 'grab';
           tracks.forEach(t => { 
               if(t.fabCanvas) { t.fabCanvas.selection = false; t.fabCanvas.defaultCursor = 'grab'; } 
+          });
+          return;
+      }
+      
       if (key === 'r') {
           isRazorToolActive = !isRazorToolActive;
           const cursorStyle = isRazorToolActive ? 'crosshair' : 'default';
