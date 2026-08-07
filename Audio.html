@@ -23,10 +23,25 @@
     
     #toolbar {
       background: #252526; border-bottom: 1px solid #000; padding: 10px 20px;
-      display: flex; flex-wrap: wrap; align-items: flex-end; gap: 15px; z-index: 2000;
+      display: flex; flex-wrap: nowrap; /* Forces everything onto one line */
+      align-items: flex-end; gap: 15px; z-index: 2000;
       box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      overflow-x: auto; /* Allows horizontal scrolling if the screen is narrow */
+      -webkit-overflow-scrolling: touch; /* Smooth scrolling for mobile */
+      scrollbar-width: none; /* Hides the scrollbar in Firefox */
     }
-    .toolbar-group { display: flex; align-items: center; gap: 10px; padding-right: 15px; border-right: 1px solid #444; height: 100%; }
+
+    /* Hides the scrollbar in Chrome, Safari, and Edge for a cleaner look */
+    #toolbar::-webkit-scrollbar {
+      display: none; 
+    }
+
+    .toolbar-group { 
+      display: flex; align-items: center; gap: 10px; padding-right: 15px; 
+      border-right: 1px solid #444; height: 100%; 
+      flex-shrink: 0; /* Prevents the browser from squishing the groups together */
+    }
+    
     .toolbar-group:last-child { border-right: none; }
     .toolbar-label { font-size: 0.7rem; text-transform: uppercase; color: #888; font-weight: bold; margin-bottom: 4px; }
     .control-stack { display: flex; flex-direction: column; justify-content: flex-end; }
