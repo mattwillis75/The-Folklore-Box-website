@@ -724,7 +724,7 @@
         // PayPal SDK Logic
         paypal.Buttons({
             createOrder: function(data, actions) {
-                let itemsTotal = 0; let shippingTotal = 0; let maxBase = -1; let maxBaseItem = null; // Start at -1
+                let itemsTotal = 0; let shippingTotal = 0; let maxBase = -1; let maxBaseItem = null;
                 const dest = destSelect ? destSelect.value : 'uk';
                 
                 // 1. Calculate items and find heaviest shipping base
@@ -747,7 +747,7 @@
                         const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
                         const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
                         
-                        // BULLETPROOF FIX: Identify by a hard ID rather than a loose reference
+                        // Identify by a hard ID rather than a loose reference
                         if (maxBaseItem && item.cartItemId === maxBaseItem.cartItemId && !baseRateApplied) {
                             shippingTotal += baseRate + (addRate * (qty - 1));
                             baseRateApplied = true;
@@ -766,18 +766,6 @@
                     };
                 });
 
-                // --- THE BULLETPROOF FIX ---
-                // Treat postage as a physical product to stop PayPal overriding it
-                if (shippingTotal > 0) {
-                    paypalItems.push({
-                        name: `Postage & Packaging (${dest === 'uk' ? 'UK' : 'International'})`,
-                        unit_amount: { currency_code: 'GBP', value: shippingTotal.toFixed(2) },
-                        quantity: "1"
-                    });
-                    itemsTotal += shippingTotal; // Add shipping cost to the item subtotal
-                    shippingTotal = 0; // Zero out the official shipping channel
-                }
-
                 // 4. Wholesale limit failsafe check
                 const isWholesaleMode = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
                 if (isWholesaleMode && itemsTotal < 75) { 
@@ -788,7 +776,7 @@
                 let finalTotal = itemsTotal + shippingTotal; 
                 if (finalTotal === 0) { alert("Your cart is empty!"); return; }
 
-                // 5. Send the detailed breakdown to PayPal
+                // 5. Send the detailed breakdown natively to PayPal
                 return actions.order.create({
                     purchase_units: [{ 
                         amount: { 
