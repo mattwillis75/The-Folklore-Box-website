@@ -54,7 +54,7 @@ Images: images/k-shuck-head-final-2.jpg
 Sections: T-Shirts
 Size: S/M/L/XL/XXL
 Materials: 100% Organic ringspun combed cotton
-Postal Class: FREE
+Postal Class: Second Class Small Parcel
 Item Cost: 25
 Stock: 10
 Stock S: 10
