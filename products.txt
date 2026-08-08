@@ -471,7 +471,7 @@ Please look at my other listings for similar items and save on shipping. The pho
 ---
 Title: Cottage with Moon Birch Plywood Pin Badge
 Main Image: badge-cottage-with-moon-1.jpg
-Images: badge-cottage-with-moon-2.jpg,badge-cottage-with-moon-3.jpg,badge-cottage-with-moon-4.jpg,badge-cottage-with-moon-5.jpg
+Images: badge-cottage-with-moon-2.jpg,badge-cottage-with-moon-3.jpg,badge-cottage-with-moon-4.jpg
 Sections: Badges
 Size: 25x40mm
 Materials: Birch wood, metal, rubber
