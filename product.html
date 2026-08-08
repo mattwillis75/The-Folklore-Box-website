@@ -684,7 +684,38 @@
 
             // Render items & find largest postal base
             cart.forEach((item, index) => {
-                // ... [HTML rendering code is here] ...
+// Render items & find largest postal base
+            cart.forEach((item, index) => {
+                // 1. Calculate items and subtotals
+                const qty = item.quantity || 1;
+                totalItems += qty;
+                subtotal += item.price * qty;
+
+                // 2. Generate the visual Cart Item HTML
+                const sizeHtml = item.size ? `<p class="cart-item-meta">Size: ${item.size}</p>` : '';
+                cartContainer.innerHTML += `
+                    <div class="cart-item">
+                        <div class="cart-item-details">
+                            <h4 class="cart-item-title">${item.title}</h4>
+                            ${sizeHtml}
+                            <p class="cart-item-meta">£${item.price.toFixed(2)}</p>
+                        </div>
+                        <div class="cart-qty-controls">
+                            <button class="qty-btn" onclick="updateQuantity(${index}, -1)">-</button>
+                            <span>${qty}</span>
+                            <button class="qty-btn" onclick="updateQuantity(${index}, 1)">+</button>
+                        </div>
+                        <button class="remove-btn" onclick="removeFromCart(${index})">&times;</button>
+                    </div>
+                `;
+
+                // Existing postal rate logic...
+                const rates = postalRates[item.postalClass];
+                if(rates) {
+                    const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                    if(baseRate > maxBase) { maxBase = baseRate; maxBaseItem = item; }
+                }
+            });
                 const rates = postalRates[item.postalClass];
                 if(rates) {
                     const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
