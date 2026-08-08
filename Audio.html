@@ -278,8 +278,6 @@
       </div>
     </div>
     
-    <!-- NEW: Reorganized Settings Bar -->
-    <!-- NEW: Reorganized Settings Bar -->
     <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
         <select id="melodyPatchSelect">
           <option value="square-pluck">🤖 The Robots (Pluck)</option>
@@ -329,6 +327,16 @@
             <input type="range" id="keySizeSlider" min="0.5" max="2" step="0.1" value="1" style="width: 80px; accent-color: #ff3366;">
         </div>
     </div>
+    
+    <div id="keys-container"></div>
+    
+    <div style="display: flex; align-items: center; gap: 10px; margin-top: 15px; border-top: 1px solid #444; padding-top: 15px;">
+      <span style="color: #ccc; font-size: 0.8rem;">Text Input:</span>
+      <input type="text" id="textSequenceInput" placeholder="A0:2, C4, D#4:2 E4, C8" style="padding: 4px; border-radius: 4px; border: 1px solid #555; width: 320px; background: #111; color: #00ffcc; font-family: monospace;">
+      <button id="addTextSequenceBtn" class="btn-primary" style="padding: 4px 10px;">Add Sequence String</button>
+      <span style="color: #666; font-size: 0.75rem;">(Format: Note:Beats | Space = Rest | Range: A0-C8)</span>
+    </div>
+  </div>
 
   <script>
     // --- STATE MANAGEMENT ---
@@ -408,10 +416,10 @@
     const addTextSequenceBtn = document.getElementById('addTextSequenceBtn');
     const noteGapInput = document.getElementById('noteGapInput');
     const newMelodyTrackBtn = document.getElementById('newMelodyTrackBtn');
+    
+    // Corrected References (Removed Duplicate)
     const melodyPatchSelect = document.getElementById('melodyPatchSelect');
-
-    const melodyPatchSelect = document.getElementById('melodyPatchSelect');
-    const chordModeSelect = document.getElementById('chordModeSelect'); // Add this line
+    const chordModeSelect = document.getElementById('chordModeSelect'); 
 
     const noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
     const musicalNotes = [];
@@ -651,20 +659,16 @@
 
       playhead.style.left = newPos + 'px';
 
-      // NEW: Auto-expand the timeline if recording pushes past the edge
       if (currentAudioTime >= longestDuration) {
           if (isRecording) {
-              // Add 5 seconds of fresh timeline so recording can continue smoothly
               userDefinedDuration = Math.ceil(currentAudioTime + 5);
               recalculateDuration();
           } else {
-              // Only stop playback if we aren't actively recording
               stopBtn.click();
               return;
           }
       }
 
-      // NEW: Auto-scroll the view to follow the playhead
       const visibleRightEdge = workspaceEl.scrollLeft + workspaceEl.clientWidth;
       if (newPos > visibleRightEdge - 150) {
           workspaceEl.scrollLeft = newPos - workspaceEl.clientWidth + 150;
@@ -908,7 +912,6 @@
         
         if (btn.dataset.pressed !== 'true') return;
         
-        // --- NEW: Step Sequencer Gap Tracker ---
         if (!isRecording && captureGapsCheckbox && captureGapsCheckbox.checked) {
             if (lastSeqNoteOffTime > 0) {
                 const gapTime = audioCtx.currentTime - lastSeqNoteOffTime;
@@ -924,9 +927,8 @@
         const hVal = parseFloat(humanizeSlider.value);
         const aVal = parseFloat(analogSlider.value);
         
-        // --- NEW: Chord Interval Logic ---
         const chordMode = chordModeSelect ? chordModeSelect.value : 'none';
-        let intervals = [0]; // Default: just the root note
+        let intervals = [0]; 
         if (chordMode === 'maj') intervals = [0, 4, 7];
         else if (chordMode === 'min') intervals = [0, 3, 7];
         else if (chordMode === 'maj7') intervals = [0, 4, 7, 11];
@@ -942,7 +944,6 @@
                 const note = musicalNotes[targetIndex];
                 notesToPlay.push(note);
                 
-                // Visually highlight all the keys in the chord!
                 const targetBtn = keysContainer.children[targetIndex];
                 if (targetBtn) targetBtn.classList.add('active');
                 
@@ -972,7 +973,6 @@
         }
         
         const hitTime = isPlaying ? (audioCtx.currentTime - startedAt) : pausedAt;
-        // Save the whole array of notes in activeTouches
         activeTouches.set(btn, { notes: notesToPlay, noteOnTime: audioCtx.currentTime, hitTime, dummyTrackObj });
       };
 
@@ -990,7 +990,6 @@
         const touch = activeTouches.get(btn);
         activeTouches.delete(btn);
         
-        // Remove the active class from all the keys in the chord
         touch.notes.forEach(note => {
             const targetIndex = musicalNotes.indexOf(note);
             if (targetIndex !== -1) {
@@ -1030,7 +1029,6 @@
                 finalDur = Math.max(snapInterval, finalDur); 
             }
             
-            // Loop through the chord and push every note to the timeline
             touch.notes.forEach(note => {
                 activeMelodicTrack.hits.push({ time: finalTime, freq: note.freq, name: note.name, duration: finalDur });
             });
@@ -1040,7 +1038,6 @@
         } else {
             const calculatedBeats = Math.max(0.25, parseFloat((rawDur / gap).toFixed(2)));
             
-            // Log to the sequencer display. If it's a chord, group them with a "+"
             if (touch.notes.length === 1) {
                 recordedSequence.push({ ...touch.notes[0], beats: calculatedBeats }); 
             } else {
@@ -1071,7 +1068,6 @@
       sequenceDisplay.scrollLeft = sequenceDisplay.scrollWidth;
     }
     
-    // Reset the offline timer tracking when we clear the array
     clearSequenceBtn.addEventListener('click', () => { recordedSequence = []; lastSeqNoteOffTime = 0; updateSequenceDisplay(); });
 
     addTextSequenceBtn.addEventListener('click', () => {
@@ -1118,12 +1114,19 @@
       const gap = parseFloat(noteGapInput.value); 
       let insertTime = pausedAt;
       
-      recordedSequence.forEach(note => {
-        const duration = gap * (note.beats || 1);
-        if (!note.isRest) {
-            activeMelodicTrack.hits.push({ time: insertTime, freq: note.freq, name: note.name, duration: duration });
+      recordedSequence.forEach(item => {
+        const duration = gap * (item.beats || 1);
+        
+        if (item.isRest) {
+            // It's a rest, do nothing here
+        } else if (item.isChord) {
+            item.notes.forEach(note => {
+                activeMelodicTrack.hits.push({ time: insertTime, freq: note.freq, name: note.name, duration: duration });
+            });
+        } else {
+            activeMelodicTrack.hits.push({ time: insertTime, freq: item.freq, name: item.name, duration: duration });
         }
-        // This adds the standard interval length by advancing the time marker, even if it was a REST!
+        
         insertTime += duration;
       });
 
