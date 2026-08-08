@@ -284,10 +284,10 @@ SHUCK #6 - BEASTS
 ---
 Title: SHUCK Issue 7 - Witches
 Main Image: images/shuck-product-image-issue-7.jpg
-Images: ./shuck-issue7-2.jpg, ./shuck-issue7-3.jpg, ./shuck-issue7-4.jpg
+Images: 
 Sections: Zines
-Size: 
-Materials: 
+Size: A5 - 148 x 210mm
+Materials: 250gsm silk cover, 130 gsm silk pages, ink
 Postal Class: Second Class Large Letter
 Item Cost: 9.00
 Stock: 10
