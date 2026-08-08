@@ -263,10 +263,10 @@ SHUCK #5 - THE DEEP - Inside you'll find tales of lost villages, nearly decapita
 ---
 Title: SHUCK Issue 6 - Beasts
 Main Image: images/shuck-product-image-issue-6.jpg
-Images: ./shuck-issue6-2.jpg, ./shuck-issue6-3.jpg
+Images: 
 Sections: Zines
-Size: 
-Materials: 
+Size: A5 - 148 x 210mm
+Materials: 250gsm silk cover, 130 gsm silk pages, ink
 Postal Class: Second Class Large Letter
 Item Cost: 7.50
 Stock: 10
