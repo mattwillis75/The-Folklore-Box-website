@@ -278,6 +278,7 @@
       </div>
     </div>
     
+    <!-- NEW: Reorganized Settings Bar -->
     <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
         <select id="melodyPatchSelect">
           <option value="square-pluck">🤖 The Robots (Pluck)</option>
@@ -293,15 +294,26 @@
         </select>
         <button id="newMelodyTrackBtn" class="btn-accent" style="background: #9933ff; border-color: #7a29cc;">➕</button>
         
-        <span style="color: #ccc; font-size: 0.8rem; margin-left: 10px;">1 Beat = (sec):</span>
-        <input type="number" id="noteGapInput" value="0.25" step="0.1" min="0.1" style="width: 50px; padding: 4px; border-radius: 4px; border: none;">
-        
-        <label style="color: #00ffcc; font-size: 0.8rem; margin-left: 5px; display: flex; align-items: center; gap: 4px; cursor: pointer; font-weight: bold;">
-          <input type="checkbox" id="quantizeCheckbox" style="accent-color: #ff3366;" checked> Auto-Quantize
-        </label>
+        <div style="border-left: 1px solid #444; padding-left: 10px; display: flex; align-items: center; gap: 10px;">
+            <span style="color: #ff3366; font-size: 0.8rem; font-weight: bold;">Live:</span>
+            <label style="color: #ccc; font-size: 0.8rem; display: flex; align-items: center; gap: 4px; cursor: pointer;" title="Snaps live recorded notes to the nearest beat">
+              <input type="checkbox" id="quantizeCheckbox" style="accent-color: #ff3366;"> Snap
+            </label>
+        </div>
 
-        <span style="color: #ccc; font-size: 0.8rem; margin-left: 15px;">Key Size:</span>
-        <input type="range" id="keySizeSlider" min="0.5" max="2" step="0.1" value="1" style="width: 80px; accent-color: #ff3366;">
+        <div style="border-left: 1px solid #444; padding-left: 10px; display: flex; align-items: center; gap: 10px;">
+            <span style="color: #00ffcc; font-size: 0.8rem; font-weight: bold;">Step Seq:</span>
+            <label style="color: #ccc; font-size: 0.8rem; display: flex; align-items: center; gap: 4px; cursor: pointer;" title="Automatically inserts RESTs if you wait between notes">
+              <input type="checkbox" id="captureGapsCheckbox" style="accent-color: #00ffcc;"> Gaps
+            </label>
+            <span style="color: #ccc; font-size: 0.8rem;">1 Beat(s):</span>
+            <input type="number" id="noteGapInput" value="0.25" step="0.1" min="0.1" style="width: 50px; padding: 4px; border-radius: 4px; border: none;">
+        </div>
+
+        <div style="border-left: 1px solid #444; padding-left: 10px; display: flex; align-items: center; gap: 10px;">
+            <span style="color: #ccc; font-size: 0.8rem;">Key Size:</span>
+            <input type="range" id="keySizeSlider" min="0.5" max="2" step="0.1" value="1" style="width: 80px; accent-color: #ff3366;">
+        </div>
     </div>
     
     <div id="keys-container"></div>
@@ -334,6 +346,7 @@
     let isDraggingPlayhead = false;
     let recordedSequence = []; 
     let replacingNote = null; 
+    let lastSeqNoteOffTime = 0; // Tracks human timing for the Step Sequencer gaps
     
     let isMetronomeActive = false;
     let metronomeNodes = [];
@@ -360,6 +373,7 @@
     const humanizeSlider = document.getElementById('humanizeSlider');
     const analogSlider = document.getElementById('analogSlider');
     const quantizeCheckbox = document.getElementById('quantizeCheckbox');
+    const captureGapsCheckbox = document.getElementById('captureGapsCheckbox');
     const keySizeSlider = document.getElementById('keySizeSlider');
     
     const timelineLengthInput = document.getElementById('timelineLengthInput');
@@ -874,6 +888,20 @@
         
         if (btn.dataset.pressed !== 'true') return;
         
+        // --- NEW: Step Sequencer Gap Tracker ---
+        if (!isRecording && captureGapsCheckbox && captureGapsCheckbox.checked) {
+            if (lastSeqNoteOffTime > 0) {
+                const gapTime = audioCtx.currentTime - lastSeqNoteOffTime;
+                const gap = parseFloat(noteGapInput.value) || 0.25;
+                const restBeats = parseFloat((gapTime / gap).toFixed(2));
+                // Wait for at least a full beat before adding a rest so it isn't too sensitive
+                if (restBeats >= 1.0) { 
+                    recordedSequence.push({ isRest: true, name: '-', beats: restBeats });
+                    updateSequenceDisplay();
+                }
+            }
+        }
+        
         const hVal = parseFloat(humanizeSlider.value);
         const aVal = parseFloat(analogSlider.value);
         
@@ -944,6 +972,7 @@
             let finalTime = touch.hitTime;
             let finalDur = Math.max(0.1, rawDur); 
             
+            // --- MODIFIED: Only forces intervals if the Live "Snap" box is checked ---
             if (quantizeCheckbox.checked) {
                 const snapInterval = gap / 4; 
                 finalTime = Math.round(finalTime / snapInterval) * snapInterval;
@@ -958,6 +987,9 @@
             const calculatedBeats = Math.max(0.25, parseFloat((rawDur / gap).toFixed(2)));
             recordedSequence.push({ ...touch.note, beats: calculatedBeats }); 
             updateSequenceDisplay();
+            
+            // Track when the note ended so we can calculate the gap before the next one
+            lastSeqNoteOffTime = audioCtx.currentTime; 
         }
       };
 
@@ -979,7 +1011,8 @@
       sequenceDisplay.scrollLeft = sequenceDisplay.scrollWidth;
     }
     
-    clearSequenceBtn.addEventListener('click', () => { recordedSequence = []; updateSequenceDisplay(); });
+    // Reset the offline timer tracking when we clear the array
+    clearSequenceBtn.addEventListener('click', () => { recordedSequence = []; lastSeqNoteOffTime = 0; updateSequenceDisplay(); });
 
     addTextSequenceBtn.addEventListener('click', () => {
       const val = textSequenceInput.value.trim();
@@ -1013,6 +1046,7 @@
       
       updateSequenceDisplay();
       textSequenceInput.value = '';
+      lastSeqNoteOffTime = 0; 
     });
 
     insertSequenceBtn.addEventListener('click', () => {
@@ -1029,10 +1063,12 @@
         if (!note.isRest) {
             activeMelodicTrack.hits.push({ time: insertTime, freq: note.freq, name: note.name, duration: duration });
         }
+        // This adds the standard interval length by advancing the time marker, even if it was a REST!
         insertTime += duration;
       });
 
       recordedSequence = []; updateSequenceDisplay(); recalculateDuration();
+      lastSeqNoteOffTime = 0;
     });
 
     function swapTrackOrder(id1, id2) {
@@ -1869,7 +1905,7 @@
                     top: 5, 
                     cropX: clip.bufferOffset * pixelsPerSecond, 
                     width: clip.duration * pixelsPerSecond * (clip.playbackRate || 1.0),
-                    scaleX: 1 / (clip.playbackRate || 1.0), // Visually stretches the drawing!
+                    scaleX: 1 / (clip.playbackRate || 1.0), 
                     hasControls: true, 
                     hasBorders: true, 
                     lockMovementY: true, 
@@ -1880,7 +1916,6 @@
                     strokeWidth: 1
                 });
                 
-                // Allow ONLY middle-right edge dragging for Audio stretching
                 img.setControlsVisibility({ mt: false, mb: false, ml: false, mr: true, tr: false, tl: false, br: false, bl: false, mtr: false });
                 
                 img.clipId = clip.id; 
@@ -1963,7 +1998,7 @@
             duration: buffer.duration,
             originalDuration: buffer.duration,
             fileName: file.name,
-            playbackRate: 1.0 // Initial stretch speed is normal
+            playbackRate: 1.0 
         };
         
         const newTrack = { 
