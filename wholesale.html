@@ -922,15 +922,25 @@
 
             // Render items & find largest postal base
             cart.forEach((item, index) => {
-                // ... [HTML rendering code is here] ...
-                const rates = postalRates[item.postalClass];
-                if(rates) {
-                    const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
-                    if(baseRate > maxBase) { maxBase = baseRate; maxBaseItem = item; }
-                }
-            });
-
-            // Calculate precise dynamic shipping
+                // 1. Calculate items and subtotals
+                const qty = item.quantity || 1;
+                cartItemCount += qty;
+                itemsTotal += item.price * qty;
+                
+                // 2. Generate the visual Cart Item HTML
+                const sizeStr = item.size ? `<br><span style="font-size:0.85rem; color:#aaa;">Size: ${item.size}</span>` : '';
+                container.innerHTML += `
+                    <div class="cart-item">
+                        <div class="cart-item-title">${item.title} ${sizeStr}</div>
+                        <div class="cart-qty-controls">
+                            <button onclick="updateQuantity(${index}, -1)">-</button>
+                            <span>${qty}</span>
+                            <button onclick="updateQuantity(${index}, 1)">+</button>
+                        </div>
+                        <div class="cart-item-total">£${(item.price * qty).toFixed(2)}</div>
+                        <button class="remove-btn" onclick="removeFromCart(${index})">&times;</button>
+                    </div>
+                `;
             let baseRateApplied = false;
             cart.forEach((item) => {
                 const rates = postalRates[item.postalClass];
