@@ -553,7 +553,6 @@
                 return;
             }
             
-            // Execute the slicing/trimming
             saveState();
             tracks.forEach(t => {
                 if (t.type === 'audio') {
@@ -678,17 +677,22 @@
                     source.buffer = clip.buffer; 
                     source.connect(track.inputNode);
                     
+                    const pRate = clip.playbackRate || 1.0;
+                    source.playbackRate.value = pRate;
+                    
                     const startTimelineTime = startedAt + clip.time;
                     let cropOffsetTime = clip.bufferOffset;
-                    let playDuration = clip.duration;
+                    let playDurationTimeline = clip.duration;
                     
                     if (pausedAt > clip.time) {
-                        const skipAmount = pausedAt - clip.time;
-                        cropOffsetTime += skipAmount;
-                        playDuration -= skipAmount;
-                        source.start(audioCtx.currentTime, cropOffsetTime, playDuration);
+                        const skipAmountTimeline = pausedAt - clip.time;
+                        const skipAmountMedia = skipAmountTimeline * pRate;
+                        cropOffsetTime += skipAmountMedia;
+                        playDurationTimeline -= skipAmountTimeline;
+                        
+                        source.start(audioCtx.currentTime, cropOffsetTime, playDurationTimeline * pRate);
                     } else {
-                        source.start(startTimelineTime, cropOffsetTime, playDuration);
+                        source.start(startTimelineTime, cropOffsetTime, playDurationTimeline * pRate);
                     }
                     track.liveNodes.push({ source });
                 }
@@ -1210,7 +1214,8 @@
                 duration: item.data.clip.duration, 
                 originalDuration: item.data.clip.originalDuration, 
                 waveformURL: item.data.clip.waveformURL, 
-                fileName: item.data.clip.fileName
+                fileName: item.data.clip.fileName,
+                playbackRate: item.data.clip.playbackRate || 1.0
             });
             targetTrack.clips.sort((a,b)=>a.time-b.time);
         }
@@ -1410,8 +1415,8 @@
 
     function configureSelection(e) {
       if (e.target && e.target.type === 'activeSelection') {
-          e.target.set({ lockMovementY: true, lockScalingY: true, transparentCorners: false, cornerColor: '#00ffcc', borderColor: '#00ffcc', cornerSize: 10 });
-          e.target.setControlsVisibility({ mt: false, mb: false, ml: true, mr: true, tr: false, tl: false, br: false, bl: false, mtr: false });
+          e.target.set({ lockMovementY: true, lockScalingY: true, lockScalingX: true, transparentCorners: false, cornerColor: '#00ffcc', borderColor: '#00ffcc', cornerSize: 10 });
+          e.target.setControlsVisibility({ mt: false, mb: false, ml: false, mr: false, tr: false, tl: false, br: false, bl: false, mtr: false });
       }
     }
 
@@ -1595,10 +1600,10 @@
 
       track.fabCanvas.on('mouse:down', function(opt) {
         if (opt.target) {
-            saveState();
             
             // --- RAZOR TOOL LOGIC ---
             if (isRazorToolActive && track.type === 'audio') {
+                saveState();
                 const origObj = opt.target;
                 const pointer = track.fabCanvas.getPointer(opt.e);
                 
@@ -1609,20 +1614,24 @@
                     const clipIdx = track.clips.findIndex(c => c.id === origObj.clipId);
                     if (clipIdx > -1) {
                         const origClip = track.clips[clipIdx];
-                        const cutTime = cutX / pixelsPerSecond;
+                        
+                        // Respect timeline vs media time if the clip was already stretched!
+                        const cutTimeTimeline = cutX / pixelsPerSecond;
+                        const cutTimeMedia = cutTimeTimeline * (origClip.playbackRate || 1.0);
                         
                         const rightClip = {
                             id: Math.random().toString(36).substr(2, 9), 
                             buffer: origClip.buffer, 
-                            time: origClip.time + cutTime,
-                            bufferOffset: origClip.bufferOffset + cutTime, 
-                            duration: origClip.duration - cutTime,
+                            time: origClip.time + cutTimeTimeline,
+                            bufferOffset: origClip.bufferOffset + cutTimeMedia, 
+                            duration: origClip.duration - cutTimeTimeline,
                             originalDuration: origClip.originalDuration, 
                             waveformURL: origClip.waveformURL, 
-                            fileName: origClip.fileName
+                            fileName: origClip.fileName,
+                            playbackRate: origClip.playbackRate || 1.0
                         };
                         
-                        origClip.duration = cutTime;
+                        origClip.duration = cutTimeTimeline;
                         
                         track.clips.push(rightClip);
                         drawAudioTrack(track);
@@ -1663,6 +1672,7 @@
           } else {
               let newTime = obj.left / pixelsPerSecond;
               if (newTime < 0) newTime = 0;
+              
               if (track.type === 'synth') {
                   track.hits[obj.drumIndex].time = newTime;
                   if (obj.scaleX !== 1) {
@@ -1679,7 +1689,23 @@
               }
               else if (track.type === 'audio') { 
                   const clip = track.clips.find(c => c.id === obj.clipId); 
-                  if (clip) clip.time = newTime; 
+                  if (clip) {
+                      clip.time = newTime;
+                      
+                      // Calculate physical width to detect stretching
+                      const newPhysicalWidth = obj.width * obj.scaleX;
+                      const newDuration = newPhysicalWidth / pixelsPerSecond;
+                      
+                      // If the duration changed noticeably, it was stretched via the edge handle!
+                      if (Math.abs(clip.duration - newDuration) > 0.001) {
+                          const unscaledMediaDuration = clip.duration * (clip.playbackRate || 1.0);
+                          clip.duration = newDuration;
+                          clip.playbackRate = unscaledMediaDuration / newDuration;
+                          
+                          // Force a redraw so Fabric resets the internal scaling numbers nicely
+                          setTimeout(() => drawAudioTrack(track), 10);
+                      }
+                  }
               }
           }
           
@@ -1842,8 +1868,9 @@
                     left: clip.time * pixelsPerSecond, 
                     top: 5, 
                     cropX: clip.bufferOffset * pixelsPerSecond, 
-                    width: clip.duration * pixelsPerSecond,
-                    hasControls: false, 
+                    width: clip.duration * pixelsPerSecond * (clip.playbackRate || 1.0),
+                    scaleX: 1 / (clip.playbackRate || 1.0), // Visually stretches the drawing!
+                    hasControls: true, 
                     hasBorders: true, 
                     lockMovementY: true, 
                     hoverCursor: isRazorToolActive ? scissorsCursor : 'grab', 
@@ -1852,6 +1879,10 @@
                     stroke: 'rgba(255, 255, 255, 0.4)',
                     strokeWidth: 1
                 });
+                
+                // Allow ONLY middle-right edge dragging for Audio stretching
+                img.setControlsVisibility({ mt: false, mb: false, ml: false, mr: true, tr: false, tl: false, br: false, bl: false, mtr: false });
+                
                 img.clipId = clip.id; 
                 track.fabCanvas.add(img); 
                 track.fabCanvas.requestRenderAll();
@@ -1931,7 +1962,8 @@
             bufferOffset: 0,
             duration: buffer.duration,
             originalDuration: buffer.duration,
-            fileName: file.name
+            fileName: file.name,
+            playbackRate: 1.0 // Initial stretch speed is normal
         };
         
         const newTrack = { 
@@ -1958,7 +1990,7 @@
               vol: t.gainNode.gain.value, pan: t.panNode.pan.value, eq: t.eqNode.frequency.value,
               delayTime: t.delayNode.delayTime.value, delayFdbk: t.feedbackNode.gain.value, delayMix: t.delayMixNode.gain.value
           };
-          if (t.type === 'audio') return { ...baseData, clips: t.clips.map(c => ({id: c.id, time: c.time, bufferOffset: c.bufferOffset, duration: c.duration, originalDuration: c.originalDuration, fileName: c.fileName})) };
+          if (t.type === 'audio') return { ...baseData, clips: t.clips.map(c => ({id: c.id, time: c.time, bufferOffset: c.bufferOffset, duration: c.duration, originalDuration: c.originalDuration, fileName: c.fileName, playbackRate: c.playbackRate})) };
           if (t.type === 'synth') return { ...baseData, instrument: t.instrument, hits: t.hits };
           if (t.type === 'melodic') return { ...baseData, hits: t.hits, patch: t.patch, trackId: t.trackId };
         })
@@ -1999,7 +2031,7 @@
           const restoredClips = [];
           for (let c of tData.clips) {
               const matchingFile = files.find(f => f.name === c.fileName);
-              if (matchingFile) restoredClips.push({ ...c, buffer: await decodeUploadedFile(matchingFile) });
+              if (matchingFile) restoredClips.push({ ...c, playbackRate: c.playbackRate || 1.0, buffer: await decodeUploadedFile(matchingFile) });
               else alert(`Missing audio file: ${c.fileName}. Clip skipped.`);
           }
           const newTrack = { id: tData.id, type: 'audio', clips: restoredClips, inputNode: nodes.inputNode, eqNode: nodes.eqNode, delayNode: nodes.delayNode, feedbackNode: nodes.feedbackNode, delayMixNode: nodes.delayMixNode, panNode: nodes.panNode, gainNode: nodes.gainNode, name: tData.name, liveNodes: [] };
@@ -2346,8 +2378,12 @@
             track.clips.forEach(c => {
                 const source = offlineCtx.createBufferSource(); 
                 source.buffer = c.buffer; 
+                
+                const pRate = c.playbackRate || 1.0;
+                source.playbackRate.value = pRate;
+                
                 source.connect(offTrackEQ); 
-                source.start(c.time, c.bufferOffset, c.duration); 
+                source.start(c.time, c.bufferOffset, c.duration * pRate); 
             }); 
         } 
         else if (track.type === 'synth') { track.hits.forEach(hit => { triggerSynth(offlineCtx, track.instrument, hit.time, offTrackEQ, null, hit.duration || 0.25, hVal, aVal); }); }
