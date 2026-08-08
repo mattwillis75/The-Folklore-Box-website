@@ -644,9 +644,23 @@
 
       playhead.style.left = newPos + 'px';
 
+      // NEW: Auto-expand the timeline if recording pushes past the edge
       if (currentAudioTime >= longestDuration) {
-          stopBtn.click();
-          return;
+          if (isRecording) {
+              // Add 5 seconds of fresh timeline so recording can continue smoothly
+              userDefinedDuration = Math.ceil(currentAudioTime + 5);
+              recalculateDuration();
+          } else {
+              // Only stop playback if we aren't actively recording
+              stopBtn.click();
+              return;
+          }
+      }
+
+      // NEW: Auto-scroll the view to follow the playhead
+      const visibleRightEdge = workspaceEl.scrollLeft + workspaceEl.clientWidth;
+      if (newPos > visibleRightEdge - 150) {
+          workspaceEl.scrollLeft = newPos - workspaceEl.clientWidth + 150;
       }
 
       animFrameId = requestAnimationFrame(updatePlayhead);
