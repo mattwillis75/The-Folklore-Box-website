@@ -684,8 +684,6 @@
 
             // Render items & find largest postal base
             cart.forEach((item, index) => {
-// Render items & find largest postal base
-            cart.forEach((item, index) => {
                 // 1. Calculate items and subtotals
                 const qty = item.quantity || 1;
                 totalItems += qty;
@@ -709,13 +707,7 @@
                     </div>
                 `;
 
-                // Existing postal rate logic...
-                const rates = postalRates[item.postalClass];
-                if(rates) {
-                    const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
-                    if(baseRate > maxBase) { maxBase = baseRate; maxBaseItem = item; }
-                }
-            });
+                // Calculate postal base
                 const rates = postalRates[item.postalClass];
                 if(rates) {
                     const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
