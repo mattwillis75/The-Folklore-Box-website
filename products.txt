@@ -200,10 +200,10 @@ SHUCK #2 - LOVE - Articles include a feature about Norfolk's very own Jack Valen
 ---
 Title: SHUCK Issue 3 - Cursed
 Main Image: images/shuck-product-image-issue-3.jpg
-Images: ./shuck-issue3-2.jpg, ./shuck-issue3-3.jpg, ./shuck-issue3-4.jpg
+Images: 
 Sections: Zines
-Size: 
-Materials: 
+Size: A5 - 148 x 210mm
+Materials: 250gsm silk cover, 130 gsm silk pages, ink
 Postal Class: Second Class Large Letter
 Item Cost: 7.50
 Stock: 10
