@@ -920,44 +920,54 @@
                 const dest = destSelect.value;
                 let maxBase = -1; let maxBaseItem = null; // Start at -1 to catch £0.00 base rates
 
-            // Render items & find largest postal base
-            cart.forEach((item, index) => {
-                // 1. Calculate items and subtotals
-                const qty = item.quantity || 1;
-                cartItemCount += qty;
-                itemsTotal += item.price * qty;
-                
-                // 2. Generate the visual Cart Item HTML
-                const sizeStr = item.size ? `<br><span style="font-size:0.85rem; color:#aaa;">Size: ${item.size}</span>` : '';
-                container.innerHTML += `
-                    <div class="cart-item">
-                        <div class="cart-item-title">${item.title} ${sizeStr}</div>
-                        <div class="cart-qty-controls">
-                            <button onclick="updateQuantity(${index}, -1)">-</button>
-                            <span>${qty}</span>
-                            <button onclick="updateQuantity(${index}, 1)">+</button>
-                        </div>
-                        <div class="cart-item-total">£${(item.price * qty).toFixed(2)}</div>
-                        <button class="remove-btn" onclick="removeFromCart(${index})">&times;</button>
-                    </div>
-                `;
-            let baseRateApplied = false;
-            cart.forEach((item) => {
-                const rates = postalRates[item.postalClass];
-                if(rates) {
+                // Render items & find largest postal base
+                cart.forEach((item, index) => {
+                    // 1. Calculate items and subtotals
                     const qty = item.quantity || 1;
-                    const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
-                    const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
+                    cartItemCount += qty;
+                    itemsTotal += item.price * qty;
+                    
+                    // 2. Generate the visual Cart Item HTML
+                    const sizeStr = item.size ? `<br><span style="font-size:0.85rem; color:#aaa;">Size: ${item.size}</span>` : '';
+                    container.innerHTML += `
+                        <div class="cart-item">
+                            <div class="cart-item-title">${item.title} ${sizeStr}</div>
+                            <div class="cart-qty-controls">
+                                <button onclick="updateQuantity(${index}, -1)">-</button>
+                                <span>${qty}</span>
+                                <button onclick="updateQuantity(${index}, 1)">+</button>
+                            </div>
+                            <div class="cart-item-total">£${(item.price * qty).toFixed(2)}</div>
+                            <button class="remove-btn" onclick="removeFromCart(${index})">&times;</button>
+                        </div>
+                    `;
 
-                    // BULLETPROOF FIX: Identify by a hard ID rather than a loose reference
-                    if (maxBaseItem && item.cartItemId === maxBaseItem.cartItemId && !baseRateApplied) {
-                        shippingTotal += baseRate + (addRate * (qty - 1));
-                        baseRateApplied = true;
-                    } else {
-                        shippingTotal += addRate * qty;
+                    // Calculate postal base
+                    const rates = postalRates[item.postalClass];
+                    if(rates) {
+                        const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                        if(baseRate > maxBase) { maxBase = baseRate; maxBaseItem = item; }
                     }
-                }
-            });
+                });
+
+                // Calculate precise dynamic shipping
+                let baseRateApplied = false;
+                cart.forEach((item) => {
+                    const rates = postalRates[item.postalClass];
+                    if(rates) {
+                        const qty = item.quantity || 1;
+                        const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                        const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
+
+                        // BULLETPROOF FIX: Identify by a hard ID rather than a loose reference
+                        if (maxBaseItem && item.cartItemId === maxBaseItem.cartItemId && !baseRateApplied) {
+                            shippingTotal += baseRate + (addRate * (qty - 1));
+                            baseRateApplied = true;
+                        } else {
+                            shippingTotal += addRate * qty;
+                        }
+                    }
+                });
 
                 finalTotal = itemsTotal + shippingTotal;
 
@@ -1007,85 +1017,85 @@
                     },
 
                     createOrder: function(data, actions) {
-                let itemsTotal = 0; let shippingTotal = 0; let maxBase = -1; let maxBaseItem = null; // Start at -1
-                const dest = destSelect ? destSelect.value : 'uk';
-                
-                // 1. Calculate items and find heaviest shipping base
-                cart.forEach(item => {
-                    const qty = item.quantity || 1;
-                    itemsTotal += item.price * qty;
-                    const rates = postalRates[item.postalClass];
-                    if(rates) {
-                        const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
-                        if(baseRate > maxBase) { maxBase = baseRate; maxBaseItem = item; }
-                    }
-                });
-
-                // 2. Calculate accurate grouped shipping
-                let baseRateApplied = false;
-                cart.forEach(item => {
-                    const rates = postalRates[item.postalClass];
-                    if(rates) {
-                        const qty = item.quantity || 1;
-                        const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
-                        const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
+                        let itemsTotal = 0; let shippingTotal = 0; let maxBase = -1; let maxBaseItem = null; // Start at -1
+                        const dest = destSelect ? destSelect.value : 'uk';
                         
-                        // BULLETPROOF FIX: Identify by a hard ID rather than a loose reference
-                        if (maxBaseItem && item.cartItemId === maxBaseItem.cartItemId && !baseRateApplied) {
-                            shippingTotal += baseRate + (addRate * (qty - 1));
-                            baseRateApplied = true;
-                        } else {
-                            shippingTotal += addRate * qty;
-                        }
-                    }
-                });
-                
-                // 3. Build the Itemized Array for PayPal
-                const paypalItems = cart.map(item => {
-                    return {
-                        name: item.title + (item.size ? ` (${item.size})` : ''),
-                        unit_amount: { currency_code: 'GBP', value: item.price.toFixed(2) },
-                        quantity: (item.quantity || 1).toString()
-                    };
-                });
-
-                // --- THE BULLETPROOF FIX ---
-                // Treat postage as a physical product to stop PayPal overriding it
-                if (shippingTotal > 0) {
-                    paypalItems.push({
-                        name: `Postage & Packaging (${dest === 'uk' ? 'UK' : 'International'})`,
-                        unit_amount: { currency_code: 'GBP', value: shippingTotal.toFixed(2) },
-                        quantity: "1"
-                    });
-                    itemsTotal += shippingTotal; // Add shipping cost to the item subtotal
-                    shippingTotal = 0; // Zero out the official shipping channel
-                }
-
-                // 4. Wholesale limit failsafe check
-                const isWholesaleMode = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
-                if (isWholesaleMode && itemsTotal < 75) { 
-                    alert("Minimum wholesale spend of £75 not met."); 
-                    return; 
-                }
-
-                let finalTotal = itemsTotal + shippingTotal; 
-                if (finalTotal === 0) { alert("Your cart is empty!"); return; }
-
-                // 5. Send the detailed breakdown to PayPal
-                return actions.order.create({
-                    purchase_units: [{ 
-                        amount: { 
-                            currency_code: 'GBP', 
-                            value: finalTotal.toFixed(2),
-                            breakdown: {
-                                item_total: { currency_code: 'GBP', value: itemsTotal.toFixed(2) },
-                                shipping: { currency_code: 'GBP', value: shippingTotal.toFixed(2) }
+                        // 1. Calculate items and find heaviest shipping base
+                        cart.forEach(item => {
+                            const qty = item.quantity || 1;
+                            itemsTotal += item.price * qty;
+                            const rates = postalRates[item.postalClass];
+                            if(rates) {
+                                const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                                if(baseRate > maxBase) { maxBase = baseRate; maxBaseItem = item; }
                             }
-                        },
-                        items: paypalItems
-                    }]
-                });
-            },
+                        });
+
+                        // 2. Calculate accurate grouped shipping
+                        let baseRateApplied = false;
+                        cart.forEach(item => {
+                            const rates = postalRates[item.postalClass];
+                            if(rates) {
+                                const qty = item.quantity || 1;
+                                const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                                const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
+                                
+                                // BULLETPROOF FIX: Identify by a hard ID rather than a loose reference
+                                if (maxBaseItem && item.cartItemId === maxBaseItem.cartItemId && !baseRateApplied) {
+                                    shippingTotal += baseRate + (addRate * (qty - 1));
+                                    baseRateApplied = true;
+                                } else {
+                                    shippingTotal += addRate * qty;
+                                }
+                            }
+                        });
+                        
+                        // 3. Build the Itemized Array for PayPal
+                        const paypalItems = cart.map(item => {
+                            return {
+                                name: item.title + (item.size ? ` (${item.size})` : ''),
+                                unit_amount: { currency_code: 'GBP', value: item.price.toFixed(2) },
+                                quantity: (item.quantity || 1).toString()
+                            };
+                        });
+
+                        // --- THE BULLETPROOF FIX ---
+                        // Treat postage as a physical product to stop PayPal overriding it
+                        if (shippingTotal > 0) {
+                            paypalItems.push({
+                                name: `Postage & Packaging (${dest === 'uk' ? 'UK' : 'International'})`,
+                                unit_amount: { currency_code: 'GBP', value: shippingTotal.toFixed(2) },
+                                quantity: "1"
+                            });
+                            itemsTotal += shippingTotal; // Add shipping cost to the item subtotal
+                            shippingTotal = 0; // Zero out the official shipping channel
+                        }
+
+                        // 4. Wholesale limit failsafe check
+                        const isWholesaleMode = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
+                        if (isWholesaleMode && itemsTotal < 75) { 
+                            alert("Minimum wholesale spend of £75 not met."); 
+                            return; 
+                        }
+
+                        let finalTotal = itemsTotal + shippingTotal; 
+                        if (finalTotal === 0) { alert("Your cart is empty!"); return; }
+
+                        // 5. Send the detailed breakdown to PayPal
+                        return actions.order.create({
+                            purchase_units: [{ 
+                                amount: { 
+                                    currency_code: 'GBP', 
+                                    value: finalTotal.toFixed(2),
+                                    breakdown: {
+                                        item_total: { currency_code: 'GBP', value: itemsTotal.toFixed(2) },
+                                        shipping: { currency_code: 'GBP', value: shippingTotal.toFixed(2) }
+                                    }
+                                },
+                                items: paypalItems
+                            }]
+                        });
+                    },
                     onApprove: function(data, actions) {
                         return actions.order.capture().then(function(details) {
                             
