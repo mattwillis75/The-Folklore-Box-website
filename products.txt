@@ -156,16 +156,22 @@ Stock M: 10
 Stock L: 10
 Stock XL: 10
 Stock XXL: 10
-Description: This listing is for my Black Shuck hanging decoration, laser cut into black painted birch plywood from an original illustration. the front and back are both painted black and it comes with a red velvet ribbon. 
+Description: This listing is for my Black Shuck hanging decoration, laser cut into black painted birch plywood from an original illustration. the front and back are both painted black and it comes with a red velvet ribbon.
 ---
 Title: SHUCK Issue 1 - The Dark
 Main Image: images/shuck-product-image-issue-1.jpg
-Images: ./shuck-issue1-2.jpg, ./shuck-issue1-3.jpg, ./shuck-issue1-4.jpg
+Images: 
 Sections: Zines
-Size: 
-Materials: 
+Size: A5 - 148 x 210mm
+Materials: 250gsm silk cover, 130 gsm silk pages, ink
 Postal Class: Second Class Large Letter
 Item Cost: 7.50
+Stock: 10
+Stock S: 10
+Stock M: 10
+Stock L: 10
+Stock XL: 10
+Stock XXL: 10
 Description: Shuck zine was a Kickstarter project initiated by three friends at the start of the pandemic. Overwhelmed by support, issue #1 sold like hot cakes and has been in print ever since. Each Shuck zine explores a different themes within Norfolk and British folklore, uncovering age-old, handed-down, dark and twisty tales rooted in truth? Who can tell.
 Written for adults, suitable for older teens, contains creepy and gory tales.
 Issue #1 - The Dark Issue#2 - Love Issue#3 - Cursed Issue#4 - Feasting Issue #5 - The Deep Issue - 6 - Beasts
@@ -179,6 +185,12 @@ Size:
 Materials: 
 Postal Class: Second Class Large Letter
 Item Cost: 7.50
+Stock: 10
+Stock S: 10
+Stock M: 10
+Stock L: 10
+Stock XL: 10
+Stock XXL: 10
 Description: Shuck zine was a Kickstarter project initiated by three friends at the start of the pandemic. Overwhelmed by support, issue #1 sold like hot cakes and has been in print ever since. Each Shuck zine explores a different themes within Norfolk and British folklore, uncovering age-old, handed-down, dark and twisty tales rooted in truth? Who can tell.
 Written for adults, suitable for older teens, contains creepy and gory tales.
 Issue #1 - The Dark Issue#2 - Love Issue#3 - Cursed Issue#4 - Feasting Issue #5 - The Deep Issue - 6 - Beasts
@@ -194,6 +206,12 @@ Size:
 Materials: 
 Postal Class: Second Class Large Letter
 Item Cost: 7.50
+Stock: 10
+Stock S: 10
+Stock M: 10
+Stock L: 10
+Stock XL: 10
+Stock XXL: 10
 Description: Shuck zine was a Kickstarter project initiated by three friends at the start of the pandemic. Overwhelmed by support, issue #1 sold like hot cakes and has been in print ever since. Each Shuck zine explores a different themes within Norfolk and British folklore, uncovering age-old, handed-down, dark and twisty tales rooted in truth? Who can tell.
 Written for adults, suitable for older teens, contains creepy and gory tales.
 Issue #1 - The Dark Issue#2 - Love Issue#3 - Cursed Issue#4 - Feasting Issue #5 - The Deep Issue - 6 - Beasts
@@ -209,6 +227,12 @@ Size:
 Materials: 
 Postal Class: Second Class Large Letter
 Item Cost: 7.50
+Stock: 10
+Stock S: 10
+Stock M: 10
+Stock L: 10
+Stock XL: 10
+Stock XXL: 10
 Description: Shuck zine was a Kickstarter project initiated by three friends at the start of the pandemic. Overwhelmed by support, issue #1 sold like hot cakes and has been in print ever since. Each Shuck zine explores a different themes within Norfolk and British folklore, uncovering age-old, handed-down, dark and twisty tales rooted in truth? Who can tell.
 Written for adults, suitable for older teens, contains creepy and gory tales.
 Issue #1 - The Dark Issue#2 - Love Issue#3 - Cursed Issue#4 - Feasting Issue #5 - The Deep Issue - 6 - Beasts
@@ -224,6 +248,12 @@ Size:
 Materials: 
 Postal Class: Second Class Large Letter
 Item Cost: 7.50
+Stock: 10
+Stock S: 10
+Stock M: 10
+Stock L: 10
+Stock XL: 10
+Stock XXL: 10
 Description: Shuck zine was a Kickstarter project initiated by three friends at the start of the pandemic. Overwhelmed by support, issue #1 sold like hot cakes and has been in print ever since. Each Shuck zine explores a different themes within Norfolk and British folklore, uncovering age-old, handed-down, dark and twisty tales rooted in truth? Who can tell.
 Written for adults, suitable for older teens, contains creepy and gory tales.
 Issue #1 - The Dark Issue#2 - Love Issue#3 - Cursed Issue#4 - Feasting Issue #5 - The Deep Issue - 6 - Beasts
@@ -239,6 +269,12 @@ Size:
 Materials: 
 Postal Class: Second Class Large Letter
 Item Cost: 7.50
+Stock: 10
+Stock S: 10
+Stock M: 10
+Stock L: 10
+Stock XL: 10
+Stock XXL: 10
 Description: Shuck zine was a Kickstarter project initiated by three friends at the start of the pandemic. Overwhelmed by support, issue #1 sold like hot cakes and has been in print ever since. Each Shuck zine explores a different themes within Norfolk and British folklore, uncovering age-old, handed-down, dark and twisty tales rooted in truth? Who can tell.
 Written for adults, suitable for older teens, contains creepy and gory tales.
 Issue #1 - The Dark Issue#2 - Love Issue#3 - Cursed Issue#4 - Feasting Issue #5 - The Deep Issue - 6 - Beasts
@@ -254,6 +290,12 @@ Size:
 Materials: 
 Postal Class: Second Class Large Letter
 Item Cost: 9.00
+Stock: 10
+Stock S: 10
+Stock M: 10
+Stock L: 10
+Stock XL: 10
+Stock XXL: 10
 Description: Shuck zine was a Kickstarter project initiated by three friends at the start of the pandemic. Overwhelmed by support, issue #1 sold like hot cakes and has been in print ever since. Each Shuck zine explores a different themes within Norfolk and British folklore, uncovering age-old, handed-down, dark and twisty tales rooted in truth? Who can tell.
 Written for adults, suitable for older teens, contains creepy and gory tales.
 Issue #1 - The Dark Issue#2 - Love Issue#3 - Cursed Issue#4 - Feasting Issue #5 - The Deep Issue - 6 - Beasts
