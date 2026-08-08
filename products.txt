@@ -328,7 +328,7 @@ Sections: Badges
 Size: 
 Materials: 
 Postal Class: Second Class Large Letter
-Item Cost: 
+Item Cost: 6.00
 Description: This listing is for a Standing Stone with Moon pin badge.
 
 The design is cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover. The badge measures 28mm x 40mm.
@@ -346,7 +346,7 @@ Sections: Badges
 Size: 
 Materials: 
 Postal Class: Second Class Large Letter
-Item Cost: 
+Item Cost: 6.00
 Description: This listing is for a Skeleton in a Coffin pin badge.
 
 The design is cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover. The badge measures 28mm x 40mm.
@@ -364,7 +364,7 @@ Sections: Badges
 Size: 
 Materials: 
 Postal Class: Second Class Large Letter
-Item Cost: 
+Item Cost: 6.00
 Description: This listing is for a Witch with Black cat pin badge.
 
 The design is cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover. The badge measures 35mm x 40mm.
@@ -382,7 +382,7 @@ Sections: Badges
 Size: 
 Materials: 
 Postal Class: Second Class Large Letter
-Item Cost: 
+Item Cost: 6.00
 Description: This listing is for a Crow’s Head pin badge.
 
 The design is cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover. The badge measures 50mm x 33mm.
@@ -401,7 +401,7 @@ Sections: Badges
 Size: 
 Materials: 
 Postal Class: Second Class Large Letter
-Item Cost: 
+Item Cost: 6.00
 Description: This listing is for a Sitting Hare pin badge.
 
 The design is cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover. The badge measures 40mm x 23mm.
@@ -419,7 +419,7 @@ Sections: Badges
 Size: 
 Materials: 
 Postal Class: Second Class Large Letter
-Item Cost: 
+Item Cost: 6.00
 Description: This listing is for a Morning Star Flail pin badge.
 
 The design is cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover. The badge measures 28mm x 45mm.
@@ -428,7 +428,7 @@ Please look at my other listings for similar items and save on shipping. The pho
 Size: 28x45mm
 Materials: Birch wood, metal, rubber
 Postal Class: Second Class Large Letter
-Item Cost: 6.00
+Item Cost: 8.00
 ---
 Title: Winged Demon Clutch Pin Badge - Laser Cut Birch Plywood
 Main Image: badge-tongue-bench-end.jpg
@@ -437,7 +437,7 @@ Sections: Badges
 Size: 
 Materials: 
 Postal Class: Second Class Large Letter
-Item Cost: 
+Item Cost: 8.00
 Description: This is a Winged Demon End clutch pin badge. It is inspired by medieval carved bench ends seen on my church crawling experiences.
 
 It is laser cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover.
@@ -455,7 +455,7 @@ Sections: Badges
 Size: 
 Materials: 
 Postal Class: Second Class Large Letter
-Item Cost: 
+Item Cost: 8.00
 Description: This is a Dog Demon Bench End clutch pin badge. It is inspired by medieval carved bench ends seen on my church crawling experiences.
 
 It is laser cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover.
@@ -473,7 +473,7 @@ Sections: Badges
 Size: 
 Materials: 
 Postal Class: Second Class Large Letter
-Item Cost: 
+Item Cost: 8.00
 Description: This is a Dragon Bench End clutch pin badge. It is inspired by medieval carved bench ends seen on my church crawling experiences.
 
 It is laser cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover.
@@ -491,7 +491,7 @@ Sections: Badges
 Size: 
 Materials: 
 Postal Class: Second Class Large Letter
-Item Cost: 
+Item Cost: 6.00
 Description: This listing is for a Death’s Head Moth pin badge.
 
 The design is cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover. The badge measures 50mm x 35mm.
@@ -509,7 +509,7 @@ Sections: Badges
 Size: 
 Materials: 
 Postal Class: Second Class Large Letter
-Item Cost: 
+Item Cost: 6.00
 Description: This listing is for a Cottage with Moon pin badge.
 
 The design is cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover. The badge measures 25mm x 40mm.
@@ -527,7 +527,7 @@ Sections: Badges
 Size: 
 Materials: 
 Postal Class: Second Class Large Letter
-Item Cost: 
+Item Cost: 6.00
 Description: This listing is for a Toadstools pin badge.
 
 The design is cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover. The badge measures 35mm x 30mm.
@@ -545,7 +545,7 @@ Sections: Badges
 Size: 
 Materials: 
 Postal Class: Second Class Large Letter
-Item Cost: 
+Item Cost: 6.00
 Description: This listing is for a Cernunnos pin badge.
 
 The design is cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover. The badge measures 35mm x 30mm.
@@ -563,7 +563,7 @@ Sections: Badges
 Size: 
 Materials: 
 Postal Class: Second Class Large Letter
-Item Cost: 
+Item Cost: 6.00
 Description: This listing is for a Knight’s Helmet pin badge.
 
 The design is cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover. The badge measures 32mm x 45mm.
@@ -581,7 +581,7 @@ Sections: Badges
 Size: 
 Materials: 
 Postal Class: Second Class Large Letter
-Item Cost: 
+Item Cost: 6.00
 Description: This listing is for a Knight’s Gauntlet pin badge.
 
 The design is cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover. The badge measures 19mm x 50mm.
@@ -599,7 +599,7 @@ Sections: Badges
 Size: 
 Materials: 
 Postal Class: Second Class Large Letter
-Item Cost: 
+Item Cost: 6.00
 Description: This listing is for a Spiral Stone pin badge.
 
 The design is cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover. The badge measures 20mm x 40mm.
@@ -617,7 +617,7 @@ Sections: Badges
 Size: 
 Materials: 
 Postal Class: Second Class Large Letter
-Item Cost: 
+Item Cost: 6.00
 Description: This listing is for a Devil’s Head pin badge.
 
 The design is cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover. The badge measures 35mm x 40mm.
