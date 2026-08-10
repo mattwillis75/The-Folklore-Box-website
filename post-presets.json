@@ -99,5 +99,42 @@
         }
       ]
     }
+  },
+  "Instagram Post Half Photo Bottom": {
+    "logo": {
+      "show": false,
+      "size": 300,
+      "x": 390,
+      "y": 100,
+      "anim": "fade",
+      "dur": 1
+    },
+    "texts": [
+      {
+        "val": "Black Shuck is a legendary ghostly black dog from English folklore said to roam the coastline and countryside of East Anglia. The creature is typically described as an immense, shaggy hound with glowing fiery eyes and is viewed as an omen of death or misfortune. Its name likely comes from the Old English word scucca, meaning devil or fiend.\n",
+        "size": 40,
+        "width": 900,
+        "x": 90,
+        "y": 76.84210526315783,
+        "anim": "fade",
+        "dur": 1
+      }
+    ],
+    "photos": {
+      "items": [
+        {
+          "img": null,
+          "w": 1080,
+          "h": 675,
+          "lock": false,
+          "x": 0,
+          "y": 675,
+          "anim": "scale",
+          "dur": 1,
+          "shape": "rect",
+          "border": false
+        }
+      ]
+    }
   }
 }
