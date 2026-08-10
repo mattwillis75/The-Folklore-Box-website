@@ -136,5 +136,44 @@
         }
       ]
     }
+  },
+  "Instagram Post Title Page Circle": {
+    "logo": {
+      "show": true,
+      "size": 675,
+      "x": 203,
+      "y": 107.10526315789471,
+      "anim": "fade",
+      "dur": 1
+    },
+    "texts": [
+      {
+        "val": "Church Name Goes Here",
+        "size": 49,
+        "width": 567.4736842105264,
+        "x": 256,
+        "y": 1173.8947368421054,
+        "anim": "fade",
+        "dur": 1,
+        "weight": "600",
+        "lock": false
+      }
+    ],
+    "photos": {
+      "items": [
+        {
+          "img": null,
+          "w": 752,
+          "h": 752,
+          "lock": true,
+          "x": 164,
+          "y": 309.89473684210526,
+          "anim": "scale",
+          "dur": 1,
+          "shape": "circle",
+          "border": false
+        }
+      ]
+    }
   }
 }
