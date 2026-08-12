@@ -181,6 +181,44 @@
         .arrow-left { left: 20px; }
         .arrow-right { right: 20px; }
 
+        /* Mobile Carousel Adjustments (Added specific view fixes here) */
+        @media (max-width: 768px) {
+            .carousel-container {
+                aspect-ratio: auto;
+                height: 550px; 
+            }
+            .carousel-slide {
+                background-position: center top; 
+            }
+            .carousel-overlay {
+                position: absolute;
+                top: 250px; /* Forces the image portion to display for the top 250px */
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                max-width: none;
+                background: var(--bg-color); /* Creates solid separation from the image */
+                border: none;
+                border-top: 1px solid #222;
+                border-radius: 0;
+                padding: 2rem 1.5rem;
+                backdrop-filter: none;
+                justify-content: flex-start;
+            }
+            .carousel-arrow {
+                top: 125px; /* Centers arrows perfectly over the visible image area */
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+            .carousel-overlay h3 {
+                font-size: 1.8rem;
+            }
+            .overlay-bottom p {
+                font-size: 0.95rem;
+            }
+        }
+
         /* Typography & Elements */
         h2 {
             font-size: 2.2rem;
@@ -191,15 +229,15 @@
         }
 
         #collections h2 {
-            margin-bottom: 2rem; /* Adjust this to push your product images down */
+            margin-bottom: 2rem; 
         }
 
         #about h2 {
-            margin-bottom: 2rem; /* Adjust this to push your product images down */
+            margin-bottom: 2rem; 
         }
 
         #map-teaser h2 {
-            margin-bottom: 2rem; /* Adjust this to push your product images down */
+            margin-bottom: 2rem; 
         }
 
         h2::after {
