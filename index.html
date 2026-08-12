@@ -181,35 +181,40 @@
         .arrow-left { left: 20px; }
         .arrow-right { right: 20px; }
 
-        /* Mobile Carousel Adjustments (Added specific view fixes here) */
+        /* Mobile Carousel Adjustments */
         @media (max-width: 768px) {
             .carousel-container {
                 aspect-ratio: auto;
-                height: 550px; 
+                /* Dynamically size the container based on the image aspect ratio + space for text */
+                height: calc(26.3vw + 180px); 
+                min-height: auto;
             }
             .carousel-slide {
-                background-position: center top; 
+                background-position: top center; 
+                background-size: contain; /* Shrinks the image to fit entirely without cropping */
             }
             .carousel-overlay {
                 position: absolute;
-                top: 250px; /* Forces the image portion to display for the top 250px */
+                /* Anchor the text exactly below where the contained image ends */
+                top: 26.3vw; 
                 bottom: 0;
                 left: 0;
                 width: 100%;
                 max-width: none;
-                background: var(--bg-color); /* Creates solid separation from the image */
+                background: var(--bg-color); 
                 border: none;
                 border-top: 1px solid #222;
                 border-radius: 0;
-                padding: 2rem 1.5rem;
+                padding: 1.5rem;
                 backdrop-filter: none;
                 justify-content: flex-start;
             }
             .carousel-arrow {
-                top: 125px; /* Centers arrows perfectly over the visible image area */
-                width: 40px;
-                height: 40px;
-                font-size: 1.2rem;
+                /* Center arrows perfectly over the visible image area */
+                top: 13.1vw; 
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
             }
             .carousel-overlay h3 {
                 font-size: 1.8rem;
