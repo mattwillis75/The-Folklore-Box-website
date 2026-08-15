@@ -3891,8 +3891,8 @@ The uptmost care is taken with the packaging so this piece will be suitable to s
 The packaging may differ to the photographs depending on other items in the order. Thank you card and sticker may vary due to availability.
 ---
 Title: Wyvern Art Print, Dragon on Standing Stone, Fantasy Illustration
-Main Image: images/standing-wyvern-art-dragon-1.jpg
-Images: images/standing-wyvern-art-dragon-2.jpg, images/standing-wyvern-art-dragon-3.jpg, images/standing-wyvern-art-dragon-4.jpg, images/standing-wyvern-art-dragon-5.jpg
+Main Image: images/item-wyvern-art-dragon-1.jpg
+Images: images/item-wyvern-art-dragon-2.jpg, images/item-wyvern-art-dragon-3.jpg, images/item-wyvern-art-dragon-4.jpg
 Sections: Standing Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
