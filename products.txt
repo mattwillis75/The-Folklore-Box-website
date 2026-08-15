@@ -4504,9 +4504,9 @@ INTERNATIONAL BUYERS:  IF YOU LIVE OUTSIDE OF MAINLAND UK AND WOULD LIKE TO PURC
 Title: Shuck Zine Cover Print - Feasting, Matt Willis Illustration
 Main Image: images/print-a4-shuck-zine-art-5.jpg
 Images: images/print-a4-shuck-zine-art-1.jpg
-Sections: Zines
-Size: Standard
-Materials: 250gsm silk cover, 130 gsm silk pages, ink
+Sections: A4 Art Prints
+Size: A4 - 210 x 297mm
+Materials: 350gsm card, ink
 Postal Class: Second Class Large Letter
 Item Cost: 12
 Stock: 10
