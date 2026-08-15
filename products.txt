@@ -3904,7 +3904,7 @@ Stock M: 10
 Stock L: 10
 Stock XL: 10
 Stock XXL: 10
-Description: This listing is for an A4 (210x 297mm)  print of The Wyvern.
+Description: This listing is Ron an A4 (210x 297mm)  print of The Wyvern.
 
 It depicts a magnificent Wyvern atop a standing stone.
 
@@ -3969,9 +3969,9 @@ The uptmost care is taken with the packaging so this piece will be suitable to s
 Title: Green Man Folklore Roundel - Altar decoration - engraved ornament - black painted birchwood
 Main Image: images/roundel-green-man-folklore-1.jpg
 Images: images/roundel-green-man-folklore-2.jpg, images/roundel-green-man-folklore-3.jpg, images/roundel-green-man-folklore-4.jpg
-Sections: The Folklore Boxes
-Size: Standard
-Materials: Please Update
+Sections: Roundels
+Size: 90 x 90 x 3mm
+Materials: birch plywood, black paint
 Postal Class: Second Class Large Letter
 Item Cost: 12
 Stock: 10
