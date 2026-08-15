@@ -3671,9 +3671,9 @@ The uptmost care is taken with the packaging so this piece will be suitable to s
 Title: The Wicker Man Decoration: Birch Plywood Lord Summerisle Figure
 Main Image: images/standing-wicker-man-decoration-1.jpg
 Images: images/standing-wicker-man-decoration-2.jpg, images/standing-wicker-man-decoration-3.jpg
-Sections: Hanging Decorations
+Sections: Standing Decorations
 Size: Standard
-Materials: birch plywood, black paint, red velvet ribbon
+Materials: birch plywood, black paint
 Postal Class: Second Class Large Letter
 Item Cost: 30
 Stock: 10
