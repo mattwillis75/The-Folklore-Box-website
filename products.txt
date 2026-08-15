@@ -4021,9 +4021,9 @@ The uptmost care is taken with the packaging so this piece will be suitable to s
 Title: Hillstones Folklore Roundel - Standing Stones - Altar decoration - engraved ornament - black painted birchwood
 Main Image: images/roundel-hillstones-folklore-roundel-1.jpg
 Images: images/roundel-hillstones-folklore-roundel-2.jpg, images/roundel-hillstones-folklore-roundel-3.jpg, images/roundel-hillstones-folklore-roundel-4.jpg
-Sections: The Folklore Boxes
-Size: Standard
-Materials: Please Update
+Sections: Roundels
+Size: 90 x 90 x 3mm
+Materials: birch plywood, black paint
 Postal Class: Second Class Large Letter
 Item Cost: 12
 Stock: 10
