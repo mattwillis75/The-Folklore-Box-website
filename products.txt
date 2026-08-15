@@ -4204,9 +4204,9 @@ If you buy other flat items from my shop at the same time, these will be packed 
 Title: Multibuy x3 Folklore Roundel Ornament – Black Painted Birchwood Decoration
 Main Image: images/roundel-multibuy-x3-folklore-1.jpg
 Images: images/roundel-multibuy-x3-folklore-2.jpg, images/roundel-multibuy-x3-folklore-3.jpg, images/roundel-multibuy-x3-folklore-4.jpg, images/roundel-multibuy-x3-folklore-5.jpg, images/roundel-multibuy-x3-folklore-6.jpg, images/roundel-multibuy-x3-folklore-7.jpg, images/roundel-multibuy-x3-folklore-8.jpg, images/roundel-multibuy-x3-folklore-9.jpg, images/roundel-multibuy-x3-folklore-10.jpg
-Sections: Roundels
-Size: 90 x 90 x 3mm
-Materials: birch plywood, black paint
+Sections: The Folklore Boxes
+Size: Standard
+Materials: Please Update
 Postal Class: Second Class Large Letter
 Item Cost: 30
 Stock: 10
@@ -4268,9 +4268,9 @@ If you purchase along with other items from my shop and a "do not bend envelope"
 Title: Standing Stone Ring and Cottage Folklore Roundel - Standing Stones - Altar decoration - engraved ornament - black painted birchwood
 Main Image: images/roundel-standing-stone-ring-1.jpg
 Images: images/roundel-standing-stone-ring-2.jpg, images/roundel-standing-stone-ring-3.jpg, images/roundel-standing-stone-ring-4.jpg
-Sections: The Folklore Boxes
-Size: Standard
-Materials: Please Update
+Sections: Roundels
+Size: 90 x 90 x 3mm
+Materials: birch plywood, black paint
 Postal Class: Second Class Large Letter
 Item Cost: 12
 Stock: 10
