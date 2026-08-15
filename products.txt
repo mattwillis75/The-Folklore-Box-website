@@ -703,11 +703,11 @@ Description: This listing is for a Black Shuck pin badge.
 The design is cut into black painted birch plywood from an original illustration. the front and back are both painted black. The back has a stainless steel clutch pin covered by a mat black rubber cover.
 ---
 Title: Shuck Zine Issue 7 – Witches, Norfolk Folklore
-Main Image: shuck-zine-issue-7-witches-norfolk-folklore/zine-shuck-zine-issue-1.jpg
-Images: shuck-zine-issue-7-witches-norfolk-folklore/zine-shuck-zine-issue-2.jpg, shuck-zine-issue-7-witches-norfolk-folklore/zine-shuck-zine-issue-3.jpg, shuck-zine-issue-7-witches-norfolk-folklore/zine-shuck-zine-issue-4.jpg
-Sections: Zine
+Main Image: images/zine-shuck-zine-issue-1.jpg
+Images: images/zine-shuck-zine-issue-2.jpg, images/zine-shuck-zine-issue-3.jpg, images/zine-shuck-zine-issue-4.jpg
+Sections: Zines
 Size: Standard
-Materials: Please Update
+Materials: 250gsm silk cover, 130 gsm silk pages, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 9
 Stock: 10
@@ -724,11 +724,11 @@ Issue#7 - Witches
 SHUCK #7 -  WITCHES -  A BUMPER ISSUE.  This issue includes stories of the Kittywitches of Great Yarmouth, A Witch Map of Norfolk, Monica English - Norfolk's High Priestess of the Grey Goose Coven along with stories of hagstones, spells and witch bottles.
 ---
 Title: Mari Lwyd Decoration - Birch Plywood Welsh Hobby Horse
-Main Image: mari-lwyd-decoration-birch-plywood-welsh-hobby-horse/standing-mari-lwyd-decoration-1.jpg
-Images: mari-lwyd-decoration-birch-plywood-welsh-hobby-horse/standing-mari-lwyd-decoration-2.jpg, mari-lwyd-decoration-birch-plywood-welsh-hobby-horse/standing-mari-lwyd-decoration-3.jpg, mari-lwyd-decoration-birch-plywood-welsh-hobby-horse/standing-mari-lwyd-decoration-4.jpg, mari-lwyd-decoration-birch-plywood-welsh-hobby-horse/standing-mari-lwyd-decoration-5.jpg
-Sections: Standing
+Main Image: images/hanging-mari-lwyd-horse-1.jpg
+Images: images/hanging-mari-lwyd-horse-2.jpg, images/hanging-mari-lwyd-horse-3.jpg, images/hanging-mari-lwyd-horse-4.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 20
 Stock: 10
@@ -749,11 +749,11 @@ The uptmost care is taken with the packaging so this piece will be suitable to s
 The packaging may differ to the photographs depending on other items in the order. Thank you card and sticker may vary due to availability.
 ---
 Title: Night of the Demon A3 Print – British Folk Horror Art
-Main Image: night-of-the-demon-a3-print-british-folk-horror-art/print-a3-night-of-demon-1.jpg
-Images: night-of-the-demon-a3-print-british-folk-horror-art/print-a3-night-of-demon-2.jpg, night-of-the-demon-a3-print-british-folk-horror-art/print-a3-night-of-demon-3.jpg, night-of-the-demon-a3-print-british-folk-horror-art/print-a3-night-of-demon-4.jpg, night-of-the-demon-a3-print-british-folk-horror-art/print-a3-night-of-demon-5.jpg, night-of-the-demon-a3-print-british-folk-horror-art/print-a3-night-of-demon-6.jpg, night-of-the-demon-a3-print-british-folk-horror-art/print-a3-night-of-demon-7.jpg
-Sections: Print-a3
+Main Image: images/print-a3-night-of-demon-1.jpg
+Images: images/print-a3-night-of-demon-2.jpg, images/print-a3-night-of-demon-3.jpg, images/print-a3-night-of-demon-4.jpg, images/print-a3-night-of-demon-5.jpg, images/print-a3-night-of-demon-6.jpg, images/print-a3-night-of-demon-7.jpg
+Sections: A3 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 18
 Stock: 10
@@ -773,11 +773,11 @@ All my prints are flat packed in a recyclable cellophane bags and are sent in ri
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Moonstones Greetings Card: Illustrated Pagan Stonehenge Card
-Main Image: moonstones-greetings-card-illustrated-pagan-stonehenge-card/card-moonstones-greetings-card-1.jpg
-Images: moonstones-greetings-card-illustrated-pagan-stonehenge-card/card-moonstones-greetings-card-2.jpg, moonstones-greetings-card-illustrated-pagan-stonehenge-card/card-moonstones-greetings-card-3.jpg
-Sections: Card
+Main Image: images/card-moonstones-greetings-card-1.jpg
+Images: images/card-moonstones-greetings-card-2.jpg, images/card-moonstones-greetings-card-3.jpg
+Sections: Greetings Cards
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 3.5
 Stock: 10
@@ -795,11 +795,11 @@ My greetings cards are hand drawn and professionally printed onto 350gsm silk co
 All my cards come in a recyclable cellophane bag and are sent in rigid protective packaging to ensure they arrive in pristine condition.
 ---
 Title: Shuck Zine Issue 1 - The Dark: British Folklore
-Main Image: shuck-zine-issue-1-the-dark-british-folklore/zine-shuck-zine-issue-1.jpg
-Images: shuck-zine-issue-1-the-dark-british-folklore/zine-shuck-zine-issue-2.jpg, shuck-zine-issue-1-the-dark-british-folklore/zine-shuck-zine-issue-3.jpg, shuck-zine-issue-1-the-dark-british-folklore/zine-shuck-zine-issue-4.jpg
-Sections: Zine
+Main Image: images/zine-shuck-zine-issue-1.jpg
+Images: images/zine-shuck-zine-issue-2.jpg, images/zine-shuck-zine-issue-3.jpg, images/zine-shuck-zine-issue-4.jpg
+Sections: Zines
 Size: Standard
-Materials: Please Update
+Materials: 250gsm silk cover, 130 gsm silk pages, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 7.5
 Stock: 10
@@ -815,12 +815,12 @@ Issue#7 - Witches
 
 SHUCK #1 - THE DARK -
 ---
-Title: Laser Cut Jack O'Lantern Halloween Decoration – Birch Plywood
+Title: Jack O'Lantern Halloween Decoration – Birch Plywood
 Main Image: images/standing-laser-cut-jack-1.jpg
 Images: images/standing-laser-cut-jack-2.jpg, images/standing-laser-cut-jack-3.jpg, images/standing-laser-cut-jack-4.jpg
-Sections: Standing
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
@@ -840,11 +840,11 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Snow Stone Globe Christmas Ornament, Black Birch Wood Decoration
-Main Image: snow-stone-globe-christmas-ornament-black-birch-wood-decoration/standing-snow-stone-globe-1.jpg
-Images: snow-stone-globe-christmas-ornament-black-birch-wood-decoration/standing-snow-stone-globe-2.jpg, snow-stone-globe-christmas-ornament-black-birch-wood-decoration/standing-snow-stone-globe-3.jpg, snow-stone-globe-christmas-ornament-black-birch-wood-decoration/standing-snow-stone-globe-4.jpg, snow-stone-globe-christmas-ornament-black-birch-wood-decoration/standing-snow-stone-globe-5.jpg, snow-stone-globe-christmas-ornament-black-birch-wood-decoration/standing-snow-stone-globe-6.jpg, snow-stone-globe-christmas-ornament-black-birch-wood-decoration/standing-snow-stone-globe-7.jpg
-Sections: Standing
+Main Image: images/hanging-snow-stone-globe-1.jpg
+Images: images/hanging-snow-stone-globe-2.jpg, images/hanging-snow-stone-globe-3.jpg, images/hanging-snow-stone-globe-4.jpg, images/hanging-snow-stone-globe-5.jpg, images/hanging-snow-stone-globe-6.jpg, images/hanging-snow-stone-globe-7.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
@@ -864,11 +864,11 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Spring Heeled Jack A4 Print – British Folklore Art
-Main Image: spring-heeled-jack-a4-print-british-folklore-art/print-a4-spring-heeled-jack-1.jpg
-Images: spring-heeled-jack-a4-print-british-folklore-art/print-a4-spring-heeled-jack-2.jpg
-Sections: Print-a4
+Main Image: images/print-a4-spring-heeled-jack-1.jpg
+Images: images/print-a4-spring-heeled-jack-2.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -888,11 +888,11 @@ All my prints are flat packed in a recyclable cellophane bags and are sent in ri
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Spiral Stone Print, Folklore Art, Matt Willis A5 Print
-Main Image: spiral-stone-print-folklore-art-matt-willis-a5-print/print-a5-spiral-stone-folklore-1.jpg
-Images: spiral-stone-print-folklore-art-matt-willis-a5-print/print-a5-spiral-stone-folklore-2.jpg, spiral-stone-print-folklore-art-matt-willis-a5-print/print-a5-spiral-stone-folklore-3.jpg, spiral-stone-print-folklore-art-matt-willis-a5-print/print-a5-spiral-stone-folklore-4.jpg
-Sections: Print-a5
+Main Image: images/print-a5-spiral-stone-folklore-1.jpg
+Images: images/print-a5-spiral-stone-folklore-2.jpg, images/print-a5-spiral-stone-folklore-3.jpg, images/print-a5-spiral-stone-folklore-4.jpg
+Sections: A5 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 8
 Stock: 10
@@ -914,11 +914,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Sun Dolmen & Moon Henge A5 Print Set
-Main Image: sun-dolmen-moon-henge-a5-print-set/print-a5-sun-dolmen-moon-1.jpg
-Images: sun-dolmen-moon-henge-a5-print-set/print-a5-sun-dolmen-moon-2.jpg, sun-dolmen-moon-henge-a5-print-set/print-a5-sun-dolmen-moon-3.jpg, sun-dolmen-moon-henge-a5-print-set/print-a5-sun-dolmen-moon-4.jpg, sun-dolmen-moon-henge-a5-print-set/print-a5-sun-dolmen-moon-5.jpg, sun-dolmen-moon-henge-a5-print-set/print-a5-sun-dolmen-moon-6.jpg, sun-dolmen-moon-henge-a5-print-set/print-a5-sun-dolmen-moon-7.jpg
-Sections: Print-a5
+Main Image: images/print-a5-sun-dolmen-moon-1.jpg
+Images: images/print-a5-sun-dolmen-moon-2.jpg, images/print-a5-sun-dolmen-moon-3.jpg, images/print-a5-sun-dolmen-moon-4.jpg, images/print-a5-sun-dolmen-moon-5.jpg, images/print-a5-sun-dolmen-moon-6.jpg, images/print-a5-sun-dolmen-moon-7.jpg
+Sections: A5 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -940,11 +940,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Shuck Zine A4 Art Print Set – Folklore Illustrations
-Main Image: shuck-zine-a4-art-print-set-folklore-illustrations/print-a4-shuck-zine-art-1.jpg
-Images: shuck-zine-a4-art-print-set-folklore-illustrations/print-a4-shuck-zine-art-2.jpg, shuck-zine-a4-art-print-set-folklore-illustrations/print-a4-shuck-zine-art-3.jpg, shuck-zine-a4-art-print-set-folklore-illustrations/print-a4-shuck-zine-art-4.jpg, shuck-zine-a4-art-print-set-folklore-illustrations/print-a4-shuck-zine-art-5.jpg
-Sections: Print-a4
+Main Image: images/zine-shuck-zine-art-1.jpg
+Images: images/zine-shuck-zine-art-2.jpg, images/zine-shuck-zine-art-3.jpg, images/zine-shuck-zine-art-4.jpg, images/zine-shuck-zine-art-5.jpg
+Sections: Zines
 Size: Standard
-Materials: Please Update
+Materials: 250gsm silk cover, 130 gsm silk pages, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 42
 Stock: 10
@@ -967,11 +967,11 @@ If you buy other flat items from my shop at the same time, these will be packed 
 INTERNATIONAL BUYERS:  IF YOU LIVE OUTSIDE OF MAINLAND UK AND WOULD LIKE TO PURCHASE A PRINT, NO PROBS.  PLEASE CONTACT ME AND I CAN PROVIDE YOU WITH A BESPOKE POSTAGE COST.
 ---
 Title: Death’s Head Moth Birch Plywood Pin Badge
-Main Image: deaths-head-moth-birch-plywood-pin-badge/badge-deaths-head-moth-1.jpg
-Images: deaths-head-moth-birch-plywood-pin-badge/badge-deaths-head-moth-2.jpg, deaths-head-moth-birch-plywood-pin-badge/badge-deaths-head-moth-3.jpg, deaths-head-moth-birch-plywood-pin-badge/badge-deaths-head-moth-4.jpg, deaths-head-moth-birch-plywood-pin-badge/badge-deaths-head-moth-5.jpg
-Sections: Badge
+Main Image: images/badge-deaths-head-moth-1.jpg
+Images: images/badge-deaths-head-moth-2.jpg, images/badge-deaths-head-moth-3.jpg, images/badge-deaths-head-moth-4.jpg, images/badge-deaths-head-moth-5.jpg
+Sections: Badges
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 6
 Stock: 10
@@ -991,11 +991,11 @@ Please look at my other listings for similar items and save on shipping. The pho
 Thank you for taking the time to look at my listings.
 ---
 Title: Cottage with Moon Birch Plywood Pin Badge
-Main Image: cottage-with-moon-birch-plywood-pin-badge/badge-cottage-moon-1.jpg
-Images: cottage-with-moon-birch-plywood-pin-badge/badge-cottage-moon-2.jpg, cottage-with-moon-birch-plywood-pin-badge/badge-cottage-moon-3.jpg, cottage-with-moon-birch-plywood-pin-badge/badge-cottage-moon-4.jpg, cottage-with-moon-birch-plywood-pin-badge/badge-cottage-moon-5.jpg
-Sections: Badge
+Main Image: images/badge-cottage-moon-1.jpg
+Images: images/badge-cottage-moon-2.jpg, images/badge-cottage-moon-3.jpg, images/badge-cottage-moon-4.jpg, images/badge-cottage-moon-5.jpg
+Sections: Badges
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 6
 Stock: 10
@@ -1015,11 +1015,11 @@ Please look at my other listings for similar items and save on shipping. The pho
 Thank you for taking the time to look at my listings.
 ---
 Title: Shuck Zine Issue 6: Beasts – Illustrated British Folklore
-Main Image: shuck-zine-issue-6-beasts-illustrated-british-folklore/zine-shuck-zine-issue-1.jpg
-Images: shuck-zine-issue-6-beasts-illustrated-british-folklore/zine-shuck-zine-issue-2.jpg, shuck-zine-issue-6-beasts-illustrated-british-folklore/zine-shuck-zine-issue-3.jpg
-Sections: Zine
+Main Image: images/zine-shuck-zine-issue-1.jpg
+Images: images/zine-shuck-zine-issue-2.jpg, images/zine-shuck-zine-issue-3.jpg
+Sections: Zines
 Size: Standard
-Materials: Please Update
+Materials: 250gsm silk cover, 130 gsm silk pages, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 7.5
 Stock: 10
@@ -1036,11 +1036,11 @@ Issue#7 - Witches
 SHUCK #6 - BEASTS -
 ---
 Title: Shuck Zine Issue 5: The Deep – Illustrated British Folklore
-Main Image: shuck-zine-issue-5-the-deep-illustrated-british-folklore/zine-shuck-zine-issue-1.jpg
-Images: shuck-zine-issue-5-the-deep-illustrated-british-folklore/zine-shuck-zine-issue-2.jpg, shuck-zine-issue-5-the-deep-illustrated-british-folklore/zine-shuck-zine-issue-3.jpg
-Sections: Zine
+Main Image: images/zine-shuck-zine-issue-1.jpg
+Images: images/zine-shuck-zine-issue-2.jpg, images/zine-shuck-zine-issue-3.jpg
+Sections: Zines
 Size: Standard
-Materials: Please Update
+Materials: 250gsm silk cover, 130 gsm silk pages, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 7.5
 Stock: 10
@@ -1057,11 +1057,11 @@ Issue#7 - Witches
 SHUCK #5 - THE DEEP - Inside you'll find tales of lost villages, nearly decapitated smugglers, mermaids, lunar botanicals, and the Yow Yows.
 ---
 Title: Shuck Zine Issue 4 – Feasting, Norfolk Folklore
-Main Image: shuck-zine-issue-4-feasting-norfolk-folklore/zine-shuck-zine-issue-1.jpg
-Images: shuck-zine-issue-4-feasting-norfolk-folklore/zine-shuck-zine-issue-2.jpg, shuck-zine-issue-4-feasting-norfolk-folklore/zine-shuck-zine-issue-3.jpg
-Sections: Zine
+Main Image: images/zine-shuck-zine-issue-1.jpg
+Images: images/zine-shuck-zine-issue-2.jpg, images/zine-shuck-zine-issue-3.jpg
+Sections: Zines
 Size: Standard
-Materials: Please Update
+Materials: 250gsm silk cover, 130 gsm silk pages, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 7.5
 Stock: 10
@@ -1078,11 +1078,11 @@ Issue#7 - Witches
 SHUCK #4 - FEASTING - Inside you'll find, among other things, tales of a night the Devil paid a visit to a feast, a mysterious local secret society, a recipe to honour St Edmund and a spell for abundance.
 ---
 Title: Black Shuck Birch Plywood Pin Badge
-Main Image: black-shuck-birch-plywood-pin-badge/badge-black-shuck-1.jpg
-Images: black-shuck-birch-plywood-pin-badge/badge-black-shuck-2.jpg, black-shuck-birch-plywood-pin-badge/badge-black-shuck-3.jpg, black-shuck-birch-plywood-pin-badge/badge-black-shuck-4.jpg, black-shuck-birch-plywood-pin-badge/badge-black-shuck-5.jpg
-Sections: Badge
+Main Image: images/badge-black-shuck-1.jpg
+Images: images/badge-black-shuck-2.jpg, images/badge-black-shuck-3.jpg, images/badge-black-shuck-4.jpg, images/badge-black-shuck-5.jpg
+Sections: Badges
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 6
 Stock: 10
@@ -1102,11 +1102,11 @@ Please look at my other listings for similar items and save on shipping. The pho
 Thank you for taking the time to look at my listings.
 ---
 Title: Toadstools Birch Plywood Pin Badge
-Main Image: toadstools-birch-plywood-pin-badge/badge-toadstools-1.jpg
-Images: toadstools-birch-plywood-pin-badge/badge-toadstools-2.jpg, toadstools-birch-plywood-pin-badge/badge-toadstools-3.jpg, toadstools-birch-plywood-pin-badge/badge-toadstools-4.jpg, toadstools-birch-plywood-pin-badge/badge-toadstools-5.jpg, toadstools-birch-plywood-pin-badge/badge-toadstools-6.jpg
-Sections: Badge
+Main Image: images/badge-toadstools-1.jpg
+Images: images/badge-toadstools-2.jpg, images/badge-toadstools-3.jpg, images/badge-toadstools-4.jpg, images/badge-toadstools-5.jpg, images/badge-toadstools-6.jpg
+Sections: Badges
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 6
 Stock: 10
@@ -1126,11 +1126,11 @@ Please look at my other listings for similar items and save on shipping. The pho
 Thank you for taking the time to look at my listings.
 ---
 Title: Witch with Black Cat Birch Plywood Pin Badge
-Main Image: witch-with-black-cat-birch-plywood-pin-badge/badge-witch-black-cat-1.jpg
-Images: witch-with-black-cat-birch-plywood-pin-badge/badge-witch-black-cat-2.jpg, witch-with-black-cat-birch-plywood-pin-badge/badge-witch-black-cat-3.jpg, witch-with-black-cat-birch-plywood-pin-badge/badge-witch-black-cat-4.jpg, witch-with-black-cat-birch-plywood-pin-badge/badge-witch-black-cat-5.jpg
-Sections: Badge
+Main Image: images/badge-witch-black-cat-1.jpg
+Images: images/badge-witch-black-cat-2.jpg, images/badge-witch-black-cat-3.jpg, images/badge-witch-black-cat-4.jpg, images/badge-witch-black-cat-5.jpg
+Sections: Badges
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 6
 Stock: 10
@@ -1150,9 +1150,9 @@ Please look at my other listings for similar items and save on shipping. The pho
 Thank you for taking the time to look at my listings.
 ---
 Title: Standing Stone Ring and Cottage Folklore Roundel - Standing Stones - Altar decoration - engraved ornament - black painted birchwood
-Main Image: standing-stone-ring-and-cottage-folklore-roundel-standing-stones-altar-decoration-engraved-ornament-black-painted-birchwood/roundel-standing-stone-ring-1.jpg
-Images: standing-stone-ring-and-cottage-folklore-roundel-standing-stones-altar-decoration-engraved-ornament-black-painted-birchwood/roundel-standing-stone-ring-2.jpg, standing-stone-ring-and-cottage-folklore-roundel-standing-stones-altar-decoration-engraved-ornament-black-painted-birchwood/roundel-standing-stone-ring-3.jpg, standing-stone-ring-and-cottage-folklore-roundel-standing-stones-altar-decoration-engraved-ornament-black-painted-birchwood/roundel-standing-stone-ring-4.jpg
-Sections: Roundel
+Main Image: images/roundel-standing-stone-ring-1.jpg
+Images: images/roundel-standing-stone-ring-2.jpg, images/roundel-standing-stone-ring-3.jpg, images/roundel-standing-stone-ring-4.jpg
+Sections: The Folklore Boxes
 Size: Standard
 Materials: Please Update
 Postal Class: Second Class Small Parcel
@@ -1176,11 +1176,11 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Erl King Art Print – Matt Willis, German Folklore (A4)
-Main Image: erl-king-art-print-matt-willis-german-folklore-a4/print-a4-erl-king-art-1.jpg
-Images: erl-king-art-print-matt-willis-german-folklore-a4/print-a4-erl-king-art-2.jpg
-Sections: Print-a4
+Main Image: images/print-a4-erl-king-art-1.jpg
+Images: images/print-a4-erl-king-art-2.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -1200,11 +1200,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Shuck Zine Issue 3 - Cursed British Folklore
-Main Image: shuck-zine-issue-3-cursed-british-folklore/zine-shuck-zine-issue-1.jpg
-Images: shuck-zine-issue-3-cursed-british-folklore/zine-shuck-zine-issue-2.jpg, shuck-zine-issue-3-cursed-british-folklore/zine-shuck-zine-issue-3.jpg, shuck-zine-issue-3-cursed-british-folklore/zine-shuck-zine-issue-4.jpg
-Sections: Zine
+Main Image: images/zine-shuck-zine-issue-1.jpg
+Images: images/zine-shuck-zine-issue-2.jpg, images/zine-shuck-zine-issue-3.jpg, images/zine-shuck-zine-issue-4.jpg
+Sections: Zines
 Size: Standard
-Materials: Please Update
+Materials: 250gsm silk cover, 130 gsm silk pages, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 7.5
 Stock: 10
@@ -1221,11 +1221,11 @@ Issue#7 - Witches
 SHUCK #3 - CURSED - Inside you'll find tales of cursed mummies, stones and the infamous cursed goat's head of Strumpshaw Fen, as well as ways to protect yourself from curses and a map of cursed Norfolk.
 ---
 Title: Knight’s Gauntlet Birch Plywood Pin Badge
-Main Image: knights-gauntlet-birch-plywood-pin-badge/badge-knights-gauntlet-1.jpg
-Images: knights-gauntlet-birch-plywood-pin-badge/badge-knights-gauntlet-2.jpg, knights-gauntlet-birch-plywood-pin-badge/badge-knights-gauntlet-3.jpg
-Sections: Badge
+Main Image: images/badge-knights-gauntlet-1.jpg
+Images: images/badge-knights-gauntlet-2.jpg, images/badge-knights-gauntlet-3.jpg
+Sections: Badges
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 6
 Stock: 10
@@ -1245,11 +1245,11 @@ Please look at my other listings for similar items and save on shipping. The pho
 Thank you for taking the time to look at my listings.
 ---
 Title: Knight’s Helmet Birch Plywood Pin Badge
-Main Image: knights-helmet-birch-plywood-pin-badge/badge-knights-helmet-1.jpg
-Images: knights-helmet-birch-plywood-pin-badge/badge-knights-helmet-2.jpg, knights-helmet-birch-plywood-pin-badge/badge-knights-helmet-3.jpg, knights-helmet-birch-plywood-pin-badge/badge-knights-helmet-4.jpg, knights-helmet-birch-plywood-pin-badge/badge-knights-helmet-5.jpg
-Sections: Badge
+Main Image: images/badge-knights-helmet-1.jpg
+Images: images/badge-knights-helmet-2.jpg, images/badge-knights-helmet-3.jpg, images/badge-knights-helmet-4.jpg, images/badge-knights-helmet-5.jpg
+Sections: Badges
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 6
 Stock: 10
@@ -1269,11 +1269,11 @@ Please look at my other listings for similar items and save on shipping. The pho
 Thank you for taking the time to look at my listings.
 ---
 Title: Spiral Stone with Sun Birch Plywood Pin Badge
-Main Image: spiral-stone-with-sun-birch-plywood-pin-badge/badge-spiral-stone-sun-1.jpg
-Images: spiral-stone-with-sun-birch-plywood-pin-badge/badge-spiral-stone-sun-2.jpg, spiral-stone-with-sun-birch-plywood-pin-badge/badge-spiral-stone-sun-3.jpg, spiral-stone-with-sun-birch-plywood-pin-badge/badge-spiral-stone-sun-4.jpg, spiral-stone-with-sun-birch-plywood-pin-badge/badge-spiral-stone-sun-5.jpg, spiral-stone-with-sun-birch-plywood-pin-badge/badge-spiral-stone-sun-6.jpg
-Sections: Badge
+Main Image: images/badge-spiral-stone-sun-1.jpg
+Images: images/badge-spiral-stone-sun-2.jpg, images/badge-spiral-stone-sun-3.jpg, images/badge-spiral-stone-sun-4.jpg, images/badge-spiral-stone-sun-5.jpg, images/badge-spiral-stone-sun-6.jpg
+Sections: Badges
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 6
 Stock: 10
@@ -1293,11 +1293,11 @@ Please look at my other listings for similar items and save on shipping. The pho
 Thank you for taking the time to look at my listings.
 ---
 Title: Devil’s Head Birch Plywood Pin Badge
-Main Image: devils-head-birch-plywood-pin-badge/badge-devils-head-1.jpg
-Images: devils-head-birch-plywood-pin-badge/badge-devils-head-2.jpg, devils-head-birch-plywood-pin-badge/badge-devils-head-3.jpg, devils-head-birch-plywood-pin-badge/badge-devils-head-4.jpg, devils-head-birch-plywood-pin-badge/badge-devils-head-5.jpg
-Sections: Badge
+Main Image: images/badge-devils-head-1.jpg
+Images: images/badge-devils-head-2.jpg, images/badge-devils-head-3.jpg, images/badge-devils-head-4.jpg, images/badge-devils-head-5.jpg
+Sections: Badges
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 6
 Stock: 10
@@ -1317,11 +1317,11 @@ Please look at my other listings for similar items and save on shipping. The pho
 Thank you for taking the time to look at my listings.
 ---
 Title: Spiral Stone Greetings Card: Illustrated Pagan Stonehenge Art
-Main Image: spiral-stone-greetings-card-illustrated-pagan-stonehenge-art/card-spiral-stone-greetings-1.jpg
-Images: spiral-stone-greetings-card-illustrated-pagan-stonehenge-art/card-spiral-stone-greetings-2.jpg, spiral-stone-greetings-card-illustrated-pagan-stonehenge-art/card-spiral-stone-greetings-3.jpg
-Sections: Card
+Main Image: images/card-spiral-stone-greetings-1.jpg
+Images: images/card-spiral-stone-greetings-2.jpg, images/card-spiral-stone-greetings-3.jpg
+Sections: Greetings Cards
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 3.5
 Stock: 10
@@ -1339,11 +1339,11 @@ My greetings cards are hand drawn and professionally printed onto 350gsm silk co
 All my cards come in a recyclable cellophane bag and are sent in rigid protective packaging to ensure they arrive in pristine condition.
 ---
 Title: Green Man Brooch - Laser Cut Ash Wood Folklore Badge
-Main Image: green-man-brooch-laser-cut-ash-wood-folklore-badge/badge-green-man-brooch-1.jpg
-Images: green-man-brooch-laser-cut-ash-wood-folklore-badge/badge-green-man-brooch-2.jpg, green-man-brooch-laser-cut-ash-wood-folklore-badge/badge-green-man-brooch-3.jpg, green-man-brooch-laser-cut-ash-wood-folklore-badge/badge-green-man-brooch-4.jpg
-Sections: Badge
+Main Image: images/badge-green-man-brooch-1.jpg
+Images: images/badge-green-man-brooch-2.jpg, images/badge-green-man-brooch-3.jpg, images/badge-green-man-brooch-4.jpg
+Sections: Badges
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
@@ -1369,11 +1369,11 @@ Care recommendations
 This wooden brooch will last for years if you avoid contact with water and chemicals.
 ---
 Title: Laser Cut Krampus Christmas Decoration - Birch Plywood Ornament
-Main Image: laser-cut-krampus-christmas-decoration-birch-plywood-ornament/standing-laser-cut-krampus-1.jpg
-Images: laser-cut-krampus-christmas-decoration-birch-plywood-ornament/standing-laser-cut-krampus-2.jpg, laser-cut-krampus-christmas-decoration-birch-plywood-ornament/standing-laser-cut-krampus-3.jpg, laser-cut-krampus-christmas-decoration-birch-plywood-ornament/standing-laser-cut-krampus-4.jpg, laser-cut-krampus-christmas-decoration-birch-plywood-ornament/standing-laser-cut-krampus-5.jpg, laser-cut-krampus-christmas-decoration-birch-plywood-ornament/standing-laser-cut-krampus-6.jpg
-Sections: Standing
+Main Image: images/hanging-laser-cut-krampus-1.jpg
+Images: images/hanging-laser-cut-krampus-2.jpg, images/hanging-laser-cut-krampus-3.jpg, images/hanging-laser-cut-krampus-4.jpg, images/hanging-laser-cut-krampus-5.jpg, images/hanging-laser-cut-krampus-6.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
@@ -1393,11 +1393,11 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Moon Stone Hanging Decoration – Black Birch Plywood, Folklore Art
-Main Image: moon-stone-hanging-decoration-black-birch-plywood-folklore-art/hanging-moon-stone-hanging-1.jpg
-Images: moon-stone-hanging-decoration-black-birch-plywood-folklore-art/hanging-moon-stone-hanging-2.jpg, moon-stone-hanging-decoration-black-birch-plywood-folklore-art/hanging-moon-stone-hanging-3.jpg, moon-stone-hanging-decoration-black-birch-plywood-folklore-art/hanging-moon-stone-hanging-4.jpg, moon-stone-hanging-decoration-black-birch-plywood-folklore-art/hanging-moon-stone-hanging-5.jpg
-Sections: Hanging
+Main Image: images/hanging-moon-stone-hanging-1.jpg
+Images: images/hanging-moon-stone-hanging-2.jpg, images/hanging-moon-stone-hanging-3.jpg, images/hanging-moon-stone-hanging-4.jpg, images/hanging-moon-stone-hanging-5.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
@@ -1417,11 +1417,11 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Cernunnos Birch Plywood Pin Badge
-Main Image: cernunnos-birch-plywood-pin-badge/badge-cernunnos-1.jpg
-Images: cernunnos-birch-plywood-pin-badge/badge-cernunnos-2.jpg, cernunnos-birch-plywood-pin-badge/badge-cernunnos-3.jpg, cernunnos-birch-plywood-pin-badge/badge-cernunnos-4.jpg, cernunnos-birch-plywood-pin-badge/badge-cernunnos-5.jpg, cernunnos-birch-plywood-pin-badge/badge-cernunnos-6.jpg
-Sections: Badge
+Main Image: images/badge-cernunnos-1.jpg
+Images: images/badge-cernunnos-2.jpg, images/badge-cernunnos-3.jpg, images/badge-cernunnos-4.jpg, images/badge-cernunnos-5.jpg, images/badge-cernunnos-6.jpg
+Sections: Badges
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 6
 Stock: 10
@@ -1441,11 +1441,11 @@ Please look at my other listings for similar items and save on shipping. The pho
 Thank you for taking the time to look at my listings.
 ---
 Title: The Procession A4 Print by Matt Willis - The Folklore Box - The Folk Lore Box - TheFolkLoreBox - ShuckZine - British Folklore
-Main Image: the-procession-a4-print-by-matt-willis-the-folklore-box-the-folk-lore-box-thefolklorebox-shuckzine-british-folklore/print-a4-procession-by-matt-1.jpg
-Images: the-procession-a4-print-by-matt-willis-the-folklore-box-the-folk-lore-box-thefolklorebox-shuckzine-british-folklore/print-a4-procession-by-matt-2.jpg
-Sections: Print-a4
+Main Image: images/zine-procession-by-matt-1.jpg
+Images: images/zine-procession-by-matt-2.jpg
+Sections: Zines
 Size: Standard
-Materials: Please Update
+Materials: 250gsm silk cover, 130 gsm silk pages, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -1465,11 +1465,11 @@ All my prints are flat packed in a recyclable cellophane bags and are sent in ri
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Sunlit Stones Print, Matt Willis Art, Henge A4 Print
-Main Image: sunlit-stones-print-matt-willis-art-henge-a4-print/print-a4-sunlit-stones-matt-1.jpg
-Images: sunlit-stones-print-matt-willis-art-henge-a4-print/print-a4-sunlit-stones-matt-2.jpg, sunlit-stones-print-matt-willis-art-henge-a4-print/print-a4-sunlit-stones-matt-3.jpg, sunlit-stones-print-matt-willis-art-henge-a4-print/print-a4-sunlit-stones-matt-4.jpg
-Sections: Print-a4
+Main Image: images/print-a4-sunlit-stones-matt-1.jpg
+Images: images/print-a4-sunlit-stones-matt-2.jpg, images/print-a4-sunlit-stones-matt-3.jpg, images/print-a4-sunlit-stones-matt-4.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -1493,11 +1493,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Shuck Zine Issue 2: Love – Norfolk & British Folklore
-Main Image: shuck-zine-issue-2-love-norfolk-british-folklore/zine-shuck-zine-issue-1.jpg
-Images: shuck-zine-issue-2-love-norfolk-british-folklore/zine-shuck-zine-issue-2.jpg, shuck-zine-issue-2-love-norfolk-british-folklore/zine-shuck-zine-issue-3.jpg, shuck-zine-issue-2-love-norfolk-british-folklore/zine-shuck-zine-issue-4.jpg
-Sections: Zine
+Main Image: images/zine-shuck-zine-issue-1.jpg
+Images: images/zine-shuck-zine-issue-2.jpg, images/zine-shuck-zine-issue-3.jpg, images/zine-shuck-zine-issue-4.jpg
+Sections: Zines
 Size: Standard
-Materials: Please Update
+Materials: 250gsm silk cover, 130 gsm silk pages, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 7.5
 Stock: 10
@@ -1514,11 +1514,11 @@ Issue#7 - Witches
 SHUCK #2 - LOVE - Articles include a feature about Norfolk's very own Jack Valentine (and his mischievous counterpart Snatch Valentine), some classic Norfolk ghost stories, a love spell, a divination board, the story of St Agnes and a Black Shuck paper doll and much more.
 ---
 Title: Standing Stones A5 Print Set, Ancient Henge Art
-Main Image: standing-stones-a5-print-set-ancient-henge-art/print-a5-standing-stones-set-1.jpg
-Images: standing-stones-a5-print-set-ancient-henge-art/print-a5-standing-stones-set-2.jpg, standing-stones-a5-print-set-ancient-henge-art/print-a5-standing-stones-set-3.jpg, standing-stones-a5-print-set-ancient-henge-art/print-a5-standing-stones-set-4.jpg, standing-stones-a5-print-set-ancient-henge-art/print-a5-standing-stones-set-5.jpg, standing-stones-a5-print-set-ancient-henge-art/print-a5-standing-stones-set-6.jpg, standing-stones-a5-print-set-ancient-henge-art/print-a5-standing-stones-set-7.jpg
-Sections: Print-a5
+Main Image: images/print-a5-standing-stones-set-1.jpg
+Images: images/print-a5-standing-stones-set-2.jpg, images/print-a5-standing-stones-set-3.jpg, images/print-a5-standing-stones-set-4.jpg, images/print-a5-standing-stones-set-5.jpg, images/print-a5-standing-stones-set-6.jpg, images/print-a5-standing-stones-set-7.jpg
+Sections: A5 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 20
 Stock: 10
@@ -1540,11 +1540,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Skeleton in Coffin Birch Plywood Pin Badge
-Main Image: skeleton-in-coffin-birch-plywood-pin-badge/badge-skeleton-in-coffin-1.jpg
-Images: skeleton-in-coffin-birch-plywood-pin-badge/badge-skeleton-in-coffin-2.jpg, skeleton-in-coffin-birch-plywood-pin-badge/badge-skeleton-in-coffin-3.jpg, skeleton-in-coffin-birch-plywood-pin-badge/badge-skeleton-in-coffin-4.jpg, skeleton-in-coffin-birch-plywood-pin-badge/badge-skeleton-in-coffin-5.jpg
-Sections: Badge
+Main Image: images/badge-skeleton-in-coffin-1.jpg
+Images: images/badge-skeleton-in-coffin-2.jpg, images/badge-skeleton-in-coffin-3.jpg, images/badge-skeleton-in-coffin-4.jpg, images/badge-skeleton-in-coffin-5.jpg
+Sections: Badges
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 6
 Stock: 10
@@ -1564,11 +1564,11 @@ Please look at my other listings for similar items and save on shipping. The pho
 Thank you for taking the time to look at my listings.
 ---
 Title: Memento Mori Skeleton with Wings Birch Plywood Pin Badge
-Main Image: memento-mori-skeleton-with-wings-birch-plywood-pin-badge/badge-memento-mori-skeleton-1.jpg
-Images: memento-mori-skeleton-with-wings-birch-plywood-pin-badge/badge-memento-mori-skeleton-2.jpg, memento-mori-skeleton-with-wings-birch-plywood-pin-badge/badge-memento-mori-skeleton-3.jpg, memento-mori-skeleton-with-wings-birch-plywood-pin-badge/badge-memento-mori-skeleton-4.jpg, memento-mori-skeleton-with-wings-birch-plywood-pin-badge/badge-memento-mori-skeleton-5.jpg
-Sections: Badge
+Main Image: images/badge-memento-mori-skeleton-1.jpg
+Images: images/badge-memento-mori-skeleton-2.jpg, images/badge-memento-mori-skeleton-3.jpg, images/badge-memento-mori-skeleton-4.jpg, images/badge-memento-mori-skeleton-5.jpg
+Sections: Badges
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 6
 Stock: 10
@@ -1588,11 +1588,11 @@ Please look at my other listings for similar items and save on shipping. The pho
 Thank you for taking the time to look at my listings.
 ---
 Title: Memento Mori Raven Print – Nevermore, Gothic Art (A5)
-Main Image: memento-mori-raven-print-nevermore-gothic-art-a5/print-a5-memento-mori-raven-1.jpg
-Images: memento-mori-raven-print-nevermore-gothic-art-a5/print-a5-memento-mori-raven-2.jpg, memento-mori-raven-print-nevermore-gothic-art-a5/print-a5-memento-mori-raven-3.jpg, memento-mori-raven-print-nevermore-gothic-art-a5/print-a5-memento-mori-raven-4.jpg
-Sections: Print-a5
+Main Image: images/print-a5-memento-mori-raven-1.jpg
+Images: images/print-a5-memento-mori-raven-2.jpg, images/print-a5-memento-mori-raven-3.jpg, images/print-a5-memento-mori-raven-4.jpg
+Sections: A5 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 8
 Stock: 10
@@ -1616,11 +1616,11 @@ If you purchase along with other items from my shop and a "do not bend envelope"
 IF YOU ARE SHOPPING OUTSIDE OF MAINLAND UK, PLEASE CONTACT ME AND I CAN GIVE YOU A MORE ACCURATE POSTAL CHARGE.
 ---
 Title: Standing Stones A4 Print, Moon Circle Henge Art
-Main Image: standing-stones-a4-print-moon-circle-henge-art/print-a4-standing-stones-moon-1.jpg
-Images: standing-stones-a4-print-moon-circle-henge-art/print-a4-standing-stones-moon-2.jpg, standing-stones-a4-print-moon-circle-henge-art/print-a4-standing-stones-moon-3.jpg, standing-stones-a4-print-moon-circle-henge-art/print-a4-standing-stones-moon-4.jpg
-Sections: Print-a4
+Main Image: images/print-a4-standing-stones-moon-1.jpg
+Images: images/print-a4-standing-stones-moon-2.jpg, images/print-a4-standing-stones-moon-3.jpg, images/print-a4-standing-stones-moon-4.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -1640,11 +1640,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Devil's Hollow Folklore A4 Print – Spooky Tree Monster
-Main Image: devils-hollow-folklore-a4-print-spooky-tree-monster/print-a4-devils-hollow-folklore-1.jpg
-Images: devils-hollow-folklore-a4-print-spooky-tree-monster/print-a4-devils-hollow-folklore-2.jpg, devils-hollow-folklore-a4-print-spooky-tree-monster/print-a4-devils-hollow-folklore-3.jpg
-Sections: Print-a4
+Main Image: images/print-a4-devils-hollow-folklore-1.jpg
+Images: images/print-a4-devils-hollow-folklore-2.jpg, images/print-a4-devils-hollow-folklore-3.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -1663,12 +1663,12 @@ All my prints are flat packed in a recyclable cellophane bags and are sent in ri
 
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
-Title: The Ceremony  A4 Print by Matt Willis thefolklorebox ~ the folklore box ~ shuck ~ standing stones ~ henge ~ circle
-Main Image: the-ceremony-a4-print-by-matt-willis-thefolklorebox-the-folklore-box-shuck-standing-stones-henge-circle/print-a4-ceremony-by-matt-1.jpg
-Images: the-ceremony-a4-print-by-matt-willis-thefolklorebox-the-folklore-box-shuck-standing-stones-henge-circle/print-a4-ceremony-by-matt-2.jpg, the-ceremony-a4-print-by-matt-willis-thefolklorebox-the-folklore-box-shuck-standing-stones-henge-circle/print-a4-ceremony-by-matt-3.jpg, the-ceremony-a4-print-by-matt-willis-thefolklorebox-the-folklore-box-shuck-standing-stones-henge-circle/print-a4-ceremony-by-matt-4.jpg
-Sections: Print-a4
+Title: The Ceremony A4 Print by Matt Willis thefolklorebox ~ the folklore box ~ shuck ~ standing stones ~ henge ~ circle
+Main Image: images/print-a4-ceremony-by-matt-1.jpg
+Images: images/print-a4-ceremony-by-matt-2.jpg, images/print-a4-ceremony-by-matt-3.jpg, images/print-a4-ceremony-by-matt-4.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -1688,11 +1688,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Stone Circle Hanging Decoration – Laser Cut Birch Plywood
-Main Image: stone-circle-hanging-decoration-laser-cut-birch-plywood/hanging-stone-circle-hanging-1.jpg
-Images: stone-circle-hanging-decoration-laser-cut-birch-plywood/hanging-stone-circle-hanging-2.jpg, stone-circle-hanging-decoration-laser-cut-birch-plywood/hanging-stone-circle-hanging-3.jpg, stone-circle-hanging-decoration-laser-cut-birch-plywood/hanging-stone-circle-hanging-4.jpg
-Sections: Hanging
+Main Image: images/hanging-stone-circle-hanging-1.jpg
+Images: images/hanging-stone-circle-hanging-2.jpg, images/hanging-stone-circle-hanging-3.jpg, images/hanging-stone-circle-hanging-4.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
@@ -1712,11 +1712,11 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Mari Lwyd A4 Print – Welsh Winter Folklore, Hobby Horse
-Main Image: mari-lwyd-a4-print-welsh-winter-folklore-hobby-horse/print-a4-mari-lwyd-welsh-1.jpg
+Main Image: images/print-a4-mari-lwyd-welsh-1.jpg
 Images: 
-Sections: Print-a4
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -1736,11 +1736,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Illustrated Sun Stone Greetings Card - Pagan Stonehenge Design
-Main Image: illustrated-sun-stone-greetings-card-pagan-stonehenge-design/card-illustrated-sun-stone-1.jpg
-Images: illustrated-sun-stone-greetings-card-pagan-stonehenge-design/card-illustrated-sun-stone-2.jpg
-Sections: Card
+Main Image: images/card-illustrated-sun-stone-1.jpg
+Images: images/card-illustrated-sun-stone-2.jpg
+Sections: Greetings Cards
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 3.5
 Stock: 10
@@ -1758,11 +1758,11 @@ My greetings cards are hand drawn and professionally printed onto 350gsm silk co
 All my cards come in a recyclable cellophane bag and are sent in rigid protective packaging to ensure they arrive in pristine condition.
 ---
 Title: Straw Bear Hanging Decoration – Birch Plywood Folklore Ornament
-Main Image: straw-bear-hanging-decoration-birch-plywood-folklore-ornament/hanging-straw-bear-hanging-1.jpg
-Images: straw-bear-hanging-decoration-birch-plywood-folklore-ornament/hanging-straw-bear-hanging-2.jpg, straw-bear-hanging-decoration-birch-plywood-folklore-ornament/hanging-straw-bear-hanging-3.jpg, straw-bear-hanging-decoration-birch-plywood-folklore-ornament/hanging-straw-bear-hanging-4.jpg, straw-bear-hanging-decoration-birch-plywood-folklore-ornament/hanging-straw-bear-hanging-5.jpg
-Sections: Hanging
+Main Image: images/hanging-straw-bear-hanging-1.jpg
+Images: images/hanging-straw-bear-hanging-2.jpg, images/hanging-straw-bear-hanging-3.jpg, images/hanging-straw-bear-hanging-4.jpg, images/hanging-straw-bear-hanging-5.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
@@ -1782,11 +1782,11 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Standing Stone Ornament Set – Laser Cut Birch Plywood, Folklore Design
-Main Image: standing-stone-ornament-set-laser-cut-birch-plywood-folklore-design/standing-standing-stone-ornament-1.jpg
-Images: standing-stone-ornament-set-laser-cut-birch-plywood-folklore-design/standing-standing-stone-ornament-2.jpg, standing-stone-ornament-set-laser-cut-birch-plywood-folklore-design/standing-standing-stone-ornament-3.jpg, standing-stone-ornament-set-laser-cut-birch-plywood-folklore-design/standing-standing-stone-ornament-4.jpg
-Sections: Standing
+Main Image: images/standing-standing-stone-ornament-1.jpg
+Images: images/standing-standing-stone-ornament-2.jpg, images/standing-standing-stone-ornament-3.jpg, images/standing-standing-stone-ornament-4.jpg
+Sections: Standing Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 36
 Stock: 10
@@ -1804,11 +1804,11 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Peg Powler Hanging Decoration – Laser Cut Birch Plywood, Folklore River Hag
-Main Image: peg-powler-hanging-decoration-laser-cut-birch-plywood-folklore-river-hag/hanging-peg-powler-hanging-1.jpg
-Images: peg-powler-hanging-decoration-laser-cut-birch-plywood-folklore-river-hag/hanging-peg-powler-hanging-2.jpg, peg-powler-hanging-decoration-laser-cut-birch-plywood-folklore-river-hag/hanging-peg-powler-hanging-3.jpg, peg-powler-hanging-decoration-laser-cut-birch-plywood-folklore-river-hag/hanging-peg-powler-hanging-4.jpg
-Sections: Hanging
+Main Image: images/hanging-peg-powler-hanging-1.jpg
+Images: images/hanging-peg-powler-hanging-2.jpg, images/hanging-peg-powler-hanging-3.jpg, images/hanging-peg-powler-hanging-4.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
@@ -1830,9 +1830,9 @@ The uptmost care is taken with the packaging so this piece will be suitable to s
 The packaging may differ to the photographs depending on other items in the order. Thank you card and sticker may vary due to availability.
 ---
 Title: Memento Mori Screaming Skull Print – Gothic Horror Art
-Main Image: memento-mori-screaming-skull-print-gothic-horror-art/item-memento-mori-screaming-1.jpg
-Images: memento-mori-screaming-skull-print-gothic-horror-art/item-memento-mori-screaming-2.jpg, memento-mori-screaming-skull-print-gothic-horror-art/item-memento-mori-screaming-3.jpg
-Sections: Item
+Main Image: images/roundel-memento-mori-screaming-1.jpg
+Images: images/roundel-memento-mori-screaming-2.jpg, images/roundel-memento-mori-screaming-3.jpg
+Sections: The Folklore Boxes
 Size: Standard
 Materials: Please Update
 Postal Class: Second Class Small Parcel
@@ -1854,11 +1854,11 @@ If you purchase along with other items from my shop and a "do not bend envelope"
 If you are buying from outside mainland UK, you can contact me for a postal quote for combined items.
 ---
 Title: Hare Art Print – Matt Willis, British Folklore Illustration (A4)
-Main Image: hare-art-print-matt-willis-british-folklore-illustration-a4/print-a4-hare-art-matt-1.jpg
-Images: hare-art-print-matt-willis-british-folklore-illustration-a4/print-a4-hare-art-matt-2.jpg
-Sections: Print-a4
+Main Image: images/print-a4-hare-art-matt-1.jpg
+Images: images/print-a4-hare-art-matt-2.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -1878,11 +1878,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Woodwose Christmas Ornament – Black Birch Plywood Folklore Decoration
-Main Image: woodwose-christmas-ornament-black-birch-plywood-folklore-decoration/standing-woodwose-christmas-ornament-1.jpg
-Images: woodwose-christmas-ornament-black-birch-plywood-folklore-decoration/standing-woodwose-christmas-ornament-2.jpg, woodwose-christmas-ornament-black-birch-plywood-folklore-decoration/standing-woodwose-christmas-ornament-3.jpg, woodwose-christmas-ornament-black-birch-plywood-folklore-decoration/standing-woodwose-christmas-ornament-4.jpg, woodwose-christmas-ornament-black-birch-plywood-folklore-decoration/standing-woodwose-christmas-ornament-5.jpg
-Sections: Standing
+Main Image: images/hanging-woodwose-christmas-ornament-1.jpg
+Images: images/hanging-woodwose-christmas-ornament-2.jpg, images/hanging-woodwose-christmas-ornament-3.jpg, images/hanging-woodwose-christmas-ornament-4.jpg, images/hanging-woodwose-christmas-ornament-5.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
@@ -1904,11 +1904,11 @@ The uptmost care is taken with the packaging so this piece will be suitable to s
 Please look at the video in this item's gallery for more of my Christmas 2025 decorations. Multibuy offers are available as other listings.
 ---
 Title: Snow Stone Christmas Decoration, Laser Cut Birch Plywood
-Main Image: snow-stone-christmas-decoration-laser-cut-birch-plywood/standing-snow-stone-christmas-1.jpg
-Images: snow-stone-christmas-decoration-laser-cut-birch-plywood/standing-snow-stone-christmas-2.jpg, snow-stone-christmas-decoration-laser-cut-birch-plywood/standing-snow-stone-christmas-3.jpg
-Sections: Standing
+Main Image: images/hanging-snow-stone-christmas-1.jpg
+Images: images/hanging-snow-stone-christmas-2.jpg, images/hanging-snow-stone-christmas-3.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
@@ -1930,11 +1930,11 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Standing Stone with Sun Birch Plywood Pin Badge
-Main Image: standing-stone-with-sun-birch-plywood-pin-badge/badge-standing-stone-sun-1.jpg
-Images: standing-stone-with-sun-birch-plywood-pin-badge/badge-standing-stone-sun-2.jpg, standing-stone-with-sun-birch-plywood-pin-badge/badge-standing-stone-sun-3.jpg, standing-stone-with-sun-birch-plywood-pin-badge/badge-standing-stone-sun-4.jpg, standing-stone-with-sun-birch-plywood-pin-badge/badge-standing-stone-sun-5.jpg, standing-stone-with-sun-birch-plywood-pin-badge/badge-standing-stone-sun-6.jpg
-Sections: Badge
+Main Image: images/badge-standing-stone-sun-1.jpg
+Images: images/badge-standing-stone-sun-2.jpg, images/badge-standing-stone-sun-3.jpg, images/badge-standing-stone-sun-4.jpg, images/badge-standing-stone-sun-5.jpg, images/badge-standing-stone-sun-6.jpg
+Sections: Badges
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 6
 Stock: 10
@@ -1954,11 +1954,11 @@ Please look at my other listings for similar items and save on shipping. The pho
 Thank you for taking the time to look at my listings.
 ---
 Title: Horned Skull Christmas Decoration – Laser Cut Birch Plywood Ornament
-Main Image: horned-skull-christmas-decoration-laser-cut-birch-plywood-ornament/standing-horned-skull-christmas-1.jpg
-Images: horned-skull-christmas-decoration-laser-cut-birch-plywood-ornament/standing-horned-skull-christmas-2.jpg, horned-skull-christmas-decoration-laser-cut-birch-plywood-ornament/standing-horned-skull-christmas-3.jpg, horned-skull-christmas-decoration-laser-cut-birch-plywood-ornament/standing-horned-skull-christmas-4.jpg, horned-skull-christmas-decoration-laser-cut-birch-plywood-ornament/standing-horned-skull-christmas-5.jpg, horned-skull-christmas-decoration-laser-cut-birch-plywood-ornament/standing-horned-skull-christmas-6.jpg, horned-skull-christmas-decoration-laser-cut-birch-plywood-ornament/standing-horned-skull-christmas-7.jpg
-Sections: Standing
+Main Image: images/hanging-horned-skull-christmas-1.jpg
+Images: images/hanging-horned-skull-christmas-2.jpg, images/hanging-horned-skull-christmas-3.jpg, images/hanging-horned-skull-christmas-4.jpg, images/hanging-horned-skull-christmas-5.jpg, images/hanging-horned-skull-christmas-6.jpg, images/hanging-horned-skull-christmas-7.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
@@ -1978,11 +1978,11 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Lambton Worm Print – British Folklore Dragon Art (A4)
-Main Image: lambton-worm-print-british-folklore-dragon-art-a4/print-a4-lambton-worm-british-1.jpg
-Images: lambton-worm-print-british-folklore-dragon-art-a4/print-a4-lambton-worm-british-2.jpg, lambton-worm-print-british-folklore-dragon-art-a4/print-a4-lambton-worm-british-3.jpg, lambton-worm-print-british-folklore-dragon-art-a4/print-a4-lambton-worm-british-4.jpg
-Sections: Print-a4
+Main Image: images/print-a4-lambton-worm-british-1.jpg
+Images: images/print-a4-lambton-worm-british-2.jpg, images/print-a4-lambton-worm-british-3.jpg, images/print-a4-lambton-worm-british-4.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -2004,11 +2004,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Mari Lywd Greetings Card - Gothic Skull Horse Art by Matt Willis
-Main Image: mari-lywd-greetings-card-gothic-skull-horse-art-by-matt-willis/card-mari-lywd-greetings-1.jpg
+Main Image: images/card-mari-lywd-greetings-1.jpg
 Images: 
-Sections: Card
+Sections: Greetings Cards
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 3.5
 Stock: 10
@@ -2020,11 +2020,11 @@ Stock XXL: 10
 Description: sdgfsdf
 ---
 Title: Black Birch Plywood Witch Christmas Ornament - Velvet Ribbon
-Main Image: black-birch-plywood-witch-christmas-ornament-velvet-ribbon/standing-black-witch-christmas-1.jpg
-Images: black-birch-plywood-witch-christmas-ornament-velvet-ribbon/standing-black-witch-christmas-2.jpg, black-birch-plywood-witch-christmas-ornament-velvet-ribbon/standing-black-witch-christmas-3.jpg, black-birch-plywood-witch-christmas-ornament-velvet-ribbon/standing-black-witch-christmas-4.jpg
-Sections: Standing
+Main Image: images/hanging-black-witch-christmas-1.jpg
+Images: images/hanging-black-witch-christmas-2.jpg, images/hanging-black-witch-christmas-3.jpg, images/hanging-black-witch-christmas-4.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
@@ -2046,9 +2046,9 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Mermaid Folklore Roundel - Melusine - Altar decoration - engraved ornament - black painted birchwood
-Main Image: mermaid-folklore-roundel-melusine-altar-decoration-engraved-ornament-black-painted-birchwood/roundel-mermaid-folklore-roundel-1.jpg
-Images: mermaid-folklore-roundel-melusine-altar-decoration-engraved-ornament-black-painted-birchwood/roundel-mermaid-folklore-roundel-2.jpg, mermaid-folklore-roundel-melusine-altar-decoration-engraved-ornament-black-painted-birchwood/roundel-mermaid-folklore-roundel-3.jpg, mermaid-folklore-roundel-melusine-altar-decoration-engraved-ornament-black-painted-birchwood/roundel-mermaid-folklore-roundel-4.jpg
-Sections: Roundel
+Main Image: images/roundel-mermaid-folklore-roundel-1.jpg
+Images: images/roundel-mermaid-folklore-roundel-2.jpg, images/roundel-mermaid-folklore-roundel-3.jpg, images/roundel-mermaid-folklore-roundel-4.jpg
+Sections: The Folklore Boxes
 Size: Standard
 Materials: Please Update
 Postal Class: Second Class Small Parcel
@@ -2072,11 +2072,11 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: MULTIBUY x5 Hanging Decorations - Mari Lwyd - Witch - Black Phillip - Devil - Lambton Worm - Kelpie
-Main Image: multibuy-x5-hanging-decorations-mari-lwyd-witch-black-phillip-devil-lambton-worm-kelpie/hanging-multibuy-x5-hanging-1.jpg
-Images: multibuy-x5-hanging-decorations-mari-lwyd-witch-black-phillip-devil-lambton-worm-kelpie/hanging-multibuy-x5-hanging-2.jpg, multibuy-x5-hanging-decorations-mari-lwyd-witch-black-phillip-devil-lambton-worm-kelpie/hanging-multibuy-x5-hanging-3.jpg, multibuy-x5-hanging-decorations-mari-lwyd-witch-black-phillip-devil-lambton-worm-kelpie/hanging-multibuy-x5-hanging-4.jpg, multibuy-x5-hanging-decorations-mari-lwyd-witch-black-phillip-devil-lambton-worm-kelpie/hanging-multibuy-x5-hanging-5.jpg, multibuy-x5-hanging-decorations-mari-lwyd-witch-black-phillip-devil-lambton-worm-kelpie/hanging-multibuy-x5-hanging-6.jpg, multibuy-x5-hanging-decorations-mari-lwyd-witch-black-phillip-devil-lambton-worm-kelpie/hanging-multibuy-x5-hanging-7.jpg, multibuy-x5-hanging-decorations-mari-lwyd-witch-black-phillip-devil-lambton-worm-kelpie/hanging-multibuy-x5-hanging-8.jpg
-Sections: Hanging
+Main Image: images/hanging-multibuy-x5-hanging-1.jpg
+Images: images/hanging-multibuy-x5-hanging-2.jpg, images/hanging-multibuy-x5-hanging-3.jpg, images/hanging-multibuy-x5-hanging-4.jpg, images/hanging-multibuy-x5-hanging-5.jpg, images/hanging-multibuy-x5-hanging-6.jpg, images/hanging-multibuy-x5-hanging-7.jpg, images/hanging-multibuy-x5-hanging-8.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 55
 Stock: 10
@@ -2099,12 +2099,12 @@ The uptmost care is taken with the packaging so this piece will be suitable to s
 
 Please look at the video in this item's gallery for more of my Christmas 2025 decorations. Multibuy offers are available as other listings.
 ---
-Title: Wirdston-in-the-Wold A4  Print by Matt Willis - Village ~The Folklore Box ~ TheFolkloreBox ~ The Folk Lore Box ~ Shuck
-Main Image: wirdstoninthewold-a4-print-by-matt-willis-village-the-folklore-box-thefolklorebox-the-folk-lore-box-shuck/print-a4-wirdstoninthewold-by-matt-1.jpg
-Images: wirdstoninthewold-a4-print-by-matt-willis-village-the-folklore-box-thefolklorebox-the-folk-lore-box-shuck/print-a4-wirdstoninthewold-by-matt-2.jpg
-Sections: Print-a4
+Title: Wirdston-in-the-Wold A4 Print by Matt Willis - Village ~The Folklore Box ~ TheFolkloreBox ~ The Folk Lore Box ~ Shuck
+Main Image: images/print-a4-wirdstoninthewold-by-matt-1.jpg
+Images: images/print-a4-wirdstoninthewold-by-matt-2.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -2128,11 +2128,11 @@ Delivery: This A4 print comes  wrapped in a bio degradable cellophane bag, and s
 Thanks for looking!
 ---
 Title: Witch Riding Goat Tote Bag – British Folklore Art, Hand-Drawn Design
-Main Image: witch-riding-goat-tote-bag-british-folklore-art-handdrawn-design/item-witch-riding-goat-1.jpg
+Main Image: images/tote-witch-riding-goat-1.jpg
 Images: 
-Sections: Item
+Sections: Tote Bags
 Size: Standard
-Materials: Please Update
+Materials: 100% recycled cotton 170gsm
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
@@ -2148,11 +2148,11 @@ The WITCH RIDING GOAT is hand drawn by folklore illustrator Matt Willis and DTF 
 The TOTE BAG will be shipped in a plastic mailing bag to protect it on it's journey.
 ---
 Title: Birch Plywood Standing Decorations - Sunlit Stone, Mari Lwyd, Sheela Na Gig
-Main Image: birch-plywood-standing-decorations-sunlit-stone-mari-lwyd-sheela-na-gig/standing-standing-decorations-sunlit-1.jpg
-Images: birch-plywood-standing-decorations-sunlit-stone-mari-lwyd-sheela-na-gig/standing-standing-decorations-sunlit-2.jpg, birch-plywood-standing-decorations-sunlit-stone-mari-lwyd-sheela-na-gig/standing-standing-decorations-sunlit-3.jpg, birch-plywood-standing-decorations-sunlit-stone-mari-lwyd-sheela-na-gig/standing-standing-decorations-sunlit-4.jpg, birch-plywood-standing-decorations-sunlit-stone-mari-lwyd-sheela-na-gig/standing-standing-decorations-sunlit-5.jpg, birch-plywood-standing-decorations-sunlit-stone-mari-lwyd-sheela-na-gig/standing-standing-decorations-sunlit-6.jpg, birch-plywood-standing-decorations-sunlit-stone-mari-lwyd-sheela-na-gig/standing-standing-decorations-sunlit-7.jpg, birch-plywood-standing-decorations-sunlit-stone-mari-lwyd-sheela-na-gig/standing-standing-decorations-sunlit-8.jpg, birch-plywood-standing-decorations-sunlit-stone-mari-lwyd-sheela-na-gig/standing-standing-decorations-sunlit-9.jpg
-Sections: Standing
+Main Image: images/standing-standing-decorations-sunlit-1.jpg
+Images: images/standing-standing-decorations-sunlit-2.jpg, images/standing-standing-decorations-sunlit-3.jpg, images/standing-standing-decorations-sunlit-4.jpg, images/standing-standing-decorations-sunlit-5.jpg, images/standing-standing-decorations-sunlit-6.jpg, images/standing-standing-decorations-sunlit-7.jpg, images/standing-standing-decorations-sunlit-8.jpg, images/standing-standing-decorations-sunlit-9.jpg
+Sections: Standing Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 55
 Stock: 10
@@ -2174,11 +2174,11 @@ The uptmost care is taken with the packaging so this piece will be suitable to s
 The packaging may differ to the photographs depending on other items in the order. Thank you card and sticker may vary due to availability.
 ---
 Title: Mushroomist A5 Print, Folklore Art by Matt Willis
-Main Image: mushroomist-a5-print-folklore-art-by-matt-willis/print-a5-mushroomist-folklore-art-1.jpg
-Images: mushroomist-a5-print-folklore-art-by-matt-willis/print-a5-mushroomist-folklore-art-2.jpg, mushroomist-a5-print-folklore-art-by-matt-willis/print-a5-mushroomist-folklore-art-3.jpg, mushroomist-a5-print-folklore-art-by-matt-willis/print-a5-mushroomist-folklore-art-4.jpg
-Sections: Print-a5
+Main Image: images/print-a5-mushroomist-folklore-art-1.jpg
+Images: images/print-a5-mushroomist-folklore-art-2.jpg, images/print-a5-mushroomist-folklore-art-3.jpg, images/print-a5-mushroomist-folklore-art-4.jpg
+Sections: A5 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 8
 Stock: 10
@@ -2198,11 +2198,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Spring Heeled Jack Print - Terror of London Folklore, A4 Art
-Main Image: spring-heeled-jack-print-terror-of-london-folklore-a4-art/print-a4-spring-heeled-jack-1.jpg
-Images: spring-heeled-jack-print-terror-of-london-folklore-a4-art/print-a4-spring-heeled-jack-2.jpg
-Sections: Print-a4
+Main Image: images/print-a4-spring-heeled-jack-1.jpg
+Images: images/print-a4-spring-heeled-jack-2.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -2222,9 +2222,9 @@ All my prints are flat packed in a recyclable cellophane bags and are sent in ri
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Standing Stones and Cottage Folklore Roundel - Standing Stones - Altar decoration - engraved ornament - black painted birchwood
-Main Image: standing-stones-and-cottage-folklore-roundel-standing-stones-altar-decoration-engraved-ornament-black-painted-birchwood/roundel-standing-stones-cottage-1.jpg
-Images: standing-stones-and-cottage-folklore-roundel-standing-stones-altar-decoration-engraved-ornament-black-painted-birchwood/roundel-standing-stones-cottage-2.jpg, standing-stones-and-cottage-folklore-roundel-standing-stones-altar-decoration-engraved-ornament-black-painted-birchwood/roundel-standing-stones-cottage-3.jpg, standing-stones-and-cottage-folklore-roundel-standing-stones-altar-decoration-engraved-ornament-black-painted-birchwood/roundel-standing-stones-cottage-4.jpg
-Sections: Roundel
+Main Image: images/roundel-standing-stones-cottage-1.jpg
+Images: images/roundel-standing-stones-cottage-2.jpg, images/roundel-standing-stones-cottage-3.jpg, images/roundel-standing-stones-cottage-4.jpg
+Sections: The Folklore Boxes
 Size: Standard
 Materials: Please Update
 Postal Class: Second Class Small Parcel
@@ -2248,9 +2248,9 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Hellmouth Folklore Roundel - Devil - Altar decoration - engraved ornament - black painted birchwood
-Main Image: hellmouth-folklore-roundel-devil-altar-decoration-engraved-ornament-black-painted-birchwood/roundel-hellmouth-folklore-roundel-1.jpg
-Images: hellmouth-folklore-roundel-devil-altar-decoration-engraved-ornament-black-painted-birchwood/roundel-hellmouth-folklore-roundel-2.jpg, hellmouth-folklore-roundel-devil-altar-decoration-engraved-ornament-black-painted-birchwood/roundel-hellmouth-folklore-roundel-3.jpg, hellmouth-folklore-roundel-devil-altar-decoration-engraved-ornament-black-painted-birchwood/roundel-hellmouth-folklore-roundel-4.jpg
-Sections: Roundel
+Main Image: images/roundel-hellmouth-folklore-roundel-1.jpg
+Images: images/roundel-hellmouth-folklore-roundel-2.jpg, images/roundel-hellmouth-folklore-roundel-3.jpg, images/roundel-hellmouth-folklore-roundel-4.jpg
+Sections: The Folklore Boxes
 Size: Standard
 Materials: Please Update
 Postal Class: Second Class Small Parcel
@@ -2274,9 +2274,9 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Green Man Folklore Roundel - Altar decoration - engraved ornament - black painted birchwood
-Main Image: green-man-folklore-roundel-altar-decoration-engraved-ornament-black-painted-birchwood/roundel-green-man-folklore-1.jpg
-Images: green-man-folklore-roundel-altar-decoration-engraved-ornament-black-painted-birchwood/roundel-green-man-folklore-2.jpg, green-man-folklore-roundel-altar-decoration-engraved-ornament-black-painted-birchwood/roundel-green-man-folklore-3.jpg, green-man-folklore-roundel-altar-decoration-engraved-ornament-black-painted-birchwood/roundel-green-man-folklore-4.jpg
-Sections: Roundel
+Main Image: images/roundel-green-man-folklore-1.jpg
+Images: images/roundel-green-man-folklore-2.jpg, images/roundel-green-man-folklore-3.jpg, images/roundel-green-man-folklore-4.jpg
+Sections: The Folklore Boxes
 Size: Standard
 Materials: Please Update
 Postal Class: Second Class Small Parcel
@@ -2300,9 +2300,9 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Multibuy x3 Folklore Roundel Ornament – Black Painted Birchwood Decoration
-Main Image: multibuy-x3-folklore-roundel-ornament-black-painted-birchwood-decoration/roundel-multibuy-x3-folklore-1.jpg
-Images: multibuy-x3-folklore-roundel-ornament-black-painted-birchwood-decoration/roundel-multibuy-x3-folklore-2.jpg, multibuy-x3-folklore-roundel-ornament-black-painted-birchwood-decoration/roundel-multibuy-x3-folklore-3.jpg, multibuy-x3-folklore-roundel-ornament-black-painted-birchwood-decoration/roundel-multibuy-x3-folklore-4.jpg, multibuy-x3-folklore-roundel-ornament-black-painted-birchwood-decoration/roundel-multibuy-x3-folklore-5.jpg, multibuy-x3-folklore-roundel-ornament-black-painted-birchwood-decoration/roundel-multibuy-x3-folklore-6.jpg, multibuy-x3-folklore-roundel-ornament-black-painted-birchwood-decoration/roundel-multibuy-x3-folklore-7.jpg, multibuy-x3-folklore-roundel-ornament-black-painted-birchwood-decoration/roundel-multibuy-x3-folklore-8.jpg, multibuy-x3-folklore-roundel-ornament-black-painted-birchwood-decoration/roundel-multibuy-x3-folklore-9.jpg, multibuy-x3-folklore-roundel-ornament-black-painted-birchwood-decoration/roundel-multibuy-x3-folklore-10.jpg
-Sections: Roundel
+Main Image: images/roundel-multibuy-x3-folklore-1.jpg
+Images: images/roundel-multibuy-x3-folklore-2.jpg, images/roundel-multibuy-x3-folklore-3.jpg, images/roundel-multibuy-x3-folklore-4.jpg, images/roundel-multibuy-x3-folklore-5.jpg, images/roundel-multibuy-x3-folklore-6.jpg, images/roundel-multibuy-x3-folklore-7.jpg, images/roundel-multibuy-x3-folklore-8.jpg, images/roundel-multibuy-x3-folklore-9.jpg, images/roundel-multibuy-x3-folklore-10.jpg
+Sections: The Folklore Boxes
 Size: Standard
 Materials: Please Update
 Postal Class: Second Class Small Parcel
@@ -2338,11 +2338,11 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Standing Stones Art Print: Ancient Village Illustration (A4)
-Main Image: standing-stones-art-print-ancient-village-illustration-a4/print-a4-standing-stones-art-1.jpg
-Images: standing-stones-art-print-ancient-village-illustration-a4/print-a4-standing-stones-art-2.jpg, standing-stones-art-print-ancient-village-illustration-a4/print-a4-standing-stones-art-3.jpg, standing-stones-art-print-ancient-village-illustration-a4/print-a4-standing-stones-art-4.jpg, standing-stones-art-print-ancient-village-illustration-a4/print-a4-standing-stones-art-5.jpg
-Sections: Print-a4
+Main Image: images/print-a4-standing-stones-art-1.jpg
+Images: images/print-a4-standing-stones-art-2.jpg, images/print-a4-standing-stones-art-3.jpg, images/print-a4-standing-stones-art-4.jpg, images/print-a4-standing-stones-art-5.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -2364,11 +2364,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Forbidden Tome A4 Print – British Folklore Art by Matt Willis
-Main Image: forbidden-tome-a4-print-british-folklore-art-by-matt-willis/print-a4-forbidden-tome-british-1.jpg
-Images: forbidden-tome-a4-print-british-folklore-art-by-matt-willis/print-a4-forbidden-tome-british-2.jpg, forbidden-tome-a4-print-british-folklore-art-by-matt-willis/print-a4-forbidden-tome-british-3.jpg
-Sections: Print-a4
+Main Image: images/print-a4-forbidden-tome-british-1.jpg
+Images: images/print-a4-forbidden-tome-british-2.jpg, images/print-a4-forbidden-tome-british-3.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -2388,9 +2388,9 @@ All my prints are flat packed in a recyclable cellophane bags and are sent in ri
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Mother Gabley Art Print – Norfolk Folklore, Gothic Illustration
-Main Image: mother-gabley-art-print-norfolk-folklore-gothic-illustration/item-mother-gabley-art-1.jpg
-Images: mother-gabley-art-print-norfolk-folklore-gothic-illustration/item-mother-gabley-art-2.jpg
-Sections: Item
+Main Image: images/roundel-mother-gabley-art-1.jpg
+Images: images/roundel-mother-gabley-art-2.jpg
+Sections: The Folklore Boxes
 Size: Standard
 Materials: Please Update
 Postal Class: Second Class Small Parcel
@@ -2412,11 +2412,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you buy other flat items from my shop at the same time, these will be packed together where possible eg prints stickers cards.  If you buy a 3D item with dimension to it, eg hanging decoration these will need to be sent out separately, incurring additional postage fees.  This really is to make ensure your packaging is protecting your items.
 ---
 Title: Snow Spell Witch Ornament - Laser Cut Birch Plywood Christmas Decoration
-Main Image: snow-spell-witch-ornament-laser-cut-birch-plywood-christmas-decoration/standing-snow-spell-witch-1.jpg
-Images: snow-spell-witch-ornament-laser-cut-birch-plywood-christmas-decoration/standing-snow-spell-witch-2.jpg, snow-spell-witch-ornament-laser-cut-birch-plywood-christmas-decoration/standing-snow-spell-witch-3.jpg
-Sections: Standing
+Main Image: images/hanging-snow-spell-witch-1.jpg
+Images: images/hanging-snow-spell-witch-2.jpg, images/hanging-snow-spell-witch-3.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
@@ -2438,11 +2438,11 @@ The uptmost care is taken with the packaging so this piece will be suitable to s
 Please look at the video in this item's gallery for more of my Christmas 2025 decorations. Multibuy offers are available as other listings.
 ---
 Title: Mermaid of Marden A4 Print – Folklore Art on 350gsm Card
-Main Image: mermaid-of-marden-a4-print-folklore-art-on-350gsm-card/print-a4-mermaid-of-marden-1.jpg
-Images: mermaid-of-marden-a4-print-folklore-art-on-350gsm-card/print-a4-mermaid-of-marden-2.jpg
-Sections: Print-a4
+Main Image: images/print-a4-mermaid-of-marden-1.jpg
+Images: images/print-a4-mermaid-of-marden-2.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -2462,11 +2462,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Sun Dolmen Print, Matt Willis Folklore Art (A5)
-Main Image: sun-dolmen-print-matt-willis-folklore-art-a5/print-a5-sun-dolmen-matt-1.jpg
-Images: sun-dolmen-print-matt-willis-folklore-art-a5/print-a5-sun-dolmen-matt-2.jpg, sun-dolmen-print-matt-willis-folklore-art-a5/print-a5-sun-dolmen-matt-3.jpg
-Sections: Print-a5
+Main Image: images/print-a5-sun-dolmen-matt-1.jpg
+Images: images/print-a5-sun-dolmen-matt-2.jpg, images/print-a5-sun-dolmen-matt-3.jpg
+Sections: A5 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 8
 Stock: 10
@@ -2488,11 +2488,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Shuck Zine Cover Print - Feasting, Matt Willis Illustration
-Main Image: shuck-zine-cover-print-feasting-matt-willis-illustration/zine-shuck-zine-cover-1.jpg
-Images: shuck-zine-cover-print-feasting-matt-willis-illustration/zine-shuck-zine-cover-2.jpg, shuck-zine-cover-print-feasting-matt-willis-illustration/zine-shuck-zine-cover-3.jpg
-Sections: Zine
+Main Image: images/zine-shuck-zine-cover-1.jpg
+Images: images/zine-shuck-zine-cover-2.jpg, images/zine-shuck-zine-cover-3.jpg
+Sections: Zines
 Size: Standard
-Materials: Please Update
+Materials: 250gsm silk cover, 130 gsm silk pages, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -2512,11 +2512,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you buy other flat items from my shop at the same time, these will be packed together where possible eg prints stickers cards.  If you buy a 3D item with dimension to it, eg hanging decoration these will need to be sent out separately, incurring additional postage fees.  This really is to make ensure your packaging is protecting your items.
 ---
 Title: Mari Lwyd Horse Skull Hanging Decoration – Welsh Folklore Art
-Main Image: mari-lwyd-horse-skull-hanging-decoration-welsh-folklore-art/hanging-mari-lwyd-horse-1.jpg
-Images: mari-lwyd-horse-skull-hanging-decoration-welsh-folklore-art/hanging-mari-lwyd-horse-2.jpg, mari-lwyd-horse-skull-hanging-decoration-welsh-folklore-art/hanging-mari-lwyd-horse-3.jpg, mari-lwyd-horse-skull-hanging-decoration-welsh-folklore-art/hanging-mari-lwyd-horse-4.jpg
-Sections: Hanging
+Main Image: images/hanging-mari-lwyd-horse-1.jpg
+Images: images/hanging-mari-lwyd-horse-2.jpg, images/hanging-mari-lwyd-horse-3.jpg, images/hanging-mari-lwyd-horse-4.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
@@ -2536,11 +2536,11 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Crow’s Head Birch Plywood Pin Badge
-Main Image: crows-head-birch-plywood-pin-badge/badge-crows-head-1.jpg
-Images: crows-head-birch-plywood-pin-badge/badge-crows-head-2.jpg, crows-head-birch-plywood-pin-badge/badge-crows-head-3.jpg, crows-head-birch-plywood-pin-badge/badge-crows-head-4.jpg, crows-head-birch-plywood-pin-badge/badge-crows-head-5.jpg
-Sections: Badge
+Main Image: images/badge-crows-head-1.jpg
+Images: images/badge-crows-head-2.jpg, images/badge-crows-head-3.jpg, images/badge-crows-head-4.jpg, images/badge-crows-head-5.jpg
+Sections: Badges
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 6
 Stock: 10
@@ -2560,9 +2560,9 @@ Please look at my other listings for similar items and save on shipping. The pho
 Thank you for taking the time to look at my listings.
 ---
 Title: Black Shuck Hanging Clock - The devil dog - The folklore box - assembled
-Main Image: black-shuck-hanging-clock-the-devil-dog-the-folklore-box-assembled/clock-black-shuck-hanging-1.jpg
-Images: black-shuck-hanging-clock-the-devil-dog-the-folklore-box-assembled/clock-black-shuck-hanging-2.jpg, black-shuck-hanging-clock-the-devil-dog-the-folklore-box-assembled/clock-black-shuck-hanging-3.jpg, black-shuck-hanging-clock-the-devil-dog-the-folklore-box-assembled/clock-black-shuck-hanging-4.jpg, black-shuck-hanging-clock-the-devil-dog-the-folklore-box-assembled/clock-black-shuck-hanging-5.jpg, black-shuck-hanging-clock-the-devil-dog-the-folklore-box-assembled/clock-black-shuck-hanging-6.jpg, black-shuck-hanging-clock-the-devil-dog-the-folklore-box-assembled/clock-black-shuck-hanging-7.jpg, black-shuck-hanging-clock-the-devil-dog-the-folklore-box-assembled/clock-black-shuck-hanging-8.jpg
-Sections: Clock
+Main Image: images/clock-black-shuck-hanging-1.jpg
+Images: images/clock-black-shuck-hanging-2.jpg, images/clock-black-shuck-hanging-3.jpg, images/clock-black-shuck-hanging-4.jpg, images/clock-black-shuck-hanging-5.jpg, images/clock-black-shuck-hanging-6.jpg, images/clock-black-shuck-hanging-7.jpg, images/clock-black-shuck-hanging-8.jpg
+Sections: Clocks
 Size: Standard
 Materials: Please Update
 Postal Class: Second Class Small Parcel
@@ -2582,11 +2582,11 @@ The clock mechanism requires 1xAA battery which is not included.
 This will be sent assembled in a cardboard PIP box with plenty of packaging to protect it on it's journey to you.
 ---
 Title: Dog Demon Birch Plywood Pin Badge – Medieval Folk Art
-Main Image: dog-demon-birch-plywood-pin-badge-medieval-folk-art/badge-dog-demon-medieval-1.jpg
-Images: dog-demon-birch-plywood-pin-badge-medieval-folk-art/badge-dog-demon-medieval-2.jpg, dog-demon-birch-plywood-pin-badge-medieval-folk-art/badge-dog-demon-medieval-3.jpg, dog-demon-birch-plywood-pin-badge-medieval-folk-art/badge-dog-demon-medieval-4.jpg
-Sections: Badge
+Main Image: images/badge-dog-demon-medieval-1.jpg
+Images: images/badge-dog-demon-medieval-2.jpg, images/badge-dog-demon-medieval-3.jpg, images/badge-dog-demon-medieval-4.jpg
+Sections: Badges
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -2606,11 +2606,11 @@ Please look at my other listings for similar items and save on shipping. The pho
 Thank you for taking the time to look at my listings.
 ---
 Title: Necromancer Art Print – Witchcraft Spellcaster Illustration (A4)
-Main Image: necromancer-art-print-witchcraft-spellcaster-illustration-a4/print-a4-necromancer-art-witchcraft-1.jpg
-Images: necromancer-art-print-witchcraft-spellcaster-illustration-a4/print-a4-necromancer-art-witchcraft-2.jpg
-Sections: Print-a4
+Main Image: images/print-a4-necromancer-art-witchcraft-1.jpg
+Images: images/print-a4-necromancer-art-witchcraft-2.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -2630,11 +2630,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Green Man Hag Stone A5 Folklore Art Print
-Main Image: green-man-hag-stone-a5-folklore-art-print/print-a5-green-man-hag-1.jpg
-Images: green-man-hag-stone-a5-folklore-art-print/print-a5-green-man-hag-2.jpg, green-man-hag-stone-a5-folklore-art-print/print-a5-green-man-hag-3.jpg
-Sections: Print-a5
+Main Image: images/print-a5-green-man-hag-1.jpg
+Images: images/print-a5-green-man-hag-2.jpg, images/print-a5-green-man-hag-3.jpg
+Sections: A5 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 8
 Stock: 10
@@ -2656,11 +2656,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Memento Mori Angel of Death A4 Print by Matt Willis - The Folklore Box ~ Thefolklorebox ~ The Folk Lore Box ~ Shuck ~ Gothic Horror ~ Angel
-Main Image: memento-mori-angel-of-death-a4-print-by-matt-willis-the-folklore-box-thefolklorebox-the-folk-lore-box-shuck-gothic-horror-angel/print-a4-memento-mori-angel-1.jpg
-Images: memento-mori-angel-of-death-a4-print-by-matt-willis-the-folklore-box-thefolklorebox-the-folk-lore-box-shuck-gothic-horror-angel/print-a4-memento-mori-angel-2.jpg, memento-mori-angel-of-death-a4-print-by-matt-willis-the-folklore-box-thefolklorebox-the-folk-lore-box-shuck-gothic-horror-angel/print-a4-memento-mori-angel-3.jpg, memento-mori-angel-of-death-a4-print-by-matt-willis-the-folklore-box-thefolklorebox-the-folk-lore-box-shuck-gothic-horror-angel/print-a4-memento-mori-angel-4.jpg
-Sections: Print-a4
+Main Image: images/print-a4-memento-mori-angel-1.jpg
+Images: images/print-a4-memento-mori-angel-2.jpg, images/print-a4-memento-mori-angel-3.jpg, images/print-a4-memento-mori-angel-4.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -2680,9 +2680,9 @@ If you purchase along with other items from my shop and a "do not bend envelope"
 If you are buying from outside mainland UK, you can contact me for a postal quote for combined items.
 ---
 Title: Lambton Worm Print – County Durham Legend, Folklore Dragon
-Main Image: lambton-worm-print-county-durham-legend-folklore-dragon/item-lambton-worm-county-1.jpg
-Images: lambton-worm-print-county-durham-legend-folklore-dragon/item-lambton-worm-county-2.jpg, lambton-worm-print-county-durham-legend-folklore-dragon/item-lambton-worm-county-3.jpg
-Sections: Item
+Main Image: images/roundel-lambton-worm-county-1.jpg
+Images: images/roundel-lambton-worm-county-2.jpg, images/roundel-lambton-worm-county-3.jpg
+Sections: The Folklore Boxes
 Size: Standard
 Materials: Please Update
 Postal Class: Second Class Small Parcel
@@ -2704,9 +2704,9 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Lambton Worm Print – British Folklore Dragon, Matt Willis Art
-Main Image: lambton-worm-print-british-folklore-dragon-matt-willis-art/item-lambton-worm-british-1.jpg
-Images: lambton-worm-print-british-folklore-dragon-matt-willis-art/item-lambton-worm-british-2.jpg, lambton-worm-print-british-folklore-dragon-matt-willis-art/item-lambton-worm-british-3.jpg, lambton-worm-print-british-folklore-dragon-matt-willis-art/item-lambton-worm-british-4.jpg
-Sections: Item
+Main Image: images/roundel-lambton-worm-british-1.jpg
+Images: images/roundel-lambton-worm-british-2.jpg, images/roundel-lambton-worm-british-3.jpg, images/roundel-lambton-worm-british-4.jpg
+Sections: The Folklore Boxes
 Size: Standard
 Materials: Please Update
 Postal Class: Second Class Small Parcel
@@ -2730,11 +2730,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Angel Toes A4 Print - Gothic Font Carving Art
-Main Image: angel-toes-a4-print-gothic-font-carving-art/print-a4-angel-toes-gothic-1.jpg
-Images: angel-toes-a4-print-gothic-font-carving-art/print-a4-angel-toes-gothic-2.jpg
-Sections: Print-a4
+Main Image: images/print-a4-angel-toes-gothic-1.jpg
+Images: images/print-a4-angel-toes-gothic-2.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -2754,11 +2754,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Spring Heeled Jack A3 Print – British Folklore Art
-Main Image: spring-heeled-jack-a3-print-british-folklore-art/print-a3-spring-heeled-jack-1.jpg
-Images: spring-heeled-jack-a3-print-british-folklore-art/print-a3-spring-heeled-jack-2.jpg
-Sections: Print-a3
+Main Image: images/print-a3-spring-heeled-jack-1.jpg
+Images: images/print-a3-spring-heeled-jack-2.jpg
+Sections: A3 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 16
 Stock: 10
@@ -2778,11 +2778,11 @@ All my prints are flat packed in a recyclable cellophane bags and are sent in ri
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Botanist A4 Print – Man of the Countryside Art
-Main Image: botanist-a4-print-man-of-the-countryside-art/print-a4-botanist-man-of-1.jpg
-Images: botanist-a4-print-man-of-the-countryside-art/print-a4-botanist-man-of-2.jpg
-Sections: Print-a4
+Main Image: images/print-a4-botanist-man-of-1.jpg
+Images: images/print-a4-botanist-man-of-2.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -2806,11 +2806,11 @@ Delivery: This A4 print comes  wrapped in a bio degradable cellophane bag, and s
 Thanks for looking!
 ---
 Title: Henge Sun Stone A5 Print by Matt Willis
-Main Image: henge-sun-stone-a5-print-by-matt-willis/print-a5-henge-sun-stone-1.jpg
-Images: henge-sun-stone-a5-print-by-matt-willis/print-a5-henge-sun-stone-2.jpg, henge-sun-stone-a5-print-by-matt-willis/print-a5-henge-sun-stone-3.jpg, henge-sun-stone-a5-print-by-matt-willis/print-a5-henge-sun-stone-4.jpg
-Sections: Print-a5
+Main Image: images/print-a5-henge-sun-stone-1.jpg
+Images: images/print-a5-henge-sun-stone-2.jpg, images/print-a5-henge-sun-stone-3.jpg, images/print-a5-henge-sun-stone-4.jpg
+Sections: A5 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 8
 Stock: 10
@@ -2832,11 +2832,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Memento Mori A5 Print – Gothic Hourglass Skull Art
-Main Image: memento-mori-a5-print-gothic-hourglass-skull-art/print-a5-memento-mori-gothic-1.jpg
-Images: memento-mori-a5-print-gothic-hourglass-skull-art/print-a5-memento-mori-gothic-2.jpg, memento-mori-a5-print-gothic-hourglass-skull-art/print-a5-memento-mori-gothic-3.jpg, memento-mori-a5-print-gothic-hourglass-skull-art/print-a5-memento-mori-gothic-4.jpg
-Sections: Print-a5
+Main Image: images/print-a5-memento-mori-gothic-1.jpg
+Images: images/print-a5-memento-mori-gothic-2.jpg, images/print-a5-memento-mori-gothic-3.jpg, images/print-a5-memento-mori-gothic-4.jpg
+Sections: A5 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 8
 Stock: 10
@@ -2860,11 +2860,11 @@ If you purchase along with other items from my shop and a "do not bend envelope"
 IF YOU ARE SHOPPING OUTSIDE OF MAINLAND UK, PLEASE CONTACT ME AND I CAN GIVE YOU A MORE ACCURATE POSTAL CHARGE.
 ---
 Title: Possessed Victorian Woman Art Print, Folklore Illustration (A4)
-Main Image: possessed-victorian-woman-art-print-folklore-illustration-a4/print-a4-possessed-victorian-woman-1.jpg
-Images: possessed-victorian-woman-art-print-folklore-illustration-a4/print-a4-possessed-victorian-woman-2.jpg
-Sections: Print-a4
+Main Image: images/print-a4-possessed-victorian-woman-1.jpg
+Images: images/print-a4-possessed-victorian-woman-2.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -2888,9 +2888,9 @@ Delivery: This A4 print comes  wrapped in a bio degradable cellophane bag, and s
 Thanks for looking!
 ---
 Title: Memento Mori Art Box – Gothic Skull, Moth Prints & Stickers
-Main Image: memento-mori-art-box-gothic-skull-moth-prints-stickers/item-memento-mori-art-1.jpg
-Images: memento-mori-art-box-gothic-skull-moth-prints-stickers/item-memento-mori-art-2.jpg, memento-mori-art-box-gothic-skull-moth-prints-stickers/item-memento-mori-art-3.jpg, memento-mori-art-box-gothic-skull-moth-prints-stickers/item-memento-mori-art-4.jpg, memento-mori-art-box-gothic-skull-moth-prints-stickers/item-memento-mori-art-5.jpg, memento-mori-art-box-gothic-skull-moth-prints-stickers/item-memento-mori-art-6.jpg
-Sections: Item
+Main Image: images/roundel-memento-mori-art-1.jpg
+Images: images/roundel-memento-mori-art-2.jpg, images/roundel-memento-mori-art-3.jpg, images/roundel-memento-mori-art-4.jpg, images/roundel-memento-mori-art-5.jpg, images/roundel-memento-mori-art-6.jpg
+Sections: The Folklore Boxes
 Size: Standard
 Materials: Please Update
 Postal Class: Second Class Small Parcel
@@ -2921,11 +2921,11 @@ If you are buying from outside mainland UK, you can contact me for an accurate p
 IF YOU WANT TO SWAP OUT ONE PRODUCT DESIGN FOR ANOTHER THEN PLEASE MESSAGE ME AT POINT OF PURCHASE AND I'LL DO THIS FOR YOU.  THE PRODUCT MUST BE IN THE SAME FORMAT, IE A5 PRINT FOR ANOTHER DESIGN A5 PRINT AND THEY MUST BE WITHIN THE MEMENTO MORI RANGE.
 ---
 Title: The Wickerman A4 Print - Lord Summerisle, Folklore Art
-Main Image: the-wickerman-a4-print-lord-summerisle-folklore-art/print-a4-wickerman-lord-summerisle-1.jpg
-Images: the-wickerman-a4-print-lord-summerisle-folklore-art/print-a4-wickerman-lord-summerisle-2.jpg, the-wickerman-a4-print-lord-summerisle-folklore-art/print-a4-wickerman-lord-summerisle-3.jpg, the-wickerman-a4-print-lord-summerisle-folklore-art/print-a4-wickerman-lord-summerisle-4.jpg
-Sections: Print-a4
+Main Image: images/print-a4-wickerman-lord-summerisle-1.jpg
+Images: images/print-a4-wickerman-lord-summerisle-2.jpg, images/print-a4-wickerman-lord-summerisle-3.jpg, images/print-a4-wickerman-lord-summerisle-4.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -2949,11 +2949,11 @@ Delivery: This A4 print comes  wrapped in a bio degradable cellophane bag, and s
 Thanks for looking!
 ---
 Title: Green Man Greetings Card - Pagan Folklore Art
-Main Image: green-man-greetings-card-pagan-folklore-art/card-green-man-greetings-1.jpg
-Images: green-man-greetings-card-pagan-folklore-art/card-green-man-greetings-2.jpg
-Sections: Card
+Main Image: images/card-green-man-greetings-1.jpg
+Images: images/card-green-man-greetings-2.jpg
+Sections: Greetings Cards
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 3.5
 Stock: 10
@@ -2971,11 +2971,11 @@ My greetings cards are hand drawn and professionally printed onto 350gsm silk co
 All my cards come in a recyclable cellophane bag and are sent in rigid protective packaging to ensure they arrive in pristine condition.
 ---
 Title: The Cailleach A4 Print – Gaelic Winter Folklore Art
-Main Image: the-cailleach-a4-print-gaelic-winter-folklore-art/print-a4-cailleach-gaelic-winter-1.jpg
-Images: the-cailleach-a4-print-gaelic-winter-folklore-art/print-a4-cailleach-gaelic-winter-2.jpg
-Sections: Print-a4
+Main Image: images/print-a4-cailleach-gaelic-winter-1.jpg
+Images: images/print-a4-cailleach-gaelic-winter-2.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -2995,11 +2995,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Lunantisidhe Moon Fairy A4 Print – Blackthorn Folklore Art
-Main Image: lunantisidhe-moon-fairy-a4-print-blackthorn-folklore-art/print-a4-lunantisidhe-moon-fairy-1.jpg
-Images: lunantisidhe-moon-fairy-a4-print-blackthorn-folklore-art/print-a4-lunantisidhe-moon-fairy-2.jpg
-Sections: Print-a4
+Main Image: images/print-a4-lunantisidhe-moon-fairy-1.jpg
+Images: images/print-a4-lunantisidhe-moon-fairy-2.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -3019,11 +3019,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Cursed Map of Norfolk Print – Illustrated Folklore Art, A3
-Main Image: cursed-map-of-norfolk-print-illustrated-folklore-art-a3/print-a3-cursed-map-of-1.jpg
-Images: cursed-map-of-norfolk-print-illustrated-folklore-art-a3/print-a3-cursed-map-of-2.jpg, cursed-map-of-norfolk-print-illustrated-folklore-art-a3/print-a3-cursed-map-of-3.jpg
-Sections: Print-a3
+Main Image: images/print-a3-cursed-map-of-1.jpg
+Images: images/print-a3-cursed-map-of-2.jpg, images/print-a3-cursed-map-of-3.jpg
+Sections: A3 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 16
 Stock: 10
@@ -3045,11 +3045,11 @@ If you buy other flat items from my shop at the same time, these will be packed 
 INTERNATIONAL BUYERS:  IF YOU LIVE OUTSIDE OF MAINLAND UK AND WOULD LIKE TO PURCHASE A PRINT, NO PROBS.  PLEASE CONTACT ME AND I CAN PROVIDE YOU WITH A BESPOKE POSTAGE COST.
 ---
 Title: Krampus Face Christmas Decoration, Laser Cut Birch Plywood
-Main Image: krampus-face-christmas-decoration-laser-cut-birch-plywood/standing-krampus-face-christmas-1.jpg
-Images: krampus-face-christmas-decoration-laser-cut-birch-plywood/standing-krampus-face-christmas-2.jpg, krampus-face-christmas-decoration-laser-cut-birch-plywood/standing-krampus-face-christmas-3.jpg, krampus-face-christmas-decoration-laser-cut-birch-plywood/standing-krampus-face-christmas-4.jpg
-Sections: Standing
+Main Image: images/hanging-krampus-face-christmas-1.jpg
+Images: images/hanging-krampus-face-christmas-2.jpg, images/hanging-krampus-face-christmas-3.jpg, images/hanging-krampus-face-christmas-4.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
@@ -3071,11 +3071,11 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Nuckelavee Print – Matt Willis, Scottish Folklore Art (A4)
-Main Image: nuckelavee-print-matt-willis-scottish-folklore-art-a4/print-a4-nuckelavee-matt-willis-1.jpg
-Images: nuckelavee-print-matt-willis-scottish-folklore-art-a4/print-a4-nuckelavee-matt-willis-2.jpg
-Sections: Print-a4
+Main Image: images/print-a4-nuckelavee-matt-willis-1.jpg
+Images: images/print-a4-nuckelavee-matt-willis-2.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -3095,9 +3095,9 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Hillstones Folklore Roundel - Standing Stones - Altar decoration - engraved ornament - black painted birchwood
-Main Image: hillstones-folklore-roundel-standing-stones-altar-decoration-engraved-ornament-black-painted-birchwood/roundel-hillstones-folklore-roundel-1.jpg
-Images: hillstones-folklore-roundel-standing-stones-altar-decoration-engraved-ornament-black-painted-birchwood/roundel-hillstones-folklore-roundel-2.jpg, hillstones-folklore-roundel-standing-stones-altar-decoration-engraved-ornament-black-painted-birchwood/roundel-hillstones-folklore-roundel-3.jpg, hillstones-folklore-roundel-standing-stones-altar-decoration-engraved-ornament-black-painted-birchwood/roundel-hillstones-folklore-roundel-4.jpg
-Sections: Roundel
+Main Image: images/roundel-hillstones-folklore-roundel-1.jpg
+Images: images/roundel-hillstones-folklore-roundel-2.jpg, images/roundel-hillstones-folklore-roundel-3.jpg, images/roundel-hillstones-folklore-roundel-4.jpg
+Sections: The Folklore Boxes
 Size: Standard
 Materials: Please Update
 Postal Class: Second Class Small Parcel
@@ -3121,11 +3121,11 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Wyvern Art Print, Dragon on Standing Stone, Fantasy Illustration
-Main Image: wyvern-art-print-dragon-on-standing-stone-fantasy-illustration/item-wyvern-art-dragon-1.jpg
-Images: wyvern-art-print-dragon-on-standing-stone-fantasy-illustration/item-wyvern-art-dragon-2.jpg, wyvern-art-print-dragon-on-standing-stone-fantasy-illustration/item-wyvern-art-dragon-3.jpg, wyvern-art-print-dragon-on-standing-stone-fantasy-illustration/item-wyvern-art-dragon-4.jpg, wyvern-art-print-dragon-on-standing-stone-fantasy-illustration/item-wyvern-art-dragon-5.jpg
-Sections: Item
+Main Image: images/standing-wyvern-art-dragon-1.jpg
+Images: images/standing-wyvern-art-dragon-2.jpg, images/standing-wyvern-art-dragon-3.jpg, images/standing-wyvern-art-dragon-4.jpg, images/standing-wyvern-art-dragon-5.jpg
+Sections: Standing Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -3147,11 +3147,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Happisburgh Torso A4 Print - Matt Willis, Gothic Art
-Main Image: happisburgh-torso-a4-print-matt-willis-gothic-art/print-a4-happisburgh-torso-matt-1.jpg
-Images: happisburgh-torso-a4-print-matt-willis-gothic-art/print-a4-happisburgh-torso-matt-2.jpg
-Sections: Print-a4
+Main Image: images/print-a4-happisburgh-torso-matt-1.jpg
+Images: images/print-a4-happisburgh-torso-matt-2.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -3171,11 +3171,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you buy other flat items from my shop at the same time, these will be packed together where possible eg prints stickers cards.  If you buy a 3D item with dimension to it, eg hanging decoration these will need to be sent out separately, incurring additional postage fees.  This really is to make ensure your packaging is protecting your items.
 ---
 Title: Folklore Girl A4 Art Print – Gothic Witch, Esoteric Illustration
-Main Image: folklore-girl-a4-art-print-gothic-witch-esoteric-illustration/print-a4-folklore-girl-art-1.jpg
-Images: folklore-girl-a4-art-print-gothic-witch-esoteric-illustration/print-a4-folklore-girl-art-2.jpg
-Sections: Print-a4
+Main Image: images/print-a4-folklore-girl-art-1.jpg
+Images: images/print-a4-folklore-girl-art-2.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -3195,11 +3195,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Imbolc featuring Brigit A3 Print – Folklore Art - The Folklore Box
-Main Image: imbolc-featuring-brigit-a3-print-folklore-art-the-folklore-box/print-a3-imbolc-featuring-brigit-1.jpg
-Images: imbolc-featuring-brigit-a3-print-folklore-art-the-folklore-box/print-a3-imbolc-featuring-brigit-2.jpg, imbolc-featuring-brigit-a3-print-folklore-art-the-folklore-box/print-a3-imbolc-featuring-brigit-3.jpg, imbolc-featuring-brigit-a3-print-folklore-art-the-folklore-box/print-a3-imbolc-featuring-brigit-4.jpg
-Sections: Print-a3
+Main Image: images/print-a3-imbolc-featuring-brigit-1.jpg
+Images: images/print-a3-imbolc-featuring-brigit-2.jpg, images/print-a3-imbolc-featuring-brigit-3.jpg, images/print-a3-imbolc-featuring-brigit-4.jpg
+Sections: A3 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 16
 Stock: 10
@@ -3219,11 +3219,11 @@ If you buy other flat items from my shop at the same time, these will be packed 
 PLEASE NOTE THAT THIS LISTING IS FOR A PHYSICAL PAPER PRINT ONLY
 ---
 Title: Jack Valentine Illustration Print - Shuck Zine Cover Art
-Main Image: jack-valentine-illustration-print-shuck-zine-cover-art/zine-jack-valentine-illustration-1.jpg
-Images: jack-valentine-illustration-print-shuck-zine-cover-art/zine-jack-valentine-illustration-2.jpg, jack-valentine-illustration-print-shuck-zine-cover-art/zine-jack-valentine-illustration-3.jpg
-Sections: Zine
+Main Image: images/zine-jack-valentine-illustration-1.jpg
+Images: images/zine-jack-valentine-illustration-2.jpg, images/zine-jack-valentine-illustration-3.jpg
+Sections: Zines
 Size: Standard
-Materials: Please Update
+Materials: 250gsm silk cover, 130 gsm silk pages, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -3246,11 +3246,11 @@ If you buy other flat items from my shop at the same time, these will be packed 
 INTERNATIONAL BUYERS:  IF YOU LIVE OUTSIDE OF MAINLAND UK AND WOULD LIKE TO PURCHASE A PRINT, NO PROBS.  PLEASE CONTACT ME AND I CAN PROVIDE YOU WITH A BESPOKE POSTAGE COST.
 ---
 Title: Green Man Christmas Decoration – Laser Cut Birch Plywood Ornament
-Main Image: green-man-christmas-decoration-laser-cut-birch-plywood-ornament/standing-green-man-christmas-1.jpg
-Images: green-man-christmas-decoration-laser-cut-birch-plywood-ornament/standing-green-man-christmas-2.jpg, green-man-christmas-decoration-laser-cut-birch-plywood-ornament/standing-green-man-christmas-3.jpg, green-man-christmas-decoration-laser-cut-birch-plywood-ornament/standing-green-man-christmas-4.jpg
-Sections: Standing
+Main Image: images/hanging-green-man-christmas-1.jpg
+Images: images/hanging-green-man-christmas-2.jpg, images/hanging-green-man-christmas-3.jpg, images/hanging-green-man-christmas-4.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
@@ -3272,11 +3272,11 @@ The uptmost care is taken with the packaging so this piece will be suitable to s
 Please look at the video in this item's gallery for more of my Christmas 2025 decorations. Multibuy offers are available as other listings.
 ---
 Title: Dragon Bench End Pin Badge - Laser Cut Birch Plywood
-Main Image: dragon-bench-end-pin-badge-laser-cut-birch-plywood/badge-dragon-bench-end-1.jpg
-Images: dragon-bench-end-pin-badge-laser-cut-birch-plywood/badge-dragon-bench-end-2.jpg, dragon-bench-end-pin-badge-laser-cut-birch-plywood/badge-dragon-bench-end-3.jpg, dragon-bench-end-pin-badge-laser-cut-birch-plywood/badge-dragon-bench-end-4.jpg
-Sections: Badge
+Main Image: images/badge-dragon-bench-end-1.jpg
+Images: images/badge-dragon-bench-end-2.jpg, images/badge-dragon-bench-end-3.jpg, images/badge-dragon-bench-end-4.jpg
+Sections: Badges
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -3298,11 +3298,11 @@ Please look at my other listings for similar items and save on shipping. The pho
 Thank you for taking the time to look at my listings.
 ---
 Title: Halloween Jack O'Lantern A5 Print, Spooky Folklore Art
-Main Image: halloween-jack-olantern-a5-print-spooky-folklore-art/print-a5-halloween-jack-olantern-1.jpg
+Main Image: images/print-a5-halloween-jack-olantern-1.jpg
 Images: 
-Sections: Print-a5
+Sections: A5 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 8
 Stock: 10
@@ -3323,11 +3323,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Wassail! A4 Print - Wassailing - Mari Lwyd - Twelfth Night - Folklore
-Main Image: wassail-a4-print-wassailing-mari-lwyd-twelfth-night-folklore/print-a4-wassail-wassailing-mari-1.jpg
-Images: wassail-a4-print-wassailing-mari-lwyd-twelfth-night-folklore/print-a4-wassail-wassailing-mari-2.jpg
-Sections: Print-a4
+Main Image: images/print-a4-wassail-wassailing-mari-1.jpg
+Images: images/print-a4-wassail-wassailing-mari-2.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -3362,11 +3362,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Standing Stones Under Moonlight Print, Henge Folklore Art (A4)
-Main Image: standing-stones-under-moonlight-print-henge-folklore-art-a4/print-a4-standing-stones-under-1.jpg
-Images: standing-stones-under-moonlight-print-henge-folklore-art-a4/print-a4-standing-stones-under-2.jpg, standing-stones-under-moonlight-print-henge-folklore-art-a4/print-a4-standing-stones-under-3.jpg, standing-stones-under-moonlight-print-henge-folklore-art-a4/print-a4-standing-stones-under-4.jpg
-Sections: Print-a4
+Main Image: images/print-a4-standing-stones-under-1.jpg
+Images: images/print-a4-standing-stones-under-2.jpg, images/print-a4-standing-stones-under-3.jpg, images/print-a4-standing-stones-under-4.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -3390,11 +3390,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: The Bower A4 Print - Matt Willis, British Folklore Art
-Main Image: the-bower-a4-print-matt-willis-british-folklore-art/print-a4-bower-matt-willis-1.jpg
-Images: the-bower-a4-print-matt-willis-british-folklore-art/print-a4-bower-matt-willis-2.jpg
-Sections: Print-a4
+Main Image: images/print-a4-bower-matt-willis-1.jpg
+Images: images/print-a4-bower-matt-willis-2.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -3414,11 +3414,11 @@ All my prints are flat packed in a recyclable cellophane bags and are sent in ri
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Green Man Print A4 - Matt Willis Pagan Folklore Art
-Main Image: green-man-print-a4-matt-willis-pagan-folklore-art/print-a4-green-man-matt-1.jpg
-Images: green-man-print-a4-matt-willis-pagan-folklore-art/print-a4-green-man-matt-2.jpg
-Sections: Print-a4
+Main Image: images/print-a4-green-man-matt-1.jpg
+Images: images/print-a4-green-man-matt-2.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -3438,11 +3438,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Medieval Bench End Pin Badge Set: Laser Cut Birch Plywood
-Main Image: medieval-bench-end-pin-badge-set-laser-cut-birch-plywood/badge-medieval-bench-end-1.jpg
-Images: medieval-bench-end-pin-badge-set-laser-cut-birch-plywood/badge-medieval-bench-end-2.jpg, medieval-bench-end-pin-badge-set-laser-cut-birch-plywood/badge-medieval-bench-end-3.jpg, medieval-bench-end-pin-badge-set-laser-cut-birch-plywood/badge-medieval-bench-end-4.jpg
-Sections: Badge
+Main Image: images/badge-medieval-bench-end-1.jpg
+Images: images/badge-medieval-bench-end-2.jpg, images/badge-medieval-bench-end-3.jpg, images/badge-medieval-bench-end-4.jpg
+Sections: Badges
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 30
 Stock: 10
@@ -3462,11 +3462,11 @@ Please look at my other listings for similar items and save on shipping. You are
 Thank you for taking the time to look at my listings.
 ---
 Title: Memento Mori Skulls and Bones Greetings Card – Free Sticker
-Main Image: memento-mori-skulls-and-bones-greetings-card-free-sticker/card-memento-mori-skulls-1.jpg
-Images: memento-mori-skulls-and-bones-greetings-card-free-sticker/card-memento-mori-skulls-2.jpg
-Sections: Card
+Main Image: images/card-memento-mori-skulls-1.jpg
+Images: images/card-memento-mori-skulls-2.jpg
+Sections: Greetings Cards
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 3.5
 Stock: 10
@@ -3482,11 +3482,11 @@ My greetings cards are hand drawn and professionally printed onto 350gsm silk co
 All my cards come in a recyclable cellophane bag and are sent in rigid protective packaging to ensure they arrive in pristine condition.
 ---
 Title: Standing Stones Greetings Card: Celestial Pagan Art
-Main Image: standing-stones-greetings-card-celestial-pagan-art/card-standing-stones-greetings-1.jpg
-Images: standing-stones-greetings-card-celestial-pagan-art/card-standing-stones-greetings-2.jpg
-Sections: Card
+Main Image: images/card-standing-stones-greetings-1.jpg
+Images: images/card-standing-stones-greetings-2.jpg
+Sections: Greetings Cards
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 3.5
 Stock: 10
@@ -3504,11 +3504,11 @@ My greetings cards are hand drawn and professionally printed onto 350gsm silk co
 All my cards come in a recyclable cellophane bag and are sent in rigid protective packaging to ensure they arrive in pristine condition.
 ---
 Title: Baba Yaga Hanging Decoration Set, Birch Plywood Folklore Ornaments
-Main Image: baba-yaga-hanging-decoration-set-birch-plywood-folklore-ornaments/hanging-baba-yaga-hanging-1.jpg
-Images: baba-yaga-hanging-decoration-set-birch-plywood-folklore-ornaments/hanging-baba-yaga-hanging-2.jpg, baba-yaga-hanging-decoration-set-birch-plywood-folklore-ornaments/hanging-baba-yaga-hanging-3.jpg, baba-yaga-hanging-decoration-set-birch-plywood-folklore-ornaments/hanging-baba-yaga-hanging-4.jpg, baba-yaga-hanging-decoration-set-birch-plywood-folklore-ornaments/hanging-baba-yaga-hanging-5.jpg, baba-yaga-hanging-decoration-set-birch-plywood-folklore-ornaments/hanging-baba-yaga-hanging-6.jpg, baba-yaga-hanging-decoration-set-birch-plywood-folklore-ornaments/hanging-baba-yaga-hanging-7.jpg, baba-yaga-hanging-decoration-set-birch-plywood-folklore-ornaments/hanging-baba-yaga-hanging-8.jpg, baba-yaga-hanging-decoration-set-birch-plywood-folklore-ornaments/hanging-baba-yaga-hanging-9.jpg, baba-yaga-hanging-decoration-set-birch-plywood-folklore-ornaments/hanging-baba-yaga-hanging-10.jpg
-Sections: Hanging
+Main Image: images/hanging-baba-yaga-hanging-1.jpg
+Images: images/hanging-baba-yaga-hanging-2.jpg, images/hanging-baba-yaga-hanging-3.jpg, images/hanging-baba-yaga-hanging-4.jpg, images/hanging-baba-yaga-hanging-5.jpg, images/hanging-baba-yaga-hanging-6.jpg, images/hanging-baba-yaga-hanging-7.jpg, images/hanging-baba-yaga-hanging-8.jpg, images/hanging-baba-yaga-hanging-9.jpg, images/hanging-baba-yaga-hanging-10.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 50
 Stock: 10
@@ -3528,11 +3528,11 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Vasilisa the Beautiful Ornament - Laser Cut Birch Folklore Decoration
-Main Image: vasilisa-the-beautiful-ornament-laser-cut-birch-folklore-decoration/standing-vasilisa-beautiful-ornament-1.jpg
-Images: vasilisa-the-beautiful-ornament-laser-cut-birch-folklore-decoration/standing-vasilisa-beautiful-ornament-2.jpg, vasilisa-the-beautiful-ornament-laser-cut-birch-folklore-decoration/standing-vasilisa-beautiful-ornament-3.jpg, vasilisa-the-beautiful-ornament-laser-cut-birch-folklore-decoration/standing-vasilisa-beautiful-ornament-4.jpg, vasilisa-the-beautiful-ornament-laser-cut-birch-folklore-decoration/standing-vasilisa-beautiful-ornament-5.jpg
-Sections: Standing
+Main Image: images/hanging-vasilisa-beautiful-ornament-1.jpg
+Images: images/hanging-vasilisa-beautiful-ornament-2.jpg, images/hanging-vasilisa-beautiful-ornament-3.jpg, images/hanging-vasilisa-beautiful-ornament-4.jpg, images/hanging-vasilisa-beautiful-ornament-5.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 20
 Stock: 10
@@ -3553,10 +3553,10 @@ Please be aware that there may be slight differences in colouring with each piec
 
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
-Title: Baba Yaga Hanging Decoration by Matt Willis  ~ The Folklore Box ~ TheFolkloreBox ~ The Folk Lore Box ~ Shuck
-Main Image: baba-yaga-hanging-decoration-by-matt-willis-the-folklore-box-thefolklorebox-the-folk-lore-box-shuck/hanging-baba-yaga-hanging-1.jpg
-Images: baba-yaga-hanging-decoration-by-matt-willis-the-folklore-box-thefolklorebox-the-folk-lore-box-shuck/hanging-baba-yaga-hanging-2.jpg, baba-yaga-hanging-decoration-by-matt-willis-the-folklore-box-thefolklorebox-the-folk-lore-box-shuck/hanging-baba-yaga-hanging-3.jpg, baba-yaga-hanging-decoration-by-matt-willis-the-folklore-box-thefolklorebox-the-folk-lore-box-shuck/hanging-baba-yaga-hanging-4.jpg, baba-yaga-hanging-decoration-by-matt-willis-the-folklore-box-thefolklorebox-the-folk-lore-box-shuck/hanging-baba-yaga-hanging-5.jpg
-Sections: Hanging
+Title: Baba Yaga Hanging Decoration by Matt Willis ~ The Folklore Box ~ TheFolkloreBox ~ The Folk Lore Box ~ Shuck
+Main Image: images/roundel-baba-yaga-hanging-1.jpg
+Images: images/roundel-baba-yaga-hanging-2.jpg, images/roundel-baba-yaga-hanging-3.jpg, images/roundel-baba-yaga-hanging-4.jpg, images/roundel-baba-yaga-hanging-5.jpg
+Sections: The Folklore Boxes
 Size: Standard
 Materials: Please Update
 Postal Class: Second Class Small Parcel
@@ -3580,11 +3580,11 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Memento Mori Skulls A5 Print - Gothic Horror Folklore Art
-Main Image: memento-mori-skulls-a5-print-gothic-horror-folklore-art/print-a5-memento-mori-skulls-1.jpg
-Images: memento-mori-skulls-a5-print-gothic-horror-folklore-art/print-a5-memento-mori-skulls-2.jpg, memento-mori-skulls-a5-print-gothic-horror-folklore-art/print-a5-memento-mori-skulls-3.jpg
-Sections: Print-a5
+Main Image: images/print-a5-memento-mori-skulls-1.jpg
+Images: images/print-a5-memento-mori-skulls-2.jpg, images/print-a5-memento-mori-skulls-3.jpg
+Sections: A5 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 8
 Stock: 10
@@ -3608,11 +3608,11 @@ If you purchase along with other items from my shop and a "do not bend envelope"
 IF YOU ARE SHOPPING OUTSIDE OF MAINLAND UK, PLEASE CONTACT ME AND I CAN GIVE YOU A MORE ACCURATE POSTAL CHARGE.
 ---
 Title: Green Man Folklore A5 Print, Matt Willis Art
-Main Image: green-man-folklore-a5-print-matt-willis-art/print-a5-green-man-folklore-1.jpg
+Main Image: images/print-a5-green-man-folklore-1.jpg
 Images: 
-Sections: Print-a5
+Sections: A5 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 8
 Stock: 10
@@ -3632,11 +3632,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Black Phillip Goat A5 Print, Devil Folklore Art
-Main Image: black-phillip-goat-a5-print-devil-folklore-art/print-a5-black-phillip-goat-1.jpg
-Images: black-phillip-goat-a5-print-devil-folklore-art/print-a5-black-phillip-goat-2.jpg, black-phillip-goat-a5-print-devil-folklore-art/print-a5-black-phillip-goat-3.jpg
-Sections: Print-a5
+Main Image: images/print-a5-black-phillip-goat-1.jpg
+Images: images/print-a5-black-phillip-goat-2.jpg, images/print-a5-black-phillip-goat-3.jpg
+Sections: A5 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 8
 Stock: 10
@@ -3657,11 +3657,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Possessed Puppeteer A4 Print by Matt Willis ~ The Folklore Box ~ The Folk Lore Box ~ TheFolkloreBox ~ Shuck
-Main Image: possessed-puppeteer-a4-print-by-matt-willis-the-folklore-box-the-folk-lore-box-thefolklorebox-shuck/print-a4-possessed-puppeteer-by-1.jpg
-Images: possessed-puppeteer-a4-print-by-matt-willis-the-folklore-box-the-folk-lore-box-thefolklorebox-shuck/print-a4-possessed-puppeteer-by-2.jpg
-Sections: Print-a4
+Main Image: images/print-a4-possessed-puppeteer-by-1.jpg
+Images: images/print-a4-possessed-puppeteer-by-2.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -3681,11 +3681,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Memento Mori Moth Greetings Card - Hand Drawn Art Card
-Main Image: memento-mori-moth-greetings-card-hand-drawn-art-card/card-memento-mori-moth-1.jpg
-Images: memento-mori-moth-greetings-card-hand-drawn-art-card/card-memento-mori-moth-2.jpg, memento-mori-moth-greetings-card-hand-drawn-art-card/card-memento-mori-moth-3.jpg
-Sections: Card
+Main Image: images/card-memento-mori-moth-1.jpg
+Images: images/card-memento-mori-moth-2.jpg, images/card-memento-mori-moth-3.jpg
+Sections: Greetings Cards
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 3.5
 Stock: 10
@@ -3701,9 +3701,9 @@ My greetings cards are hand drawn and professionally printed onto 350gsm silk co
 All my cards come in a recyclable cellophane bag and are sent in rigid protective packaging to ensure they arrive in pristine condition.
 ---
 Title: All Seeing Eye Divination Board Print – Illustrated Folklore Art
-Main Image: all-seeing-eye-divination-board-print-illustrated-folklore-art/item-all-seeing-eye-1.jpg
-Images: all-seeing-eye-divination-board-print-illustrated-folklore-art/item-all-seeing-eye-2.jpg, all-seeing-eye-divination-board-print-illustrated-folklore-art/item-all-seeing-eye-3.jpg, all-seeing-eye-divination-board-print-illustrated-folklore-art/item-all-seeing-eye-4.jpg
-Sections: Item
+Main Image: images/roundel-all-seeing-eye-1.jpg
+Images: images/roundel-all-seeing-eye-2.jpg, images/roundel-all-seeing-eye-3.jpg, images/roundel-all-seeing-eye-4.jpg
+Sections: The Folklore Boxes
 Size: Standard
 Materials: Please Update
 Postal Class: Second Class Small Parcel
@@ -3725,11 +3725,11 @@ If you buy other flat items from my shop at the same time, these will be packed 
 PLEASE NOTE THAT THIS LISTING IS FOR A PHYSICAL PAPER PRINT ONLY
 ---
 Title: Dragons of Norfolk & Suffolk A3 Print – Illustrated Folklore Art
-Main Image: dragons-of-norfolk-suffolk-a3-print-illustrated-folklore-art/print-a3-dragons-of-norfolk-1.jpg
-Images: dragons-of-norfolk-suffolk-a3-print-illustrated-folklore-art/print-a3-dragons-of-norfolk-2.jpg, dragons-of-norfolk-suffolk-a3-print-illustrated-folklore-art/print-a3-dragons-of-norfolk-3.jpg, dragons-of-norfolk-suffolk-a3-print-illustrated-folklore-art/print-a3-dragons-of-norfolk-4.jpg
-Sections: Print-a3
+Main Image: images/print-a3-dragons-of-norfolk-1.jpg
+Images: images/print-a3-dragons-of-norfolk-2.jpg, images/print-a3-dragons-of-norfolk-3.jpg, images/print-a3-dragons-of-norfolk-4.jpg
+Sections: A3 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 16
 Stock: 10
@@ -3749,11 +3749,11 @@ If you buy other flat items from my shop at the same time, these will be packed 
 PLEASE NOTE THAT THIS LISTING IS FOR A PHYSICAL PAPER PRINT ONLY
 ---
 Title: Sun and Moon Divination Board Print – Folklore Art (A3 Size, PDF Guidebook Included)
-Main Image: sun-and-moon-divination-board-print-folklore-art-a3-size-pdf-guidebook-included/print-a3-sun-moon-divination-1.jpg
-Images: sun-and-moon-divination-board-print-folklore-art-a3-size-pdf-guidebook-included/print-a3-sun-moon-divination-2.jpg, sun-and-moon-divination-board-print-folklore-art-a3-size-pdf-guidebook-included/print-a3-sun-moon-divination-3.jpg, sun-and-moon-divination-board-print-folklore-art-a3-size-pdf-guidebook-included/print-a3-sun-moon-divination-4.jpg
-Sections: Print-a3
+Main Image: images/print-a3-sun-moon-divination-1.jpg
+Images: images/print-a3-sun-moon-divination-2.jpg, images/print-a3-sun-moon-divination-3.jpg, images/print-a3-sun-moon-divination-4.jpg
+Sections: A3 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 16
 Stock: 10
@@ -3775,9 +3775,9 @@ If you buy other flat items from my shop at the same time, these will be packed 
 PLEASE NOTE THAT THIS LISTING IS FOR A PHYSICAL PAPER PRINT ONLY
 ---
 Title: New Year Cleansing Ritual Prints – Witchy A6 Print Set - folklore - gothic
-Main Image: new-year-cleansing-ritual-prints-witchy-a6-print-set-folklore-gothic/item-new-year-cleansing-1.jpg
-Images: new-year-cleansing-ritual-prints-witchy-a6-print-set-folklore-gothic/item-new-year-cleansing-2.jpg, new-year-cleansing-ritual-prints-witchy-a6-print-set-folklore-gothic/item-new-year-cleansing-3.jpg, new-year-cleansing-ritual-prints-witchy-a6-print-set-folklore-gothic/item-new-year-cleansing-4.jpg, new-year-cleansing-ritual-prints-witchy-a6-print-set-folklore-gothic/item-new-year-cleansing-5.jpg, new-year-cleansing-ritual-prints-witchy-a6-print-set-folklore-gothic/item-new-year-cleansing-6.jpg, new-year-cleansing-ritual-prints-witchy-a6-print-set-folklore-gothic/item-new-year-cleansing-7.jpg, new-year-cleansing-ritual-prints-witchy-a6-print-set-folklore-gothic/item-new-year-cleansing-8.jpg, new-year-cleansing-ritual-prints-witchy-a6-print-set-folklore-gothic/item-new-year-cleansing-9.jpg
-Sections: Item
+Main Image: images/roundel-new-year-cleansing-1.jpg
+Images: images/roundel-new-year-cleansing-2.jpg, images/roundel-new-year-cleansing-3.jpg, images/roundel-new-year-cleansing-4.jpg, images/roundel-new-year-cleansing-5.jpg, images/roundel-new-year-cleansing-6.jpg, images/roundel-new-year-cleansing-7.jpg, images/roundel-new-year-cleansing-8.jpg, images/roundel-new-year-cleansing-9.jpg
+Sections: The Folklore Boxes
 Size: Standard
 Materials: Please Update
 Postal Class: Second Class Small Parcel
@@ -3801,11 +3801,11 @@ The print set comes in a transparent parchment envelope.
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Spooky Oak Tree A4 Print – Gothic Woods, Folklore Art
-Main Image: spooky-oak-tree-a4-print-gothic-woods-folklore-art/print-a4-spooky-oak-tree-1.jpg
-Images: spooky-oak-tree-a4-print-gothic-woods-folklore-art/print-a4-spooky-oak-tree-2.jpg
-Sections: Print-a4
+Main Image: images/print-a4-spooky-oak-tree-1.jpg
+Images: images/print-a4-spooky-oak-tree-2.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -3829,11 +3829,11 @@ Delivery: This A4 print comes  wrapped in a bio degradable cellophane bag, and s
 Thanks for looking!
 ---
 Title: Art Nouveau Tarot Card Print – Illustrated Divination Board, Folklore Art
-Main Image: art-nouveau-tarot-card-print-illustrated-divination-board-folklore-art/card-art-nouveau-tarot-1.jpg
-Images: art-nouveau-tarot-card-print-illustrated-divination-board-folklore-art/card-art-nouveau-tarot-2.jpg, art-nouveau-tarot-card-print-illustrated-divination-board-folklore-art/card-art-nouveau-tarot-3.jpg, art-nouveau-tarot-card-print-illustrated-divination-board-folklore-art/card-art-nouveau-tarot-4.jpg
-Sections: Card
+Main Image: images/card-art-nouveau-tarot-1.jpg
+Images: images/card-art-nouveau-tarot-2.jpg, images/card-art-nouveau-tarot-3.jpg, images/card-art-nouveau-tarot-4.jpg
+Sections: Greetings Cards
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 16
 Stock: 10
@@ -3853,11 +3853,11 @@ If you buy other flat items from my shop at the same time, these will be packed 
 PLEASE NOTE THAT THIS LISTING IS FOR A PHYSICAL PAPER PRINT ONLY
 ---
 Title: Sitting Hare Birch Plywood Pin Badge
-Main Image: sitting-hare-birch-plywood-pin-badge/badge-sitting-hare-1.jpg
-Images: sitting-hare-birch-plywood-pin-badge/badge-sitting-hare-2.jpg, sitting-hare-birch-plywood-pin-badge/badge-sitting-hare-3.jpg, sitting-hare-birch-plywood-pin-badge/badge-sitting-hare-4.jpg, sitting-hare-birch-plywood-pin-badge/badge-sitting-hare-5.jpg, sitting-hare-birch-plywood-pin-badge/badge-sitting-hare-6.jpg
-Sections: Badge
+Main Image: images/badge-sitting-hare-1.jpg
+Images: images/badge-sitting-hare-2.jpg, images/badge-sitting-hare-3.jpg, images/badge-sitting-hare-4.jpg, images/badge-sitting-hare-5.jpg, images/badge-sitting-hare-6.jpg
+Sections: Badges
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 6
 Stock: 10
@@ -3877,11 +3877,11 @@ Please look at my other listings for similar items and save on shipping. The pho
 Thank you for taking the time to look at my listings.
 ---
 Title: Broomstick Witch Christmas Ornament: Laser Cut Birch Plywood
-Main Image: broomstick-witch-christmas-ornament-laser-cut-birch-plywood/standing-broomstick-witch-christmas-1.jpg
-Images: broomstick-witch-christmas-ornament-laser-cut-birch-plywood/standing-broomstick-witch-christmas-2.jpg, broomstick-witch-christmas-ornament-laser-cut-birch-plywood/standing-broomstick-witch-christmas-3.jpg, broomstick-witch-christmas-ornament-laser-cut-birch-plywood/standing-broomstick-witch-christmas-4.jpg, broomstick-witch-christmas-ornament-laser-cut-birch-plywood/standing-broomstick-witch-christmas-5.jpg, broomstick-witch-christmas-ornament-laser-cut-birch-plywood/standing-broomstick-witch-christmas-6.jpg, broomstick-witch-christmas-ornament-laser-cut-birch-plywood/standing-broomstick-witch-christmas-7.jpg
-Sections: Standing
+Main Image: images/hanging-broomstick-witch-christmas-1.jpg
+Images: images/hanging-broomstick-witch-christmas-2.jpg, images/hanging-broomstick-witch-christmas-3.jpg, images/hanging-broomstick-witch-christmas-4.jpg, images/hanging-broomstick-witch-christmas-5.jpg, images/hanging-broomstick-witch-christmas-6.jpg, images/hanging-broomstick-witch-christmas-7.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
@@ -3901,11 +3901,11 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Black Phillip Goat Christmas Decoration - Laser Cut Birch Plywood
-Main Image: black-phillip-goat-christmas-decoration-laser-cut-birch-plywood/standing-black-phillip-goat-1.jpg
-Images: black-phillip-goat-christmas-decoration-laser-cut-birch-plywood/standing-black-phillip-goat-2.jpg, black-phillip-goat-christmas-decoration-laser-cut-birch-plywood/standing-black-phillip-goat-3.jpg, black-phillip-goat-christmas-decoration-laser-cut-birch-plywood/standing-black-phillip-goat-4.jpg
-Sections: Standing
+Main Image: images/hanging-black-phillip-goat-1.jpg
+Images: images/hanging-black-phillip-goat-2.jpg, images/hanging-black-phillip-goat-3.jpg, images/hanging-black-phillip-goat-4.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
@@ -3927,11 +3927,11 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Memento Mori Moth Print – Gothic Horror Art, Tattoo Flash (A5)
-Main Image: memento-mori-moth-print-gothic-horror-art-tattoo-flash-a5/print-a5-memento-mori-moth-1.jpg
-Images: memento-mori-moth-print-gothic-horror-art-tattoo-flash-a5/print-a5-memento-mori-moth-2.jpg, memento-mori-moth-print-gothic-horror-art-tattoo-flash-a5/print-a5-memento-mori-moth-3.jpg
-Sections: Print-a5
+Main Image: images/print-a5-memento-mori-moth-1.jpg
+Images: images/print-a5-memento-mori-moth-2.jpg, images/print-a5-memento-mori-moth-3.jpg
+Sections: A5 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 8
 Stock: 10
@@ -3955,11 +3955,11 @@ If you purchase along with other items from my shop and a "do not bend envelope"
 IF YOU ARE SHOPPING OUTSIDE OF MAINLAND UK, PLEASE CONTACT ME AND I CAN GIVE YOU A MORE ACCURATE POSTAL CHARGE.
 ---
 Title: Forest Stone Print, Ancient Standing Stone Illustration (A4)
-Main Image: forest-stone-print-ancient-standing-stone-illustration-a4/print-a4-forest-stone-ancient-1.jpg
-Images: forest-stone-print-ancient-standing-stone-illustration-a4/print-a4-forest-stone-ancient-2.jpg, forest-stone-print-ancient-standing-stone-illustration-a4/print-a4-forest-stone-ancient-3.jpg, forest-stone-print-ancient-standing-stone-illustration-a4/print-a4-forest-stone-ancient-4.jpg, forest-stone-print-ancient-standing-stone-illustration-a4/print-a4-forest-stone-ancient-5.jpg
-Sections: Print-a4
+Main Image: images/print-a4-forest-stone-ancient-1.jpg
+Images: images/print-a4-forest-stone-ancient-2.jpg, images/print-a4-forest-stone-ancient-3.jpg, images/print-a4-forest-stone-ancient-4.jpg, images/print-a4-forest-stone-ancient-5.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -3979,11 +3979,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Woman Under Tree A4 Print - Matt Willis Art, Folklore Illustration
-Main Image: woman-under-tree-a4-print-matt-willis-art-folklore-illustration/print-a4-woman-under-tree-1.jpg
-Images: woman-under-tree-a4-print-matt-willis-art-folklore-illustration/print-a4-woman-under-tree-2.jpg, woman-under-tree-a4-print-matt-willis-art-folklore-illustration/print-a4-woman-under-tree-3.jpg, woman-under-tree-a4-print-matt-willis-art-folklore-illustration/print-a4-woman-under-tree-4.jpg
-Sections: Print-a4
+Main Image: images/print-a4-woman-under-tree-1.jpg
+Images: images/print-a4-woman-under-tree-2.jpg, images/print-a4-woman-under-tree-3.jpg, images/print-a4-woman-under-tree-4.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -4007,11 +4007,11 @@ Delivery: This A4 print comes  wrapped in a bio degradable cellophane bag, and s
 Thanks for looking!
 ---
 Title: Birch Plywood The Bower Decoration with Skulls, Matt Willis Illustration
-Main Image: birch-plywood-the-bower-decoration-with-skulls-matt-willis-illustration/standing-bower-decoration-skulls-1.jpg
-Images: birch-plywood-the-bower-decoration-with-skulls-matt-willis-illustration/standing-bower-decoration-skulls-2.jpg, birch-plywood-the-bower-decoration-with-skulls-matt-willis-illustration/standing-bower-decoration-skulls-3.jpg, birch-plywood-the-bower-decoration-with-skulls-matt-willis-illustration/standing-bower-decoration-skulls-4.jpg
-Sections: Standing
+Main Image: images/hanging-bower-decoration-skulls-1.jpg
+Images: images/hanging-bower-decoration-skulls-2.jpg, images/hanging-bower-decoration-skulls-3.jpg, images/hanging-bower-decoration-skulls-4.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 40
 Stock: 10
@@ -4031,11 +4031,11 @@ The uptmost care is taken with the packaging so this piece will be suitable to s
 The packaging may differ to the photographs depending on other items in the order. Thank you card and sticker may vary due to availability.
 ---
 Title: Baba Yaga Standing Decoration, Slavic Folklore Witch, Birch Plywood
-Main Image: baba-yaga-standing-decoration-slavic-folklore-witch-birch-plywood/standing-baba-yaga-standing-1.jpg
-Images: baba-yaga-standing-decoration-slavic-folklore-witch-birch-plywood/standing-baba-yaga-standing-2.jpg, baba-yaga-standing-decoration-slavic-folklore-witch-birch-plywood/standing-baba-yaga-standing-3.jpg, baba-yaga-standing-decoration-slavic-folklore-witch-birch-plywood/standing-baba-yaga-standing-4.jpg
-Sections: Standing
+Main Image: images/standing-baba-yaga-standing-1.jpg
+Images: images/standing-baba-yaga-standing-2.jpg, images/standing-baba-yaga-standing-3.jpg, images/standing-baba-yaga-standing-4.jpg
+Sections: Standing Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 40
 Stock: 10
@@ -4057,11 +4057,11 @@ The uptmost care is taken with the packaging so this piece will be suitable to s
 The packaging may differ to the photographs depending on other items in the order. Thank you card and sticker may vary due to availability.
 ---
 Title: Witch Riding Goat Christmas Ornament, Black Birch Plywood Decoration
-Main Image: witch-riding-goat-christmas-ornament-black-birch-plywood-decoration/standing-witch-riding-goat-1.jpg
-Images: witch-riding-goat-christmas-ornament-black-birch-plywood-decoration/standing-witch-riding-goat-2.jpg, witch-riding-goat-christmas-ornament-black-birch-plywood-decoration/standing-witch-riding-goat-3.jpg, witch-riding-goat-christmas-ornament-black-birch-plywood-decoration/standing-witch-riding-goat-4.jpg
-Sections: Standing
+Main Image: images/hanging-witch-riding-goat-1.jpg
+Images: images/hanging-witch-riding-goat-2.jpg, images/hanging-witch-riding-goat-3.jpg, images/hanging-witch-riding-goat-4.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
@@ -4079,11 +4079,11 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Sunlit Stone Standing Decoration, Birch Plywood Henge Art
-Main Image: sunlit-stone-standing-decoration-birch-plywood-henge-art/standing-sunlit-stone-standing-1.jpg
-Images: sunlit-stone-standing-decoration-birch-plywood-henge-art/standing-sunlit-stone-standing-2.jpg, sunlit-stone-standing-decoration-birch-plywood-henge-art/standing-sunlit-stone-standing-3.jpg, sunlit-stone-standing-decoration-birch-plywood-henge-art/standing-sunlit-stone-standing-4.jpg, sunlit-stone-standing-decoration-birch-plywood-henge-art/standing-sunlit-stone-standing-5.jpg, sunlit-stone-standing-decoration-birch-plywood-henge-art/standing-sunlit-stone-standing-6.jpg, sunlit-stone-standing-decoration-birch-plywood-henge-art/standing-sunlit-stone-standing-7.jpg
-Sections: Standing
+Main Image: images/standing-sunlit-stone-standing-1.jpg
+Images: images/standing-sunlit-stone-standing-2.jpg, images/standing-sunlit-stone-standing-3.jpg, images/standing-sunlit-stone-standing-4.jpg, images/standing-sunlit-stone-standing-5.jpg, images/standing-sunlit-stone-standing-6.jpg, images/standing-sunlit-stone-standing-7.jpg
+Sections: Standing Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 25
 Stock: 10
@@ -4105,11 +4105,11 @@ The uptmost care is taken with the packaging so this piece will be suitable to s
 The packaging may differ to the photographs depending on other items in the order. Thank you card and sticker may vary due to availability.
 ---
 Title: Cauldron Witch Christmas Ornament, Laser Cut Birch Plywood
-Main Image: cauldron-witch-christmas-ornament-laser-cut-birch-plywood/standing-cauldron-witch-christmas-1.jpg
-Images: cauldron-witch-christmas-ornament-laser-cut-birch-plywood/standing-cauldron-witch-christmas-2.jpg, cauldron-witch-christmas-ornament-laser-cut-birch-plywood/standing-cauldron-witch-christmas-3.jpg, cauldron-witch-christmas-ornament-laser-cut-birch-plywood/standing-cauldron-witch-christmas-4.jpg
-Sections: Standing
+Main Image: images/hanging-cauldron-witch-christmas-1.jpg
+Images: images/hanging-cauldron-witch-christmas-2.jpg, images/hanging-cauldron-witch-christmas-3.jpg, images/hanging-cauldron-witch-christmas-4.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
@@ -4129,11 +4129,11 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Cauldron Witch Black Tote Bag – Folklore Illustration
-Main Image: cauldron-witch-black-tote-bag-folklore-illustration/item-cauldron-witch-black-1.jpg
+Main Image: images/tote-cauldron-witch-black-1.jpg
 Images: 
-Sections: Item
+Sections: Tote Bags
 Size: Standard
-Materials: Please Update
+Materials: 100% recycled cotton 170gsm
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
@@ -4149,11 +4149,11 @@ The CAULDRON WITCH is hand drawn by folklore illustrator Matt Willis and DTF pri
 The TOTE BAG will be shipped in a plastic mailing bag to protect it on it's journey.
 ---
 Title: Halloween Greetings Card by Matt Willis ~ Illustrated Card ~ Jack O'Lantern ~ Pumpkin ~ Shuck ~ The Folklore Box
-Main Image: halloween-greetings-card-by-matt-willis-illustrated-card-jack-olantern-pumpkin-shuck-the-folklore-box/card-halloween-greetings-card-1.jpg
-Images: halloween-greetings-card-by-matt-willis-illustrated-card-jack-olantern-pumpkin-shuck-the-folklore-box/card-halloween-greetings-card-2.jpg, halloween-greetings-card-by-matt-willis-illustrated-card-jack-olantern-pumpkin-shuck-the-folklore-box/card-halloween-greetings-card-3.jpg
-Sections: Card
+Main Image: images/card-halloween-greetings-card-1.jpg
+Images: images/card-halloween-greetings-card-2.jpg, images/card-halloween-greetings-card-3.jpg
+Sections: Greetings Cards
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 2.5
 Stock: 10
@@ -4171,11 +4171,11 @@ My greetings cards are hand drawn and professionally printed onto 300gsm uncoate
 All my cards come in a recyclable cellophane bag and are sent in rigid protective packaging to ensure they arrive in pristine condition.
 ---
 Title: Green Man Cotton Tote Bag – British Folklore Design
-Main Image: green-man-cotton-tote-bag-british-folklore-design/item-green-man-cotton-1.jpg
-Images: green-man-cotton-tote-bag-british-folklore-design/item-green-man-cotton-2.jpg
-Sections: Item
+Main Image: images/tote-green-man-cotton-1.jpg
+Images: images/tote-green-man-cotton-2.jpg
+Sections: Tote Bags
 Size: Standard
-Materials: Please Update
+Materials: 100% recycled cotton 170gsm
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
@@ -4191,11 +4191,11 @@ The GREEN MAN is hand drawn by folklore illustrator Matt Willis and DTF printed 
 The TOTE BAG will be shipped in a plastic mailing bag to protect it on it's journey.
 ---
 Title: The Magician's Skull A4 Print by Matt Willis
-Main Image: the-magicians-skull-a4-print-by-matt-willis/print-a4-magicians-skull-by-1.jpg
-Images: the-magicians-skull-a4-print-by-matt-willis/print-a4-magicians-skull-by-2.jpg, the-magicians-skull-a4-print-by-matt-willis/print-a4-magicians-skull-by-3.jpg, the-magicians-skull-a4-print-by-matt-willis/print-a4-magicians-skull-by-4.jpg
-Sections: Print-a4
+Main Image: images/print-a4-magicians-skull-by-1.jpg
+Images: images/print-a4-magicians-skull-by-2.jpg, images/print-a4-magicians-skull-by-3.jpg, images/print-a4-magicians-skull-by-4.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -4215,11 +4215,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: The Ghoul A4 Print, Matt Willis Folklore Art
-Main Image: the-ghoul-a4-print-matt-willis-folklore-art/print-a4-ghoul-matt-willis-1.jpg
-Images: the-ghoul-a4-print-matt-willis-folklore-art/print-a4-ghoul-matt-willis-2.jpg
-Sections: Print-a4
+Main Image: images/print-a4-ghoul-matt-willis-1.jpg
+Images: images/print-a4-ghoul-matt-willis-2.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -4241,11 +4241,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: The Swamp God A4 Art Print, Folklore Illustration
-Main Image: the-swamp-god-a4-art-print-folklore-illustration/print-a4-swamp-god-art-1.jpg
-Images: the-swamp-god-a4-art-print-folklore-illustration/print-a4-swamp-god-art-2.jpg, the-swamp-god-a4-art-print-folklore-illustration/print-a4-swamp-god-art-3.jpg, the-swamp-god-a4-art-print-folklore-illustration/print-a4-swamp-god-art-4.jpg, the-swamp-god-a4-art-print-folklore-illustration/print-a4-swamp-god-art-5.jpg
-Sections: Print-a4
+Main Image: images/print-a4-swamp-god-art-1.jpg
+Images: images/print-a4-swamp-god-art-2.jpg, images/print-a4-swamp-god-art-3.jpg, images/print-a4-swamp-god-art-4.jpg, images/print-a4-swamp-god-art-5.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -4267,11 +4267,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Lambton Worm Wood Hanging Decoration – English Folklore Dragon
-Main Image: lambton-worm-wood-hanging-decoration-english-folklore-dragon/hanging-lambton-worm-wood-1.jpg
-Images: lambton-worm-wood-hanging-decoration-english-folklore-dragon/hanging-lambton-worm-wood-2.jpg, lambton-worm-wood-hanging-decoration-english-folklore-dragon/hanging-lambton-worm-wood-3.jpg, lambton-worm-wood-hanging-decoration-english-folklore-dragon/hanging-lambton-worm-wood-4.jpg, lambton-worm-wood-hanging-decoration-english-folklore-dragon/hanging-lambton-worm-wood-5.jpg, lambton-worm-wood-hanging-decoration-english-folklore-dragon/hanging-lambton-worm-wood-6.jpg
-Sections: Hanging
+Main Image: images/hanging-lambton-worm-wood-1.jpg
+Images: images/hanging-lambton-worm-wood-2.jpg, images/hanging-lambton-worm-wood-3.jpg, images/hanging-lambton-worm-wood-4.jpg, images/hanging-lambton-worm-wood-5.jpg, images/hanging-lambton-worm-wood-6.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
@@ -4291,11 +4291,11 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Witch Map of Norfolk Print – Illustrated Folklore Art (A3)
-Main Image: witch-map-of-norfolk-print-illustrated-folklore-art-a3/print-a3-witch-map-of-1.jpg
-Images: witch-map-of-norfolk-print-illustrated-folklore-art-a3/print-a3-witch-map-of-2.jpg, witch-map-of-norfolk-print-illustrated-folklore-art-a3/print-a3-witch-map-of-3.jpg
-Sections: Print-a3
+Main Image: images/print-a3-witch-map-of-1.jpg
+Images: images/print-a3-witch-map-of-2.jpg, images/print-a3-witch-map-of-3.jpg
+Sections: A3 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 16
 Stock: 10
@@ -4317,11 +4317,11 @@ If you buy other flat items from my shop at the same time, these will be packed 
 INTERNATIONAL BUYERS:  IF YOU LIVE OUTSIDE OF MAINLAND UK AND WOULD LIKE TO PURCHASE A PRINT, NO PROBS.  PLEASE CONTACT ME AND I CAN PROVIDE YOU WITH A BESPOKE POSTAGE COST.
 ---
 Title: Moon Henge Print, Ancient Standing Stones Art (A5)
-Main Image: moon-henge-print-ancient-standing-stones-art-a5/print-a5-moon-henge-ancient-1.jpg
-Images: moon-henge-print-ancient-standing-stones-art-a5/print-a5-moon-henge-ancient-2.jpg, moon-henge-print-ancient-standing-stones-art-a5/print-a5-moon-henge-ancient-3.jpg
-Sections: Print-a5
+Main Image: images/print-a5-moon-henge-ancient-1.jpg
+Images: images/print-a5-moon-henge-ancient-2.jpg, images/print-a5-moon-henge-ancient-3.jpg
+Sections: A5 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 8
 Stock: 10
@@ -4343,11 +4343,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Leaping Black Shuck Decoration – Birch Plywood Devil Dog Folk Art
-Main Image: leaping-black-shuck-decoration-birch-plywood-devil-dog-folk-art/standing-leaping-black-shuck-1.jpg
+Main Image: images/hanging-leaping-black-shuck-1.jpg
 Images: 
-Sections: Standing
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 25
 Stock: 10
@@ -4367,11 +4367,11 @@ The uptmost care is taken with the packaging so this piece will be suitable to s
 The packaging may differ to the photographs depending on other items in the order. Thank you card and sticker may vary due to availability.
 ---
 Title: Baba Yaga Hen Legged Hut Hanging Decoration - Slavic Folklore
-Main Image: baba-yaga-hen-legged-hut-hanging-decoration-slavic-folklore/hanging-baba-yaga-hen-1.jpg
-Images: baba-yaga-hen-legged-hut-hanging-decoration-slavic-folklore/hanging-baba-yaga-hen-2.jpg, baba-yaga-hen-legged-hut-hanging-decoration-slavic-folklore/hanging-baba-yaga-hen-3.jpg, baba-yaga-hen-legged-hut-hanging-decoration-slavic-folklore/hanging-baba-yaga-hen-4.jpg, baba-yaga-hen-legged-hut-hanging-decoration-slavic-folklore/hanging-baba-yaga-hen-5.jpg
-Sections: Hanging
+Main Image: images/hanging-baba-yaga-hen-1.jpg
+Images: images/hanging-baba-yaga-hen-2.jpg, images/hanging-baba-yaga-hen-3.jpg, images/hanging-baba-yaga-hen-4.jpg, images/hanging-baba-yaga-hen-5.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 20
 Stock: 10
@@ -4393,11 +4393,11 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Krampus Christmas Decoration - Laser Cut Birch Plywood Hanging Ornament
-Main Image: krampus-christmas-decoration-laser-cut-birch-plywood-hanging-ornament/hanging-krampus-christmas-decoration-1.jpg
-Images: krampus-christmas-decoration-laser-cut-birch-plywood-hanging-ornament/hanging-krampus-christmas-decoration-2.jpg
-Sections: Hanging
+Main Image: images/hanging-krampus-christmas-decoration-1.jpg
+Images: images/hanging-krampus-christmas-decoration-2.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
@@ -4418,12 +4418,12 @@ Please be aware that there may be slight differences in colouring with each piec
 
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
-Title: Winter Solstice – A4 Art Print - Stone Circle -  Folklore - The Folklore Box
-Main Image: winter-solstice-a4-art-print-stone-circle-folklore-the-folklore-box/print-a4-winter-solstice-art-1.jpg
-Images: winter-solstice-a4-art-print-stone-circle-folklore-the-folklore-box/print-a4-winter-solstice-art-2.jpg
-Sections: Print-a4
+Title: Winter Solstice – A4 Art Print - Stone Circle - Folklore - The Folklore Box
+Main Image: images/print-a4-winter-solstice-art-1.jpg
+Images: images/print-a4-winter-solstice-art-2.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -4458,11 +4458,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Shuck Zine Cover Print – "The Deep" Illustration, Matt Willis
-Main Image: shuck-zine-cover-print-the-deep-illustration-matt-willis/zine-shuck-zine-cover-1.jpg
-Images: shuck-zine-cover-print-the-deep-illustration-matt-willis/zine-shuck-zine-cover-2.jpg
-Sections: Zine
+Main Image: images/zine-shuck-zine-cover-1.jpg
+Images: images/zine-shuck-zine-cover-2.jpg
+Sections: Zines
 Size: Standard
-Materials: Please Update
+Materials: 250gsm silk cover, 130 gsm silk pages, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -4485,11 +4485,11 @@ If you buy other flat items from my shop at the same time, these will be packed 
 INTERNATIONAL BUYERS:  IF YOU LIVE OUTSIDE OF MAINLAND UK AND WOULD LIKE TO PURCHASE A PRINT, NO PROBS.  PLEASE CONTACT ME AND I CAN PROVIDE YOU WITH A BESPOKE POSTAGE COST.
 ---
 Title: Shuck Zine Cover Print – Black Shuck Illustration, The Dark Issue
-Main Image: shuck-zine-cover-print-black-shuck-illustration-the-dark-issue/zine-shuck-zine-cover-1.jpg
-Images: shuck-zine-cover-print-black-shuck-illustration-the-dark-issue/zine-shuck-zine-cover-2.jpg, shuck-zine-cover-print-black-shuck-illustration-the-dark-issue/zine-shuck-zine-cover-3.jpg
-Sections: Zine
+Main Image: images/zine-shuck-zine-cover-1.jpg
+Images: images/zine-shuck-zine-cover-2.jpg, images/zine-shuck-zine-cover-3.jpg
+Sections: Zines
 Size: Standard
-Materials: Please Update
+Materials: 250gsm silk cover, 130 gsm silk pages, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 16
 Stock: 10
@@ -4511,11 +4511,11 @@ If you buy other flat items from my shop at the same time, these will be packed 
 INTERNATIONAL BUYERS:  IF YOU LIVE OUTSIDE OF MAINLAND UK AND WOULD LIKE TO PURCHASE A PRINT, NO PROBS.  PLEASE CONTACT ME AND I CAN PROVIDE YOU WITH A BESPOKE POSTAGE COST.
 ---
 Title: Devil Christmas Ornament – Laser Cut Birch Plywood Satan Decoration
-Main Image: devil-christmas-ornament-laser-cut-birch-plywood-satan-decoration/standing-devil-christmas-ornament-1.jpg
-Images: devil-christmas-ornament-laser-cut-birch-plywood-satan-decoration/standing-devil-christmas-ornament-2.jpg, devil-christmas-ornament-laser-cut-birch-plywood-satan-decoration/standing-devil-christmas-ornament-3.jpg
-Sections: Standing
+Main Image: images/hanging-devil-christmas-ornament-1.jpg
+Images: images/hanging-devil-christmas-ornament-2.jpg, images/hanging-devil-christmas-ornament-3.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
@@ -4537,11 +4537,11 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Cat People - A3 Print by Matt Willis - The Folklore Box - The Folk Lore Box - TheFolkLoreBox - British Folk Horror
-Main Image: cat-people-a3-print-by-matt-willis-the-folklore-box-the-folk-lore-box-thefolklorebox-british-folk-horror/print-a3-cat-people-a3-1.jpg
-Images: cat-people-a3-print-by-matt-willis-the-folklore-box-the-folk-lore-box-thefolklorebox-british-folk-horror/print-a3-cat-people-a3-2.jpg, cat-people-a3-print-by-matt-willis-the-folklore-box-the-folk-lore-box-thefolklorebox-british-folk-horror/print-a3-cat-people-a3-3.jpg
-Sections: Print-a3
+Main Image: images/print-a3-cat-people-a3-1.jpg
+Images: images/print-a3-cat-people-a3-2.jpg, images/print-a3-cat-people-a3-3.jpg
+Sections: A3 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 18
 Stock: 10
@@ -4561,11 +4561,11 @@ All my prints are flat packed in a recyclable cellophane bags and are sent in ri
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: MULTIBUY x3 Hanging Decorations - Mari Lwyd - Witch - Black Phillip - Devil - Lambton Worm - Kelpie
-Main Image: multibuy-x3-hanging-decorations-mari-lwyd-witch-black-phillip-devil-lambton-worm-kelpie/hanging-multibuy-x3-hanging-1.jpg
-Images: multibuy-x3-hanging-decorations-mari-lwyd-witch-black-phillip-devil-lambton-worm-kelpie/hanging-multibuy-x3-hanging-2.jpg, multibuy-x3-hanging-decorations-mari-lwyd-witch-black-phillip-devil-lambton-worm-kelpie/hanging-multibuy-x3-hanging-3.jpg, multibuy-x3-hanging-decorations-mari-lwyd-witch-black-phillip-devil-lambton-worm-kelpie/hanging-multibuy-x3-hanging-4.jpg, multibuy-x3-hanging-decorations-mari-lwyd-witch-black-phillip-devil-lambton-worm-kelpie/hanging-multibuy-x3-hanging-5.jpg, multibuy-x3-hanging-decorations-mari-lwyd-witch-black-phillip-devil-lambton-worm-kelpie/hanging-multibuy-x3-hanging-6.jpg, multibuy-x3-hanging-decorations-mari-lwyd-witch-black-phillip-devil-lambton-worm-kelpie/hanging-multibuy-x3-hanging-7.jpg, multibuy-x3-hanging-decorations-mari-lwyd-witch-black-phillip-devil-lambton-worm-kelpie/hanging-multibuy-x3-hanging-8.jpg, multibuy-x3-hanging-decorations-mari-lwyd-witch-black-phillip-devil-lambton-worm-kelpie/hanging-multibuy-x3-hanging-9.jpg, multibuy-x3-hanging-decorations-mari-lwyd-witch-black-phillip-devil-lambton-worm-kelpie/hanging-multibuy-x3-hanging-10.jpg
-Sections: Hanging
+Main Image: images/hanging-multibuy-x3-hanging-1.jpg
+Images: images/hanging-multibuy-x3-hanging-2.jpg, images/hanging-multibuy-x3-hanging-3.jpg, images/hanging-multibuy-x3-hanging-4.jpg, images/hanging-multibuy-x3-hanging-5.jpg, images/hanging-multibuy-x3-hanging-6.jpg, images/hanging-multibuy-x3-hanging-7.jpg, images/hanging-multibuy-x3-hanging-8.jpg, images/hanging-multibuy-x3-hanging-9.jpg, images/hanging-multibuy-x3-hanging-10.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 36
 Stock: 10
@@ -4589,11 +4589,11 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Stonehenge Hanging Decoration - Laser Cut Birch Plywood Sun Stone
-Main Image: stonehenge-hanging-decoration-laser-cut-birch-plywood-sun-stone/hanging-stonehenge-hanging-decoration-1.jpg
-Images: stonehenge-hanging-decoration-laser-cut-birch-plywood-sun-stone/hanging-stonehenge-hanging-decoration-2.jpg, stonehenge-hanging-decoration-laser-cut-birch-plywood-sun-stone/hanging-stonehenge-hanging-decoration-3.jpg, stonehenge-hanging-decoration-laser-cut-birch-plywood-sun-stone/hanging-stonehenge-hanging-decoration-4.jpg, stonehenge-hanging-decoration-laser-cut-birch-plywood-sun-stone/hanging-stonehenge-hanging-decoration-5.jpg
-Sections: Hanging
+Main Image: images/hanging-stonehenge-hanging-decoration-1.jpg
+Images: images/hanging-stonehenge-hanging-decoration-2.jpg, images/hanging-stonehenge-hanging-decoration-3.jpg, images/hanging-stonehenge-hanging-decoration-4.jpg, images/hanging-stonehenge-hanging-decoration-5.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
@@ -4613,11 +4613,11 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Memento Mori Skull & Roses Print - Gothic Horror A5 Art
-Main Image: memento-mori-skull-roses-print-gothic-horror-a5-art/print-a5-memento-mori-skull-1.jpg
-Images: memento-mori-skull-roses-print-gothic-horror-a5-art/print-a5-memento-mori-skull-2.jpg, memento-mori-skull-roses-print-gothic-horror-a5-art/print-a5-memento-mori-skull-3.jpg
-Sections: Print-a5
+Main Image: images/print-a5-memento-mori-skull-1.jpg
+Images: images/print-a5-memento-mori-skull-2.jpg, images/print-a5-memento-mori-skull-3.jpg
+Sections: A5 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 8
 Stock: 10
@@ -4641,11 +4641,11 @@ If you purchase along with other items from my shop and a "do not bend envelope"
 IF YOU ARE SHOPPING OUTSIDE OF MAINLAND UK, PLEASE CONTACT ME AND I CAN GIVE YOU A MORE ACCURATE POSTAL CHARGE.
 ---
 Title: Morning Star Flail Birch Plywood Pin Badge
-Main Image: morning-star-flail-birch-plywood-pin-badge/badge-morning-star-flail-1.jpg
-Images: morning-star-flail-birch-plywood-pin-badge/badge-morning-star-flail-2.jpg, morning-star-flail-birch-plywood-pin-badge/badge-morning-star-flail-3.jpg, morning-star-flail-birch-plywood-pin-badge/badge-morning-star-flail-4.jpg, morning-star-flail-birch-plywood-pin-badge/badge-morning-star-flail-5.jpg
-Sections: Badge
+Main Image: images/badge-morning-star-flail-1.jpg
+Images: images/badge-morning-star-flail-2.jpg, images/badge-morning-star-flail-3.jpg, images/badge-morning-star-flail-4.jpg, images/badge-morning-star-flail-5.jpg
+Sections: Badges
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 6
 Stock: 10
@@ -4665,11 +4665,11 @@ Please look at my other listings for similar items and save on shipping. The pho
 Thank you for taking the time to look at my listings.
 ---
 Title: Hilltop Stones A4 Print, Henge Art by Matt Willis
-Main Image: hilltop-stones-a4-print-henge-art-by-matt-willis/print-a4-hilltop-stones-henge-1.jpg
-Images: hilltop-stones-a4-print-henge-art-by-matt-willis/print-a4-hilltop-stones-henge-2.jpg, hilltop-stones-a4-print-henge-art-by-matt-willis/print-a4-hilltop-stones-henge-3.jpg, hilltop-stones-a4-print-henge-art-by-matt-willis/print-a4-hilltop-stones-henge-4.jpg
-Sections: Print-a4
+Main Image: images/print-a4-hilltop-stones-henge-1.jpg
+Images: images/print-a4-hilltop-stones-henge-2.jpg, images/print-a4-hilltop-stones-henge-3.jpg, images/print-a4-hilltop-stones-henge-4.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -4693,11 +4693,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Forest Stone Print, Standing Stone Circle Art (A5)
-Main Image: forest-stone-print-standing-stone-circle-art-a5/print-a5-forest-stone-standing-1.jpg
-Images: forest-stone-print-standing-stone-circle-art-a5/print-a5-forest-stone-standing-2.jpg, forest-stone-print-standing-stone-circle-art-a5/print-a5-forest-stone-standing-3.jpg, forest-stone-print-standing-stone-circle-art-a5/print-a5-forest-stone-standing-4.jpg, forest-stone-print-standing-stone-circle-art-a5/print-a5-forest-stone-standing-5.jpg
-Sections: Print-a5
+Main Image: images/print-a5-forest-stone-standing-1.jpg
+Images: images/print-a5-forest-stone-standing-2.jpg, images/print-a5-forest-stone-standing-3.jpg, images/print-a5-forest-stone-standing-4.jpg, images/print-a5-forest-stone-standing-5.jpg
+Sections: A5 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 8
 Stock: 10
@@ -4717,11 +4717,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Hobgoblin A4 Print, Naughty House Spirit Illustration
-Main Image: hobgoblin-a4-print-naughty-house-spirit-illustration/print-a4-hobgoblin-naughty-house-1.jpg
-Images: hobgoblin-a4-print-naughty-house-spirit-illustration/print-a4-hobgoblin-naughty-house-2.jpg
-Sections: Print-a4
+Main Image: images/print-a4-hobgoblin-naughty-house-1.jpg
+Images: images/print-a4-hobgoblin-naughty-house-2.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -4741,11 +4741,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Stone Cottage A5 Print, Folklore Landscape
-Main Image: stone-cottage-a5-print-folklore-landscape/print-a5-stone-cottage-folklore-1.jpg
-Images: stone-cottage-a5-print-folklore-landscape/print-a5-stone-cottage-folklore-2.jpg, stone-cottage-a5-print-folklore-landscape/print-a5-stone-cottage-folklore-3.jpg, stone-cottage-a5-print-folklore-landscape/print-a5-stone-cottage-folklore-4.jpg
-Sections: Print-a5
+Main Image: images/print-a5-stone-cottage-folklore-1.jpg
+Images: images/print-a5-stone-cottage-folklore-2.jpg, images/print-a5-stone-cottage-folklore-3.jpg, images/print-a5-stone-cottage-folklore-4.jpg
+Sections: A5 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 8
 Stock: 10
@@ -4766,11 +4766,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Spring Heeled Jack A3 Print – London Folklore Art
-Main Image: spring-heeled-jack-a3-print-london-folklore-art/print-a3-spring-heeled-jack-1.jpg
-Images: spring-heeled-jack-a3-print-london-folklore-art/print-a3-spring-heeled-jack-2.jpg
-Sections: Print-a3
+Main Image: images/print-a3-spring-heeled-jack-1.jpg
+Images: images/print-a3-spring-heeled-jack-2.jpg
+Sections: A3 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 16
 Stock: 10
@@ -4790,11 +4790,11 @@ All my prints are flat packed in a recyclable cellophane bags and are sent in ri
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Folklore Box #1 – Jenny Greenteeth Print, Zine & Stickers
-Main Image: folklore-box-1-jenny-greenteeth-print-zine-stickers/zine-folklore-box-1-1.jpg
-Images: folklore-box-1-jenny-greenteeth-print-zine-stickers/zine-folklore-box-1-2.jpg, folklore-box-1-jenny-greenteeth-print-zine-stickers/zine-folklore-box-1-3.jpg, folklore-box-1-jenny-greenteeth-print-zine-stickers/zine-folklore-box-1-4.jpg, folklore-box-1-jenny-greenteeth-print-zine-stickers/zine-folklore-box-1-5.jpg, folklore-box-1-jenny-greenteeth-print-zine-stickers/zine-folklore-box-1-6.jpg
-Sections: Zine
+Main Image: images/zine-folklore-box-1-1.jpg
+Images: images/zine-folklore-box-1-2.jpg, images/zine-folklore-box-1-3.jpg, images/zine-folklore-box-1-4.jpg, images/zine-folklore-box-1-5.jpg, images/zine-folklore-box-1-6.jpg
+Sections: Zines
 Size: Standard
-Materials: Please Update
+Materials: 250gsm silk cover, 130 gsm silk pages, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 24
 Stock: 10
@@ -4820,11 +4820,11 @@ The above items will be securely packaged in an oversized A4 cardboard box which
 This is a preorder so that I can get an idea of the quantities needed for each box and produce all of the individual pieces. Preorder time is 4 weeks. If I can get a good idea of the amounts needed beforehand I will possibly start sending some boxes out before the finish date. I will do my best to get this out as soon as possible.
 ---
 Title: Red Dragon Cotton Tote Bag – British Folklore Art
-Main Image: red-dragon-cotton-tote-bag-british-folklore-art/item-red-dragon-cotton-1.jpg
-Images: red-dragon-cotton-tote-bag-british-folklore-art/item-red-dragon-cotton-2.jpg
-Sections: Item
+Main Image: images/tote-red-dragon-cotton-1.jpg
+Images: images/tote-red-dragon-cotton-2.jpg
+Sections: Tote Bags
 Size: Standard
-Materials: Please Update
+Materials: 100% recycled cotton 170gsm
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
@@ -4840,11 +4840,11 @@ The RED DRAGON is hand drawn by folklore illustrator Matt Willis and DTF printed
 The TOTE BAG will be shipped within a plastic mailing bag to protect it on it's journey.
 ---
 Title: Shuck Zine Cover Print – Haunted Goatshead Illustration
-Main Image: shuck-zine-cover-print-haunted-goatshead-illustration/zine-shuck-zine-cover-1.jpg
-Images: shuck-zine-cover-print-haunted-goatshead-illustration/zine-shuck-zine-cover-2.jpg, shuck-zine-cover-print-haunted-goatshead-illustration/zine-shuck-zine-cover-3.jpg
-Sections: Zine
+Main Image: images/zine-shuck-zine-cover-1.jpg
+Images: images/zine-shuck-zine-cover-2.jpg, images/zine-shuck-zine-cover-3.jpg
+Sections: Zines
 Size: Standard
-Materials: Please Update
+Materials: 250gsm silk cover, 130 gsm silk pages, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -4867,11 +4867,11 @@ If you buy other flat items from my shop at the same time, these will be packed 
 INTERNATIONAL BUYERS:  IF YOU LIVE OUTSIDE OF MAINLAND UK AND WOULD LIKE TO PURCHASE A PRINT, NO PROBS.  PLEASE CONTACT ME AND I CAN PROVIDE YOU WITH A BESPOKE POSTAGE COST.
 ---
 Title: The Wicker Man Decoration: Birch Plywood Lord Summerisle Figure
-Main Image: the-wicker-man-decoration-birch-plywood-lord-summerisle-figure/standing-wicker-man-decoration-1.jpg
-Images: the-wicker-man-decoration-birch-plywood-lord-summerisle-figure/standing-wicker-man-decoration-2.jpg, the-wicker-man-decoration-birch-plywood-lord-summerisle-figure/standing-wicker-man-decoration-3.jpg
-Sections: Standing
+Main Image: images/hanging-wicker-man-decoration-1.jpg
+Images: images/hanging-wicker-man-decoration-2.jpg, images/hanging-wicker-man-decoration-3.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 30
 Stock: 10
@@ -4891,11 +4891,11 @@ The uptmost care is taken with the packaging so this piece will be suitable to s
 The packaging may differ to the photographs depending on other items in the order. Thank you card and sticker may vary due to availability.
 ---
 Title: Witchfinder General Decoration - Laser Cut Birch Plywood Folklore Art
-Main Image: witchfinder-general-decoration-laser-cut-birch-plywood-folklore-art/standing-witchfinder-general-decoration-1.jpg
-Images: witchfinder-general-decoration-laser-cut-birch-plywood-folklore-art/standing-witchfinder-general-decoration-2.jpg, witchfinder-general-decoration-laser-cut-birch-plywood-folklore-art/standing-witchfinder-general-decoration-3.jpg
-Sections: Standing
+Main Image: images/hanging-witchfinder-general-decoration-1.jpg
+Images: images/hanging-witchfinder-general-decoration-2.jpg, images/hanging-witchfinder-general-decoration-3.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 20
 Stock: 10
@@ -4915,11 +4915,11 @@ The uptmost care is taken with the packaging so this piece will be suitable to s
 The packaging may differ to the photographs depending on other items in the order. Thank you card and sticker may vary due to availability.
 ---
 Title: Queen of Elphame A4 Print – Matt Willis Fairy Art, Scottish Folklore
-Main Image: queen-of-elphame-a4-print-matt-willis-fairy-art-scottish-folklore/print-a4-queen-of-elphame-1.jpg
-Images: queen-of-elphame-a4-print-matt-willis-fairy-art-scottish-folklore/print-a4-queen-of-elphame-2.jpg
-Sections: Print-a4
+Main Image: images/print-a4-queen-of-elphame-1.jpg
+Images: images/print-a4-queen-of-elphame-2.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -4943,11 +4943,11 @@ Delivery: This A4 print comes  wrapped in a bio degradable cellophane bag, and s
 Thanks for looking!
 ---
 Title: Winged Demon Clutch Pin Badge - Laser Cut Birch Plywood
-Main Image: winged-demon-clutch-pin-badge-laser-cut-birch-plywood/badge-winged-demon-clutch-1.jpg
-Images: winged-demon-clutch-pin-badge-laser-cut-birch-plywood/badge-winged-demon-clutch-2.jpg, winged-demon-clutch-pin-badge-laser-cut-birch-plywood/badge-winged-demon-clutch-3.jpg, winged-demon-clutch-pin-badge-laser-cut-birch-plywood/badge-winged-demon-clutch-4.jpg
-Sections: Badge
+Main Image: images/badge-winged-demon-clutch-1.jpg
+Images: images/badge-winged-demon-clutch-2.jpg, images/badge-winged-demon-clutch-3.jpg, images/badge-winged-demon-clutch-4.jpg
+Sections: Badges
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -4967,11 +4967,11 @@ Please look at my other listings for similar items and save on shipping. The pho
 Thank you for taking the time to look at my listings.
 ---
 Title: Memento Mori Skull and Roses Greetings Card - Free Sticker
-Main Image: memento-mori-skull-and-roses-greetings-card-free-sticker/card-memento-mori-skull-1.jpg
-Images: memento-mori-skull-and-roses-greetings-card-free-sticker/card-memento-mori-skull-2.jpg
-Sections: Card
+Main Image: images/card-memento-mori-skull-1.jpg
+Images: images/card-memento-mori-skull-2.jpg
+Sections: Greetings Cards
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 3.5
 Stock: 10
@@ -4987,11 +4987,11 @@ My greetings cards are hand drawn and professionally printed onto 350gsm silk co
 All my cards come in a recyclable cellophane bag and are sent in rigid protective packaging to ensure they arrive in pristine condition.
 ---
 Title: Black Cat Christmas Decoration - Pyewackett Folklore Ornament
-Main Image: black-cat-christmas-decoration-pyewackett-folklore-ornament/standing-black-cat-christmas-1.jpg
-Images: black-cat-christmas-decoration-pyewackett-folklore-ornament/standing-black-cat-christmas-2.jpg, black-cat-christmas-decoration-pyewackett-folklore-ornament/standing-black-cat-christmas-3.jpg, black-cat-christmas-decoration-pyewackett-folklore-ornament/standing-black-cat-christmas-4.jpg
-Sections: Standing
+Main Image: images/hanging-black-cat-christmas-1.jpg
+Images: images/hanging-black-cat-christmas-2.jpg, images/hanging-black-cat-christmas-3.jpg, images/hanging-black-cat-christmas-4.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
@@ -5013,11 +5013,11 @@ The uptmost care is taken with the packaging so this piece will be suitable to s
 Please look at the video in this item's gallery for more of my Christmas 2025 decorations. Multibuy offers are available as other listings.
 ---
 Title: Bridge Troll A5 Print - Dark Folklore Illustration
-Main Image: bridge-troll-a5-print-dark-folklore-illustration/print-a5-bridge-troll-dark-1.jpg
-Images: bridge-troll-a5-print-dark-folklore-illustration/print-a5-bridge-troll-dark-2.jpg, bridge-troll-a5-print-dark-folklore-illustration/print-a5-bridge-troll-dark-3.jpg, bridge-troll-a5-print-dark-folklore-illustration/print-a5-bridge-troll-dark-4.jpg
-Sections: Print-a5
+Main Image: images/print-a5-bridge-troll-dark-1.jpg
+Images: images/print-a5-bridge-troll-dark-2.jpg, images/print-a5-bridge-troll-dark-3.jpg, images/print-a5-bridge-troll-dark-4.jpg
+Sections: A5 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 8
 Stock: 10
@@ -5037,11 +5037,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Kelpie Hanging Decoration – Black Birch Plywood Water Horse, Folklore Art
-Main Image: kelpie-hanging-decoration-black-birch-plywood-water-horse-folklore-art/hanging-kelpie-hanging-decoration-1.jpg
-Images: kelpie-hanging-decoration-black-birch-plywood-water-horse-folklore-art/hanging-kelpie-hanging-decoration-2.jpg, kelpie-hanging-decoration-black-birch-plywood-water-horse-folklore-art/hanging-kelpie-hanging-decoration-3.jpg, kelpie-hanging-decoration-black-birch-plywood-water-horse-folklore-art/hanging-kelpie-hanging-decoration-4.jpg, kelpie-hanging-decoration-black-birch-plywood-water-horse-folklore-art/hanging-kelpie-hanging-decoration-5.jpg, kelpie-hanging-decoration-black-birch-plywood-water-horse-folklore-art/hanging-kelpie-hanging-decoration-6.jpg
-Sections: Hanging
+Main Image: images/hanging-kelpie-hanging-decoration-1.jpg
+Images: images/hanging-kelpie-hanging-decoration-2.jpg, images/hanging-kelpie-hanging-decoration-3.jpg, images/hanging-kelpie-hanging-decoration-4.jpg, images/hanging-kelpie-hanging-decoration-5.jpg, images/hanging-kelpie-hanging-decoration-6.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
@@ -5063,11 +5063,11 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Witchfinder General A3 Print - British Folk Horror Art
-Main Image: witchfinder-general-a3-print-british-folk-horror-art/print-a3-witchfinder-general-a3-1.jpg
-Images: witchfinder-general-a3-print-british-folk-horror-art/print-a3-witchfinder-general-a3-2.jpg, witchfinder-general-a3-print-british-folk-horror-art/print-a3-witchfinder-general-a3-3.jpg, witchfinder-general-a3-print-british-folk-horror-art/print-a3-witchfinder-general-a3-4.jpg
-Sections: Print-a3
+Main Image: images/print-a3-witchfinder-general-a3-1.jpg
+Images: images/print-a3-witchfinder-general-a3-2.jpg, images/print-a3-witchfinder-general-a3-3.jpg, images/print-a3-witchfinder-general-a3-4.jpg
+Sections: A3 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 18
 Stock: 10
@@ -5087,11 +5087,11 @@ All my prints are flat packed in a recyclable cellophane bags and are sent in ri
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Moon Stones A5 Print, Henge Stone Circle Art, Folklore Illustration
-Main Image: moon-stones-a5-print-henge-stone-circle-art-folklore-illustration/print-a5-moon-stones-henge-1.jpg
-Images: moon-stones-a5-print-henge-stone-circle-art-folklore-illustration/print-a5-moon-stones-henge-2.jpg, moon-stones-a5-print-henge-stone-circle-art-folklore-illustration/print-a5-moon-stones-henge-3.jpg, moon-stones-a5-print-henge-stone-circle-art-folklore-illustration/print-a5-moon-stones-henge-4.jpg
-Sections: Print-a5
+Main Image: images/print-a5-moon-stones-henge-1.jpg
+Images: images/print-a5-moon-stones-henge-2.jpg, images/print-a5-moon-stones-henge-3.jpg, images/print-a5-moon-stones-henge-4.jpg
+Sections: A5 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 8
 Stock: 10
@@ -5113,11 +5113,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Moon Rays Black Tote Bag – Matt Willis Folklore Art
-Main Image: moon-rays-black-tote-bag-matt-willis-folklore-art/item-moon-rays-black-1.jpg
+Main Image: images/tote-moon-rays-black-1.jpg
 Images: 
-Sections: Item
+Sections: Tote Bags
 Size: Standard
-Materials: Please Update
+Materials: 100% recycled cotton 170gsm
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
@@ -5133,11 +5133,11 @@ The MOON RAYS TOTE is hand drawn by folklore illustrator Matt Willis and DTF pri
 The TOTE BAG will be shipped in a plastic mailing bag to protect it on it's journey.
 ---
 Title: Standing Stones A4 Print Set, Matt Willis Illustration
-Main Image: standing-stones-a4-print-set-matt-willis-illustration/print-a4-standing-stones-set-1.jpg
-Images: standing-stones-a4-print-set-matt-willis-illustration/print-a4-standing-stones-set-2.jpg, standing-stones-a4-print-set-matt-willis-illustration/print-a4-standing-stones-set-3.jpg, standing-stones-a4-print-set-matt-willis-illustration/print-a4-standing-stones-set-4.jpg, standing-stones-a4-print-set-matt-willis-illustration/print-a4-standing-stones-set-5.jpg, standing-stones-a4-print-set-matt-willis-illustration/print-a4-standing-stones-set-6.jpg, standing-stones-a4-print-set-matt-willis-illustration/print-a4-standing-stones-set-7.jpg, standing-stones-a4-print-set-matt-willis-illustration/print-a4-standing-stones-set-8.jpg, standing-stones-a4-print-set-matt-willis-illustration/print-a4-standing-stones-set-9.jpg, standing-stones-a4-print-set-matt-willis-illustration/print-a4-standing-stones-set-10.jpg
-Sections: Print-a4
+Main Image: images/print-a4-standing-stones-set-1.jpg
+Images: images/print-a4-standing-stones-set-2.jpg, images/print-a4-standing-stones-set-3.jpg, images/print-a4-standing-stones-set-4.jpg, images/print-a4-standing-stones-set-5.jpg, images/print-a4-standing-stones-set-6.jpg, images/print-a4-standing-stones-set-7.jpg, images/print-a4-standing-stones-set-8.jpg, images/print-a4-standing-stones-set-9.jpg, images/print-a4-standing-stones-set-10.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 30
 Stock: 10
@@ -5161,11 +5161,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Lunar Botany Art Print – Moon Phases, Folklore Illustration (A3 Size)
-Main Image: lunar-botany-art-print-moon-phases-folklore-illustration-a3-size/print-a3-lunar-botany-art-1.jpg
-Images: lunar-botany-art-print-moon-phases-folklore-illustration-a3-size/print-a3-lunar-botany-art-2.jpg, lunar-botany-art-print-moon-phases-folklore-illustration-a3-size/print-a3-lunar-botany-art-3.jpg, lunar-botany-art-print-moon-phases-folklore-illustration-a3-size/print-a3-lunar-botany-art-4.jpg
-Sections: Print-a3
+Main Image: images/print-a3-lunar-botany-art-1.jpg
+Images: images/print-a3-lunar-botany-art-2.jpg, images/print-a3-lunar-botany-art-3.jpg, images/print-a3-lunar-botany-art-4.jpg
+Sections: A3 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 16
 Stock: 10
@@ -5185,11 +5185,11 @@ If you buy other flat items from my shop at the same time, these will be packed 
 PLEASE NOTE THAT THIS LISTING IS FOR A PHYSICAL PAPER PRINT ONLY
 ---
 Title: Enchantress A4 Art Print – Gothic Magic Illustration
-Main Image: enchantress-a4-art-print-gothic-magic-illustration/print-a4-enchantress-art-gothic-1.jpg
-Images: enchantress-a4-art-print-gothic-magic-illustration/print-a4-enchantress-art-gothic-2.jpg
-Sections: Print-a4
+Main Image: images/print-a4-enchantress-art-gothic-1.jpg
+Images: images/print-a4-enchantress-art-gothic-2.jpg
+Sections: A4 Art Prints
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 12
 Stock: 10
@@ -5209,11 +5209,11 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Illustrated Krampus Christmas Card: Folklore Devil Greeting
-Main Image: illustrated-krampus-christmas-card-folklore-devil-greeting/card-illustrated-krampus-christmas-1.jpg
-Images: illustrated-krampus-christmas-card-folklore-devil-greeting/card-illustrated-krampus-christmas-2.jpg, illustrated-krampus-christmas-card-folklore-devil-greeting/card-illustrated-krampus-christmas-3.jpg
-Sections: Card
+Main Image: images/card-illustrated-krampus-christmas-1.jpg
+Images: images/card-illustrated-krampus-christmas-2.jpg, images/card-illustrated-krampus-christmas-3.jpg
+Sections: Greetings Cards
 Size: Standard
-Materials: Please Update
+Materials: 350gsm card, ink
 Postal Class: Second Class Small Parcel
 Item Cost: 3
 Stock: 10
@@ -5233,11 +5233,11 @@ My greetings cards are hand drawn and professionally printed onto 300gsm uncoate
 All my cards come in a recyclable cellophane bag and are sent in rigid protective packaging to ensure they arrive in pristine condition.
 ---
 Title: Krampus Christmas Ornament – Black Birch Plywood Folklore Decoration
-Main Image: krampus-christmas-ornament-black-birch-plywood-folklore-decoration/standing-krampus-christmas-ornament-1.jpg
-Images: krampus-christmas-ornament-black-birch-plywood-folklore-decoration/standing-krampus-christmas-ornament-2.jpg, krampus-christmas-ornament-black-birch-plywood-folklore-decoration/standing-krampus-christmas-ornament-3.jpg, krampus-christmas-ornament-black-birch-plywood-folklore-decoration/standing-krampus-christmas-ornament-4.jpg
-Sections: Standing
+Main Image: images/hanging-krampus-christmas-ornament-1.jpg
+Images: images/hanging-krampus-christmas-ornament-2.jpg, images/hanging-krampus-christmas-ornament-3.jpg, images/hanging-krampus-christmas-ornament-4.jpg
+Sections: Hanging Decorations
 Size: Standard
-Materials: Please Update
+Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Small Parcel
 Item Cost: 15
 Stock: 10
