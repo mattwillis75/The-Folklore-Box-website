@@ -3904,7 +3904,7 @@ Stock M: 10
 Stock L: 10
 Stock XL: 10
 Stock XXL: 10
-Description: This listing is Ron an A4 (210x 297mm)  print of The Wyvern.
+Description: This listing is for an A4 (210x 297mm)  print of The Wyvern.
 
 It depicts a magnificent Wyvern atop a standing stone.
 
