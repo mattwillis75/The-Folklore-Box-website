@@ -3917,9 +3917,9 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: All Seeing Eye Divination Board Print – Illustrated Folklore Art
-Main Image: images/roundel-all-seeing-eye-1.jpg
-Images: images/roundel-all-seeing-eye-2.jpg, images/roundel-all-seeing-eye-3.jpg, images/roundel-all-seeing-eye-4.jpg
-Sections: The Folklore Boxes
+Main Image: images/item-all-seeing-eye-1.jpg
+Images: images/item-all-seeing-eye-2.jpg, images/item-all-seeing-eye-3.jpg, images/item-all-seeing-eye-4.jpg
+Sections: A3 Art Prints
 Size: Standard
 Materials: Please Update
 Postal Class: Second Class Large Letter
