@@ -2636,8 +2636,8 @@ This will be sent assembled in a cardboard PIP box with plenty of packaging to p
 Title: Art Nouveau Tarot Card Print – Illustrated Divination Board, Folklore Art
 Main Image: images/card-art-nouveau-tarot-1.jpg
 Images: images/card-art-nouveau-tarot-2.jpg, images/card-art-nouveau-tarot-3.jpg, images/card-art-nouveau-tarot-4.jpg
-Sections: Greetings Cards
-Size: Standard
+Sections: A3 Art Prints
+Size: A3 - 297 x 420mm
 Materials: 350gsm card, ink
 Postal Class: Second Class Letter
 Item Cost: 16
