@@ -4477,9 +4477,9 @@ INTERNATIONAL BUYERS:  IF YOU LIVE OUTSIDE OF MAINLAND UK AND WOULD LIKE TO PURC
 Title: Shuck Zine A4 Art Print Set – Folklore Illustrations
 Main Image: images/print-a4-shuck-zine-art-1.jpg
 Images: images/print-a4-shuck-zine-art-2.jpg, images/print-a4-shuck-zine-art-3.jpg, images/print-a4-shuck-zine-art-4.jpg, images/print-a4-shuck-zine-art-5.jpg
-Sections: Zines
-Size: Standard
-Materials: 250gsm silk cover, 130 gsm silk pages, ink
+Sections: A4 Art Prints
+Size: A4 - 210 x 297mm
+Materials: 350gsm card, ink
 Postal Class: Second Class Large Letter
 Item Cost: 42
 Stock: 10
