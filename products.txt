@@ -4338,8 +4338,8 @@ The CAULDRON WITCH is hand drawn by folklore illustrator Matt Willis and DTF pri
 The TOTE BAG will be shipped in a plastic mailing bag to protect it on it's journey.
 ---
 Title: Green Man Cotton Tote Bag – British Folklore Design
-Main Image: images/tote-green-man-cotton-1.jpg
-Images: images/tote-green-man-cotton-2.jpg
+Main Image: images/item-green-man-cotton-1.jpg
+Images: 
 Sections: Tote Bags
 Size: Standard
 Materials: 100% recycled cotton 170gsm
