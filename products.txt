@@ -3366,9 +3366,9 @@ The uptmost care is taken with the packaging so this piece will be suitable to s
 The packaging may differ to the photographs depending on other items in the order. Thank you card and sticker may vary due to availability.
 ---
 Title: Mari Lwyd Decoration - Birch Plywood Welsh Hobby Horse
-Main Image: images/hanging-mari-lwyd-decoration-1.jpg
-Images: images/hanging-mari-lwyd-decoration-2.jpg, images/hanging-mari-lwyd-decoration-3.jpg, images/hanging-mari-lwyd-decoration-4.jpg, images/hanging-mari-lwyd-decoration-5.jpg
-Sections: Hanging Decorations
+Main Image: images/standing-mari-lwyd-decoration-1.jpg
+Images: images/standing-mari-lwyd-decoration-2.jpg, images/standing-mari-lwyd-decoration-3.jpg, images/standing-mari-lwyd-decoration-4.jpg, images/standing-mari-lwyd-decoration-5.jpg
+Sections: Standing Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Large Letter
