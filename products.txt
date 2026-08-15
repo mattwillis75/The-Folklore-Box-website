@@ -4178,8 +4178,8 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Mother Gabley Art Print – Norfolk Folklore, Gothic Illustration
-Main Image: images/item-mother-gabley-art-1.jpg
-Images: images/item-mother-gabley-art-2.jpg
+Main Image: images/roundel-mother-gabley-art-1.jpg
+Images: images/roundel-mother-gabley-art-2.jpg
 Sections: The Folklore Boxes
 Size: Standard
 Materials: Please Update
@@ -4240,9 +4240,9 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: New Year Cleansing Ritual Prints – Witchy A6 Print Set - folklore - gothic
-Main Image: images/roundel-new-year-cleansing-1.jpg
-Images: images/roundel-new-year-cleansing-2.jpg, images/roundel-new-year-cleansing-3.jpg, images/roundel-new-year-cleansing-4.jpg, images/roundel-new-year-cleansing-5.jpg, images/roundel-new-year-cleansing-6.jpg, images/roundel-new-year-cleansing-7.jpg, images/roundel-new-year-cleansing-8.jpg, images/roundel-new-year-cleansing-9.jpg
-Sections: The Folklore Boxes
+Main Image: images/item-new-year-cleansing-1.jpg
+Images: images/item-new-year-cleansing-2.jpg, images/item-new-year-cleansing-3.jpg, images/item-new-year-cleansing-4.jpg, images/item-new-year-cleansing-5.jpg, images/item-new-year-cleansing-6.jpg, images/item-new-year-cleansing-7.jpg, images/item-new-year-cleansing-8.jpg, images/item-new-year-cleansing-9.jpg
+Sections: Greetings Cards
 Size: Standard
 Materials: Please Update
 Postal Class: Second Class Large Letter
