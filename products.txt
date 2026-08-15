@@ -724,8 +724,8 @@ Issue#7 - Witches
 SHUCK #7 -  WITCHES -  A BUMPER ISSUE.  This issue includes stories of the Kittywitches of Great Yarmouth, A Witch Map of Norfolk, Monica English - Norfolk's High Priestess of the Grey Goose Coven along with stories of hagstones, spells and witch bottles.
 ---
 Title: Mari Lwyd Decoration - Birch Plywood Welsh Hobby Horse
-Main Image: images/hanging-mari-lwyd-decoration-1.jpg
-Images: images/hanging-mari-lwyd-decoration-2.jpg, images/hanging-mari-lwyd-decoration-3.jpg, images/hanging-mari-lwyd-decoration-4.jpg, images/hanging-mari-lwyd-decoration-5.jpg
+Main Image: images/hanging-mari-lwyd-horse-1.jpg
+Images: images/hanging-mari-lwyd-horse-2.jpg, images/hanging-mari-lwyd-horse-3.jpg, images/hanging-mari-lwyd-horse-4.jpg, images/hanging-mari-lwyd-horse-5.jpg
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
