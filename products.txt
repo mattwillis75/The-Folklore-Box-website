@@ -4358,7 +4358,7 @@ The GREEN MAN is hand drawn by folklore illustrator Matt Willis and DTF printed 
 The TOTE BAG will be shipped in a plastic mailing bag to protect it on it's journey.
 ---
 Title: Moon Rays Black Tote Bag – Matt Willis Folklore Art
-Main Image: images/tote-moon-rays-black-1.jpg
+Main Image: images/item-moon-rays-black-1.jpg
 Images: 
 Sections: Tote Bags
 Size: Standard
