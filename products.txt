@@ -4450,9 +4450,9 @@ This is a preorder so that I can get an idea of the quantities needed for each b
 Title: Jack Valentine Illustration Print - Shuck Zine Cover Art
 Main Image: images/zine-jack-valentine-illustration-1.jpg
 Images: images/zine-jack-valentine-illustration-2.jpg, images/zine-jack-valentine-illustration-3.jpg
-Sections: Zines
-Size: Standard
-Materials: 250gsm silk cover, 130 gsm silk pages, ink
+Sections: A4 Art Prints
+Size: A4 - 210 x 297mm
+Materials: 350gsm card, ink
 Postal Class: Second Class Large Letter
 Item Cost: 12
 Stock: 10
