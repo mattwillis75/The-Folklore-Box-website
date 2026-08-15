@@ -2990,8 +2990,8 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 ---
 Title: Black Cat Christmas Decoration - Pyewackett Folklore Ornament
-Main Image: images/hanging-black-cat-christmas-1.jpg
-Images: images/hanging-black-cat-christmas-2.jpg, images/hanging-black-cat-christmas-3.jpg, images/hanging-black-cat-christmas-4.jpg
+Main Image: images/Hanging-dec-black-cat-1.jpg
+Images: images/Hanging-dec-black-cat-2.jpg
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
