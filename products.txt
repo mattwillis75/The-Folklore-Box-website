@@ -4378,8 +4378,8 @@ The MOON RAYS TOTE is hand drawn by folklore illustrator Matt Willis and DTF pri
 The TOTE BAG will be shipped in a plastic mailing bag to protect it on it's journey.
 ---
 Title: Red Dragon Cotton Tote Bag – British Folklore Art
-Main Image: images/tote-red-dragon-cotton-1.jpg
-Images: images/tote-red-dragon-cotton-2.jpg
+Main Image: images/item-red-dragon-cotton-1.jpg
+Images: 
 Sections: Tote Bags
 Size: Standard
 Materials: 100% recycled cotton 170gsm
