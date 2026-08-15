@@ -3995,9 +3995,9 @@ The uptmost care is taken with the packaging so this piece will be suitable to s
 Title: Hellmouth Folklore Roundel - Devil - Altar decoration - engraved ornament - black painted birchwood
 Main Image: images/roundel-hellmouth-folklore-roundel-1.jpg
 Images: images/roundel-hellmouth-folklore-roundel-2.jpg, images/roundel-hellmouth-folklore-roundel-3.jpg, images/roundel-hellmouth-folklore-roundel-4.jpg
-Sections: The Folklore Boxes
-Size: Standard
-Materials: Please Update
+Sections: Roundels
+Size: 90 x 90 x 3mm
+Materials: birch plywood, black paint
 Postal Class: Second Class Large Letter
 Item Cost: 12
 Stock: 10
