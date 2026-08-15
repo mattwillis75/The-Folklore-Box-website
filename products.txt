@@ -4581,9 +4581,9 @@ INTERNATIONAL BUYERS:  IF YOU LIVE OUTSIDE OF MAINLAND UK AND WOULD LIKE TO PURC
 Title: Shuck Zine Cover Print – Haunted Goatshead Illustration
 Main Image: images/zine-shuck-zine-cover-1.jpg
 Images: images/zine-shuck-zine-cover-2.jpg, images/zine-shuck-zine-cover-3.jpg
-Sections: Zines
-Size: Standard
-Materials: 250gsm silk cover, 130 gsm silk pages, ink
+Sections: A4 Art Prints
+Size: A4 - 210 x 297mm
+Materials: 350gsm card, ink
 Postal Class: Second Class Large Letter
 Item Cost: 12
 Stock: 10
