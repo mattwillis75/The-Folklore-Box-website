@@ -3941,9 +3941,9 @@ If you buy other flat items from my shop at the same time, these will be packed 
 PLEASE NOTE THAT THIS LISTING IS FOR A PHYSICAL PAPER PRINT ONLY
 ---
 Title: Baba Yaga Hanging Decoration by Matt Willis ~ The Folklore Box ~ TheFolkloreBox ~ The Folk Lore Box ~ Shuck
-Main Image: images/roundel-baba-yaga-hanging-1.jpg
-Images: images/roundel-baba-yaga-hanging-2.jpg, images/roundel-baba-yaga-hanging-3.jpg, images/roundel-baba-yaga-hanging-4.jpg, images/roundel-baba-yaga-hanging-5.jpg
-Sections: The Folklore Boxes
+Main Image: images/hanging-baba-yaga-hanging-1.jpg
+Images: images/hanging-baba-yaga-hanging-2.jpg, images/hanging-baba-yaga-hanging-3.jpg, images/hanging-baba-yaga-hanging-4.jpg, images/hanging-baba-yaga-hanging-5.jpg
+Sections: Hanging Decorations
 Size: Standard
 Materials: Please Update
 Postal Class: Second Class Large Letter
