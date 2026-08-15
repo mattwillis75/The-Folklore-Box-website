@@ -4047,9 +4047,9 @@ The uptmost care is taken with the packaging so this piece will be suitable to s
 Title: Lambton Worm Print – British Folklore Dragon, Matt Willis Art
 Main Image: images/item-lambton-worm-british-1.jpg
 Images: images/item-lambton-worm-british-2.jpg, images/item-lambton-worm-british-3.jpg
-Sections: A4 Art Prints
-Size: A4 - 210 x 297mm
-Materials: 350gsm card, ink
+Sections: The Folklore Boxes
+Size: Standard
+Materials: Please Update
 Postal Class: Second Class Large Letter
 Item Cost: 8
 Stock: 10
@@ -4130,9 +4130,9 @@ IF YOU WANT TO SWAP OUT ONE PRODUCT DESIGN FOR ANOTHER THEN PLEASE MESSAGE ME AT
 Title: Memento Mori Screaming Skull Print – Gothic Horror Art
 Main Image: images/item-memento-mori-screaming-1.jpg
 Images: images/item-memento-mori-screaming-2.jpg, images/item-memento-mori-screaming-3.jpg
-Sections: The Folklore Boxes
-Size: Standard
-Materials: Please Update
+Sections: A4 Art Prints
+Size: A4 - 210 x 297mm
+Materials: 350gsm card, ink
 Postal Class: Second Class Large Letter
 Item Cost: 12
 Stock: 10
