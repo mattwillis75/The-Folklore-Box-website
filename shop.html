@@ -266,7 +266,6 @@
                 <li><a href="uk-folklore-map.html">Folklore Map</a></li>
                 <li><a href="journal.html">Journal</a></li>
                 <li><a href="wholesale.html">Wholesale</a></li>
-                <!-- New Contact Link Added Here -->
                 <li><a href="contact.html">Contact</a></li>
                 <li><a href="#" id="cart-toggle">Cart (0)</a></li>
             </ul>
@@ -539,15 +538,13 @@
                     ? `<p><span class="original-price">£${product.basePrice.toFixed(2)}</span> £${displayPrice.toFixed(2)}</p>` 
                     : `<p>£${displayPrice.toFixed(2)}</p>`;
 
-                // Generate the thumbnail path by inserting 'thumbnails/' into the directory structure
-                let thumbPath = product.mainImage ? product.mainImage.replace('images/', 'images/thumbnails/') : 'placeholder.jpg';
+                let gridPath = product.mainImage ? product.mainImage.replace('images/', 'images/grid/') : 'placeholder.jpg';
 
                 shopGrid.innerHTML += `
                     <div class="product-card">
                         <a href="product.html?id=${encodeURIComponent(product.id)}">
                             <div class="product-image">
-                                <!-- Swap product.mainImage for thumbPath here -->
-                                <img src="${thumbPath}" alt="${product.title.replace(/"/g, '&quot;')}" loading="lazy">
+                                <img src="${gridPath}" alt="${product.title.replace(/"/g, '&quot;')}" loading="lazy">
                             </div>
                             <div class="product-details">
                                 <h3 class="product-title">${product.title}</h3>
