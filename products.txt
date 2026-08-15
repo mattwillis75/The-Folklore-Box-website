@@ -4204,9 +4204,9 @@ If you buy other flat items from my shop at the same time, these will be packed 
 Title: Multibuy x3 Folklore Roundel Ornament – Black Painted Birchwood Decoration
 Main Image: images/roundel-multibuy-x3-folklore-1.jpg
 Images: images/roundel-multibuy-x3-folklore-2.jpg, images/roundel-multibuy-x3-folklore-3.jpg, images/roundel-multibuy-x3-folklore-4.jpg, images/roundel-multibuy-x3-folklore-5.jpg, images/roundel-multibuy-x3-folklore-6.jpg, images/roundel-multibuy-x3-folklore-7.jpg, images/roundel-multibuy-x3-folklore-8.jpg, images/roundel-multibuy-x3-folklore-9.jpg, images/roundel-multibuy-x3-folklore-10.jpg
-Sections: The Folklore Boxes
-Size: Standard
-Materials: Please Update
+Sections: Roundels
+Size: 90 x 90 x 3mm
+Materials: birch plywood, black paint
 Postal Class: Second Class Large Letter
 Item Cost: 30
 Stock: 10
