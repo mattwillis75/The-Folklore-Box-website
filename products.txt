@@ -4553,10 +4553,10 @@ If you buy other flat items from my shop at the same time, these will be packed 
 INTERNATIONAL BUYERS:  IF YOU LIVE OUTSIDE OF MAINLAND UK AND WOULD LIKE TO PURCHASE A PRINT, NO PROBS.  PLEASE CONTACT ME AND I CAN PROVIDE YOU WITH A BESPOKE POSTAGE COST.
 ---
 Title: Shuck Zine Cover Print – Black Shuck Illustration, The Dark Issue
-Main Image: images/zine-shuck-zine-cover-1.jpg
-Images: images/zine-shuck-zine-cover-2.jpg, images/zine-shuck-zine-cover-3.jpg
+Main Image: images/print-a4-shuck-zine-art-2.jpg
+Images: images/print-a4-shuck-zine-art-1.jpg
 Sections: Zines
-Size: Standard
+Size: A3 - 297 x 420mm
 Materials: 250gsm silk cover, 130 gsm silk pages, ink
 Postal Class: Second Class Large Letter
 Item Cost: 16
