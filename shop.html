@@ -539,11 +539,15 @@
                     ? `<p><span class="original-price">£${product.basePrice.toFixed(2)}</span> £${displayPrice.toFixed(2)}</p>` 
                     : `<p>£${displayPrice.toFixed(2)}</p>`;
 
+                // Generate the thumbnail path by inserting 'thumbnails/' into the directory structure
+                let thumbPath = product.mainImage ? product.mainImage.replace('images/', 'images/thumbnails/') : 'placeholder.jpg';
+
                 shopGrid.innerHTML += `
                     <div class="product-card">
                         <a href="product.html?id=${encodeURIComponent(product.id)}">
                             <div class="product-image">
-                                <img src="${product.mainImage || 'placeholder.jpg'}" alt="${product.title.replace(/"/g, '&quot;')}" loading="lazy">
+                                <!-- Swap product.mainImage for thumbPath here -->
+                                <img src="${thumbPath}" alt="${product.title.replace(/"/g, '&quot;')}" loading="lazy">
                             </div>
                             <div class="product-details">
                                 <h3 class="product-title">${product.title}</h3>
