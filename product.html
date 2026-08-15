@@ -226,6 +226,7 @@
                 <li><a href="uk-folklore-map.html">Folklore Map</a></li>
                 <li><a href="journal.html">Journal</a></li>
                 <li><a href="wholesale.html" id="nav-wholesale-link">Wholesale</a></li>
+                <li><a href="contact.html">Contact</a></li>
                 <li><a href="#" id="cart-toggle" onclick="openCart(); return false;">Cart (<span id="cart-count">0</span>)</a></li>
             </ul>
         </nav>
@@ -481,16 +482,16 @@
             }
             if(galleryImages.length === 0) galleryImages.push('placeholder.jpg');
 
+            // --- THIS IS THE UPDATED THUMBNAIL LOGIC ---
             let thumbsHtml = '';
             if(galleryImages.length > 1) {
                 galleryImages.forEach((img, i) => {
-                    // Create the path to the tiny thumbnail folder
                     const thumbPath = img.replace('images/', 'images/thumbs/');
                     const activeClass = i === 0 ? 'active' : '';
-                    // Note: src uses thumbPath, but onclick still passes the full-size 'img'
                     thumbsHtml += `<img src="${thumbPath}" class="${activeClass}" onclick="swapImage(this, '${img}')" alt="Thumbnail">`;
                 });
             }
+            // -------------------------------------------
 
             let metaHtml = '';
             if (currentProduct.size || currentProduct.materials) {
@@ -824,6 +825,17 @@
                 if (isWholesaleMode && itemsTotal < 75) { 
                     alert("Minimum wholesale spend of £75 not met."); 
                     return; 
+                }
+
+                // Treat postage as a physical product to stop PayPal overriding it
+                if (shippingTotal > 0) {
+                    paypalItems.push({
+                        name: `Postage & Packaging (${dest === 'uk' ? 'UK' : 'International'})`,
+                        unit_amount: { currency_code: 'GBP', value: shippingTotal.toFixed(2) },
+                        quantity: "1"
+                    });
+                    itemsTotal += shippingTotal; // Add shipping cost to the item subtotal
+                    shippingTotal = 0; // Zero out the official shipping channel
                 }
 
                 let finalTotal = itemsTotal + shippingTotal; 
