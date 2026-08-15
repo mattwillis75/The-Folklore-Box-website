@@ -484,8 +484,11 @@
             let thumbsHtml = '';
             if(galleryImages.length > 1) {
                 galleryImages.forEach((img, i) => {
+                    // Create the path to the tiny thumbnail folder
+                    const thumbPath = img.replace('images/', 'images/thumbs/');
                     const activeClass = i === 0 ? 'active' : '';
-                    thumbsHtml += `<img src="${img}" class="${activeClass}" onclick="swapImage(this, '${img}')" alt="Thumbnail">`;
+                    // Note: src uses thumbPath, but onclick still passes the full-size 'img'
+                    thumbsHtml += `<img src="${thumbPath}" class="${activeClass}" onclick="swapImage(this, '${img}')" alt="Thumbnail">`;
                 });
             }
 
