@@ -1296,7 +1296,7 @@ Title: Lambton Worm Print – British Folklore Dragon Art (A4)
 Main Image: images/print-a4-lambton-worm-british-1.jpg
 Images: images/print-a4-lambton-worm-british-2.jpg, images/print-a4-lambton-worm-british-3.jpg, images/print-a4-lambton-worm-british-4.jpg
 Sections: A4 Art Prints
-Size: Standard
+Size: A4 - 210 x 297mm
 Materials: 350gsm card, ink
 Postal Class: Second Class Large Letter
 Item Cost: 12
@@ -4047,9 +4047,9 @@ The uptmost care is taken with the packaging so this piece will be suitable to s
 Title: Lambton Worm Print – British Folklore Dragon, Matt Willis Art
 Main Image: images/item-lambton-worm-british-1.jpg
 Images: images/item-lambton-worm-british-2.jpg, images/item-lambton-worm-british-3.jpg
-Sections: A4 Art Prints
-Size: A4 - 210 x 297mm
-Materials: 350gsm card, ink
+Sections: The Folklore Boxes
+Size: Standard
+Materials: Please Update
 Postal Class: Second Class Large Letter
 Item Cost: 8
 Stock: 10
