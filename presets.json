@@ -5,7 +5,9 @@
     "A5 - 148 x 210mm",
     "A4 - 210 x 297mm",
     "A3 - 297 x 420mm",
-    "380 x 420mm"
+    "380 x 420mm",
+    "A6 - 102 x 148 mm",
+    "A6 - 105 x 148 mm"
   ],
   "sections": [
     "Zines",
@@ -19,13 +21,16 @@
     "Tote Bags",
     "T-Shirts",
     "Clocks",
-    "The Folklore Boxes"
+    "The Folklore Boxes",
+    "A6 Art Prints",
+    "Roundels"
   ],
   "materials": [
     "birch plywood, black paint, red velvet ribbon",
     "380 x 420mm",
     "100% recycled cotton 170gsm",
     "350gsm card, ink",
-    "250gsm silk cover, 130 gsm silk pages, ink"
+    "250gsm silk cover, 130 gsm silk pages, ink",
+    "birch plywood, black paint"
   ]
 }
