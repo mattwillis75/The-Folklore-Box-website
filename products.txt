@@ -4128,8 +4128,8 @@ If you are buying from outside mainland UK, you can contact me for an accurate p
 IF YOU WANT TO SWAP OUT ONE PRODUCT DESIGN FOR ANOTHER THEN PLEASE MESSAGE ME AT POINT OF PURCHASE AND I'LL DO THIS FOR YOU.  THE PRODUCT MUST BE IN THE SAME FORMAT, IE A5 PRINT FOR ANOTHER DESIGN A5 PRINT AND THEY MUST BE WITHIN THE MEMENTO MORI RANGE.
 ---
 Title: Memento Mori Screaming Skull Print – Gothic Horror Art
-Main Image: images/roundel-memento-mori-screaming-1.jpg
-Images: images/roundel-memento-mori-screaming-2.jpg, images/roundel-memento-mori-screaming-3.jpg
+Main Image: images/item-memento-mori-screaming-1.jpg
+Images: images/item-memento-mori-screaming-2.jpg, images/item-memento-mori-screaming-3.jpg
 Sections: The Folklore Boxes
 Size: Standard
 Materials: Please Update
