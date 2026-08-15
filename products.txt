@@ -4095,8 +4095,8 @@ All my prints are flat packed in a recyclable cellophane bag and are sent in rig
 If you purchase along with other items from my shop and a "do not bend envelope" isn't suitable, your item will be sent in a PIP box with a depth of no more than 2cm.
 ---
 Title: Memento Mori Art Box – Gothic Skull, Moth Prints & Stickers
-Main Image: images/roundel-memento-mori-art-1.jpg
-Images: images/roundel-memento-mori-art-2.jpg, images/roundel-memento-mori-art-3.jpg, images/roundel-memento-mori-art-4.jpg, images/roundel-memento-mori-art-5.jpg, images/roundel-memento-mori-art-6.jpg
+Main Image: images/item-memento-mori-art-1.jpg
+Images: images/item-memento-mori-art-2.jpg, images/item-memento-mori-art-3.jpg, images/item-memento-mori-art-4.jpg, images/item-memento-mori-art-5.jpg, images/item-memento-mori-art-6.jpg
 Sections: The Folklore Boxes
 Size: Standard
 Materials: Please Update
