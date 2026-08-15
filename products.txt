@@ -4528,9 +4528,9 @@ If you buy other flat items from my shop at the same time, these will be packed 
 Title: Shuck Zine Cover Print – "The Deep" Illustration, Matt Willis
 Main Image: images/zine-shuck-zine-cover-1.jpg
 Images: 
-Sections: Zines
+Sections: A4 Art Prints
 Size: A4 - 210 x 297mm
-Materials: 250gsm silk cover, 130 gsm silk pages, ink
+Materials: 350gsm card, ink
 Postal Class: Second Class Large Letter
 Item Cost: 12
 Stock: 10
