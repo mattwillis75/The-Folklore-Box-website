@@ -3893,9 +3893,9 @@ The packaging may differ to the photographs depending on other items in the orde
 Title: Wyvern Art Print, Dragon on Standing Stone, Fantasy Illustration
 Main Image: images/item-wyvern-art-dragon-1.jpg
 Images: images/item-wyvern-art-dragon-2.jpg, images/item-wyvern-art-dragon-3.jpg, images/item-wyvern-art-dragon-4.jpg
-Sections: Standing Decorations
-Size: Standard
-Materials: birch plywood, black paint, red velvet ribbon
+Sections: A4 Art Prints
+Size: A4 - 210 x 297mm
+Materials: 350gsm card, ink
 Postal Class: Second Class Large Letter
 Item Cost: 12
 Stock: 10
