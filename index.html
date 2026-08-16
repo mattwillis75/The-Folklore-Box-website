@@ -183,27 +183,25 @@
         .arrow-left { left: 20px; }
         .arrow-right { right: 20px; }
 
-       /* Mobile Carousel Adjustments */
+      /* Mobile Carousel Adjustments */
         @media (max-width: 768px) {
             .carousel-container {
                 aspect-ratio: auto;
-                /* 525 height / 1080 width = 48.6% (48.6vw). Plus 200px space for the text overlay */
                 height: calc(48.6vw + 200px); 
                 min-height: auto;
             }
             .carousel-slide {
-                /* Swap to the mobile image variable on small screens */
                 background-image: var(--mobile-bg); 
                 background-position: top center; 
-                background-size: contain; /* Shrinks the image to fit entirely without cropping */
+                background-size: contain; 
             }
             .carousel-overlay {
                 position: absolute;
-                /* Anchor the text exactly below where the 1080x525 image ends */
                 top: 48.6vw; 
                 bottom: 0;
                 left: 0;
                 width: 100%;
+                box-sizing: border-box; /* Add this line to force text wrapping */
                 max-width: none;
                 background: var(--bg-color); 
                 border: none;
@@ -214,7 +212,6 @@
                 justify-content: flex-start;
             }
             .carousel-arrow {
-                /* Center arrows perfectly over the visible image area (Half of 48.6vw = 24.3vw) */
                 top: 24.3vw; 
                 width: 35px;
                 height: 35px;
