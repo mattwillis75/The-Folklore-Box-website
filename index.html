@@ -83,7 +83,7 @@
         .carousel-container {
             position: relative;
             width: 100vw;
-            aspect-ratio: 1920 / 505; /* This locks the box to your exact image proportions */
+            aspect-ratio: 1920 / 505;
             min-height: 250px;
             margin-top: 70px;
             overflow: hidden;
@@ -101,6 +101,8 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            /* Default to desktop image variable */
+            background-image: var(--desktop-bg);
         }
 
         .carousel-slide.active {
@@ -185,17 +187,17 @@
         @media (max-width: 768px) {
             .carousel-container {
                 aspect-ratio: auto;
-                /* Dynamically size the container based on the image aspect ratio + space for text */
                 height: calc(26.3vw + 180px); 
                 min-height: auto;
             }
             .carousel-slide {
+                /* Swap to the mobile image variable on small screens */
+                background-image: var(--mobile-bg); 
                 background-position: top center; 
-                background-size: contain; /* Shrinks the image to fit entirely without cropping */
+                background-size: contain; 
             }
             .carousel-overlay {
                 position: absolute;
-                /* Anchor the text exactly below where the contained image ends */
                 top: 26.3vw; 
                 bottom: 0;
                 left: 0;
@@ -210,7 +212,6 @@
                 justify-content: flex-start;
             }
             .carousel-arrow {
-                /* Center arrows perfectly over the visible image area */
                 top: 13.1vw; 
                 width: 35px;
                 height: 35px;
@@ -233,17 +234,9 @@
             position: relative;
         }
 
-        #collections h2 {
-            margin-bottom: 2rem; 
-        }
-
-        #about h2 {
-            margin-bottom: 2rem; 
-        }
-
-        #map-teaser h2 {
-            margin-bottom: 2rem; 
-        }
+        #collections h2 { margin-bottom: 2rem; }
+        #about h2 { margin-bottom: 2rem; }
+        #map-teaser h2 { margin-bottom: 2rem; }
 
         h2::after {
             content: '';
@@ -355,7 +348,6 @@
                 <li><a href="uk-folklore-map.html">Folklore Map</a></li>
                 <li><a href="journal.html">Journal</a></li>
                 <li><a href="wholesale.html">Wholesale</a></li>
-                <!-- New Contact Link Added Here -->
                 <li><a href="contact.html" >Contact</a></li>
                 <li><a href="#" id="cart-toggle">Cart (0)</a></li>
             </ul>
@@ -364,13 +356,13 @@
 
     <main>
         
-        <!-- Full Width Hero Carousel (Matched structure) -->
+        <!-- Full Width Hero Carousel -->
         <section class="carousel-container animate-on-scroll" id="dynamic-carousel">
             <button class="carousel-arrow arrow-left" onclick="moveSlide(-1)">&#10094;</button>
             <button class="carousel-arrow arrow-right" onclick="moveSlide(1)">&#10095;</button>
             
             <div id="carousel-slides-container">
-                <!-- Slides will be dynamically injected here from carousel.txt -->
+                <!-- Slides will be dynamically injected here -->
             </div>
         </section>
 
@@ -482,7 +474,7 @@
 
         document.addEventListener("DOMContentLoaded", () => {
             
-            // --- 1. DYNAMIC CAROUSEL LOGIC (Matched to Working Norfolk App) ---
+            // --- 1. DYNAMIC CAROUSEL LOGIC ---
             async function loadCarousel() {
                 const container = document.getElementById('carousel-slides-container');
                 if(!container) return;
@@ -517,8 +509,12 @@
                             const isActive = slideIndex === 0 ? "active" : "";
                             const imageUrlWithBuster = `${slide.image}?v=${cacheBuster}`;
                             
+                            // Programmatically build the mobile image URL based on slide index
+                            const mobileImageUrl = `./images/carousel-${slideIndex + 1}-mobile.jpg?v=${cacheBuster}`;
+                            
+                            // Inject both URLs as CSS Custom Variables via inline styles
                             const html = `
-                            <div class="carousel-slide slide-${slideIndex + 1} ${isActive}" style="background-image: url('${imageUrlWithBuster}');">
+                            <div class="carousel-slide slide-${slideIndex + 1} ${isActive}" style="--desktop-bg: url('${imageUrlWithBuster}'); --mobile-bg: url('${mobileImageUrl}');">
                                 <div class="carousel-overlay">
                                     <h2>${slide.format || ''}</h2>
                                     <h3>${slide.heading || ''}</h3>
@@ -627,7 +623,6 @@
                 if (cartHeaderTitle) cartHeaderTitle.textContent = 'Wholesale Cart';
             }
 
-            // CRUCIAL FIX: Changed from localStorage to sessionStorage
             let cart = JSON.parse(sessionStorage.getItem(cartKey)) || [];
             cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
             
