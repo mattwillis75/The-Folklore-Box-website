@@ -103,6 +103,7 @@
         .search-icon-btn { display: none; } /* Hidden on desktop */
 
         /* Mobile specific media query */
+        /* Mobile specific media query */
         @media (max-width: 1100px) {
             .mobile-menu-toggle { display: flex; }
             nav ul { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background-color: rgba(0, 0, 0, 0.95); padding: 1rem 0; border-bottom: 1px solid #333; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
@@ -110,6 +111,11 @@
             nav ul li { width: 100%; text-align: center; padding: 0.8rem 0; }
             .dropdown-content { position: static; transform: none; background-color: transparent; box-shadow: none; margin-top: 0; display: none; }
             .dropdown-content::before { display: none; }
+            
+            /* ADD THESE THREE LINES TO ANIMATE THE HAMBURGER TO AN 'X' */
+            .mobile-menu-toggle.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .mobile-menu-toggle.open span:nth-child(2) { opacity: 0; }
+            .mobile-menu-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
             
             .journal-container { grid-template-columns: 1fr; gap: 2rem; } 
             
@@ -471,6 +477,15 @@
         };
 
         document.addEventListener("DOMContentLoaded", async () => {
+            / --- MOBILE MENU TOGGLE SCRIPT ---
+            const mobileToggle = document.getElementById('mobile-toggle');
+            const navList = document.getElementById('nav-list');
+            if (mobileToggle && navList) {
+                mobileToggle.addEventListener('click', () => {
+                    navList.classList.toggle('mobile-active');
+                    mobileToggle.classList.toggle('open');
+                });
+            }
             const feedContainer = document.getElementById('journal-feed');
             const searchInput = document.getElementById('search-input');
             const yearSelect = document.getElementById('year-select');
