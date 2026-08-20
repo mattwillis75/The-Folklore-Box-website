@@ -217,8 +217,8 @@ The design is cut into black painted birch plywood from an original illustration
 Please look at my other listings for similar items and save on shipping. The photographs show the other badges available in this set.
 ---
 Title: Cottage with Moon Birch Plywood Pin Badge
-Main Image: badge-cottage-with-moon-1.jpg
-Images: badge-cottage-with-moon-2.jpg,badge-cottage-with-moon-3.jpg,badge-cottage-with-moon-4.jpg
+Main Image: images/badge-cottage-moon-1.jpg
+Images: images/badge-cottage-moon-2.jpg, images/badge-cottage-moon-3.jpg, images/badge-cottage-moon-4.jpg, images/badge-cottage-moon-5.jpg
 Sections: Badges
 Size: 25x40mm
 Materials: Birch wood, metal, rubber
@@ -4628,3 +4628,4 @@ Description: BLACK TOTE BAG with a WHITE PRINT WITCH RIDING GOAT design printed 
 The WITCH RIDING GOAT is hand drawn by folklore illustrator Matt Willis and DTF printed and pressed onto a 200gsm 100% cotton natural tote bag. The bag measures 46cm x 35 cm and the straps measure 60cm.
 
 The TOTE BAG will be shipped in a plastic mailing bag to protect it on it's journey.
+---
