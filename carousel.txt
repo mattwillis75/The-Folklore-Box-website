@@ -13,7 +13,7 @@ Image: images/Carousel-2.jpg
 Slide: 3
 Format: GEEGAW
 Heading: Wooden Standing Decorations
-Description: Available soon from The Folklore Box shop.
+Description: Available from The Folklore Box shop.
 Image: images/carousel-3.jpg
 ---
 Slide: 4
