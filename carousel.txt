@@ -1,7 +1,7 @@
 Slide: 1
 Format: Shop Update
-Heading: Black Shuck festival T-Shirts
-Description: The remainder of my T-Shirts for the Black Shuck festival are up on my shop page! Don't worry if your size isn't available - a restock is happening soon.
+Heading: Black Shuck T-Shirts
+Description: My new Black Shuck T-Shirts  are on my shop page!
 Image: images/Carousel-1.jpg
 ---
 Slide: 2
