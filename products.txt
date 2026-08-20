@@ -568,8 +568,8 @@ It is laser cut into black painted birch plywood from an original illustration. 
 Please look at my other listings for similar items and save on shipping. The photographs show the other badges available in this set.
 ---
 Title: Witch with Black Cat Birch Plywood Pin Badge
-Main Image: ./badge-witch-with-cat-1.jpg
-Images: ./badge-witch-with-cat-2.jpg, ./badge-witch-with-cat-3.jpg, ./badge-witch-with-cat-4.jpg
+Main Image: images/badge-witch-black-cat-1.jpg
+Images: images/badge-witch-black-cat-2.jpg, images/badge-witch-black-cat-3.jpg, images/badge-witch-black-cat-4.jpg, images/badge-witch-black-cat-5.jpg
 Sections: Badges
 Size: 35x40mm
 Materials: Birch wood, metal, rubber
