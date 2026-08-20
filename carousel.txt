@@ -20,7 +20,7 @@ Slide: 4
 Format: GEEGAW
 Heading: Cursed Maps
 Description: Norfolk Witch Map and Cursed Norfolk Map in The Folklore Box shop.
-Image: Carousel-4.jpg
+Image: images/carousel-4.jpg
 ---
 Slide: 5
 Format: GEEGAW
