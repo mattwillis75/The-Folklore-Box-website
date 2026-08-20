@@ -488,8 +488,8 @@ The design is cut into black painted birch plywood from an original illustration
 Please look at my other listings for similar items and save on shipping. The photographs show the other badges available in this set.
 ---
 Title: Spiral Stone with Sun Birch Plywood Pin Badge
-Main Image: badge-spiral-stone-1.jpg
-Images: badge-spiral-stone-2.jpg, badge-spiral-stone-3.jpg, badge-spiral-stone-4.jpg, badge-spiral-stone-5.jpg
+Main Image: images/badge-spiral-stone-sun-1.jpg
+Images: images/badge-spiral-stone-sun-2.jpg, images/badge-spiral-stone-sun-3.jpg, images/badge-spiral-stone-sun-4.jpg, images/badge-spiral-stone-sun-5.jpg, images/badge-spiral-stone-sun-6.jpg
 Sections: Badges
 Size: 20x40mm
 Materials: Birch wood, metal, rubber
