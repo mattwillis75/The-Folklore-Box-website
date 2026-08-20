@@ -468,8 +468,8 @@ The design is cut into black painted birch plywood from an original illustration
 Please look at my other listings for similar items and save on shipping. The photographs show the other badges available in this set.
 ---
 Title: Skeleton in Coffin Birch Plywood Pin Badge
-Main Image: ./badge-skeleton-coffin-1.jpg
-Images: ./badge-skeleton-coffin-2.jpg, ./badge-skeleton-coffin-3.jpg, ./badge-skeleton-coffin-4.jpg
+Main Image: images/badge-skeleton-in-coffin-1.jpg
+Images: images/badge-skeleton-in-coffin-2.jpg, images/badge-skeleton-in-coffin-3.jpg, images/badge-skeleton-in-coffin-4.jpg, images/badge-skeleton-in-coffin-5.jpg
 Sections: Badges
 Size: 28x40mm
 Materials: Birch wood, metal, rubber
