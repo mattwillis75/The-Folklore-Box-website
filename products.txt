@@ -408,12 +408,12 @@ The design is cut into black painted birch plywood from an original illustration
 Please look at my other listings for similar items and save on shipping. The photographs show the other badges available in this set.
 ---
 Title: Memento Mori Skeleton with Wings Birch Plywood Pin Badge
-Main Image: ./badge-memento-mori-1.jpg
-Images: ./badge-memento-mori-2.jpg, ./badge-memento-mori-3.jpg, ./badge-memento-mori-4.jpg
+Main Image: images/badge-memento-mori-skeleton-1.jpg
+Images: images/badge-memento-mori-skeleton-2.jpg, images/badge-memento-mori-skeleton-3.jpg, images/badge-memento-mori-skeleton-4.jpg, images/badge-memento-mori-skeleton-5.jpg
 Sections: Badges
 Size: 48x22mm
 Materials: Birch wood, metal, rubber
-Postal Class: Large Letter
+Postal Class: 
 Item Cost: 6.00
 Stock: 10
 Stock S: 10
