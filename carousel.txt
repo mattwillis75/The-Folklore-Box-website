@@ -25,6 +25,6 @@ Image: Carousel-4.jpg
 Slide: 5
 Format: GEEGAW
 Heading: SHUCK Zine
-Description: Available soon from The Folklore Box shop.
+Description: Issues 1-7 available from The Folklore Box shop.
 Image: images/shuck-zine.jpg
 ---
