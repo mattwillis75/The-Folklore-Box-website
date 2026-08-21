@@ -79,28 +79,39 @@
         .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
         section { margin-bottom: 2.5rem; scroll-margin-top: 100px; }
 
-        /* --- FOLKLORE BOX FLOATING BUTTON --- */
+/* --- FOLKLORE BOX FLOATING BUTTON --- */
 .floating-newsletter-btn {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
     background: var(--accent-red, #cc0000);
-    width: 65px;
-    height: 65px;
+    width: 110px;
+    height: 110px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
+    color: #ffffff;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1.3;
     cursor: pointer;
     z-index: 1001;
     box-shadow: 0 4px 15px rgba(204, 0, 0, 0.4);
     transition: transform 0.3s ease, background 0.3s ease;
+    padding: 10px;
+    box-sizing: border-box;
 }
+
 .floating-newsletter-btn:hover {
-    transform: scale(1.1);
+    transform: translateY(-50%) scale(1.1);
     background: #a30000;
 }
-.floating-newsletter-btn svg { width: 30px; height: 30px; fill: #ffffff; }
 
 /* --- FOLKLORE BOX MODAL --- */
 #newsletter-backdrop { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); z-index: 2999; backdrop-filter: blur(4px); }
@@ -757,7 +768,7 @@ function closeNewsletterModal() {
     </script>
     <!-- Floating Button -->
 <div class="floating-newsletter-btn" onclick="openNewsletterModal(event)" title="Join the Newsletter">
-    <svg viewBox="0 0 24 24"><path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z"/></svg>
+    Join the mailing<br>list here.
 </div>
 
 <!-- Modal & Backdrop -->
