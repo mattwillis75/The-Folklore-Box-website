@@ -743,6 +743,17 @@
             
             updateCartUI();
         });
+        // --- Newsletter Modal Logic ---
+function openNewsletterModal(event) {
+    if(event) event.preventDefault();
+    document.getElementById('newsletter-backdrop').style.display = 'block';
+    document.getElementById('newsletter-modal').style.display = 'block';
+}
+
+function closeNewsletterModal() {
+    document.getElementById('newsletter-backdrop').style.display = 'none';
+    document.getElementById('newsletter-modal').style.display = 'none';
+}
     </script>
     <!-- Floating Button -->
 <div class="floating-newsletter-btn" onclick="openNewsletterModal(event)" title="Join the Newsletter">
