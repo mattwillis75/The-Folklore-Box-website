@@ -759,11 +759,26 @@ function openNewsletterModal(event) {
     if(event) event.preventDefault();
     document.getElementById('newsletter-backdrop').style.display = 'block';
     document.getElementById('newsletter-modal').style.display = 'block';
+    
+    // Reset the button text in case they open it again later
+    const btn = document.getElementById('newsletter-submit-btn');
+    btn.innerText = 'Subscribe';
+    btn.style.background = 'var(--accent-red)';
 }
 
 function closeNewsletterModal() {
     document.getElementById('newsletter-backdrop').style.display = 'none';
     document.getElementById('newsletter-modal').style.display = 'none';
+}
+
+function showSuccessState() {
+    // Change button text to show it worked
+    const btn = document.getElementById('newsletter-submit-btn');
+    btn.innerText = 'Success! Welcome to the Archives.';
+    btn.style.background = 'var(--secondary-green, #2b3d1b)'; 
+    
+    // Wait 2.5 seconds so they can read it, then close the modal
+    setTimeout(closeNewsletterModal, 2500);
 }
     </script>
     <!-- Floating Button -->
@@ -778,10 +793,13 @@ function closeNewsletterModal() {
     <h3>Join the Archives</h3>
     <p>Sign up for updates on new lore, original artwork, and upcoming issues of SHUCK.</p>
     
+    <!-- The Invisible Iframe Trick -->
+    <iframe name="hidden_mailerlite" style="display:none;"></iframe>
+    
     <!-- PASTE YOUR MAILERLITE URL HERE -->
-    <form action="https://assets.mailerlite.com/jsonp/2588341/forms/196398444208719424/subscribe" method="post" target="_blank" onsubmit="setTimeout(closeNewsletterModal, 1000)">
+    <form action="YOUR_MAILERLITE_URL_HERE" method="post" target="hidden_mailerlite" onsubmit="showSuccessState()">
         <input type="email" name="fields[email]" placeholder="Enter your email address" required>
-        <button type="submit">Subscribe</button>
+        <button type="submit" id="newsletter-submit-btn">Subscribe</button>
     </form>
 </div>
 </body>
