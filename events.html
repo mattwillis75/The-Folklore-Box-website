@@ -15,6 +15,8 @@
         /* Base Colors & Typography */
         :root { --bg-color: #000000; --text-color: #ffffff; --accent-red: #cc0000; --header-bg: rgba(0, 0, 0, 0.85); }
         
+        * { box-sizing: border-box; }
+
         /* Force scrollbar space to stop judder, but make the track invisible */
         html {
             overflow-y: scroll; 
@@ -31,8 +33,8 @@
         h1, h2, h3, h4, h5, h6 { font-family: 'Spectral', serif; font-weight: 400; color: #ffffff;  }
 
         /* Fixed Header */
-        header { position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 3rem; background: var(--header-bg); border-bottom: 1px solid #333333; z-index: 1000; box-sizing: border-box; backdrop-filter: blur(8px); transition: all 0.3s ease; }
-        .logo img { max-width: 180px; height: auto; }
+        header { position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 3rem; background: var(--header-bg); border-bottom: 1px solid #333333; z-index: 1000; backdrop-filter: blur(8px); transition: all 0.3s ease; }
+        .logo img { max-width: 180px; height: auto; display: block; }
 
         /* Navigation */
         nav ul { list-style: none; display: flex; align-items: center; gap: 2rem; margin: 0; padding: 0; }
@@ -71,18 +73,16 @@
         .events-layout-wrapper {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
+            align-items: flex-start; /* Ensures content flows naturally */
             width: 100%;
             margin: 0;
-            padding: 73px 0 0 0; /* Exactly matches the height of the fixed header to eliminate the gap */
+            padding: 0; /* Padding is now set dynamically by JavaScript to exactly match the header */
             min-height: 100vh;
         }
 
         .side-column {
             flex: 1; 
-            position: sticky;
-            top: 73px; /* Exactly aligns with the bottom of the header */
-            height: calc(100vh - 73px); /* Fills the rest of the screen vertically */
+            position: sticky; /* Keeps the images fixed in view as the user scrolls */
             display: none; 
             background-color: var(--bg-color);
         }
@@ -90,11 +90,11 @@
         .side-column img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Forces image to stretch down to the floor to prevent bottom gap */
+            object-fit: contain; /* Forces the entire image to shrink to fit the screen without cropping */
+            display: block;
             opacity: 0.85;
         }
 
-        /* Anchors the image to the top outer corners so the main artwork doesn't get cropped */
         .left-side img {
             object-position: top left;
         }
@@ -107,9 +107,8 @@
             flex: 0 0 750px; 
             max-width: 100%;
             margin: 0;
-            padding: 3rem 3rem 5rem 3rem; 
+            padding: 3rem 4rem 5rem 4rem; 
             background-color: var(--bg-color); 
-            min-height: calc(100vh - 73px); 
         }
 
         .events-title {
@@ -150,7 +149,6 @@
             animation: fadeUp 0.6s forwards ease-out;
         }
         
-        /* The Signature Red Line Separator */
         .event-item:not(:last-child)::after {
             content: '';
             position: absolute;
@@ -185,6 +183,16 @@
 
         @media (min-width: 950px) {
             .side-column { display: block; }
+        }
+
+        /* Fix for mobile text cut-off */
+        @media (max-width: 768px) {
+            .events-center-column {
+                padding: 2rem 1.5rem 4rem 1.5rem; 
+            }
+            .events-title {
+                font-size: 2.2rem;
+            }
         }
 
         /* --- FOLKLORE BOX FLOATING BUTTON --- */
@@ -265,17 +273,17 @@
 
     <main>
         <!-- Full-Page Event Layout -->
-        <div class="events-layout-wrapper">
+        <div class="events-layout-wrapper" id="events-wrapper">
             
             <!-- Left Background Image -->
-            <div class="side-column left-side">
+            <div class="side-column left-side" id="col-left">
                 <img src="./images/events-bg-left.jpg" alt="Decorative Folklore Art" loading="lazy">
             </div>
             
             <!-- Center Content Area -->
             <div class="events-center-column">
                 <h2 class="events-title">Markets & Events</h2>
-                <p class="events-subtitle">Where to find The Folklore Box on these upcoming dates.</p>
+                <p class="events-subtitle">Where to find The Folklore Box at these upcoming dates.</p>
                 
                 <div id="events-list-container">
                     <p style="color: #888; font-style: italic;">Consulting the archives...</p>
@@ -283,7 +291,7 @@
             </div>
 
             <!-- Right Background Image -->
-            <div class="side-column right-side">
+            <div class="side-column right-side" id="col-right">
                 <img src="./images/events-bg-right.jpg" alt="Decorative Folklore Art" loading="lazy">
             </div>
 
@@ -347,6 +355,27 @@
 
         document.addEventListener("DOMContentLoaded", () => {
             
+            // --- HEADER GAP & SIDEBAR FIX ---
+            // Recalculates the exact header height to align and restrict image sizes
+            function alignUnderHeader() {
+                const header = document.getElementById('main-header');
+                const wrapper = document.getElementById('events-wrapper');
+                if(header && wrapper) {
+                    const hHeight = header.offsetHeight;
+                    wrapper.style.paddingTop = hHeight + 'px';
+                    
+                    // Bind the side columns perfectly to the space below the header
+                    document.querySelectorAll('.side-column').forEach(col => {
+                        col.style.top = hHeight + 'px';
+                        col.style.height = `calc(100vh - ${hHeight}px)`;
+                    });
+                }
+            }
+            alignUnderHeader();
+            
+            window.addEventListener('resize', alignUnderHeader);
+            window.addEventListener('load', alignUnderHeader);
+
             // --- HEADER SCROLL EFFECT ---
             const header = document.getElementById('main-header');
             window.addEventListener('scroll', () => {
@@ -375,7 +404,6 @@
                 if(!container) return;
 
                 try {
-                    // This fetches your plain text file. Be sure to link to the raw GitHub URL if needed!
                     const eventsDataUrl = 'events.txt?v=' + new Date().getTime(); 
                     const response = await fetch(eventsDataUrl, { cache: 'no-store' });
                     
@@ -387,7 +415,7 @@
                     let htmlOutput = '';
                     let tempDate = '';
                     let tempEvent = '';
-                    let delayCounter = 0; // Staggered fade-in animation
+                    let delayCounter = 0; 
 
                     lines.forEach(line => {
                         const cleanLine = line.trim();
@@ -397,7 +425,6 @@
                         } else if (cleanLine.startsWith('Event:')) {
                             tempEvent = cleanLine.replace('Event:', '').trim();
                             
-                            // Once both date and event are found, output the HTML block
                             if (tempDate && tempEvent) {
                                 const animDelay = delayCounter * 0.15; 
                                 htmlOutput += `
@@ -419,7 +446,6 @@
                 }
             }
 
-            // Run the events fetcher
             fetchAndRenderEvents();
 
             // --- SMART CART LOGIC ---
