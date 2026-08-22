@@ -73,7 +73,7 @@
         .events-layout-wrapper {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start; /* Ensures content flows naturally */
+            align-items: stretch; /* Forces side columns to grow equally with the center text column */
             width: 100%;
             margin: 0;
             padding: 0; /* Padding is now set dynamically by JavaScript to exactly match the header */
@@ -82,25 +82,24 @@
 
         .side-column {
             flex: 1; 
-            position: sticky; /* Keeps the images fixed in view as the user scrolls */
             display: none; 
             background-color: var(--bg-color);
+            opacity: 0.85; /* Dims the art slightly to keep focus on the events */
         }
 
-        .side-column img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain; /* Forces the entire image to shrink to fit the screen without cropping */
-            display: block;
-            opacity: 0.85;
+        /* Repeating Background Rules */
+        .left-side {
+            background-image: url('./images/events-bg-left.jpg');
+            background-position: top left;
+            background-size: 100% auto; /* Fills column width, scales height naturally */
+            background-repeat: repeat-y; /* Tiles vertically as you scroll down */
         }
 
-        .left-side img {
-            object-position: top left;
-        }
-
-        .right-side img {
-            object-position: top right;
+        .right-side {
+            background-image: url('./images/events-bg-right.jpg');
+            background-position: top right;
+            background-size: 100% auto; 
+            background-repeat: repeat-y; 
         }
 
         .events-center-column {
@@ -275,10 +274,8 @@
         <!-- Full-Page Event Layout -->
         <div class="events-layout-wrapper" id="events-wrapper">
             
-            <!-- Left Background Image -->
-            <div class="side-column left-side" id="col-left">
-                <img src="./images/events-bg-left.jpg" alt="Decorative Folklore Art" loading="lazy">
-            </div>
+            <!-- Left Repeating Background Column -->
+            <div class="side-column left-side" id="col-left"></div>
             
             <!-- Center Content Area -->
             <div class="events-center-column">
@@ -290,10 +287,8 @@
                 </div>
             </div>
 
-            <!-- Right Background Image -->
-            <div class="side-column right-side" id="col-right">
-                <img src="./images/events-bg-right.jpg" alt="Decorative Folklore Art" loading="lazy">
-            </div>
+            <!-- Right Repeating Background Column -->
+            <div class="side-column right-side" id="col-right"></div>
 
         </div>
     </main>
@@ -355,20 +350,12 @@
 
         document.addEventListener("DOMContentLoaded", () => {
             
-            // --- HEADER GAP & SIDEBAR FIX ---
-            // Recalculates the exact header height to align and restrict image sizes
+            // --- HEADER GAP FIX ---
             function alignUnderHeader() {
                 const header = document.getElementById('main-header');
                 const wrapper = document.getElementById('events-wrapper');
                 if(header && wrapper) {
-                    const hHeight = header.offsetHeight;
-                    wrapper.style.paddingTop = hHeight + 'px';
-                    
-                    // Bind the side columns perfectly to the space below the header
-                    document.querySelectorAll('.side-column').forEach(col => {
-                        col.style.top = hHeight + 'px';
-                        col.style.height = `calc(100vh - ${hHeight}px)`;
-                    });
+                    wrapper.style.paddingTop = header.offsetHeight + 'px';
                 }
             }
             alignUnderHeader();
