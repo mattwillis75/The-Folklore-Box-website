@@ -542,24 +542,24 @@
                     ? `<p><span class="original-price">£${product.basePrice.toFixed(2)}</span> £${displayPrice.toFixed(2)}</p>` 
                     : `<p>£${displayPrice.toFixed(2)}</p>`;
 
-                // Generate path using the new -thumb suffix
-let gridPath = product.mainImage ? `images/${product.mainImage.replace(/\.jpg$/i, '-thumb.jpg')}` : 'placeholder.jpg';
+                // Generate both the thumbnail path and the original fallback path
+let thumbPath = product.mainImage ? `images/${product.mainImage.replace(/\.jpg$/i, '-thumb.jpg')}` : 'placeholder.jpg';
+let originalPath = product.mainImage ? `images/${product.mainImage}` : 'placeholder.jpg';
 
-                shopGrid.innerHTML += `
-                    <div class="product-card">
-                        <a href="product.html?id=${encodeURIComponent(product.id)}">
-                            <div class="product-image">
-                                <img src="${gridPath}" alt="${product.title.replace(/"/g, '&quot;')}" loading="lazy">
-                            </div>
-                            <div class="product-details">
-                                <h3 class="product-title">${product.title}</h3>
-                                <div class="product-prices">${priceHTML}</div>
-                            </div>
-                        </a>
-                    </div>
-                `;
-            });
-        }
+shopGrid.innerHTML += `
+    <div class="product-card">
+        <a href="product.html?id=${encodeURIComponent(product.id)}">
+            <div class="product-image">
+                <!-- Try the thumb, but fall back to the original if it fails -->
+                <img src="${thumbPath}" onerror="this.onerror=null; this.src='${originalPath}';" alt="${product.title.replace(/"/g, '&quot;')}" loading="lazy">
+            </div>
+            <div class="product-details">
+                <h3 class="product-title">${product.title}</h3>
+                <div class="product-prices">${priceHTML}</div>
+            </div>
+        </a>
+    </div>
+`;
 
         window.filterCategory = function(category) {
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
