@@ -534,32 +534,33 @@
         }
 
         function renderGrid() {
-            if(!shopGrid) return;
-            shopGrid.innerHTML = '';
-            filteredProducts.forEach(product => {
-                let displayPrice = isWholesale ? Math.round(product.basePrice * 0.60 * 100) / 100 : product.basePrice;
-                let priceHTML = isWholesale 
-                    ? `<p><span class="original-price">£${product.basePrice.toFixed(2)}</span> £${displayPrice.toFixed(2)}</p>` 
-                    : `<p>£${displayPrice.toFixed(2)}</p>`;
+    if(!shopGrid) return;
+    shopGrid.innerHTML = '';
+    filteredProducts.forEach(product => {
+        let displayPrice = isWholesale ? Math.round(product.basePrice * 0.60 * 100) / 100 : product.basePrice;
+        let priceHTML = isWholesale 
+            ? `<p><span class="original-price">£${product.basePrice.toFixed(2)}</span> £${displayPrice.toFixed(2)}</p>` 
+            : `<p>£${displayPrice.toFixed(2)}</p>`;
 
-                // Generate both the thumbnail path and the original fallback path
-let thumbPath = product.mainImage ? `images/${product.mainImage.replace(/\.jpg$/i, '-thumb.jpg')}` : 'placeholder.jpg';
-let originalPath = product.mainImage ? `images/${product.mainImage}` : 'placeholder.jpg';
+        let thumbPath = product.mainImage ? `images/${product.mainImage.replace(/\.jpg$/i, '-thumb.jpg')}` : 'placeholder.jpg';
+        let originalPath = product.mainImage ? `images/${product.mainImage}` : 'placeholder.jpg';
 
-shopGrid.innerHTML += `
-    <div class="product-card">
-        <a href="product.html?id=${encodeURIComponent(product.id)}">
-            <div class="product-image">
-                <!-- Try the thumb, but fall back to the original if it fails -->
-                <img src="${thumbPath}" onerror="this.onerror=null; this.src='${originalPath}';" alt="${product.title.replace(/"/g, '&quot;')}" loading="lazy">
+        shopGrid.innerHTML += `
+            <div class="product-card">
+                <a href="product.html?id=${encodeURIComponent(product.id)}">
+                    <div class="product-image">
+                        <!-- Try the thumb, but fall back to the original if it fails -->
+                        <img src="${thumbPath}" onerror="this.onerror=null; this.src='${originalPath}';" alt="${product.title.replace(/"/g, '&quot;')}" loading="lazy">
+                    </div>
+                    <div class="product-details">
+                        <h3 class="product-title">${product.title}</h3>
+                        <div class="product-prices">${priceHTML}</div>
+                    </div>
+                </a>
             </div>
-            <div class="product-details">
-                <h3 class="product-title">${product.title}</h3>
-                <div class="product-prices">${priceHTML}</div>
-            </div>
-        </a>
-    </div>
-`;
+        `;
+    });
+}
 
         window.filterCategory = function(category) {
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
