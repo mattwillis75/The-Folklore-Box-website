@@ -72,35 +72,37 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            width: 100%; /* Spans the entire screen */
+            width: 100%;
             margin: 0;
             padding: 85px 0 0 0; /* Pushes content exactly below the fixed header */
             min-height: 100vh;
         }
 
         .side-column {
-            flex: 1; /* Takes up all available horizontal space outside the center */
+            flex: 1; 
             position: sticky;
-            top: 85px; /* Sits right under the header */
-            height: calc(100vh - 85px); /* Fills all vertical space to the bottom */
-            display: none; /* Hidden on mobile */
-            overflow: hidden;
-            background-color: #050505;
+            top: 85px; 
+            height: calc(100vh - 85px); 
+            display: none; 
+            background-color: var(--bg-color); /* Seamless blending with background */
         }
 
         .side-column img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Forces the image to fill the column without whitespace */
-            opacity: 0.85; /* Slightly muted so text stands out */
+            object-fit: contain; /* Shows entire image, no cropping */
+            object-position: top center; /* Pins image right up against the header */
+            opacity: 0.85;
         }
 
         .events-center-column {
-            flex: 0 0 750px; /* Keeps the text section contained and readable */
+            flex: 0 0 750px; 
             max-width: 100%;
             margin: 0;
-            padding: 4rem 3rem 5rem 3rem;
-            background-color: var(--bg-color); /* Prevents overlapping issues */
+            /* Drastically reduced top padding to remove the gap */
+            padding: 1.5rem 3rem 5rem 3rem; 
+            background-color: var(--bg-color); 
+            min-height: calc(100vh - 85px); 
         }
 
         .events-title {
@@ -244,7 +246,6 @@
                 </li>
                 <li><a href="portfolio.html">Portfolio</a></li>
                 <li><a href="shop.html">Shop</a></li>
-                <!-- NEW EVENTS LINK PLACED HERE -->
                 <li><a href="events.html" class="active-page">Events</a></li>
                 <li><a href="uk-folklore-map.html">Folklore Map</a></li>
                 <li><a href="journal.html">Journal</a></li>
@@ -259,7 +260,7 @@
         <!-- Full-Page Event Layout -->
         <div class="events-layout-wrapper">
             
-            <!-- Left Full-Bleed Background Image -->
+            <!-- Left Background Image -->
             <div class="side-column left-side">
                 <img src="./images/events-bg-left.jpg" alt="Decorative Folklore Art" loading="lazy">
             </div>
@@ -274,9 +275,9 @@
                 </div>
             </div>
 
-            <!-- Right Full-Bleed Background Image -->
+            <!-- Right Background Image -->
             <div class="side-column right-side">
-                <img src="./images/event-bg-right.jpg" alt="Decorative Folklore Art" loading="lazy">
+                <img src="./images/events-bg-right.jpg" alt="Decorative Folklore Art" loading="lazy">
             </div>
 
         </div>
