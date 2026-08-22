@@ -23,13 +23,12 @@
             scrollbar-color: #333333 transparent; 
         }
 
-        /* WebKit Custom Scrollbar */
-        ::-webkit-scrollbar { width: 12px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #333333; border-radius: 6px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--accent-red); }
+        /* 
+           Changed overflow-x to 'clip' instead of 'hidden'. 
+           This prevents horizontal scrolling without breaking position: sticky!
+        */
+        body { font-family: 'Lato', sans-serif; font-weight: 300; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 0; line-height: 1.6; overflow-x: clip; }
         
-        body { font-family: 'Lato', sans-serif; font-weight: 300; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 0; line-height: 1.6; overflow-x: hidden; }
         h1, h2, h3, h4, h5, h6 { font-family: 'Spectral', serif; font-weight: 400; color: #ffffff;  }
 
         /* Fixed Header */
@@ -73,7 +72,7 @@
         .events-layout-wrapper {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start; /* Important: Allows the side columns to be sticky while the center scrolls */
+            align-items: flex-start; /* CRITICAL: Allows the side columns to be sticky while the center scrolls */
             width: 100%;
             margin: 0;
             padding: 0; /* Padding is now set dynamically by JavaScript to exactly match the header */
