@@ -1505,7 +1505,7 @@ If you purchase along with other items from my shop and a "do not bend envelope"
 Title: Lambton Worm Print – County Durham Legend, Folklore Dragon
 Main Image: images/item-lambton-worm-county-1.jpg
 Images: images/item-lambton-worm-county-2.jpg, images/item-lambton-worm-county-3.jpg
-Sections: The Folklore Boxes
+Sections: A4 Art Prints
 Size: Standard
 Materials: Please Update
 Postal Class: Second Class Large Letter
