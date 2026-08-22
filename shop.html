@@ -542,8 +542,8 @@
                     ? `<p><span class="original-price">£${product.basePrice.toFixed(2)}</span> £${displayPrice.toFixed(2)}</p>` 
                     : `<p>£${displayPrice.toFixed(2)}</p>`;
 
-                // Generate path using the newly auto-cleaned mainImage
-                let gridPath = product.mainImage ? 'images/grid/' + product.mainImage : 'placeholder.jpg';
+                // Generate path using the new -thumb suffix
+let gridPath = product.mainImage ? `images/${product.mainImage.replace(/\.jpg$/i, '-thumb.jpg')}` : 'placeholder.jpg';
 
                 shopGrid.innerHTML += `
                     <div class="product-card">
