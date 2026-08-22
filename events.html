@@ -67,36 +67,40 @@
             .mobile-menu-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
         }
 
-        /* --- EVENTS PAGE LAYOUT --- */
+        /* --- FULL-PAGE EVENTS LAYOUT --- */
         .events-layout-wrapper {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 130px 2rem 5rem 2rem; /* Accounts for fixed header */
-            gap: 3rem;
-            min-height: 80vh;
+            width: 100%; /* Spans the entire screen */
+            margin: 0;
+            padding: 85px 0 0 0; /* Pushes content exactly below the fixed header */
+            min-height: 100vh;
         }
 
         .side-column {
-            flex: 0 0 250px;
+            flex: 1; /* Takes up all available horizontal space outside the center */
             position: sticky;
-            top: 130px; /* Stays fixed in place as user scrolls down the event list */
-            display: none; /* Hidden on mobile to save space */
+            top: 85px; /* Sits right under the header */
+            height: calc(100vh - 85px); /* Fills all vertical space to the bottom */
+            display: none; /* Hidden on mobile */
+            overflow: hidden;
+            background-color: #050505;
         }
 
         .side-column img {
             width: 100%;
-            height: auto;
-            object-fit: contain;
-            opacity: 0.9;
+            height: 100%;
+            object-fit: cover; /* Forces the image to fill the column without whitespace */
+            opacity: 0.85; /* Slightly muted so text stands out */
         }
 
         .events-center-column {
-            flex: 1;
-            max-width: 700px;
-            margin: 0 auto;
+            flex: 0 0 750px; /* Keeps the text section contained and readable */
+            max-width: 100%;
+            margin: 0;
+            padding: 4rem 3rem 5rem 3rem;
+            background-color: var(--bg-color); /* Prevents overlapping issues */
         }
 
         .events-title {
@@ -123,7 +127,7 @@
         .events-subtitle {
             font-size: 1.15rem;
             color: #aaaaaa;
-            margin-bottom: 3.5rem;
+            margin-bottom: 4rem;
             font-style: italic;
         }
 
@@ -152,15 +156,15 @@
             font-family: 'Lato', sans-serif;
             font-weight: 600;
             color: var(--accent-red);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.4rem;
         }
 
         .event-name {
             font-family: 'Spectral', serif;
-            font-size: 1.8rem;
+            font-size: 1.9rem;
             color: #ffffff;
             margin: 0;
             line-height: 1.3;
@@ -252,10 +256,10 @@
     </header>
 
     <main>
-        <!-- Center Event Column with Side Images -->
+        <!-- Full-Page Event Layout -->
         <div class="events-layout-wrapper">
             
-            <!-- Left Background Image -->
+            <!-- Left Full-Bleed Background Image -->
             <div class="side-column left-side">
                 <img src="./images/events-bg-left.jpg" alt="Decorative Folklore Art" loading="lazy">
             </div>
@@ -270,9 +274,9 @@
                 </div>
             </div>
 
-            <!-- Right Background Image -->
+            <!-- Right Full-Bleed Background Image -->
             <div class="side-column right-side">
-                <img src="./images/events-bg-right.jpg" alt="Decorative Folklore Art" loading="lazy">
+                <img src="./images/event-bg-right.jpg" alt="Decorative Folklore Art" loading="lazy">
             </div>
 
         </div>
