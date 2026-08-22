@@ -484,15 +484,17 @@
             if(galleryImages.length === 0) galleryImages.push('placeholder.jpg');
 
             // --- THIS IS THE UPDATED THUMBNAIL LOGIC ---
-            let thumbsHtml = '';
-            if(galleryImages.length > 1) {
-                galleryImages.forEach((img, i) => {
-                    const thumbPath = img.replace('images/', 'images/thumbs/');
-                    const activeClass = i === 0 ? 'active' : '';
-                    thumbsHtml += `<img src="${thumbPath}" class="${activeClass}" onclick="swapImage(this, '${img}')" alt="Thumbnail">`;
-                });
-            }
-            // -------------------------------------------
+            // --- THIS IS THE UPDATED THUMBNAIL LOGIC ---
+let thumbsHtml = '';
+if(galleryImages.length > 1) {
+    galleryImages.forEach((img, i) => {
+        // Look for the -thumb suffix instead of a subfolder
+        const thumbPath = img.replace(/\.jpg$/i, '-thumb.jpg'); 
+        const activeClass = i === 0 ? 'active' : '';
+        thumbsHtml += `<img src="${thumbPath}" class="${activeClass}" onclick="swapImage(this, '${img}')" alt="Thumbnail">`;
+    });
+}
+// -------------------------------------------
 
             let metaHtml = '';
             if (currentProduct.size || currentProduct.materials) {
