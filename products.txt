@@ -1479,7 +1479,7 @@ If you purchase along with other items from my shop and a "do not bend envelope"
 Title: Lambton Worm Print – British Folklore Dragon, Matt Willis Art
 Main Image: images/item-lambton-worm-british-1.jpg
 Images: images/item-lambton-worm-british-2.jpg, images/item-lambton-worm-british-3.jpg
-Sections: The Folklore Boxes
+Sections: A4 Art Prints
 Size: Standard
 Materials: Please Update
 Postal Class: Second Class Large Letter
