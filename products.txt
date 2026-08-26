@@ -4,8 +4,8 @@ Images: images/green-man-t-shirt-2.jpg
 Sections: T-Shirts
 Size: 
 Materials: 100% Organic ringspun combed cotton
-Postal Class: First Class Letter
-Item Cost: 
+Postal Class: Second Class Small Parcel
+Item Cost: 25
 Stock: 10
 Stock S: 10
 Stock M: 10
@@ -32,8 +32,8 @@ Images: images/tote-green-man-2.jpg
 Sections: Tote Bags
 Size: 
 Materials: 100% recycled cotton 170gsm
-Postal Class: First Class Letter
-Item Cost: 
+Postal Class: Second Class Small Parcel
+Item Cost: 15
 Stock: 10
 Stock S: 10
 Stock M: 10
