@@ -4540,24 +4540,6 @@ Description: A black tote bag with a white print Cauldron Witch design printed o
 
 ** Please be aware that delivery can take up to 10 days on this item. Email us if you would like it quicker and we will let you know if this is possible. **
 ---
-Title: Green Man Tote Bag
-Main Image: images/item-green-man-cotton-1.jpg
-Images: 
-Sections: Tote Bags
-Size: 380 x 420mm
-Materials: 100% recycled cotton 170gsm
-Postal Class: Second Class Large Letter
-Item Cost: 15
-Stock: 10
-Stock S: 10
-Stock M: 10
-Stock L: 10
-Stock XL: 10
-Stock XXL: 10
-Description: A natural tote bag with a Green Man design printed onto the front.
-
-**Please be aware that delivery can take up to 10 days on this item. Email us if you would like it quicker and we will let you know if this is possible. **
----
 Title: Moon Rays Tote Bag
 Main Image: images/item-moon-rays-black-1.jpg
 Images: 
