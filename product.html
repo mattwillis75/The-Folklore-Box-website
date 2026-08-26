@@ -174,6 +174,14 @@
         .cart-shipping-selector label { display: block; color: #aaa; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
         .cart-shipping-selector select { width: 100%; padding: 0.8rem; background: #111; color: #fff; border: 1px solid #333; border-radius: 3px; cursor: pointer; font-family: var(--font-body); }
         
+        /* Discount Code CSS */
+        .discount-container { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #222; padding-bottom: 15px; }
+        .discount-input { flex-grow: 1; padding: 0.8rem; background: #111; border: 1px solid #333; color: #fff; border-radius: 3px; font-family: var(--font-body); }
+        .discount-btn { background: #333; color: #fff; border: 1px solid #444; padding: 0.8rem 1.5rem; cursor: pointer; border-radius: 3px; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; transition: 0.3s ease; }
+        .discount-btn:hover { background: var(--accent-red); border-color: var(--accent-red); }
+        .discount-msg { width: 100%; font-size: 0.85rem; margin-top: 5px; }
+        .cart-discount-row { display: flex; justify-content: space-between; color: #28a745; margin-bottom: 10px; font-family: var(--font-body); }
+
         .cart-total-row { display: flex; justify-content: space-between; font-size: 1rem; font-family: var(--font-body); margin-bottom: 10px; }
         .cart-final-total-row { display: flex; justify-content: space-between; color: var(--accent-red); margin-top: 10px; border-top: 1px solid #333; padding-top: 15px; font-weight: 700; font-family: 'Spectral', serif; font-size: 1.5rem; }
 
@@ -259,6 +267,13 @@
                 Minimum wholesale spend is £75.00 before postage.
             </div>
 
+            <!-- New Discount Code Section -->
+            <div class="discount-container">
+                <input type="text" id="discount-code" class="discount-input" placeholder="Promo code">
+                <button class="discount-btn" onclick="applyDiscount()">Apply</button>
+                <div id="discount-msg" class="discount-msg"></div>
+            </div>
+
             <!-- Destination Dropdown -->
             <div class="cart-shipping-selector">
                 <label for="cart-destination">Deliver to:</label>
@@ -311,6 +326,9 @@
         const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
         const cartKey = isWholesale ? 'folkloreWholesaleCart' : 'folkloreCart';
         let cart = JSON.parse(sessionStorage.getItem(cartKey)) || [];
+
+        let validDiscounts = {};
+        let activeDiscount = null;
 
         if (isWholesale) {
             document.getElementById('nav-wholesale-link').classList.add('active-page');
@@ -398,6 +416,20 @@
                 });
             } catch(e) { console.error("Could not load postal rates."); }
 
+            // Fetch Discounts
+            try {
+                const discResponse = await fetch('discounts.txt', { cache: 'no-store' });
+                if (discResponse.ok) {
+                    const discText = await discResponse.text();
+                    discText.split('\n').forEach(line => {
+                        const parts = line.split(':');
+                        if (parts.length === 2) {
+                            validDiscounts[parts[0].trim().toUpperCase()] = parts[1].trim();
+                        }
+                    });
+                }
+            } catch(e) { console.error("Could not load discount codes."); }
+
             try {
                 const response = await fetch('products.txt?v=' + new Date().getTime(), { cache: 'no-store' });
                 if (!response.ok) throw new Error("Database load failed.");
@@ -483,18 +515,14 @@
             }
             if(galleryImages.length === 0) galleryImages.push('placeholder.jpg');
 
-            // --- THIS IS THE UPDATED THUMBNAIL LOGIC ---
-            // --- THIS IS THE UPDATED THUMBNAIL LOGIC ---
-let thumbsHtml = '';
-if(galleryImages.length > 1) {
-    galleryImages.forEach((img, i) => {
-        // Look for the -thumb suffix instead of a subfolder
-        const thumbPath = img.replace(/\.jpg$/i, '-thumb.jpg'); 
-        const activeClass = i === 0 ? 'active' : '';
-        thumbsHtml += `<img src="${thumbPath}" class="${activeClass}" onclick="swapImage(this, '${img}')" alt="Thumbnail">`;
-    });
-}
-// -------------------------------------------
+            let thumbsHtml = '';
+            if(galleryImages.length > 1) {
+                galleryImages.forEach((img, i) => {
+                    const thumbPath = img.replace(/\.jpg$/i, '-thumb.jpg'); 
+                    const activeClass = i === 0 ? 'active' : '';
+                    thumbsHtml += `<img src="${thumbPath}" class="${activeClass}" onclick="swapImage(this, '${img}')" alt="Thumbnail">`;
+                });
+            }
 
             let metaHtml = '';
             if (currentProduct.size || currentProduct.materials) {
@@ -655,6 +683,34 @@ if(galleryImages.length > 1) {
             updateCartUI();
         }
 
+        window.applyDiscount = function() {
+            const input = document.getElementById('discount-code').value.trim().toUpperCase();
+            const msgEl = document.getElementById('discount-msg');
+
+            if (!input) {
+                activeDiscount = null;
+                msgEl.textContent = "";
+                updateCartUI();
+                return;
+            }
+
+            if (validDiscounts[input]) {
+                const val = validDiscounts[input];
+                if (val.startsWith('%')) {
+                    activeDiscount = { code: input, type: 'percent', value: parseFloat(val.substring(1)) };
+                } else if (val.startsWith('-')) {
+                    activeDiscount = { code: input, type: 'fixed', value: parseFloat(val.substring(1)) };
+                }
+                msgEl.textContent = "Discount applied!";
+                msgEl.style.color = "#28a745";
+            } else {
+                activeDiscount = null;
+                msgEl.textContent = "Invalid discount code.";
+                msgEl.style.color = "var(--accent-red)";
+            }
+            updateCartUI();
+        };
+
         const destSelect = document.getElementById('cart-destination');
         if (destSelect) destSelect.addEventListener('change', updateCartUI);
 
@@ -683,6 +739,10 @@ if(galleryImages.length > 1) {
                 if (cartFinalTotalLabel) cartFinalTotalLabel.innerText = `£0.00`;
                 if (cartCountLabel) cartCountLabel.innerText = "0";
                 if (mbCartCountLabel) mbCartCountLabel.innerText = "0";
+                
+                const existingDiscRow = document.getElementById('cart-discount-row-render');
+                if (existingDiscRow) existingDiscRow.remove();
+
                 return;
             }
 
@@ -691,12 +751,10 @@ if(galleryImages.length > 1) {
 
             // Render items & find largest postal base
             cart.forEach((item, index) => {
-                // 1. Calculate items and subtotals
                 const qty = item.quantity || 1;
                 totalItems += qty;
                 subtotal += item.price * qty;
 
-                // 2. Generate the visual Cart Item HTML
                 const sizeHtml = item.size ? `<p class="cart-item-meta">Size: ${item.size}</p>` : '';
                 cartContainer.innerHTML += `
                     <div class="cart-item">
@@ -714,7 +772,6 @@ if(galleryImages.length > 1) {
                     </div>
                 `;
 
-                // Calculate postal base
                 const rates = postalRates[item.postalClass];
                 if(rates) {
                     const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
@@ -731,7 +788,7 @@ if(galleryImages.length > 1) {
                     const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
                     const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
 
-                    // BULLETPROOF FIX: Identify by a hard ID rather than a loose reference
+                    // Identify by a hard ID rather than a loose reference
                     if (maxBaseItem && item.cartItemId === maxBaseItem.cartItemId && !baseRateApplied) {
                         shippingTotal += baseRate + (addRate * (qty - 1));
                         baseRateApplied = true;
@@ -741,9 +798,35 @@ if(galleryImages.length > 1) {
                 }
             });
 
+            // Calculate Discount
+            let discountAmount = 0;
+            if (activeDiscount) {
+                if (activeDiscount.type === 'percent') {
+                    discountAmount = subtotal * (activeDiscount.value / 100);
+                } else if (activeDiscount.type === 'fixed') {
+                    discountAmount = activeDiscount.value;
+                }
+                if (discountAmount > subtotal) discountAmount = subtotal; // Prevent negative subtotals
+            }
+
             if (cartSubtotalLabel) cartSubtotalLabel.innerText = `£${subtotal.toFixed(2)}`;
             if (cartPostageLabel) cartPostageLabel.innerText = `£${shippingTotal.toFixed(2)}`;
-            if (cartFinalTotalLabel) cartFinalTotalLabel.innerText = `£${(subtotal + shippingTotal).toFixed(2)}`;
+            
+            // Render discount row visually
+            const existingDiscRow = document.getElementById('cart-discount-row-render');
+            if (existingDiscRow) existingDiscRow.remove();
+
+            if (discountAmount > 0) {
+                const finalTotalRow = document.querySelector('.cart-final-total-row');
+                finalTotalRow.insertAdjacentHTML('beforebegin', `
+                    <div class="cart-discount-row" id="cart-discount-row-render">
+                        <span>Discount (${activeDiscount.code}):</span>
+                        <span>-£${discountAmount.toFixed(2)}</span>
+                    </div>
+                `);
+            }
+
+            if (cartFinalTotalLabel) cartFinalTotalLabel.innerText = `£${(subtotal - discountAmount + shippingTotal).toFixed(2)}`;
 
             if (isWholesale && subtotal < 75) {
                 cartWarning.style.display = 'block';
@@ -823,7 +906,15 @@ if(galleryImages.length > 1) {
                     };
                 });
 
-                // 4. Wholesale limit failsafe check
+                // 4. Calculate Discount
+                let discountAmount = 0;
+                if (activeDiscount) {
+                    if (activeDiscount.type === 'percent') discountAmount = itemsTotal * (activeDiscount.value / 100);
+                    else discountAmount = activeDiscount.value;
+                    if (discountAmount > itemsTotal) discountAmount = itemsTotal; // Prevent negative order values
+                }
+
+                // 5. Wholesale limit failsafe check
                 const isWholesaleMode = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
                 if (isWholesaleMode && itemsTotal < 75) { 
                     alert("Minimum wholesale spend of £75 not met."); 
@@ -841,10 +932,10 @@ if(galleryImages.length > 1) {
                     shippingTotal = 0; // Zero out the official shipping channel
                 }
 
-                let finalTotal = itemsTotal + shippingTotal; 
-                if (finalTotal === 0) { alert("Your cart is empty!"); return; }
+                let finalTotal = itemsTotal - discountAmount + shippingTotal; 
+                if (finalTotal <= 0) { alert("Your cart is empty or the total is zero!"); return; }
 
-                // 5. Send the detailed breakdown natively to PayPal
+                // 6. Send the detailed breakdown natively to PayPal
                 return actions.order.create({
                     purchase_units: [{ 
                         amount: { 
@@ -852,7 +943,8 @@ if(galleryImages.length > 1) {
                             value: finalTotal.toFixed(2),
                             breakdown: {
                                 item_total: { currency_code: 'GBP', value: itemsTotal.toFixed(2) },
-                                shipping: { currency_code: 'GBP', value: shippingTotal.toFixed(2) }
+                                shipping: { currency_code: 'GBP', value: shippingTotal.toFixed(2) },
+                                discount: { currency_code: 'GBP', value: discountAmount.toFixed(2) }
                             }
                         },
                         items: paypalItems
@@ -868,6 +960,20 @@ if(galleryImages.length > 1) {
                             const sizeStr = item.size ? ` (Size: ${item.size})` : '';
                             orderBreakdown += `${item.quantity || 1}x ${item.title}${sizeStr} - £${itemTotal}\n`;
                         });
+                        
+                        // Calculate discount for email text
+                        let discountText = "";
+                        if (activeDiscount) {
+                            let discountAmount = 0;
+                            let subtotal = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
+                            if (activeDiscount.type === 'percent') discountAmount = subtotal * (activeDiscount.value / 100);
+                            else discountAmount = activeDiscount.value;
+                            if (discountAmount > subtotal) discountAmount = subtotal;
+                            
+                            if (discountAmount > 0) {
+                                orderBreakdown += `\nDiscount Applied (${activeDiscount.code}): -£${discountAmount.toFixed(2)}\n`;
+                            }
+                        }
 
                         const templateParams = {
                             to_name: details.payer.name.given_name,
@@ -885,6 +991,7 @@ if(galleryImages.length > 1) {
 
                     alert('Payment successful! We have received your order, ' + details.payer.name.given_name + ', and an email confirmation will be sent to you shortly.');
                     cart = []; 
+                    activeDiscount = null; // Clear discount on success
                     sessionStorage.setItem(cartKey, JSON.stringify(cart)); 
                     updateCartUI(); 
                     closeCart();
