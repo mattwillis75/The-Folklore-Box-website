@@ -9,32 +9,26 @@
     <!-- Google Fonts: Lato Light (300) and Spectral Regular (400) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Spectral:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;600&family=Spectral:wght@400&display=swap" rel="stylesheet">
     
+    <!-- REQUIRED FOR CHECKOUT: EmailJS & PayPal SDKs -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+       (function(){ emailjs.init({ publicKey: "qI6ltlwzFXECV29P8", }); })();
+    </script>
+    <script src="https://www.paypal.com/sdk/js?client-id=BAAyFEECFHCgIYSVAcx3GUqT0FI1rHhhU_mwYJxRf6ngeAPN3zYdx3W4a1tCIEHivTFLxU7oFEeDD1NIIs&currency=GBP&locale=en_GB"></script>
+
     <style>
         /* --- Base Colors & Typography --- */
-        :root { --bg-color: #000000; --text-color: #ffffff; --accent-red: #cc0000; --header-bg: rgba(0, 0, 0, 0.85); }
-        /* Force scrollbar space to stop judder, but make the track invisible */
-        html {
-            overflow-y: scroll; 
-            scrollbar-color: #333333 transparent; /* Firefox support */
-        }
-
-        /* WebKit (Chrome, Safari, Edge) Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 12px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent; /* This makes it invisible on short pages! */
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #333333; 
-            border-radius: 6px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--accent-red); 
-        }
-        body { font-family: 'Lato', sans-serif; font-weight: 300; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 0; line-height: 1.6; overflow-x: hidden;  }
+        :root { --bg-color: #000000; --text-color: #ffffff; --accent-red: #cc0000; --header-bg: rgba(0, 0, 0, 0.85); --font-body: 'Lato', sans-serif;}
+        
+        html { overflow-y: scroll; scrollbar-color: #333333 transparent; }
+        ::-webkit-scrollbar { width: 12px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #333333; border-radius: 6px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-red); }
+        
+        body { font-family: var(--font-body); font-weight: 300; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 0; line-height: 1.6; overflow-x: hidden;  }
         h1, h2, h3, h4, h5, h6 { font-family: 'Spectral', serif; font-weight: 400; color: #ffffff; }
 
         /* --- Fixed Header --- */
@@ -43,7 +37,7 @@
 
         /* --- Navigation --- */
         nav ul { list-style: none; display: flex; align-items: center; gap: 2rem; margin: 0; padding: 0; }
-        nav a { text-decoration: none; color: #ffffff; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; transition: color 0.3s ease; font-family: 'Lato', sans-serif; white-space: nowrap; }
+        nav a { text-decoration: none; color: #ffffff; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; transition: color 0.3s ease; font-family: var(--font-body); white-space: nowrap; }
         nav a:hover { color: var(--accent-red); }
         .active-page { color: var(--accent-red) !important; }
         #cart-toggle { color: var(--accent-red); border: 1px solid var(--accent-red); padding: 0.5rem 1rem; border-radius: 3px; }
@@ -58,11 +52,17 @@
         .dropdown-content a:hover { background-color: #a30000; color: #ffffff; }
         .dropdown-divider { height: 1px; background-color: #ffffff; margin: 0 15px; }
 
-        /* --- Mobile Menu --- */
-        .mobile-menu-toggle { display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1005; }
+        /* --- Mobile Controls --- */
+        .mobile-controls { display: none; align-items: center; gap: 15px; z-index: 1005; }
+        .mobile-cart-btn { color: var(--accent-red); border: 1px solid var(--accent-red); padding: 0.4rem 0.8rem; border-radius: 3px; text-decoration: none; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-body); transition: all 0.3s ease; }
+        .mobile-cart-btn:hover { background: var(--accent-red); color: #ffffff; }
+
+        .mobile-menu-toggle { display: flex; flex-direction: column; cursor: pointer; gap: 5px; }
         .mobile-menu-toggle span { width: 25px; height: 3px; background-color: #ffffff; transition: all 0.3s ease; border-radius: 3px; }
+        
         @media (max-width: 1100px) {
-            .mobile-menu-toggle { display: flex; }
+            .mobile-controls { display: flex; }
+            #nav-list li:last-child { display: none; }
             nav ul { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background-color: rgba(0, 0, 0, 0.95); padding: 1rem 0; border-bottom: 1px solid #333; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
             nav ul.mobile-active { display: flex; }
             nav ul li { width: 100%; text-align: center; padding: 0.8rem 0; }
@@ -74,181 +74,34 @@
         }
 
         /* --- PORTFOLIO GALLERY LAYOUT --- */
-        main { 
-            padding-top: 85px; 
-            height: 100vh; 
-            box-sizing: border-box;
-            display: flex; 
-            flex-direction: column; 
-        }
+        main { padding-top: 85px; height: 100vh; box-sizing: border-box; display: flex; flex-direction: column; }
 
-        .portfolio-header { 
-            text-align: center; 
-            padding: 1rem; 
-            flex-shrink: 0; 
-        }
+        .portfolio-header { text-align: center; padding: 1rem; flex-shrink: 0; }
         .portfolio-header h1 { font-size: 2.2rem; margin: 0; }
 
-        /* Large Viewer Section */
-        .viewer-container {
-            flex-grow: 1; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 0; 
-            padding: 0 2rem;
-            position: relative;
-        }
+        .viewer-container { flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 0; padding: 0 2rem; position: relative; }
 
-        #main-viewer {
-            max-width: 100%;
-            max-height: calc(100% - 70px); 
-            object-fit: contain;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
-            border: 1px solid #222;
-            transition: opacity 0.4s ease, transform 0.4s ease;
-        }
+        #main-viewer { max-width: 100%; max-height: calc(100% - 70px); object-fit: contain; box-shadow: 0 20px 50px rgba(0,0,0,0.8); border: 1px solid #222; transition: opacity 0.4s ease, transform 0.4s ease; }
 
-        .artwork-title {
-            font-family: 'Spectral', serif;
-            font-size: 1.4rem;
-            margin-top: 1rem;
-            margin-bottom: 0.5rem; 
-            color: #ddd;
-            text-align: center;
-            letter-spacing: 1px;
-            transition: opacity 0.4s ease;
-            height: 40px; 
-        }
+        .artwork-title { font-family: 'Spectral', serif; font-size: 1.4rem; margin-top: 1rem; margin-bottom: 0.5rem; color: #ddd; text-align: center; letter-spacing: 1px; transition: opacity 0.4s ease; height: 40px; }
 
         /* --- Commission Roundel --- */
-        .commission-roundel {
-            position: absolute;
-            left: 3rem;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 120px;
-            height: 120px;
-            background-color: var(--accent-red);
-            color: #fff;
-            border: none;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-family: 'Lato', sans-serif;
-            font-weight: 600;
-            font-size: 0.75rem; 
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            line-height: 1.4;
-            padding: 1.5rem; 
-            box-sizing: border-box;
-            box-shadow: 0 10px 30px rgba(204,0,0,0.4);
-            z-index: 50;
-            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-        }
+        .commission-roundel { position: absolute; left: 3rem; top: 50%; transform: translateY(-50%); width: 120px; height: 120px; background-color: var(--accent-red); color: #fff; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; font-family: var(--font-body); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; line-height: 1.4; padding: 1.5rem; box-sizing: border-box; box-shadow: 0 10px 30px rgba(204,0,0,0.4); z-index: 50; transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease; cursor: pointer; }
+        .commission-roundel:hover { transform: translateY(-50%) scale(1.08); background-color: #e60000; box-shadow: 0 10px 40px rgba(204,0,0,0.7); }
 
-        .commission-roundel:hover {
-            transform: translateY(-50%) scale(1.08);
-            background-color: #e60000;
-            box-shadow: 0 10px 40px rgba(204,0,0,0.7);
-        }
-
-        /* Responsive Mobile Update: Converts Roundel to a Top Bar */
         @media (max-width: 900px) {
-            .commission-roundel {
-                position: relative;
-                top: auto;
-                left: auto;
-                transform: none;
-                width: 100%;
-                height: auto;
-                border-radius: 3px;
-                font-size: 0.85rem;
-                padding: 1rem;
-                margin-bottom: 1rem;
-                box-shadow: 0 4px 15px rgba(204,0,0,0.3);
-            }
-            .commission-roundel:hover { 
-                transform: translateY(-2px); 
-                background-color: #e60000;
-            }
+            .commission-roundel { position: relative; top: auto; left: auto; transform: none; width: 100%; height: auto; border-radius: 3px; font-size: 0.85rem; padding: 1rem; margin-bottom: 1rem; box-shadow: 0 4px 15px rgba(204,0,0,0.3); }
+            .commission-roundel:hover { transform: translateY(-2px); background-color: #e60000; }
         }
 
         /* Thumbnails Carousel Section */
-        .carousel-wrapper {
-            flex-shrink: 0; 
-            position: relative;
-            padding: 1.5rem 0;
-            width: 100%;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            background: linear-gradient(to bottom, transparent, #0a0a0a);
-            border-top: 1px solid #111;
-        }
+        .carousel-wrapper { flex-shrink: 0; position: relative; padding: 1.5rem 0; width: 100%; overflow: hidden; display: flex; align-items: center; background: linear-gradient(to bottom, transparent, #0a0a0a); border-top: 1px solid #111; }
+        .carousel-track { display: flex; align-items: center; gap: 1.5rem; transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); will-change: transform; padding: 0 50vw; }
+        .thumb-wrapper { position: relative; width: 100px; height: 100px; flex-shrink: 0; transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.6s ease, filter 0.6s ease; cursor: pointer; display: flex; justify-content: center; align-items: center; }
+        .thumb-wrapper img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; border: 2px solid transparent; transition: border-color 0.3s ease; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
 
-        .carousel-track {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-            will-change: transform;
-            padding: 0 50vw; 
-        }
-
-        .thumb-wrapper {
-            position: relative;
-            width: 100px; 
-            height: 100px;
-            flex-shrink: 0;
-            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.6s ease, filter 0.6s ease;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .thumb-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 4px;
-            border: 2px solid transparent;
-            transition: border-color 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-        }
-
-        /* Carousel Navigation Buttons */
-        .nav-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.8);
-            color: #fff;
-            border: 1px solid #444;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            cursor: pointer;
-            z-index: 20;
-            transition: all 0.3s ease;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .nav-btn:hover {
-            background: var(--accent-red);
-            border-color: var(--accent-red);
-            box-shadow: 0 0 15px rgba(204,0,0,0.4);
-        }
-
+        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0, 0, 0, 0.8); color: #fff; border: 1px solid #444; width: 40px; height: 40px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; z-index: 20; transition: all 0.3s ease; display: flex; justify-content: center; align-items: center; }
+        .nav-btn:hover { background: var(--accent-red); border-color: var(--accent-red); box-shadow: 0 0 15px rgba(204,0,0,0.4); }
         .prev-btn { left: 1rem; }
         .next-btn { right: 1rem; }
 
@@ -266,15 +119,14 @@
         .commission-modal p { color: #aaa; font-size: 0.95rem; margin-bottom: 1.5rem; }
         .commission-modal form { display: flex; flex-direction: column; gap: 1rem; }
         .commission-modal label { color: #fff; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
-        .commission-modal input, .commission-modal textarea { width: 100%; padding: 0.8rem; background: #111; border: 1px solid #333; color: #fff; font-family: 'Lato', sans-serif; border-radius: 3px; box-sizing: border-box; }
+        .commission-modal input, .commission-modal textarea { width: 100%; padding: 0.8rem; background: #111; border: 1px solid #333; color: #fff; font-family: var(--font-body); border-radius: 3px; box-sizing: border-box; }
         .commission-modal input:focus, .commission-modal textarea:focus { outline: none; border-color: var(--accent-red); }
-        .submit-btn { background: var(--accent-red); color: #fff; border: none; padding: 1rem; font-family: 'Lato', sans-serif; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; cursor: pointer; border-radius: 3px; transition: background 0.3s ease; margin-top: 0.5rem; }
+        .submit-btn { background: var(--accent-red); color: #fff; border: none; padding: 1rem; font-family: var(--font-body); text-transform: uppercase; letter-spacing: 1px; font-weight: bold; cursor: pointer; border-radius: 3px; transition: background 0.3s ease; margin-top: 0.5rem; }
         .submit-btn:hover { background: #e60000; }
         .submit-btn:disabled { background: #555; cursor: not-allowed; }
         .close-modal { position: absolute; top: 1rem; right: 1.5rem; font-size: 2rem; color: #888; cursor: pointer; transition: color 0.3s; line-height: 1; }
         .close-modal:hover { color: var(--accent-red); }
 
-        /* Success Message Container */
         .form-success-message { display: none; text-align: center; padding: 2rem 0; }
         .form-success-message h3 { color: var(--accent-red); font-size: 1.8rem; font-family: 'Spectral', serif; margin-top: 0; }
         .form-success-message p { color: #ddd; font-size: 1rem; }
@@ -285,14 +137,13 @@
         .cart-sidebar { position: fixed; top: 0; right: -500px; width: 500px; max-width: 100vw; height: 100vh; background: #0a0a0a; border-left: 1px solid #222; z-index: 2002; transition: right 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); padding: 2rem; box-sizing: border-box; display: flex; flex-direction: column; overflow-y: auto; }
         .cart-sidebar.open { right: 0; }
         .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 1rem; margin-bottom: 1.5rem; flex-shrink: 0; }
-        .cart-header h2 { margin: 0; font-size: 2rem; }
+        .cart-header h2 { margin: 0; font-size: 2rem; font-family: 'Spectral', serif; font-weight: 400;}
         .close-cart { font-size: 2.5rem; cursor: pointer; color: #fff; line-height: 1; transition: color 0.3s; }
         .close-cart:hover { color: var(--accent-red); }
         .cart-items-container { flex-grow: 1; margin-bottom: 1rem; padding-right: 0.5rem; overflow-y: visible; }
         
-        /* Updated Cart Grouping Styles */
         .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid #222; gap: 0.8rem; }
-        .cart-item-title { flex-grow: 1; font-weight: 600; font-size: 0.95rem; line-height: 1.3; }
+        .cart-item-title { flex-grow: 1; font-weight: 600; font-size: 0.95rem; line-height: 1.3; font-family: var(--font-body); }
         .cart-qty-controls { display: flex; align-items: center; gap: 0.5rem; background: #111; padding: 0.2rem 0.5rem; border-radius: 3px; border: 1px solid #333; }
         .cart-qty-controls button { background: none; border: none; color: #fff; cursor: pointer; font-size: 1.2rem; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
         .cart-qty-controls button:hover { color: var(--accent-red); }
@@ -301,23 +152,29 @@
         .remove-btn:hover { color: var(--accent-red); }
         
         .cart-footer { border-top: 1px solid #333; padding-top: 1.5rem; flex-shrink: 0; }
-        .cart-total { font-size: 1.8rem; text-align: right; margin-bottom: 1.5rem; font-family: 'Spectral', serif; color: var(--accent-red); }
+        
+        /* REQUIRED FOR CHECKOUT: Universal Checkout Styles */
+        .discount-container { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #222; padding-bottom: 15px; }
+        .discount-input { flex-grow: 1; padding: 0.8rem; background: #111; border: 1px solid #333; color: #fff; border-radius: 3px; font-family: var(--font-body); }
+        .discount-btn { background: #333; color: #fff; border: 1px solid #444; padding: 0.8rem 1.5rem; cursor: pointer; border-radius: 3px; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; transition: 0.3s ease; }
+        .discount-btn:hover { background: var(--accent-red); border-color: var(--accent-red); }
+        .discount-msg { width: 100%; font-size: 0.85rem; margin-top: 5px; }
+        
+        .cart-shipping-selector { margin-bottom: 1rem; border-bottom: 1px solid #222; padding-bottom: 1rem; }
+        .cart-shipping-selector label { display: block; color: #aaa; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
+        .cart-shipping-selector select { width: 100%; padding: 0.8rem; background: #111; color: #fff; border: 1px solid #333; border-radius: 3px; cursor: pointer; font-family: var(--font-body); }
+        
+        .cart-breakdown { margin-bottom: 1rem; color: #aaa; font-size: 1rem; font-family: var(--font-body); }
+        .cart-row { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
+        .cart-discount-row { display: flex; justify-content: space-between; color: #28a745; margin-bottom: 10px; font-family: var(--font-body); }
+        
+        .cart-total { font-size: 1.5rem; text-align: right; margin-bottom: 1.5rem; font-family: 'Spectral', serif; color: var(--accent-red); border-top: 1px solid #333; padding-top: 1rem; font-weight: 700; }
+        .cart-warning { background: rgba(204, 0, 0, 0.1); border: 1px solid var(--accent-red); color: var(--accent-red); font-weight: bold; text-align: center; padding: 1rem; border-radius: 4px; margin-bottom: 1.5rem; font-size: 0.9rem; line-height: 1.4; display: none; }
+        .paypal-disabled { pointer-events: none; opacity: 0.4; filter: grayscale(100%); }
 
-        /* --- Footer --- */
-        <footer>
-            <div class="social-links">
-                <a href="https://instagram.com/the_folklore_box" target="_blank">Instagram: @the_folklore_box</a> | 
-                <a href="https://facebook.com/thefolklorebox" target="_blank">Facebook: @thefolklorebox</a>
-            </div>
-            <div style="margin-bottom: 2rem;">
-                <a href="shop.html">Shop</a>
-                <a href="wholesale.html">Wholesale Enquiries</a>
-                <a href="contact.html">Contact</a>
-            </div>
-            <p style="font-size: 0.8rem; color: #555; font-family: 'Lato', sans-serif;">
-                &copy; 2026 The Folklore Box by Matt Willis. All rights reserved.
-            </p>
-        </footer>
+        @media (max-width: 600px) {
+            .cart-sidebar { width: 100%; right: -100%; }
+        }
     </style>
 </head>
 <body>
@@ -325,7 +182,13 @@
     <!-- Header & Navigation -->
      <header id="main-header">
         <div class="logo"><a href="index.html"><img src="./The-folklore-box-logo.png" alt="The Folklore Box Logo"></a></div>
-        <div class="mobile-menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
+        
+        <!-- Mobile Controls Updated -->
+        <div class="mobile-controls">
+            <a href="#" id="mobile-cart-toggle" class="mobile-cart-btn" onclick="openCart(); return false;">Cart (<span id="mobile-cart-count">0</span>)</a>
+            <div class="mobile-menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
+        </div>
+
         <nav>
             <ul id="nav-list">
                 <li class="dropdown">
@@ -345,7 +208,7 @@
                 <li><a href="journal.html">Journal</a></li>
                 <li><a href="wholesale.html">Wholesale</a></li>
                 <li><a href="contact.html" >Contact</a></li>
-                <li><a href="#" id="cart-toggle">Cart (0)</a></li>
+                <li><a href="#" id="cart-toggle" onclick="openCart(); return false;">Cart (<span id="cart-count">0</span>)</a></li>
             </ul>
         </nav>
     </header>
@@ -357,7 +220,6 @@
 
         <!-- Large Viewer Section -->
         <div class="viewer-container">
-            <!-- Modal Trigger Roundel (Turns into bar on mobile) -->
             <button id="commission-btn" class="commission-roundel">
                 Commission an illustration
             </button>
@@ -381,21 +243,17 @@
         <div class="commission-modal">
             <span class="close-modal" id="close-commission">&times;</span>
             
-            <!-- Success Message (Hidden by default) -->
             <div id="form-success" class="form-success-message">
                 <h3>Thank You!</h3>
                 <p>Your enquiry has been sent successfully. I will be in touch shortly to discuss your ideas.</p>
             </div>
 
-            <!-- Form -->
             <div id="form-container">
                 <h2>Commission Enquiry</h2>
                 <p>Please fill out the form below and I will get back to you to discuss your illustration requirements.</p>
                 
                 <form id="commission-form" action="https://formsubmit.co/thefolklorebox@gmail.com" method="POST">
-                    <!-- Disables the Captcha -->
                     <input type="hidden" name="_captcha" value="false">
-                    <!-- Hidden Subject Line for your inbox -->
                     <input type="hidden" name="_subject" value="New Commission Enquiry from Portfolio!">
                     
                     <label for="name">Your Name</label>
@@ -422,14 +280,41 @@
         </div>
         <div class="cart-items-container" id="cart-items"></div>
         <div class="cart-footer">
+            
+            <div class="cart-warning" id="cart-warning">
+                Minimum wholesale spend is £75.00 before postage.
+            </div>
+
+            <!-- REQUIRED FOR CHECKOUT: Discount Code Field -->
+            <div class="discount-container">
+                <input type="text" id="discount-code" class="discount-input" placeholder="Promo code">
+                <button class="discount-btn" onclick="applyDiscount()">Apply</button>
+                <div id="discount-msg" class="discount-msg"></div>
+            </div>
+
+            <div class="cart-shipping-selector">
+                <label for="cart-destination">Deliver to:</label>
+                <select id="cart-destination">
+                    <option value="uk">United Kingdom</option>
+                    <option value="int">International</option>
+                </select>
+            </div>
+            
+            <div class="cart-breakdown">
+                <div class="cart-row"><span>Items:</span><span id="cart-subtotal">£0.00</span></div>
+                <div class="cart-row"><span>Postage:</span><span id="cart-shipping-cost">£0.00</span></div>
+            </div>
+            
             <div class="cart-total" id="cart-total">Total: £0.00</div>
-            <p style="text-align: center; color: #888; font-size: 0.9rem;">Checkout is completed securely via the Shop.</p>
-            <a href="shop.html" style="display: block; background: var(--accent-red); color: #fff; padding: 1rem; text-align: center; text-decoration: none; text-transform: uppercase; font-weight: bold; margin-top: 1rem;">Go to Shop</a>
+            
+            <!-- REQUIRED FOR CHECKOUT: PayPal Container -->
+            <div id="paypal-button-container" style="margin-top: 15px;"></div>
+            
         </div>
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener("DOMContentLoaded", async () => {
             
             // --- PORTFOLIO GALLERY LOGIC ---
             const portfolioItems = [
@@ -467,11 +352,7 @@
                 const wrapper = document.createElement('div');
                 wrapper.className = 'thumb-wrapper';
                 
-                // Dynamically create the thumbnail filename by replacing '.png' with '-thumb.png'
                 const thumbSrc = item.src.replace('.png', '-thumb.png');
-                
-                
-                // Updated with width, height, and lazy loading
                 wrapper.innerHTML = `<img src="${thumbSrc}" width="100" height="100" loading="lazy" alt="${item.title} thumbnail">`;
                 
                 wrapper.onclick = () => selectItem(i);
@@ -512,22 +393,39 @@
                 track.style.transform = `translateX(${translateX}px)`;
             }
 
+            // CRUCIAL FIX: Image Preloading added to solve the visual glitch
             function selectItem(index) {
                 if (index < 0) index = portfolioItems.length - 1;
                 if (index >= portfolioItems.length) index = 0;
                 
                 currentIndex = index;
                 
+                // 1. Fade out the current elements
                 mainViewer.style.opacity = 0;
                 mainTitle.style.opacity = 0;
                 mainViewer.style.transform = 'scale(0.98)';
                 
+                // 2. Pre-load the new image secretly in the background
+                const newImage = new Image();
+                newImage.src = portfolioItems[currentIndex].src;
+                
                 setTimeout(() => {
-                    mainViewer.src = portfolioItems[index].src;
-                    mainTitle.textContent = portfolioItems[index].title;
-                    mainViewer.style.opacity = 1;
+                    mainTitle.textContent = portfolioItems[currentIndex].title;
                     mainTitle.style.opacity = 1;
-                    mainViewer.style.transform = 'scale(1)';
+                    
+                    // 3. If the image is ready (from cache or fast network), display it
+                    if (newImage.complete) {
+                        mainViewer.src = newImage.src;
+                        mainViewer.style.opacity = 1;
+                        mainViewer.style.transform = 'scale(1)';
+                    } else {
+                        // 4. If it's still downloading, wait until it finishes BEFORE fading it back in
+                        newImage.onload = () => {
+                            mainViewer.src = newImage.src;
+                            mainViewer.style.opacity = 1;
+                            mainViewer.style.transform = 'scale(1)';
+                        };
+                    }
                 }, 400);
 
                 updateCarouselUI();
@@ -549,9 +447,7 @@
             const formSuccess = document.getElementById('form-success');
             const submitBtn = document.getElementById('submit-btn');
 
-            commissionBtn.addEventListener('click', () => {
-                commissionOverlay.classList.add('active');
-            });
+            commissionBtn.addEventListener('click', () => { commissionOverlay.classList.add('active'); });
 
             const closeModal = () => {
                 commissionOverlay.classList.remove('active');
@@ -565,12 +461,7 @@
             };
 
             closeCommissionBtn.addEventListener('click', closeModal);
-
-            commissionOverlay.addEventListener('click', (e) => {
-                if (e.target === commissionOverlay) {
-                    closeModal();
-                }
-            });
+            commissionOverlay.addEventListener('click', (e) => { if (e.target === commissionOverlay) closeModal(); });
 
             commissionForm.addEventListener('submit', function(e) {
                 e.preventDefault(); 
@@ -578,14 +469,10 @@
                 submitBtn.textContent = 'Sending...';
                 submitBtn.disabled = true;
 
-                const formData = new FormData(commissionForm);
-
                 fetch(commissionForm.action, {
                     method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
+                    body: new FormData(commissionForm),
+                    headers: { 'Accept': 'application/json' }
                 })
                 .then(response => {
                     if (response.ok) {
@@ -628,32 +515,252 @@
                 });
             }
 
-            // --- Smart Cart Detection Logic ---
+            // ==========================================
+            // UNIVERSAL CHECKOUT LOGIC STARTS HERE
+            // ==========================================
             const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
             const cartKey = isWholesale ? 'folkloreWholesaleCart' : 'folkloreCart';
             
-            if (isWholesale) {
-                const cartHeaderTitle = document.getElementById('cart-title');
-                if (cartHeaderTitle) cartHeaderTitle.textContent = 'Wholesale Cart';
-            }
+            let validDiscounts = {};
+            let activeDiscount = null;
 
-            // CRUCIAL FIX: Changed from localStorage to sessionStorage
-            let cart = JSON.parse(sessionStorage.getItem(cartKey)) || [];
-            cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
-            
+            let cart = [];
+            try {
+                cart = JSON.parse(sessionStorage.getItem(cartKey)) || [];
+                cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
+            } catch(e) { cart = []; }
+
+            const cartHeaderTitle = document.getElementById('cart-title');
             const cartSidebar = document.getElementById('cart-sidebar');
             const cartOverlay = document.getElementById('cart-overlay');
             const cartToggle = document.getElementById('cart-toggle');
+            const mobileCartToggle = document.getElementById('mobile-cart-toggle');
             const closeCartBtn = document.getElementById('close-cart');
+            const destSelect = document.getElementById('cart-destination');
+            const cartWarning = document.getElementById('cart-warning');
             const cartItemsContainer = document.getElementById('cart-items');
             const cartTotalElement = document.getElementById('cart-total');
+            
+            if (isWholesale) {
+                if (cartHeaderTitle) cartHeaderTitle.textContent = 'Wholesale Cart';
+            }
 
-            const openCart = () => { if(cartSidebar) cartSidebar.classList.add('open'); if(cartOverlay) cartOverlay.classList.add('active'); };
-            const closeCartSidebar = () => { if(cartSidebar) cartSidebar.classList.remove('open'); if(cartOverlay) cartOverlay.classList.remove('active'); };
+            let postalRates = {}; 
+            try {
+                const postalResponse = await fetch('postal.txt', { cache: 'no-store' });
+                const postalText = await postalResponse.text();
+                postalText.split('---').forEach(block => {
+                    if(!block.trim()) return;
+                    let currentClass = "";
+                    let rates = {};
+                    block.trim().split('\n').forEach(line => {
+                        const sepIndex = line.indexOf(':');
+                        if(sepIndex > -1) {
+                            const key = line.slice(0, sepIndex).trim().toLowerCase();
+                            const value = line.slice(sepIndex + 1).trim();
+                            if(key === 'class') currentClass = value;
+                            else if(key === 'uk base') rates.ukBase = parseFloat(value);
+                            else if(key === 'uk additional') rates.ukAdd = parseFloat(value);
+                            else if(key === 'int base') rates.intBase = parseFloat(value);
+                            else if(key === 'int additional') rates.intAdd = parseFloat(value);
+                        }
+                    });
+                    if(currentClass) postalRates[currentClass] = rates;
+                });
+            } catch(e) { console.error("Could not load postal rates for cart math."); }
+
+            try {
+                const discResponse = await fetch('discounts.txt', { cache: 'no-store' });
+                if (discResponse.ok) {
+                    const discText = await discResponse.text();
+                    discText.split('\n').forEach(line => {
+                        const parts = line.split(':');
+                        if (parts.length === 2) {
+                            validDiscounts[parts[0].trim().toUpperCase()] = parts[1].trim();
+                        }
+                    });
+                }
+            } catch(e) { console.error("Could not load discount codes."); }
+
+            window.applyDiscount = function() {
+                const input = document.getElementById('discount-code').value.trim().toUpperCase();
+                const msgEl = document.getElementById('discount-msg');
+                if (!input) {
+                    activeDiscount = null;
+                    msgEl.textContent = "";
+                    updateCartUI();
+                    return;
+                }
+                if (validDiscounts[input]) {
+                    const val = validDiscounts[input];
+                    if (val.startsWith('%')) {
+                        activeDiscount = { code: input, type: 'percent', value: parseFloat(val.substring(1)) };
+                    } else if (val.startsWith('-')) {
+                        activeDiscount = { code: input, type: 'fixed', value: parseFloat(val.substring(1)) };
+                    }
+                    msgEl.textContent = "Discount applied!";
+                    msgEl.style.color = "#28a745";
+                } else {
+                    activeDiscount = null;
+                    msgEl.textContent = "Invalid discount code.";
+                    msgEl.style.color = "var(--accent-red)";
+                }
+                updateCartUI();
+            };
+
+            window.updateCartUI = function() {
+                try {
+                    if (!cartItemsContainer) return;
+                    cartItemsContainer.innerHTML = '';
+                    let itemsTotal = 0; let shippingTotal = 0; let finalTotal = 0;
+                    let cartItemCount = 0;
+                    const paypalContainer = document.getElementById('paypal-button-container');
+                    
+                    if (cart.length === 0) {
+                        cartItemsContainer.innerHTML = `<p style="color: #777; font-style: italic;">Your ${isWholesale ? 'wholesale ' : ''}cart is currently empty.</p>`;
+                        if(document.getElementById('cart-subtotal')) document.getElementById('cart-subtotal').textContent = `£0.00`;
+                        if(document.getElementById('cart-shipping-cost')) document.getElementById('cart-shipping-cost').textContent = `£0.00`;
+                        if(cartTotalElement) cartTotalElement.textContent = `Total: £0.00`;
+                        
+                        const desktopCount = document.getElementById('cart-count');
+                        const mobileCount = document.getElementById('mobile-cart-count');
+                        if (desktopCount) desktopCount.innerText = "0";
+                        if (mobileCount) mobileCount.innerText = "0";
+                        
+                        if (paypalContainer) paypalContainer.style.display = 'none';
+
+                        if (isWholesale && cartWarning) {
+                            cartWarning.style.display = 'block';
+                        } else if (!isWholesale && cartWarning) {
+                            cartWarning.style.display = 'none';
+                        }
+                        
+                        const existingDiscRow = document.getElementById('cart-discount-row-render');
+                        if (existingDiscRow) existingDiscRow.remove();
+
+                        return;
+                    }
+
+                    const dest = destSelect ? destSelect.value : 'uk';
+                    let maxBase = -1; let maxBaseItem = null;
+
+                    cart.forEach((item, index) => {
+                        const qty = item.quantity || 1;
+                        const itemTotalCost = item.price * qty;
+                        itemsTotal += itemTotalCost;
+                        cartItemCount += qty;
+
+                        const sizeHtml = item.size ? `<br><span style="font-size:0.8rem; color:#888;">Size: ${item.size}</span>` : '';
+                        
+                        cartItemsContainer.innerHTML += `
+                            <div class="cart-item">
+                                <div class="cart-item-title">
+                                    ${item.title} ${sizeHtml} <br>
+                                    <span style="font-size:0.8rem; color:#888; font-weight:normal;">£${item.price.toFixed(2)} each</span>
+                                </div>
+                                <div class="cart-qty-controls">
+                                    <button onclick="updateQuantity(${index}, -1)">-</button>
+                                    <span>${qty}</span>
+                                    <button onclick="updateQuantity(${index}, 1)">+</button>
+                                </div>
+                                <div class="cart-item-total">£${itemTotalCost.toFixed(2)}</div>
+                                <button class="remove-btn" onclick="removeFromCart(${index})" title="Remove item">&times;</button>
+                            </div>
+                        `;
+                        
+                        const rates = postalRates[item.postalClass];
+                        if(rates) {
+                            const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                            if(baseRate > maxBase) { maxBase = baseRate; maxBaseItem = item; }
+                        }
+                    });
+
+                    let baseRateApplied = false;
+                    cart.forEach((item) => {
+                        const rates = postalRates[item.postalClass];
+                        if(rates) {
+                            const qty = item.quantity || 1;
+                            const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                            const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
+
+                            if (maxBaseItem && item.cartItemId === maxBaseItem.cartItemId && !baseRateApplied) {
+                                shippingTotal += baseRate + (addRate * (qty - 1));
+                                baseRateApplied = true;
+                            } else {
+                                shippingTotal += addRate * qty;
+                            }
+                        }
+                    });
+
+                    let discountAmount = 0;
+                    if (activeDiscount) {
+                        if (activeDiscount.type === 'percent') {
+                            discountAmount = itemsTotal * (activeDiscount.value / 100);
+                        } else if (activeDiscount.type === 'fixed') {
+                            discountAmount = activeDiscount.value;
+                        }
+                        if (discountAmount > itemsTotal) discountAmount = itemsTotal; 
+                    }
+
+                    finalTotal = itemsTotal - discountAmount + shippingTotal;
+
+                    if(document.getElementById('cart-subtotal')) document.getElementById('cart-subtotal').textContent = `£${itemsTotal.toFixed(2)}`;
+                    if(document.getElementById('cart-shipping-cost')) document.getElementById('cart-shipping-cost').textContent = `£${shippingTotal.toFixed(2)}`;
+                    
+                    const existingDiscRow = document.getElementById('cart-discount-row-render');
+                    if (existingDiscRow) existingDiscRow.remove();
+
+                    if (discountAmount > 0) {
+                        const finalTotalRow = document.getElementById('cart-total');
+                        finalTotalRow.insertAdjacentHTML('beforebegin', `
+                            <div class="cart-row cart-discount-row" id="cart-discount-row-render">
+                                <span>Discount (${activeDiscount.code}):</span>
+                                <span>-£${discountAmount.toFixed(2)}</span>
+                            </div>
+                        `);
+                    }
+
+                    if(cartTotalElement) cartTotalElement.textContent = `Total: £${finalTotal.toFixed(2)}`;
+                    
+                    const desktopCount = document.getElementById('cart-count');
+                    const mobileCount = document.getElementById('mobile-cart-count');
+                    if (desktopCount) desktopCount.innerText = cartItemCount;
+                    if (mobileCount) mobileCount.innerText = cartItemCount;
+
+                    if (isWholesale && cartWarning) {
+                        if (itemsTotal >= 75) {
+                            cartWarning.style.display = 'none';
+                            if (paypalContainer) {
+                                paypalContainer.classList.remove('paypal-disabled');
+                                paypalContainer.style.display = 'block';
+                            }
+                        } else {
+                            cartWarning.style.display = 'block';
+                            if (paypalContainer) {
+                                paypalContainer.classList.add('paypal-disabled');
+                                paypalContainer.style.display = 'block';
+                            }
+                        }
+                    } else if (!isWholesale && cartWarning) {
+                        cartWarning.style.display = 'none';
+                        if (paypalContainer) {
+                            paypalContainer.classList.remove('paypal-disabled');
+                            paypalContainer.style.display = 'block';
+                        }
+                    }
+                } catch (e) {
+                    console.error("Cart UI Rendering Error:", e);
+                }
+            };
+
+            window.openCart = () => { if(cartSidebar) cartSidebar.classList.add('open'); if(cartOverlay) cartOverlay.classList.add('active'); };
+            window.closeCartSidebar = () => { if(cartSidebar) cartSidebar.classList.remove('open'); if(cartOverlay) cartOverlay.classList.remove('active'); };
 
             if(cartToggle) cartToggle.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
+            if(mobileCartToggle) mobileCartToggle.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
             if(closeCartBtn) closeCartBtn.addEventListener('click', closeCartSidebar);
             if(cartOverlay) cartOverlay.addEventListener('click', closeCartSidebar);
+            if(destSelect) destSelect.addEventListener('change', updateCartUI);
 
             window.updateQuantity = function(index, delta) {
                 cart[index].quantity += delta;
@@ -670,47 +777,6 @@
                 updateCartUI(); 
             };
 
-            const updateCartUI = () => {
-                if(!cartItemsContainer) return;
-                
-                cartItemsContainer.innerHTML = '';
-                let itemsTotal = 0;
-                let cartItemCount = 0;
-                
-                if (cart.length === 0) {
-                    cartItemsContainer.innerHTML = `<p style="color: #777; font-style: italic;">Your ${isWholesale ? 'wholesale ' : ''}cart is currently empty.</p>`;
-                    if(cartTotalElement) cartTotalElement.textContent = 'Total: £0.00';
-                    if(cartToggle) cartToggle.textContent = 'Cart (0)';
-                    return;
-                }
-
-                cart.forEach((item, index) => {
-                    const qty = item.quantity || 1;
-                    const itemTotalCost = item.price * qty;
-                    itemsTotal += itemTotalCost;
-                    cartItemCount += qty;
-
-                    cartItemsContainer.innerHTML += `
-                        <div class="cart-item">
-                            <div class="cart-item-title">
-                                ${item.title} <br>
-                                <span style="font-size:0.8rem; color:#888; font-weight:normal;">£${item.price.toFixed(2)} each</span>
-                            </div>
-                            <div class="cart-qty-controls">
-                                <button onclick="updateQuantity(${index}, -1)">-</button>
-                                <span>${qty}</span>
-                                <button onclick="updateQuantity(${index}, 1)">+</button>
-                            </div>
-                            <div class="cart-item-total">£${itemTotalCost.toFixed(2)}</div>
-                            <button class="remove-btn" onclick="removeFromCart(${index})" title="Remove item">&times;</button>
-                        </div>
-                    `;
-                });
-
-                if(cartTotalElement) cartTotalElement.textContent = `Total: £${itemsTotal.toFixed(2)}`;
-                if(cartToggle) cartToggle.textContent = `Cart (${cartItemCount})`;
-            };
-
             window.addEventListener('pageshow', (event) => {
                 if (event.persisted) {
                     const currentKey = typeof cartKey !== 'undefined' ? cartKey : 'folkloreCart';
@@ -719,8 +785,141 @@
                     updateCartUI();
                 }
             });
-            
+
             updateCartUI();
+
+            // PayPal SDK Logic
+            if (document.getElementById('paypal-button-container')) {
+                paypal.Buttons({
+                    createOrder: function(data, actions) {
+                        let itemsTotal = 0; let shippingTotal = 0; let maxBase = -1; let maxBaseItem = null;
+                        const dest = destSelect ? destSelect.value : 'uk';
+                        
+                        cart.forEach(item => {
+                            const qty = item.quantity || 1;
+                            itemsTotal += item.price * qty;
+                            const rates = postalRates[item.postalClass];
+                            if(rates) {
+                                const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                                if(baseRate > maxBase) { maxBase = baseRate; maxBaseItem = item; }
+                            }
+                        });
+
+                        let baseRateApplied = false;
+                        cart.forEach(item => {
+                            const rates = postalRates[item.postalClass];
+                            if(rates) {
+                                const qty = item.quantity || 1;
+                                const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                                const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
+                                
+                                if (maxBaseItem && item.cartItemId === maxBaseItem.cartItemId && !baseRateApplied) {
+                                    shippingTotal += baseRate + (addRate * (qty - 1));
+                                    baseRateApplied = true;
+                                } else {
+                                    shippingTotal += addRate * qty;
+                                }
+                            }
+                        });
+                        
+                        const paypalItems = cart.map(item => {
+                            return {
+                                name: item.title + (item.size ? ` (${item.size})` : ''),
+                                unit_amount: { currency_code: 'GBP', value: item.price.toFixed(2) },
+                                quantity: (item.quantity || 1).toString()
+                            };
+                        });
+
+                        let discountAmount = 0;
+                        if (activeDiscount) {
+                            if (activeDiscount.type === 'percent') discountAmount = itemsTotal * (activeDiscount.value / 100);
+                            else discountAmount = activeDiscount.value;
+                            if (discountAmount > itemsTotal) discountAmount = itemsTotal;
+                        }
+
+                        const isWholesaleMode = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
+                        if (isWholesaleMode && itemsTotal < 75) { 
+                            alert("Minimum wholesale spend of £75 not met."); 
+                            return; 
+                        }
+
+                        if (shippingTotal > 0) {
+                            paypalItems.push({
+                                name: `Postage & Packaging (${dest === 'uk' ? 'UK' : 'International'})`,
+                                unit_amount: { currency_code: 'GBP', value: shippingTotal.toFixed(2) },
+                                quantity: "1"
+                            });
+                            itemsTotal += shippingTotal;
+                            shippingTotal = 0;
+                        }
+
+                        let finalTotal = itemsTotal - discountAmount + shippingTotal; 
+                        if (finalTotal <= 0) { alert("Your cart is empty or the total is zero!"); return; }
+
+                        return actions.order.create({
+                            purchase_units: [{ 
+                                amount: { 
+                                    currency_code: 'GBP', 
+                                    value: finalTotal.toFixed(2),
+                                    breakdown: {
+                                        item_total: { currency_code: 'GBP', value: itemsTotal.toFixed(2) },
+                                        shipping: { currency_code: 'GBP', value: shippingTotal.toFixed(2) },
+                                        discount: { currency_code: 'GBP', value: discountAmount.toFixed(2) }
+                                    }
+                                },
+                                items: paypalItems
+                            }]
+                        });
+                    },
+                    onApprove: function(data, actions) {
+                        return actions.order.capture().then(function(details) {
+                            try {
+                                let orderBreakdown = "";
+                                cart.forEach(item => {
+                                    const itemTotal = (item.price * (item.quantity || 1)).toFixed(2);
+                                    const sizeStr = item.size ? ` (Size: ${item.size})` : '';
+                                    orderBreakdown += `${item.quantity || 1}x ${item.title}${sizeStr} - £${itemTotal}\n`;
+                                });
+                                
+                                let discountText = "";
+                                if (activeDiscount) {
+                                    let discountAmount = 0;
+                                    let subtotal = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
+                                    if (activeDiscount.type === 'percent') discountAmount = subtotal * (activeDiscount.value / 100);
+                                    else discountAmount = activeDiscount.value;
+                                    if (discountAmount > subtotal) discountAmount = subtotal;
+                                    
+                                    if (discountAmount > 0) {
+                                        orderBreakdown += `\nDiscount Applied (${activeDiscount.code}): -£${discountAmount.toFixed(2)}\n`;
+                                    }
+                                }
+
+                                const templateParams = {
+                                    to_name: details.payer.name.given_name,
+                                    to_email: details.payer.email_address,
+                                    order_details: orderBreakdown,
+                                    shipping_cost: document.getElementById('cart-shipping-cost').textContent,
+                                    total_paid: document.getElementById('cart-total').textContent.replace('Total: £', '')
+                                };
+
+                                if (typeof emailjs !== 'undefined') {
+                                    emailjs.send('service_zmm27cb', 'template_ld7uqbh', templateParams)
+                                        .catch(err => console.error('Email failed to send...', err));
+                                }
+                            } catch (err) { console.error('EmailJS Error:', err); }
+
+                            alert('Payment successful! We have received your order, ' + details.payer.name.given_name + ', and an email confirmation will be sent to you shortly.');
+                            cart = []; 
+                            activeDiscount = null;
+                            sessionStorage.setItem(cartKey, JSON.stringify(cart)); 
+                            updateCartUI(); 
+                            closeCartSidebar();
+                        });
+                    },
+                    onError: function(err) { console.error('PayPal Checkout Error:', err); alert('There was an issue connecting to PayPal. Please try again.'); }
+                }).render('#paypal-button-container');
+            }
+
         });
     </script>
 </body>
