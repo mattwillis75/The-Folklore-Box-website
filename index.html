@@ -324,7 +324,7 @@
             </div>
 
             <!-- REQUIRED FOR CHECKOUT: Discount Code Field -->
-            <div class="discount-container">
+            <div class="discount-container" id="discount-container">
                 <input type="text" id="discount-code" class="discount-input" placeholder="Promo code">
                 <button class="discount-btn" onclick="applyDiscount()">Apply</button>
                 <div id="discount-msg" class="discount-msg"></div>
@@ -377,7 +377,80 @@
 
         document.addEventListener("DOMContentLoaded", async () => {
             
-            // --- 1. DYNAMIC CAROUSEL LOGIC ---
+            // ==========================================
+            // 1. BULLETPROOF DOM & MEMORY INITIALIZATION
+            // ==========================================
+            
+            // Check Wholesale State
+            const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
+            const cartKey = isWholesale ? 'folkloreWholesaleCart' : 'folkloreCart';
+            
+            // Persistent Discount Memory Load
+            let activeDiscount = JSON.parse(sessionStorage.getItem('folkloreDiscount')) || null;
+            let validDiscounts = {};
+
+            // Secure Cart Initialization
+            let cart = [];
+            try {
+                cart = JSON.parse(sessionStorage.getItem(cartKey)) || [];
+                cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
+            } catch(e) { cart = []; }
+
+            // UI Elements
+            const cartHeaderTitle = document.getElementById('cart-title');
+            const cartSidebar = document.getElementById('cart-sidebar');
+            const cartOverlay = document.getElementById('cart-overlay');
+            const cartToggle = document.getElementById('cart-toggle');
+            const closeCartBtn = document.getElementById('close-cart');
+            const destSelect = document.getElementById('cart-destination');
+            const cartWarning = document.getElementById('cart-warning');
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartTotalElement = document.getElementById('cart-total');
+            const discountContainerElement = document.getElementById('discount-container');
+            const discountInput = document.getElementById('discount-code');
+            const discountMsg = document.getElementById('discount-msg');
+
+            // Apply Wholesale or Retail Environment
+            if (isWholesale) {
+                if (cartHeaderTitle) cartHeaderTitle.textContent = 'Wholesale Cart';
+                
+                // Wholesale failsafe: Nuke any saved retail discounts
+                activeDiscount = null;
+                sessionStorage.removeItem('folkloreDiscount');
+                if (discountContainerElement) discountContainerElement.style.display = 'none';
+
+                // Standard Wholesale Cart Merger Logic
+                let rCart = JSON.parse(sessionStorage.getItem('folkloreCart')) || [];
+                if (rCart.length > 0) {
+                    let wCart = JSON.parse(sessionStorage.getItem('folkloreWholesaleCart')) || [];
+                    rCart.forEach(rItem => {
+                        let existingW = wCart.find(w => (w.cartItemId || w.id) === (rItem.cartItemId || rItem.id));
+                        let discountedPrice = Math.round(rItem.price * 0.60 * 100) / 100;
+                        if (existingW) {
+                            existingW.quantity += (rItem.quantity || 1);
+                        } else {
+                            wCart.push({
+                                id: rItem.id, cartItemId: rItem.cartItemId || rItem.id, title: rItem.title,
+                                price: discountedPrice, postalClass: rItem.postalClass, size: rItem.size || null, quantity: rItem.quantity || 1
+                            });
+                        }
+                    });
+                    sessionStorage.setItem('folkloreWholesaleCart', JSON.stringify(wCart));
+                    sessionStorage.removeItem('folkloreCart');
+                }
+            } else {
+                if (discountContainerElement) discountContainerElement.style.display = 'flex';
+                // Pre-fill the discount box if a code was already saved to memory
+                if (activeDiscount && discountInput) {
+                    discountInput.value = activeDiscount.code;
+                    if (discountMsg) {
+                        discountMsg.textContent = "Discount active!";
+                        discountMsg.style.color = "#28a745";
+                    }
+                }
+            }
+
+            // --- 2. DYNAMIC CAROUSEL LOGIC ---
             async function loadCarousel() {
                 const container = document.getElementById('carousel-slides-container');
                 if(!container) return;
@@ -517,32 +590,6 @@
             // ==========================================
             // UNIVERSAL CHECKOUT LOGIC STARTS HERE
             // ==========================================
-            const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
-            const cartKey = isWholesale ? 'folkloreWholesaleCart' : 'folkloreCart';
-            
-            let validDiscounts = {};
-            let activeDiscount = null;
-
-            let cart = [];
-            try {
-                cart = JSON.parse(sessionStorage.getItem(cartKey)) || [];
-                cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
-            } catch(e) { cart = []; }
-
-            const cartHeaderTitle = document.getElementById('cart-title');
-            const cartSidebar = document.getElementById('cart-sidebar');
-            const cartOverlay = document.getElementById('cart-overlay');
-            const cartToggle = document.getElementById('cart-toggle');
-            const closeCartBtn = document.getElementById('close-cart');
-            const destSelect = document.getElementById('cart-destination');
-            const cartWarning = document.getElementById('cart-warning');
-            const cartItemsContainer = document.getElementById('cart-items');
-            const cartTotalElement = document.getElementById('cart-total');
-            
-            if (isWholesale) {
-                if (cartHeaderTitle) cartHeaderTitle.textContent = 'Wholesale Cart';
-            }
-
             let postalRates = {}; 
             try {
                 const postalResponse = await fetch('postal.txt', { cache: 'no-store' });
@@ -581,14 +628,20 @@
             } catch(e) { console.error("Could not load discount codes."); }
 
             window.applyDiscount = function() {
+                if (isWholesale) return; // Prevent entirely for wholesale
+                
                 const input = document.getElementById('discount-code').value.trim().toUpperCase();
                 const msgEl = document.getElementById('discount-msg');
+
                 if (!input) {
+                    // Wipe the discount entirely from session memory
                     activeDiscount = null;
+                    sessionStorage.removeItem('folkloreDiscount');
                     msgEl.textContent = "";
                     updateCartUI();
                     return;
                 }
+
                 if (validDiscounts[input]) {
                     const val = validDiscounts[input];
                     if (val.startsWith('%')) {
@@ -596,10 +649,15 @@
                     } else if (val.startsWith('-')) {
                         activeDiscount = { code: input, type: 'fixed', value: parseFloat(val.substring(1)) };
                     }
+                    
+                    // Save to Session Storage
+                    sessionStorage.setItem('folkloreDiscount', JSON.stringify(activeDiscount));
+                    
                     msgEl.textContent = "Discount applied!";
                     msgEl.style.color = "#28a745";
                 } else {
                     activeDiscount = null;
+                    sessionStorage.removeItem('folkloreDiscount');
                     msgEl.textContent = "Invalid discount code.";
                     msgEl.style.color = "var(--accent-red)";
                 }
@@ -689,7 +747,7 @@
                     });
 
                     let discountAmount = 0;
-                    if (activeDiscount) {
+                    if (activeDiscount && !isWholesale) {
                         if (activeDiscount.type === 'percent') {
                             discountAmount = itemsTotal * (activeDiscount.value / 100);
                         } else if (activeDiscount.type === 'fixed') {
@@ -706,7 +764,7 @@
                     const existingDiscRow = document.getElementById('cart-discount-row-render');
                     if (existingDiscRow) existingDiscRow.remove();
 
-                    if (discountAmount > 0) {
+                    if (discountAmount > 0 && !isWholesale) {
                         const finalTotalRow = document.getElementById('cart-total');
                         finalTotalRow.insertAdjacentHTML('beforebegin', `
                             <div class="cart-row cart-discount-row" id="cart-discount-row-render">
@@ -824,7 +882,7 @@
                         });
 
                         let discountAmount = 0;
-                        if (activeDiscount) {
+                        if (activeDiscount && !isWholesale) {
                             if (activeDiscount.type === 'percent') discountAmount = itemsTotal * (activeDiscount.value / 100);
                             else discountAmount = activeDiscount.value;
                             if (discountAmount > itemsTotal) discountAmount = itemsTotal;
@@ -842,8 +900,8 @@
                                 unit_amount: { currency_code: 'GBP', value: shippingTotal.toFixed(2) },
                                 quantity: "1"
                             });
-                            itemsTotal += shippingTotal;
-                            shippingTotal = 0;
+                            itemsTotal += shippingTotal; 
+                            shippingTotal = 0; 
                         }
 
                         let finalTotal = itemsTotal - discountAmount + shippingTotal; 
@@ -875,7 +933,7 @@
                                 });
                                 
                                 let discountText = "";
-                                if (activeDiscount) {
+                                if (activeDiscount && !isWholesale) {
                                     let discountAmount = 0;
                                     let subtotal = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
                                     if (activeDiscount.type === 'percent') discountAmount = subtotal * (activeDiscount.value / 100);
@@ -904,9 +962,10 @@
                             alert('Payment successful! We have received your order, ' + details.payer.name.given_name + ', and an email confirmation will be sent to you shortly.');
                             cart = []; 
                             activeDiscount = null;
+                            sessionStorage.removeItem('folkloreDiscount');
                             sessionStorage.setItem(cartKey, JSON.stringify(cart)); 
                             updateCartUI(); 
-                            closeCartSidebar();
+                            window.closeCartSidebar();
                         });
                     },
                     onError: function(err) { console.error('PayPal Checkout Error:', err); alert('There was an issue connecting to PayPal. Please try again.'); }
