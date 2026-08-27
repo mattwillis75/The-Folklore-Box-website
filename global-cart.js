@@ -26,40 +26,42 @@
     const banner = document.getElementById('wholesale-banner');
     const cartHeaderTitle = document.getElementById('cart-title');
     const logoutBtn = document.getElementById('wholesale-logout-btn');
-    const cartSidebar = document.getElementById('cart-sidebar');
+    
+    const cartPanel = document.getElementById('cart-panel'); 
     const cartOverlay = document.getElementById('cart-overlay');
+    
     const destSelect = document.getElementById('cart-destination');
     const cartWarning = document.getElementById('cart-warning');
     const cartItemsContainer = document.getElementById('cart-items');
-    const cartTotalElement = document.getElementById('cart-total');
+    
+    const cartSubtotalLabel = document.getElementById('cart-subtotal');
+    const cartPostageLabel = document.getElementById('cart-shipping-cost');
+    const cartFinalTotalLabel = document.getElementById('cart-total');
+    
     const discountContainerElement = document.getElementById('discount-container');
     const discountInput = document.getElementById('discount-code');
     const discountMsg = document.getElementById('discount-msg');
     const paypalContainer = document.getElementById('paypal-button-container');
 
-    // Nav/Header elements (these are on the main page, not injected)
-    const cartToggle = document.getElementById('cart-toggle');
-    const mobileCartToggle = document.getElementById('mobile-cart-toggle');
-    
-    // Grab Injected elements (close buttons etc)
-    const closeCartBtn = document.getElementById('close-cart');
-    
+    const dtToggle = document.getElementById('cart-toggle');
+    const mbToggle = document.getElementById('mobile-cart-toggle');
+    const mbCount = document.getElementById('mobile-cart-count');
+
+    // Global toggle functions
     window.openCart = () => { 
-        if(cartSidebar) cartSidebar.classList.add('open'); 
+        if(cartPanel) cartPanel.classList.add('active'); 
         if(cartOverlay) cartOverlay.classList.add('active'); 
         document.body.style.overflow = 'hidden'; 
     };
     
     window.closeCart = () => { 
-        if(cartSidebar) cartSidebar.classList.remove('open'); 
+        if(cartPanel) cartPanel.classList.remove('active'); 
         if(cartOverlay) cartOverlay.classList.remove('active'); 
         document.body.style.overflow = ''; 
     };
 
-    if (cartToggle) cartToggle.addEventListener('click', (e) => { e.preventDefault(); window.openCart(); });
-    if (mobileCartToggle) mobileCartToggle.addEventListener('click', (e) => { e.preventDefault(); window.openCart(); });
-    if (closeCartBtn) closeCartBtn.addEventListener('click', window.closeCart);
-    if (cartOverlay) cartOverlay.addEventListener('click', window.closeCart);
+    if (dtToggle) dtToggle.addEventListener('click', (e) => { e.preventDefault(); window.openCart(); });
+    if (mbToggle) mbToggle.addEventListener('click', (e) => { e.preventDefault(); window.openCart(); });
     if (destSelect) destSelect.addEventListener('change', () => window.updateCartUI());
 
     // Apply Wholesale UI Overrides
@@ -105,7 +107,7 @@
         });
     }
 
-    // Fetch Postal & Discount Data
+    // Fetch Postal Data
     let postalRates = {}; 
     try {
         const postalResponse = await fetch('postal.txt', { cache: 'no-store' });
@@ -131,6 +133,7 @@
         }
     } catch(e) { console.error("Could not load postal rates."); }
 
+    // Fetch Discounts
     try {
         const discResponse = await fetch('discounts.txt', { cache: 'no-store' });
         if (discResponse.ok) {
@@ -142,15 +145,13 @@
         }
     } catch(e) { console.error("Could not load discount codes."); }
 
-    // Global Interactive Functions
+    // Global Functions
     window.applyDiscount = function() {
         if (isWholesale) return; 
         const input = document.getElementById('discount-code').value.trim().toUpperCase();
-        const msgEl = document.getElementById('discount-msg');
-        
         if (!input) {
             activeDiscount = null; sessionStorage.removeItem('folkloreDiscount');
-            if(msgEl) msgEl.textContent = "";
+            if(discountMsg) discountMsg.textContent = "";
             window.updateCartUI(); return;
         }
         if (validDiscounts[input]) {
@@ -158,10 +159,10 @@
             if (val.startsWith('%')) activeDiscount = { code: input, type: 'percent', value: parseFloat(val.substring(1)) };
             else if (val.startsWith('-')) activeDiscount = { code: input, type: 'fixed', value: parseFloat(val.substring(1)) };
             sessionStorage.setItem('folkloreDiscount', JSON.stringify(activeDiscount));
-            if(msgEl) { msgEl.textContent = "Discount applied!"; msgEl.style.color = "#28a745"; }
+            if(discountMsg) { discountMsg.textContent = "Discount applied!"; discountMsg.style.color = "#28a745"; }
         } else {
             activeDiscount = null; sessionStorage.removeItem('folkloreDiscount');
-            if(msgEl) { msgEl.textContent = "Invalid discount code."; msgEl.style.color = "var(--accent-red)"; }
+            if(discountMsg) { discountMsg.textContent = "Invalid discount code."; discountMsg.style.color = "var(--accent-red)"; }
         }
         window.updateCartUI();
     };
@@ -199,15 +200,13 @@
         let itemsTotal = 0; let shippingTotal = 0; let finalTotal = 0; let cartItemCount = 0;
         
         if (cart.length === 0) {
-            cartItemsContainer.innerHTML = `<p style="color: #777; font-style: italic;">Your ${isWholesale ? 'wholesale ' : ''}cart is currently empty.</p>`;
-            if (document.getElementById('cart-subtotal')) document.getElementById('cart-subtotal').textContent = `£0.00`;
-            if (document.getElementById('cart-shipping-cost')) document.getElementById('cart-shipping-cost').textContent = `£0.00`;
-            if (document.getElementById('cart-total')) document.getElementById('cart-total').textContent = `Total: £0.00`;
+            cartItemsContainer.innerHTML = `<p style="color: #777; font-style: italic; text-align: center; margin-top: 40px;">Your ${isWholesale ? 'wholesale ' : ''}cart is currently empty.</p>`;
+            if (cartSubtotalLabel) cartSubtotalLabel.textContent = `£0.00`;
+            if (cartPostageLabel) cartPostageLabel.textContent = `£0.00`;
+            if (cartFinalTotalLabel) cartFinalTotalLabel.textContent = `£0.00`;
             
-            const dtToggle = document.getElementById('cart-toggle');
-            const mbToggle = document.getElementById('mobile-cart-count');
             if(dtToggle) dtToggle.textContent = `Cart (0)`;
-            if(mbToggle) mbToggle.textContent = `0`;
+            if(mbCount) mbCount.textContent = `0`;
             
             if (paypalContainer) paypalContainer.style.display = 'none';
             if (cartWarning) cartWarning.style.display = isWholesale ? 'block' : 'none';
@@ -268,28 +267,26 @@
         }
 
         finalTotal = itemsTotal - discountAmount + shippingTotal;
-        if (document.getElementById('cart-subtotal')) document.getElementById('cart-subtotal').textContent = `£${itemsTotal.toFixed(2)}`;
-        if (document.getElementById('cart-shipping-cost')) document.getElementById('cart-shipping-cost').textContent = `£${shippingTotal.toFixed(2)}`;
+        if (cartSubtotalLabel) cartSubtotalLabel.textContent = `£${itemsTotal.toFixed(2)}`;
+        if (cartPostageLabel) cartPostageLabel.textContent = `£${shippingTotal.toFixed(2)}`;
         
         const existingDiscRow = document.getElementById('cart-discount-row-render');
         if (existingDiscRow) existingDiscRow.remove();
 
         if (discountAmount > 0 && !isWholesale) {
-            const finalTotalRow = document.getElementById('cart-total');
+            const finalTotalRow = document.querySelector('.cart-final-total-row');
             if (finalTotalRow) {
                 finalTotalRow.insertAdjacentHTML('beforebegin', `
-                    <div class="cart-row cart-discount-row" id="cart-discount-row-render">
+                    <div class="cart-row cart-discount-row" id="cart-discount-row-render" style="display: flex; justify-content: space-between; color: #28a745; margin-bottom: 10px; font-family: 'Lato', sans-serif;">
                         <span>Discount (${activeDiscount.code}):</span><span>-£${discountAmount.toFixed(2)}</span>
                     </div>
                 `);
             }
         }
 
-        if (document.getElementById('cart-total')) document.getElementById('cart-total').textContent = `Total: £${finalTotal.toFixed(2)}`;
-        const dtToggle = document.getElementById('cart-toggle');
-        const mbToggle = document.getElementById('mobile-cart-count');
+        if (cartFinalTotalLabel) cartFinalTotalLabel.textContent = `£${finalTotal.toFixed(2)}`;
         if(dtToggle) dtToggle.textContent = `Cart (${cartItemCount})`;
-        if(mbToggle) mbToggle.textContent = `${cartItemCount}`;
+        if(mbCount) mbCount.textContent = `${cartItemCount}`;
 
         if (isWholesale && cartWarning) {
             if (itemsTotal >= 75) {
@@ -305,7 +302,7 @@
         }
     };
 
-    // RUN THE RENDER IMMEDIATELY ON PAGE LOAD!
+    // RUN THE RENDER IMMEDIATELY ON PAGE LOAD TO SYNC UI!
     window.updateCartUI();
 
     // Check if cart should auto-open
