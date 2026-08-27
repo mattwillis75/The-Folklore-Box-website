@@ -75,7 +75,7 @@
         }
 
         /* --- Password Overlay --- */
-        .password-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.98); z-index: 2999; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); transition: opacity 0.3s ease; padding-top: 85px; box-sizing: border-box; }
+        .password-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.98); z-index: 1999; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); transition: opacity 0.3s ease; padding-top: 85px; box-sizing: border-box; }
         .password-modal { background: #0a0a0a; border: 1px solid #333; padding: 4rem 3rem; border-radius: 4px; max-width: 450px; width: 90%; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.9); }
         .password-modal h2 { font-size: 2.5rem; margin-top: 0; margin-bottom: 1rem; color: #fff; }
         .password-modal p { color: #aaa; margin-bottom: 2rem; font-size: 1rem; line-height: 1.5; }
@@ -199,7 +199,6 @@
         </div>
     </div>
 
-    <!-- Header & Navigation -->
     <header id="main-header">
         <div class="logo"><a href="index.html"><img src="./The-folklore-box-logo.png" alt="The Folklore Box Logo"></a></div>
         <div class="mobile-controls">
@@ -231,9 +230,8 @@
     </header>
 
     <main class="fade-in">
-        <!-- Dynamic Wholesale Banner -->
         <div class="wholesale-banner" id="wholesale-banner" style="display: none;">
-            <span>Wholesale Account Active: Prices are 60% of standard retail. Minimum spend £75.</span>
+            <span>Minimum spend to allow the wholesale discount is £75.</span>
             <button id="wholesale-logout-btn" class="exit-wholesale-btn" style="display: none;">Exit Wholesale</button>
         </div>
 
@@ -254,17 +252,21 @@
         <div class="request-modal">
             <span class="close-modal" id="close-request">&times;</span>
             
+            <!-- Success Message (Hidden by default) -->
             <div id="request-success" class="form-success-message">
                 <h3>Request Sent</h3>
                 <p>Thank you for your interest! I will review your details and be in touch shortly with your wholesale password.</p>
             </div>
 
+            <!-- Form -->
             <div id="request-form-container">
                 <h2>Request a Password</h2>
                 <p>Enter your shop details below to apply for wholesale access.</p>
                 
                 <form id="request-form" action="https://formsubmit.co/thefolklorebox@gmail.com" method="POST">
+                    <!-- Disables the Captcha -->
                     <input type="hidden" name="_captcha" value="false">
+                    <!-- Hidden Subject Line for your inbox -->
                     <input type="hidden" name="_subject" value="New Wholesale Password Request!">
                     
                     <label for="shop-name">Shop Name / Business</label>
@@ -285,7 +287,7 @@
         </div>
     </div>
 
-    <!-- Footer -->
+    <!-- Index.html matching footer -->
     <footer>
         <div class="social-links">
             <a href="https://instagram.com/the_folklore_box" target="_blank">Instagram: @the_folklore_box</a> | 
