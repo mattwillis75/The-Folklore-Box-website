@@ -10,20 +10,24 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;600&family=Spectral:wght@400;700&display=swap" rel="stylesheet">
     
+    <!-- REQUIRED FOR CHECKOUT: EmailJS & PayPal SDKs -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+       (function(){ emailjs.init({ publicKey: "qI6ltlwzFXECV29P8", }); })();
+    </script>
+    <script src="https://www.paypal.com/sdk/js?client-id=BAAyFEECFHCgIYSVAcx3GUqT0FI1rHhhU_mwYJxRf6ngeAPN3zYdx3W4a1tCIEHivTFLxU7oFEeDD1NIIs&currency=GBP&locale=en_GB"></script>
+
     <style>
         /* Base Styles */
-        :root { --bg-color: #000000; --text-color: #ffffff; --accent-red: #cc0000; --header-bg: rgba(0, 0, 0, 0.85); }
-        html {
-            overflow-y: scroll; 
-            scrollbar-color: #333333 transparent;
-        }
-
+        :root { --bg-color: #000000; --text-color: #ffffff; --accent-red: #cc0000; --header-bg: rgba(0, 0, 0, 0.85); --font-body: 'Lato', sans-serif;}
+        
+        html { overflow-y: scroll; scrollbar-color: #333333 transparent; }
         ::-webkit-scrollbar { width: 12px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #333333; border-radius: 6px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--accent-red); }
         
-        body { font-family: 'Lato', sans-serif; font-weight: 300; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 0; line-height: 1.6; overflow-x: hidden; overflow-y: scroll; }
+        body { font-family: var(--font-body); font-weight: 300; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 0; line-height: 1.6; overflow-x: hidden; overflow-y: scroll; }
         h1, h2, h3 { font-family: 'Spectral', serif; font-weight: 400; color: #ffffff; }
         
         /* Header & Nav */
@@ -31,7 +35,7 @@
         .logo img { max-width: 180px; height: auto; }
 
         nav ul { list-style: none; display: flex; align-items: center; gap: 2rem; margin: 0; padding: 0; }
-        nav a { text-decoration: none; color: #ffffff; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; transition: color 0.3s ease; font-family: 'Lato', sans-serif; white-space: nowrap; }
+        nav a { text-decoration: none; color: #ffffff; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; transition: color 0.3s ease; font-family: var(--font-body); white-space: nowrap; }
         nav a:hover { color: var(--accent-red); }
         .active-page { color: var(--accent-red) !important; }
         
@@ -46,52 +50,19 @@
         .dropdown-content a:hover { background-color: #a30000; color: #ffffff; }
         .dropdown-divider { height: 1px; background-color: #ffffff; margin: 0 15px; }
 
+        /* Mobile Controls */
+        .mobile-controls { display: none; align-items: center; gap: 15px; z-index: 1005; }
+        .mobile-cart-btn { color: var(--accent-red); border: 1px solid var(--accent-red); padding: 0.4rem 0.8rem; border-radius: 3px; text-decoration: none; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-body); transition: all 0.3s ease; }
+        .mobile-cart-btn:hover { background: var(--accent-red); color: #ffffff; }
+
         .mobile-menu-toggle { display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 2005; }
         .mobile-menu-toggle span { width: 25px; height: 3px; background-color: #ffffff; transition: all 0.3s ease; border-radius: 3px; }
         
-        /* --- JOURNAL LAYOUT (Desktop) --- */
-        main { padding-top: 120px; min-height: 100vh; max-width: 1400px; margin: 0 auto; padding-bottom: 4rem; }
-        .journal-header { text-align: center; padding: 1rem 2rem 3rem; }
-        .journal-header h1 { font-size: 3rem; margin-bottom: 0.5rem; }
-        
-        .journal-container { display: grid; grid-template-columns: 280px 1fr; gap: 4rem; padding: 0 2rem; align-items: start; }
-        
-        .journal-sidebar {
-            position: sticky;
-            top: 120px;
-            background: #0a0a0a;
-            border: 1px solid #222;
-            padding: 2rem;
-            border-radius: 4px;
-        }
-
-        .journal-sidebar h3 { margin-top: 0; margin-bottom: 1.5rem; font-size: 1.5rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
-        
-        .sidebar-group { margin-bottom: 2rem; }
-        .sidebar-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem; color: #aaa; }
-        
-        .journal-sidebar input, .journal-sidebar select {
-            width: 100%;
-            padding: 0.8rem;
-            background: #111;
-            color: #fff;
-            border: 1px solid #444;
-            border-radius: 3px;
-            font-family: 'Lato', sans-serif;
-            box-sizing: border-box;
-            transition: border-color 0.3s ease;
-        }
-        
-        .journal-sidebar input:focus, .journal-sidebar select:focus {
-            outline: none;
-            border-color: var(--accent-red);
-        }
-
-        .search-icon-btn { display: none; } /* Hidden on desktop */
-
         /* --- MOBILE MEDIA QUERY --- */
         @media (max-width: 1100px) {
+            .mobile-controls { display: flex; }
             .mobile-menu-toggle { display: flex; }
+            #nav-list li:last-child { display: none; }
             nav ul { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background-color: rgba(0, 0, 0, 0.95); padding: 1rem 0; border-bottom: 1px solid #333; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
             nav ul.mobile-active { display: flex; }
             nav ul li { width: 100%; text-align: center; padding: 0.8rem 0; }
@@ -103,28 +74,25 @@
             .mobile-menu-toggle.open span:nth-child(2) { opacity: 0; }
             .mobile-menu-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
             
-            .journal-container { grid-template-columns: 1fr; gap: 2rem; } 
+            .journal-container { grid-template-columns: 1fr !important; gap: 2rem !important; } 
             
             /* --- Floating Mobile Sidebar Panel --- */
             .journal-sidebar {
-                position: fixed;
-                top: 140px; 
-                left: 0;
-                z-index: 2500; 
-                margin: 0;
-                padding: 0;
-                border: none;
-                background: transparent;
+                position: fixed !important;
+                top: 140px !important; 
+                left: 0 !important;
+                z-index: 2500 !important; 
+                margin: 0 !important;
+                padding: 0 !important;
+                border: none !important;
+                background: transparent !important;
             }
             
-            .mobile-sidebar-container {
-                display: flex;
-                align-items: flex-start;
-            }
+            .mobile-sidebar-container { display: flex; align-items: flex-start; }
             
             /* The Icon */
             .search-icon-btn {
-                display: flex;
+                display: flex !important;
                 align-items: center; 
                 justify-content: center;
                 width: 45px; height: 45px;
@@ -153,68 +121,53 @@
             }
 
             .sidebar-inner h3, .sidebar-inner .sidebar-group {
-                min-width: 200px; /* Prevents text squishing during animation */
+                min-width: 200px;
                 opacity: 0;
                 transition: opacity 0.2s ease;
             }
             
             /* Expanded States */
-            .journal-sidebar.expanded .search-icon-btn {
-                border-color: var(--accent-red);
-                border-right: none;
-                color: var(--accent-red);
-                border-radius: 0;
-                box-shadow: none;
-            }
-            
-            .journal-sidebar.expanded .sidebar-inner {
-                width: 70vw; 
-                max-width: 250px;
-                padding: 1.5rem;
-                opacity: 1;
-                border: 1px solid var(--accent-red);
-                border-left: none;
-                box-shadow: 2px 2px 10px rgba(0,0,0,0.5);
-            }
-
-            .journal-sidebar.expanded .sidebar-inner h3, 
-            .journal-sidebar.expanded .sidebar-inner .sidebar-group {
-                opacity: 1;
-                transition: opacity 0.4s ease 0.2s;
-            }
+            .journal-sidebar.expanded .search-icon-btn { border-color: var(--accent-red); border-right: none; color: var(--accent-red); border-radius: 0; box-shadow: none; }
+            .journal-sidebar.expanded .sidebar-inner { width: 70vw; max-width: 250px; padding: 1.5rem; opacity: 1; border: 1px solid var(--accent-red); border-left: none; box-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+            .journal-sidebar.expanded .sidebar-inner h3, .journal-sidebar.expanded .sidebar-inner .sidebar-group { opacity: 1; transition: opacity 0.4s ease 0.2s; }
         }
+
+        /* --- JOURNAL LAYOUT (Desktop) --- */
+        main { padding-top: 85px; min-height: 100vh; max-width: 1400px; margin: 0 auto; padding-bottom: 4rem; display: flex; flex-direction: column;}
+        
+        .wholesale-banner { background: #222; color: var(--accent-red); border-bottom: 1px solid #333; text-align: center; padding: 0.8rem 2rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; margin-bottom: 1rem; display: none; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .exit-wholesale-btn { background: transparent; color: #fff; border: 1px solid var(--accent-red); padding: 0.4rem 1rem; font-family: var(--font-body); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; border-radius: 3px; transition: all 0.3s ease; }
+        .exit-wholesale-btn:hover { background: var(--accent-red); }
+
+        .journal-header { text-align: center; padding: 1rem 2rem 3rem; }
+        .journal-header h1 { font-size: 3rem; margin-bottom: 0.5rem; margin-top: 0; }
+        
+        .journal-container { display: grid; grid-template-columns: 280px 1fr; gap: 4rem; padding: 0 2rem; align-items: start; }
+        
+        .journal-sidebar { position: sticky; top: 120px; background: #0a0a0a; border: 1px solid #222; padding: 2rem; border-radius: 4px; }
+        .journal-sidebar h3 { margin-top: 0; margin-bottom: 1.5rem; font-size: 1.5rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+        
+        .sidebar-group { margin-bottom: 2rem; }
+        .sidebar-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem; color: #aaa; }
+        
+        .journal-sidebar input, .journal-sidebar select { width: 100%; padding: 0.8rem; background: #111; color: #fff; border: 1px solid #444; border-radius: 3px; font-family: var(--font-body); box-sizing: border-box; transition: border-color 0.3s ease; }
+        .journal-sidebar input:focus, .journal-sidebar select:focus { outline: none; border-color: var(--accent-red); }
+
+        .search-icon-btn { display: none; } /* Hidden on desktop */
 
         /* Journal Feed & Image Styles */
         .journal-feed { display: flex; flex-direction: column; gap: 4rem; }
         
-        .journal-entry {
-            background: transparent;
-            padding: 0 0 4rem 0; 
-            border-bottom: 1px solid var(--accent-red); 
-            max-width: 55ch; 
-        }
+        .journal-entry { background: transparent; padding: 0 0 4rem 0; border-bottom: 1px solid var(--accent-red); max-width: 55ch; }
+        .journal-entry:last-child { border-bottom: none; padding-bottom: 0; }
 
-        .journal-entry:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-
-        .entry-image, .carousel-image { 
-            width: 100%; 
-            aspect-ratio: 4 / 3; 
-            object-fit: cover; 
-            background: #111;
-        }
+        .entry-image, .carousel-image { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: #111; }
         .entry-image { display: block; }
 
         /* Comments Section Styles */
         .comments-section { margin-top: 2rem; padding-top: 2rem; border-top: 1px dashed #333; display: none; }
 
-        .toggle-comments-btn { 
-            margin-top: 2rem; background: transparent; border: 1px solid var(--accent-red); 
-            color: var(--accent-red); padding: 0.6rem 1.2rem; cursor: pointer; text-transform: uppercase; 
-            font-family: 'Lato', sans-serif; font-size: 0.85rem; transition: all 0.3s ease; letter-spacing: 1px;
-        }
+        .toggle-comments-btn { margin-top: 2rem; background: transparent; border: 1px solid var(--accent-red); color: var(--accent-red); padding: 0.6rem 1.2rem; cursor: pointer; text-transform: uppercase; font-family: var(--font-body); font-size: 0.85rem; transition: all 0.3s ease; letter-spacing: 1px; }
         .toggle-comments-btn:hover { background: var(--accent-red); color: #fff; }
 
         .comment-item { background: #0a0a0a; padding: 1.2rem; border-left: 2px solid var(--accent-red); margin-bottom: 1rem; border-radius: 0 4px 4px 0; }
@@ -225,9 +178,9 @@
 
         .comment-form { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; background: #111; padding: 1.5rem; border-radius: 4px; }
         .comment-form h4 { margin: 0 0 0.5rem 0; font-family: 'Spectral', serif; font-size: 1.5rem; color: #fff; }
-        .comment-form input, .comment-form textarea { width: 100%; padding: 0.8rem; background: #000; color: #fff; border: 1px solid #333; border-radius: 3px; font-family: 'Lato', sans-serif; box-sizing: border-box; transition: border-color 0.3s; }
+        .comment-form input, .comment-form textarea { width: 100%; padding: 0.8rem; background: #000; color: #fff; border: 1px solid #333; border-radius: 3px; font-family: var(--font-body); box-sizing: border-box; transition: border-color 0.3s; }
         .comment-form input:focus, .comment-form textarea:focus { outline: none; border-color: var(--accent-red); }
-        .comment-form button { background: var(--accent-red); color: #fff; border: none; padding: 0.8rem; text-transform: uppercase; font-weight: bold; cursor: pointer; transition: background 0.3s; letter-spacing: 1px; }
+        .comment-form button { background: var(--accent-red); color: #fff; border: none; padding: 0.8rem; text-transform: uppercase; font-weight: bold; cursor: pointer; transition: background 0.3s; letter-spacing: 1px; font-family: var(--font-body); }
         .comment-form button:hover { background: #a30000; }
         
         /* Carousel Specific Styles */
@@ -240,10 +193,8 @@
         .carousel-btn.next { right: 10px; }
         
         .entry-content { padding: 1.5rem 0 0 0; }
-
         .entry-date { color: var(--accent-red); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; margin-bottom: 0.5rem; display: block; }
         .entry-title { font-size: 2.2rem; margin: 0 0 1.5rem 0; line-height: 1.2; }
-        
         .entry-text, .entry-text p { font-size: 1rem; line-height: 1.6; text-align: left; }
         .entry-text p { margin-bottom: 1.5rem; margin-top: 0; }
         
@@ -253,19 +204,19 @@
 
         .no-results { text-align: center; padding: 4rem 0; color: #888; font-style: italic; font-size: 1.2rem; }
 
-       /* Cart Styles */
-        .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 2001; display: none; backdrop-filter: blur(3px); }
+        /* --- Slide-Out Cart Styles --- */
+        .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 3001; display: none; backdrop-filter: blur(3px); }
         .cart-overlay.active { display: block; }
-        .cart-sidebar { position: fixed; top: 0; right: -500px; width: 500px; max-width: 100vw; height: 100vh; background: #0a0a0a; border-left: 1px solid #222; z-index: 2002; transition: right 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); padding: 2rem; box-sizing: border-box; display: flex; flex-direction: column; overflow-y: auto; }
+        .cart-sidebar { position: fixed; top: 0; right: -500px; width: 500px; max-width: 100vw; height: 100vh; background: #0a0a0a; border-left: 1px solid #222; z-index: 3002; transition: right 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); padding: 2rem; box-sizing: border-box; display: flex; flex-direction: column; overflow-y: auto; }
         .cart-sidebar.open { right: 0; }
         .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 1rem; margin-bottom: 1.5rem; flex-shrink: 0; }
-        .cart-header h2 { margin: 0; font-size: 2rem; }
+        .cart-header h2 { margin: 0; font-size: 2rem; font-family: 'Spectral', serif; font-weight: 400;}
         .close-cart { font-size: 2.5rem; cursor: pointer; color: #fff; line-height: 1; transition: color 0.3s; }
         .close-cart:hover { color: var(--accent-red); }
         .cart-items-container { flex-grow: 1; margin-bottom: 1rem; padding-right: 0.5rem; overflow-y: visible; }
         
         .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid #222; gap: 0.8rem; }
-        .cart-item-title { flex-grow: 1; font-weight: 600; font-size: 0.95rem; line-height: 1.3; }
+        .cart-item-title { flex-grow: 1; font-weight: 600; font-size: 0.95rem; line-height: 1.3; font-family: var(--font-body); }
         .cart-qty-controls { display: flex; align-items: center; gap: 0.5rem; background: #111; padding: 0.2rem 0.5rem; border-radius: 3px; border: 1px solid #333; }
         .cart-qty-controls button { background: none; border: none; color: #fff; cursor: pointer; font-size: 1.2rem; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
         .cart-qty-controls button:hover { color: var(--accent-red); }
@@ -274,8 +225,32 @@
         .remove-btn:hover { color: var(--accent-red); }
         
         .cart-footer { border-top: 1px solid #333; padding-top: 1.5rem; flex-shrink: 0; }
-        .cart-total { font-size: 1.8rem; text-align: right; margin-bottom: 1.5rem; font-family: 'Spectral', serif; color: var(--accent-red); }
+        
+        /* REQUIRED FOR CHECKOUT: Universal Checkout Styles */
+        .discount-container { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #222; padding-bottom: 15px; }
+        .discount-input { flex-grow: 1; padding: 0.8rem; background: #111; border: 1px solid #333; color: #fff; border-radius: 3px; font-family: var(--font-body); }
+        .discount-btn { background: #333; color: #fff; border: 1px solid #444; padding: 0.8rem 1.5rem; cursor: pointer; border-radius: 3px; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; transition: 0.3s ease; }
+        .discount-btn:hover { background: var(--accent-red); border-color: var(--accent-red); }
+        .discount-msg { width: 100%; font-size: 0.85rem; margin-top: 5px; }
+        
+        .cart-shipping-selector { margin-bottom: 1rem; border-bottom: 1px solid #222; padding-bottom: 1rem; }
+        .cart-shipping-selector label { display: block; color: #aaa; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
+        .cart-shipping-selector select { width: 100%; padding: 0.8rem; background: #111; color: #fff; border: 1px solid #333; border-radius: 3px; cursor: pointer; font-family: var(--font-body); }
+        
+        .cart-breakdown { margin-bottom: 1rem; color: #aaa; font-size: 1rem; font-family: var(--font-body); }
+        .cart-row { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
+        .cart-discount-row { display: flex; justify-content: space-between; color: #28a745; margin-bottom: 10px; font-family: var(--font-body); }
+        
+        .cart-total { font-size: 1.5rem; text-align: right; margin-bottom: 1.5rem; font-family: 'Spectral', serif; color: var(--accent-red); border-top: 1px solid #333; padding-top: 1rem; font-weight: 700; }
+        .cart-warning { background: rgba(204, 0, 0, 0.1); border: 1px solid var(--accent-red); color: var(--accent-red); font-weight: bold; text-align: center; padding: 1rem; border-radius: 4px; margin-bottom: 1.5rem; font-size: 0.9rem; line-height: 1.4; display: none; }
+        .paypal-disabled { pointer-events: none; opacity: 0.4; filter: grayscale(100%); }
 
+        @media (max-width: 600px) {
+            .mobile-cart-btn { font-size: 0.7rem; padding: 0.3rem 0.6rem; }
+            .cart-sidebar { width: 100%; right: -100%; }
+        }
+
+        /* Footer */
         footer { background: #000000; color: #ffffff; padding: 4rem 2rem; text-align: center; border-top: 1px solid #222; }
         footer a { color: #ffffff; text-decoration: none; margin: 0 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
         footer a:hover { color: var(--accent-red); }
@@ -286,7 +261,13 @@
 
     <header id="main-header">
         <div class="logo"><a href="index.html"><img src="./The-folklore-box-logo.png" alt="The Folklore Box Logo"></a></div>
-        <div class="mobile-menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
+        
+        <!-- Updated Mobile Controls for consistency -->
+        <div class="mobile-controls">
+            <a href="#" id="mobile-cart-toggle" class="mobile-cart-btn" onclick="openCart(); return false;">Cart (<span id="mobile-cart-count">0</span>)</a>
+            <div class="mobile-menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
+        </div>
+
         <nav>
             <ul id="nav-list">
                 <li class="dropdown">
@@ -306,12 +287,18 @@
                 <li><a href="journal.html" class="active-page">Journal</a></li>
                 <li><a href="wholesale.html">Wholesale</a></li>
                 <li><a href="contact.html">Contact</a></li>
-                <li><a href="#" id="cart-toggle">Cart (0)</a></li>
+                <li><a href="#" id="cart-toggle" onclick="openCart(); return false;">Cart (<span id="cart-count">0</span>)</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
+        <!-- Dynamic Wholesale Banner Added for Consistency -->
+        <div class="wholesale-banner" id="wholesale-banner">
+            <span>Wholesale Account Active: Prices are 60% of standard retail. Minimum spend £75.</span>
+            <button id="wholesale-logout-btn" class="exit-wholesale-btn">Exit Wholesale</button>
+        </div>
+
         <div class="journal-header">
             <h1>The Journal</h1>
         </div>
@@ -346,14 +333,45 @@
         </div>
     </main>
 
+    <!-- Slide-Out Shopping Cart -->
     <div class="cart-overlay" id="cart-overlay"></div>
     <div class="cart-sidebar" id="cart-sidebar">
-        <div class="cart-header"><h2 id="cart-title">Your Cart</h2><span class="close-cart" id="close-cart">&times;</span></div>
+        <div class="cart-header">
+            <h2 id="cart-title">Your Cart</h2>
+            <span class="close-cart" id="close-cart">&times;</span>
+        </div>
         <div class="cart-items-container" id="cart-items"></div>
         <div class="cart-footer">
+            
+            <div class="cart-warning" id="cart-warning">
+                Minimum wholesale spend is £75.00 before postage.
+            </div>
+
+            <!-- REQUIRED FOR CHECKOUT: Discount Code Field -->
+            <div class="discount-container">
+                <input type="text" id="discount-code" class="discount-input" placeholder="Promo code">
+                <button class="discount-btn" onclick="applyDiscount()">Apply</button>
+                <div id="discount-msg" class="discount-msg"></div>
+            </div>
+
+            <div class="cart-shipping-selector">
+                <label for="cart-destination">Deliver to:</label>
+                <select id="cart-destination">
+                    <option value="uk">United Kingdom</option>
+                    <option value="int">International</option>
+                </select>
+            </div>
+            
+            <div class="cart-breakdown">
+                <div class="cart-row"><span>Items:</span><span id="cart-subtotal">£0.00</span></div>
+                <div class="cart-row"><span>Postage:</span><span id="cart-shipping-cost">£0.00</span></div>
+            </div>
+            
             <div class="cart-total" id="cart-total">Total: £0.00</div>
-            <p style="text-align: center; color: #888; font-size: 0.9rem;">Checkout is completed securely via the Shop.</p>
-            <a href="shop.html" style="display: block; background: var(--accent-red); color: #fff; padding: 1rem; text-align: center; text-decoration: none; text-transform: uppercase; font-weight: bold; margin-top: 1rem;">Go to Shop</a>
+            
+            <!-- REQUIRED FOR CHECKOUT: PayPal Container -->
+            <div id="paypal-button-container" style="margin-top: 15px;"></div>
+            
         </div>
     </div>
 
@@ -390,6 +408,20 @@
 
         document.addEventListener("DOMContentLoaded", async () => {
             
+            // --- HEADER SCROLL EFFECT ---
+            const header = document.getElementById('main-header');
+            if (header) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 50) {
+                        header.style.boxShadow = '0 2px 20px rgba(255, 0, 0, 0.1)';
+                        header.style.borderBottom = '1px solid var(--accent-red)';
+                    } else {
+                        header.style.boxShadow = 'none';
+                        header.style.borderBottom = '1px solid #333333';
+                    }
+                });
+            }
+
             // --- MOBILE MENU TOGGLE SCRIPT ---
             const mobileToggle = document.getElementById('mobile-toggle');
             const navList = document.getElementById('nav-list');
@@ -589,31 +621,284 @@
                 }
             });
 
-            // --- CART LOGIC ---
+            // ==========================================
+            // UNIVERSAL CHECKOUT LOGIC STARTS HERE
+            // ==========================================
             const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
             const cartKey = isWholesale ? 'folkloreWholesaleCart' : 'folkloreCart';
             
-            if (isWholesale) {
-                const cartHeaderTitle = document.getElementById('cart-title');
-                if (cartHeaderTitle) cartHeaderTitle.textContent = 'Wholesale Cart';
-            }
+            let validDiscounts = {};
+            let activeDiscount = null;
 
-            let cart = JSON.parse(sessionStorage.getItem(cartKey)) || [];
-            cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
-            
+            let cart = [];
+            try {
+                cart = JSON.parse(sessionStorage.getItem(cartKey)) || [];
+                cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
+            } catch(e) { cart = []; }
+
+            const banner = document.getElementById('wholesale-banner');
+            const cartHeaderTitle = document.getElementById('cart-title');
+            const logoutBtn = document.getElementById('wholesale-logout-btn');
             const cartSidebar = document.getElementById('cart-sidebar');
             const cartOverlay = document.getElementById('cart-overlay');
             const cartToggle = document.getElementById('cart-toggle');
+            const mobileCartToggle = document.getElementById('mobile-cart-toggle');
             const closeCartBtn = document.getElementById('close-cart');
+            const destSelect = document.getElementById('cart-destination');
+            const cartWarning = document.getElementById('cart-warning');
             const cartItemsContainer = document.getElementById('cart-items');
             const cartTotalElement = document.getElementById('cart-total');
+            
+            if (isWholesale) {
+                if (banner) banner.style.display = 'flex'; 
+                if (cartHeaderTitle) cartHeaderTitle.textContent = 'Wholesale Cart';
+            }
 
-            const openCart = () => { if(cartSidebar) cartSidebar.classList.add('open'); if(cartOverlay) cartOverlay.classList.add('active'); };
-            const closeCartSidebar = () => { if(cartSidebar) cartSidebar.classList.remove('open'); if(cartOverlay) cartOverlay.classList.remove('active'); };
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    let wCart = JSON.parse(sessionStorage.getItem('folkloreWholesaleCart')) || [];
+                    let rCart = JSON.parse(sessionStorage.getItem('folkloreCart')) || [];
+                    
+                    wCart.forEach(wItem => {
+                        let existingRItem = rCart.find(rItem => (rItem.cartItemId || rItem.id) === (wItem.cartItemId || wItem.id));
+                        if (existingRItem) {
+                            existingRItem.quantity += (wItem.quantity || 1);
+                        } else {
+                            let retailPrice = Math.round((wItem.price / 0.60) * 100) / 100;
+                            rCart.push({
+                                id: wItem.id, cartItemId: wItem.cartItemId || wItem.id, title: wItem.title,
+                                price: retailPrice, postalClass: wItem.postalClass, size: wItem.size || null, quantity: wItem.quantity || 1
+                            });
+                        }
+                    });
+
+                    sessionStorage.setItem('folkloreCart', JSON.stringify(rCart));
+                    cart = []; 
+                    sessionStorage.removeItem('folkloreWholesaleCart');
+                    sessionStorage.removeItem('wholesaleAuthenticated');
+                    
+                    alert("You have exited Wholesale Mode. Returning to the standard retail shop.");
+                    window.location.href = 'shop.html'; 
+                });
+            }
+
+            let postalRates = {}; 
+            try {
+                const postalResponse = await fetch('postal.txt', { cache: 'no-store' });
+                const postalText = await postalResponse.text();
+                postalText.split('---').forEach(block => {
+                    if(!block.trim()) return;
+                    let currentClass = "";
+                    let rates = {};
+                    block.trim().split('\n').forEach(line => {
+                        const sepIndex = line.indexOf(':');
+                        if(sepIndex > -1) {
+                            const key = line.slice(0, sepIndex).trim().toLowerCase();
+                            const value = line.slice(sepIndex + 1).trim();
+                            if(key === 'class') currentClass = value;
+                            else if(key === 'uk base') rates.ukBase = parseFloat(value);
+                            else if(key === 'uk additional') rates.ukAdd = parseFloat(value);
+                            else if(key === 'int base') rates.intBase = parseFloat(value);
+                            else if(key === 'int additional') rates.intAdd = parseFloat(value);
+                        }
+                    });
+                    if(currentClass) postalRates[currentClass] = rates;
+                });
+            } catch(e) { console.error("Could not load postal rates for cart math."); }
+
+            try {
+                const discResponse = await fetch('discounts.txt', { cache: 'no-store' });
+                if (discResponse.ok) {
+                    const discText = await discResponse.text();
+                    discText.split('\n').forEach(line => {
+                        const parts = line.split(':');
+                        if (parts.length === 2) {
+                            validDiscounts[parts[0].trim().toUpperCase()] = parts[1].trim();
+                        }
+                    });
+                }
+            } catch(e) { console.error("Could not load discount codes."); }
+
+            window.applyDiscount = function() {
+                const input = document.getElementById('discount-code').value.trim().toUpperCase();
+                const msgEl = document.getElementById('discount-msg');
+                if (!input) {
+                    activeDiscount = null;
+                    msgEl.textContent = "";
+                    updateCartUI();
+                    return;
+                }
+                if (validDiscounts[input]) {
+                    const val = validDiscounts[input];
+                    if (val.startsWith('%')) {
+                        activeDiscount = { code: input, type: 'percent', value: parseFloat(val.substring(1)) };
+                    } else if (val.startsWith('-')) {
+                        activeDiscount = { code: input, type: 'fixed', value: parseFloat(val.substring(1)) };
+                    }
+                    msgEl.textContent = "Discount applied!";
+                    msgEl.style.color = "#28a745";
+                } else {
+                    activeDiscount = null;
+                    msgEl.textContent = "Invalid discount code.";
+                    msgEl.style.color = "var(--accent-red)";
+                }
+                updateCartUI();
+            };
+
+            window.updateCartUI = function() {
+                try {
+                    if (!cartItemsContainer) return;
+                    cartItemsContainer.innerHTML = '';
+                    let itemsTotal = 0; let shippingTotal = 0; let finalTotal = 0;
+                    let cartItemCount = 0;
+                    const paypalContainer = document.getElementById('paypal-button-container');
+                    
+                    if (cart.length === 0) {
+                        cartItemsContainer.innerHTML = `<p style="color: #777; font-style: italic;">Your ${isWholesale ? 'wholesale ' : ''}cart is currently empty.</p>`;
+                        if(document.getElementById('cart-subtotal')) document.getElementById('cart-subtotal').textContent = `£0.00`;
+                        if(document.getElementById('cart-shipping-cost')) document.getElementById('cart-shipping-cost').textContent = `£0.00`;
+                        if(cartTotalElement) cartTotalElement.textContent = `Total: £0.00`;
+                        
+                        const desktopCount = document.getElementById('cart-count');
+                        const mobileCount = document.getElementById('mobile-cart-count');
+                        if (desktopCount) desktopCount.innerText = "0";
+                        if (mobileCount) mobileCount.innerText = "0";
+                        
+                        if (paypalContainer) paypalContainer.style.display = 'none';
+
+                        if (isWholesale && cartWarning) {
+                            cartWarning.style.display = 'block';
+                        } else if (!isWholesale && cartWarning) {
+                            cartWarning.style.display = 'none';
+                        }
+                        
+                        const existingDiscRow = document.getElementById('cart-discount-row-render');
+                        if (existingDiscRow) existingDiscRow.remove();
+
+                        return;
+                    }
+
+                    const dest = destSelect ? destSelect.value : 'uk';
+                    let maxBase = -1; let maxBaseItem = null;
+
+                    cart.forEach((item, index) => {
+                        const qty = item.quantity || 1;
+                        const itemTotalCost = item.price * qty;
+                        itemsTotal += itemTotalCost;
+                        cartItemCount += qty;
+
+                        const sizeHtml = item.size ? `<br><span style="font-size:0.8rem; color:#888;">Size: ${item.size}</span>` : '';
+                        
+                        cartItemsContainer.innerHTML += `
+                            <div class="cart-item">
+                                <div class="cart-item-title">
+                                    ${item.title} ${sizeHtml} <br>
+                                    <span style="font-size:0.8rem; color:#888; font-weight:normal;">£${item.price.toFixed(2)} each</span>
+                                </div>
+                                <div class="cart-qty-controls">
+                                    <button onclick="updateQuantity(${index}, -1)">-</button>
+                                    <span>${qty}</span>
+                                    <button onclick="updateQuantity(${index}, 1)">+</button>
+                                </div>
+                                <div class="cart-item-total">£${itemTotalCost.toFixed(2)}</div>
+                                <button class="remove-btn" onclick="removeFromCart(${index})" title="Remove item">&times;</button>
+                            </div>
+                        `;
+                        
+                        const rates = postalRates[item.postalClass];
+                        if(rates) {
+                            const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                            if(baseRate > maxBase) { maxBase = baseRate; maxBaseItem = item; }
+                        }
+                    });
+
+                    let baseRateApplied = false;
+                    cart.forEach((item) => {
+                        const rates = postalRates[item.postalClass];
+                        if(rates) {
+                            const qty = item.quantity || 1;
+                            const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                            const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
+
+                            if (maxBaseItem && item.cartItemId === maxBaseItem.cartItemId && !baseRateApplied) {
+                                shippingTotal += baseRate + (addRate * (qty - 1));
+                                baseRateApplied = true;
+                            } else {
+                                shippingTotal += addRate * qty;
+                            }
+                        }
+                    });
+
+                    let discountAmount = 0;
+                    if (activeDiscount) {
+                        if (activeDiscount.type === 'percent') {
+                            discountAmount = itemsTotal * (activeDiscount.value / 100);
+                        } else if (activeDiscount.type === 'fixed') {
+                            discountAmount = activeDiscount.value;
+                        }
+                        if (discountAmount > itemsTotal) discountAmount = itemsTotal; 
+                    }
+
+                    finalTotal = itemsTotal - discountAmount + shippingTotal;
+
+                    if(document.getElementById('cart-subtotal')) document.getElementById('cart-subtotal').textContent = `£${itemsTotal.toFixed(2)}`;
+                    if(document.getElementById('cart-shipping-cost')) document.getElementById('cart-shipping-cost').textContent = `£${shippingTotal.toFixed(2)}`;
+                    
+                    const existingDiscRow = document.getElementById('cart-discount-row-render');
+                    if (existingDiscRow) existingDiscRow.remove();
+
+                    if (discountAmount > 0) {
+                        const finalTotalRow = document.getElementById('cart-total');
+                        finalTotalRow.insertAdjacentHTML('beforebegin', `
+                            <div class="cart-row cart-discount-row" id="cart-discount-row-render">
+                                <span>Discount (${activeDiscount.code}):</span>
+                                <span>-£${discountAmount.toFixed(2)}</span>
+                            </div>
+                        `);
+                    }
+
+                    if(cartTotalElement) cartTotalElement.textContent = `Total: £${finalTotal.toFixed(2)}`;
+                    
+                    const desktopCount = document.getElementById('cart-count');
+                    const mobileCount = document.getElementById('mobile-cart-count');
+                    if (desktopCount) desktopCount.innerText = cartItemCount;
+                    if (mobileCount) mobileCount.innerText = cartItemCount;
+
+                    if (isWholesale && cartWarning) {
+                        if (itemsTotal >= 75) {
+                            cartWarning.style.display = 'none';
+                            if (paypalContainer) {
+                                paypalContainer.classList.remove('paypal-disabled');
+                                paypalContainer.style.display = 'block';
+                            }
+                        } else {
+                            cartWarning.style.display = 'block';
+                            if (paypalContainer) {
+                                paypalContainer.classList.add('paypal-disabled');
+                                paypalContainer.style.display = 'block';
+                            }
+                        }
+                    } else if (!isWholesale && cartWarning) {
+                        cartWarning.style.display = 'none';
+                        if (paypalContainer) {
+                            paypalContainer.classList.remove('paypal-disabled');
+                            paypalContainer.style.display = 'block';
+                        }
+                    }
+                } catch (e) {
+                    console.error("Cart UI Rendering Error:", e);
+                }
+            };
+
+            window.openCart = () => { if(cartSidebar) cartSidebar.classList.add('open'); if(cartOverlay) cartOverlay.classList.add('active'); };
+            window.closeCartSidebar = () => { if(cartSidebar) cartSidebar.classList.remove('open'); if(cartOverlay) cartOverlay.classList.remove('active'); };
 
             if(cartToggle) cartToggle.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
+            if(mobileCartToggle) mobileCartToggle.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
             if(closeCartBtn) closeCartBtn.addEventListener('click', closeCartSidebar);
             if(cartOverlay) cartOverlay.addEventListener('click', closeCartSidebar);
+            if(destSelect) destSelect.addEventListener('change', updateCartUI);
 
             window.updateQuantity = function(index, delta) {
                 cart[index].quantity += delta;
@@ -630,47 +915,6 @@
                 updateCartUI(); 
             };
 
-            const updateCartUI = () => {
-                if(!cartItemsContainer) return;
-                
-                cartItemsContainer.innerHTML = '';
-                let itemsTotal = 0;
-                let cartItemCount = 0;
-                
-                if (cart.length === 0) {
-                    cartItemsContainer.innerHTML = `<p style="color: #777; font-style: italic;">Your ${isWholesale ? 'wholesale ' : ''}cart is currently empty.</p>`;
-                    if(cartTotalElement) cartTotalElement.textContent = 'Total: £0.00';
-                    if(cartToggle) cartToggle.textContent = 'Cart (0)';
-                    return;
-                }
-
-                cart.forEach((item, index) => {
-                    const qty = item.quantity || 1;
-                    const itemTotalCost = item.price * qty;
-                    itemsTotal += itemTotalCost;
-                    cartItemCount += qty;
-
-                    cartItemsContainer.innerHTML += `
-                        <div class="cart-item">
-                            <div class="cart-item-title">
-                                ${item.title} <br>
-                                <span style="font-size:0.8rem; color:#888; font-weight:normal;">£${item.price.toFixed(2)} each</span>
-                            </div>
-                            <div class="cart-qty-controls">
-                                <button onclick="updateQuantity(${index}, -1)">-</button>
-                                <span>${qty}</span>
-                                <button onclick="updateQuantity(${index}, 1)">+</button>
-                            </div>
-                            <div class="cart-item-total">£${itemTotalCost.toFixed(2)}</div>
-                            <button class="remove-btn" onclick="removeFromCart(${index})" title="Remove item">&times;</button>
-                        </div>
-                    `;
-                });
-
-                if(cartTotalElement) cartTotalElement.textContent = `Total: £${itemsTotal.toFixed(2)}`;
-                if(cartToggle) cartToggle.textContent = `Cart (${cartItemCount})`;
-            };
-
             window.addEventListener('pageshow', (event) => {
                 if (event.persisted) {
                     const currentKey = typeof cartKey !== 'undefined' ? cartKey : 'folkloreCart';
@@ -679,23 +923,142 @@
                     updateCartUI();
                 }
             });
-            
-            updateCartUI();
-        });
 
-        // --- Header Scroll Effect ---
-        const header = document.getElementById('main-header');
-        if (header) {
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    header.style.boxShadow = '0 2px 20px rgba(255, 0, 0, 0.1)';
-                    header.style.borderBottom = '1px solid var(--accent-red)';
-                } else {
-                    header.style.boxShadow = 'none';
-                    header.style.borderBottom = '1px solid #333333';
-                }
-            });
-        }
+            updateCartUI();
+
+            // PayPal SDK Logic
+            if (document.getElementById('paypal-button-container')) {
+                paypal.Buttons({
+                    createOrder: function(data, actions) {
+                        let itemsTotal = 0; let shippingTotal = 0; let maxBase = -1; let maxBaseItem = null;
+                        const dest = destSelect ? destSelect.value : 'uk';
+                        
+                        cart.forEach(item => {
+                            const qty = item.quantity || 1;
+                            itemsTotal += item.price * qty;
+                            const rates = postalRates[item.postalClass];
+                            if(rates) {
+                                const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                                if(baseRate > maxBase) { maxBase = baseRate; maxBaseItem = item; }
+                            }
+                        });
+
+                        let baseRateApplied = false;
+                        cart.forEach(item => {
+                            const rates = postalRates[item.postalClass];
+                            if(rates) {
+                                const qty = item.quantity || 1;
+                                const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                                const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
+                                
+                                if (maxBaseItem && item.cartItemId === maxBaseItem.cartItemId && !baseRateApplied) {
+                                    shippingTotal += baseRate + (addRate * (qty - 1));
+                                    baseRateApplied = true;
+                                } else {
+                                    shippingTotal += addRate * qty;
+                                }
+                            }
+                        });
+                        
+                        const paypalItems = cart.map(item => {
+                            return {
+                                name: item.title + (item.size ? ` (${item.size})` : ''),
+                                unit_amount: { currency_code: 'GBP', value: item.price.toFixed(2) },
+                                quantity: (item.quantity || 1).toString()
+                            };
+                        });
+
+                        let discountAmount = 0;
+                        if (activeDiscount) {
+                            if (activeDiscount.type === 'percent') discountAmount = itemsTotal * (activeDiscount.value / 100);
+                            else discountAmount = activeDiscount.value;
+                            if (discountAmount > itemsTotal) discountAmount = itemsTotal;
+                        }
+
+                        const isWholesaleMode = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
+                        if (isWholesaleMode && itemsTotal < 75) { 
+                            alert("Minimum wholesale spend of £75 not met."); 
+                            return; 
+                        }
+
+                        if (shippingTotal > 0) {
+                            paypalItems.push({
+                                name: `Postage & Packaging (${dest === 'uk' ? 'UK' : 'International'})`,
+                                unit_amount: { currency_code: 'GBP', value: shippingTotal.toFixed(2) },
+                                quantity: "1"
+                            });
+                            itemsTotal += shippingTotal;
+                            shippingTotal = 0;
+                        }
+
+                        let finalTotal = itemsTotal - discountAmount + shippingTotal; 
+                        if (finalTotal <= 0) { alert("Your cart is empty or the total is zero!"); return; }
+
+                        return actions.order.create({
+                            purchase_units: [{ 
+                                amount: { 
+                                    currency_code: 'GBP', 
+                                    value: finalTotal.toFixed(2),
+                                    breakdown: {
+                                        item_total: { currency_code: 'GBP', value: itemsTotal.toFixed(2) },
+                                        shipping: { currency_code: 'GBP', value: shippingTotal.toFixed(2) },
+                                        discount: { currency_code: 'GBP', value: discountAmount.toFixed(2) }
+                                    }
+                                },
+                                items: paypalItems
+                            }]
+                        });
+                    },
+                    onApprove: function(data, actions) {
+                        return actions.order.capture().then(function(details) {
+                            try {
+                                let orderBreakdown = "";
+                                cart.forEach(item => {
+                                    const itemTotal = (item.price * (item.quantity || 1)).toFixed(2);
+                                    const sizeStr = item.size ? ` (Size: ${item.size})` : '';
+                                    orderBreakdown += `${item.quantity || 1}x ${item.title}${sizeStr} - £${itemTotal}\n`;
+                                });
+                                
+                                let discountText = "";
+                                if (activeDiscount) {
+                                    let discountAmount = 0;
+                                    let subtotal = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
+                                    if (activeDiscount.type === 'percent') discountAmount = subtotal * (activeDiscount.value / 100);
+                                    else discountAmount = activeDiscount.value;
+                                    if (discountAmount > subtotal) discountAmount = subtotal;
+                                    
+                                    if (discountAmount > 0) {
+                                        orderBreakdown += `\nDiscount Applied (${activeDiscount.code}): -£${discountAmount.toFixed(2)}\n`;
+                                    }
+                                }
+
+                                const templateParams = {
+                                    to_name: details.payer.name.given_name,
+                                    to_email: details.payer.email_address,
+                                    order_details: orderBreakdown,
+                                    shipping_cost: document.getElementById('cart-shipping-cost').textContent,
+                                    total_paid: document.getElementById('cart-total').textContent.replace('Total: £', '')
+                                };
+
+                                if (typeof emailjs !== 'undefined') {
+                                    emailjs.send('service_zmm27cb', 'template_ld7uqbh', templateParams)
+                                        .catch(err => console.error('Email failed to send...', err));
+                                }
+                            } catch (err) { console.error('EmailJS Error:', err); }
+
+                            alert('Payment successful! We have received your order, ' + details.payer.name.given_name + ', and an email confirmation will be sent to you shortly.');
+                            cart = []; 
+                            activeDiscount = null;
+                            sessionStorage.setItem(cartKey, JSON.stringify(cart)); 
+                            updateCartUI(); 
+                            window.closeCartSidebar();
+                        });
+                    },
+                    onError: function(err) { console.error('PayPal Checkout Error:', err); alert('There was an issue connecting to PayPal. Please try again.'); }
+                }).render('#paypal-button-container');
+            }
+
+        });
     </script>
     
     <script type="module">
