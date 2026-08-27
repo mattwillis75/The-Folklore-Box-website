@@ -9,55 +9,24 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;600&family=Spectral:wght@400;700&display=swap" rel="stylesheet">
     
+    <!-- REQUIRED FOR CHECKOUT: EmailJS & PayPal SDKs -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script type="text/javascript">
-       (function(){
-          emailjs.init({
-            publicKey: "qI6ltlwzFXECV29P8",
-          });
-       })();
+       (function(){ emailjs.init({ publicKey: "qI6ltlwzFXECV29P8", }); })();
     </script>
-
     <script src="https://www.paypal.com/sdk/js?client-id=BAAyFEECFHCgIYSVAcx3GUqT0FI1rHhhU_mwYJxRf6ngeAPN3zYdx3W4a1tCIEHivTFLxU7oFEeDD1NIIs&currency=GBP&locale=en_GB"></script>
 
     <style>
         /* Base Colors & Typography */
-        :root {
-            --bg-color: #000000;
-            --secondary-bg: #0a0a0a;
-            --border-color: #333333;
-            --text-light: #ffffff;
-            --text-muted: #aaaaaa;
-            --accent-red: #cc0000;
-            --font-headings: 'Spectral', serif;
-            --font-body: 'Lato', sans-serif;
-            --transition-speed: 0.3s;
-            --header-bg: rgba(0, 0, 0, 0.85);
-        }
+        :root { --bg-color: #000000; --secondary-bg: #0a0a0a; --border-color: #333333; --text-light: #ffffff; --text-muted: #aaaaaa; --accent-red: #cc0000; --font-headings: 'Spectral', serif; --font-body: 'Lato', sans-serif; --transition-speed: 0.3s; --header-bg: rgba(0, 0, 0, 0.85); }
 
-        html {
-            overflow-y: scroll; 
-            scrollbar-color: #333333 transparent; 
-        }
-
+        html { overflow-y: scroll; scrollbar-color: #333333 transparent; }
         ::-webkit-scrollbar { width: 12px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #333333; border-radius: 6px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--accent-red); }
 
-        body {
-            font-family: var(--font-body);
-            font-weight: 300;
-            background-color: var(--bg-color);
-            color: var(--text-light);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+        body { font-family: var(--font-body); font-weight: 300; background-color: var(--bg-color); color: var(--text-light); margin: 0; padding: 0; line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
 
         /* Fixed Header */
         header { position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 3rem; background: var(--header-bg); border-bottom: 1px solid var(--border-color); z-index: 2000; box-sizing: border-box; backdrop-filter: blur(8px); transition: all 0.3s ease; }
@@ -105,17 +74,8 @@
         /* Main Wrapper & Wholesale Banner */
         main { padding-top: 85px; flex-grow: 1; display: flex; flex-direction: column; }
         
-        .wholesale-banner { 
-            background: #222; color: var(--accent-red); border-bottom: 1px solid #333; text-align: center; 
-            padding: 0.8rem 2rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; 
-            margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap; 
-        }
-        
-        .exit-wholesale-btn { 
-            background: transparent; color: #fff; border: 1px solid var(--accent-red); padding: 0.4rem 1rem; 
-            font-family: 'Lato', sans-serif; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; 
-            cursor: pointer; border-radius: 3px; transition: all 0.3s ease; 
-        }
+        .wholesale-banner { background: #222; color: var(--accent-red); border-bottom: 1px solid #333; text-align: center; padding: 0.8rem 2rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .exit-wholesale-btn { background: transparent; color: #fff; border: 1px solid var(--accent-red); padding: 0.4rem 1rem; font-family: 'Lato', sans-serif; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; border-radius: 3px; transition: all 0.3s ease; }
         .exit-wholesale-btn:hover { background: var(--accent-red); }
 
         /* Shop Layout */
@@ -146,32 +106,19 @@
         .product-prices p { margin: 0; font-size: 1.2rem; color: #ffffff; font-weight: 300; }
         .original-price { text-decoration: line-through; color: var(--text-muted); font-size: 0.9rem; margin-right: 8px; }
 
-        /* Smart Cart Side Panel */
+        /* Global Cart UI Base Styles */
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); backdrop-filter: blur(3px); z-index: 3000; opacity: 0; visibility: hidden; transition: opacity 0.3s; }
-        
-        .cart-panel { 
-            position: fixed; top: 0; right: -400px; width: 100%; max-width: 400px; 
-            height: 100vh; height: 100dvh; background: var(--secondary-bg); 
-            border-left: 1px solid var(--border-color); z-index: 3001; 
-            transition: right 0.3s ease; display: flex; flex-direction: column; 
-            overflow-y: auto; overflow-x: hidden;
-        }
-        
+        .cart-panel { position: fixed; top: 0; right: -400px; width: 100%; max-width: 400px; height: 100vh; height: 100dvh; background: var(--secondary-bg); border-left: 1px solid var(--border-color); z-index: 3001; transition: right 0.3s ease; display: flex; flex-direction: column; overflow-y: auto; overflow-x: hidden; }
         .cart-overlay.active { opacity: 1; visibility: visible; }
         .cart-panel.active { right: 0; }
         .cart-header { padding: 20px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
         .cart-header h2 { margin: 0; font-family: var(--font-headings); font-weight: 400; }
         .close-cart-btn { background: none; border: none; color: var(--text-light); font-size: 1.5rem; cursor: pointer; }
-        
-        /* Items Container */
         .cart-items-container { flex-grow: 1; padding: 20px; overflow-y: auto; min-height: 150px; }
-        
-        /* Custom Cart Scrollbar */
         .cart-panel::-webkit-scrollbar, .cart-items-container::-webkit-scrollbar { width: 8px; }
         .cart-panel::-webkit-scrollbar-track, .cart-items-container::-webkit-scrollbar-track { background: #111111; border-radius: 4px; }
         .cart-panel::-webkit-scrollbar-thumb, .cart-items-container::-webkit-scrollbar-thumb { background: #444444; border-radius: 4px; }
         .cart-panel::-webkit-scrollbar-thumb:hover, .cart-items-container::-webkit-scrollbar-thumb:hover { background: var(--accent-red); }
-        
         .cart-item { display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); gap: 10px; }
         .cart-item-details { flex-grow: 1; }
         .cart-item-title { margin: 0 0 5px 0; font-weight: 600; font-size: 0.95rem; line-height: 1.3;}
@@ -180,16 +127,11 @@
         .qty-btn { background: #222; border: none; color: #fff; width: 25px; height: 25px; cursor: pointer; border-radius: 3px; }
         .remove-btn { background: none; border: none; color: #888; cursor: pointer; font-size: 1.5rem; padding: 0 0 0 0.5rem; transition: color 0.2s; }
         .remove-btn:hover { color: var(--accent-red); }
-
-        /* Locked Cart Footer */
         .cart-footer { padding: 20px; border-top: 1px solid var(--border-color); background: var(--bg-color); flex-shrink: 0; }
-        
-        /* Shipping Dropdown CSS */
         .cart-shipping-selector { margin-bottom: 1rem; border-bottom: 1px solid #222; padding-bottom: 1rem; }
         .cart-shipping-selector label { display: block; color: #aaa; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
         .cart-shipping-selector select { width: 100%; padding: 0.8rem; background: #111; color: #fff; border: 1px solid #333; border-radius: 3px; cursor: pointer; font-family: var(--font-body); }
         
-        /* Discount Code CSS */
         .discount-container { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #222; padding-bottom: 15px; }
         .discount-input { flex-grow: 1; padding: 0.8rem; background: #111; border: 1px solid #333; color: #fff; border-radius: 3px; font-family: var(--font-body); }
         .discount-btn { background: #333; color: #fff; border: 1px solid #444; padding: 0.8rem 1.5rem; cursor: pointer; border-radius: 3px; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; transition: 0.3s ease; }
@@ -199,11 +141,9 @@
 
         .cart-total-row { display: flex; justify-content: space-between; font-size: 1rem; font-family: var(--font-body); margin-bottom: 10px; }
         .cart-final-total-row { display: flex; justify-content: space-between; color: var(--accent-red); margin-top: 10px; border-top: 1px solid #333; padding-top: 15px; font-weight: 700; font-family: 'Spectral', serif; font-size: 1.5rem; }
-
         .cart-warning { background: rgba(204, 0, 0, 0.1); border: 1px solid var(--accent-red); color: var(--accent-red); font-weight: bold; text-align: center; padding: 1rem; border-radius: 4px; margin-bottom: 1rem; font-size: 0.9rem; line-height: 1.4; display: none; }
         .paypal-disabled { pointer-events: none; opacity: 0.4; filter: grayscale(100%); }
 
-        /* Custom Stock Alert Modal */
         .stock-alert-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.8); z-index: 4000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
         .stock-alert-box { background: #0a0a0a; border: 1px solid var(--accent-red); padding: 2.5rem; border-radius: 4px; max-width: 400px; width: 90%; text-align: center; color: #fff; box-shadow: 0 10px 30px rgba(204,0,0,0.15); }
         .stock-alert-box p { margin-bottom: 2rem; font-size: 1.1rem; }
@@ -216,9 +156,7 @@
         footer a:hover { color: var(--accent-red); }
         .social-links { margin-bottom: 2rem; }
 
-        /* ========================================= */
-        /* RESPONSIVE MOBILE LAYOUT ADJUSTMENTS      */
-        /* ========================================= */
+        /* RESPONSIVE MOBILE LAYOUT ADJUSTMENTS */
         @media (max-width: 800px) {
             header { padding: 1rem 1.5rem; }
             .page-title { font-size: 2.2rem; margin-bottom: 1.5rem; }
@@ -278,7 +216,7 @@
     <main>
         <div class="wholesale-banner" id="wholesale-banner" style="display: none;">
             <span>Minimum spend to allow the wholesale discount is £75.</span>
-            <button id="wholesale-logout-btn" class="exit-wholesale-btn">Exit Wholesale</button>
+            <button id="wholesale-logout-btn" class="exit-wholesale-btn" style="display: none;">Exit Wholesale</button>
         </div>
 
         <div class="container">
@@ -287,59 +225,6 @@
             <div class="shop-grid" id="shop-grid"></div>
         </div>
     </main>
-
-    <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
-    <div class="cart-panel" id="cart-panel">
-        <div class="cart-header">
-            <h2 id="cart-title">Your Cart</h2>
-            <button class="close-cart-btn" onclick="closeCart()">&times;</button>
-        </div>
-        <div class="cart-items-container" id="cart-items">
-            </div>
-        <div class="cart-footer">
-            <div class="cart-warning" id="cart-warning">
-                Minimum wholesale spend is £75.00 before postage.
-            </div>
-
-            <!-- Discount Code Section -->
-            <div class="discount-container" id="discount-container">
-                <input type="text" id="discount-code" class="discount-input" placeholder="Promo code">
-                <button class="discount-btn" onclick="applyDiscount()">Apply</button>
-                <div id="discount-msg" class="discount-msg"></div>
-            </div>
-
-            <div class="cart-shipping-selector">
-                <label for="cart-destination">Deliver to:</label>
-                <select id="cart-destination">
-                    <option value="uk">United Kingdom</option>
-                    <option value="int">International</option>
-                </select>
-            </div>
-
-            <div class="cart-total-row">
-                <span>Items:</span>
-                <span id="cart-subtotal">£0.00</span>
-            </div>
-            <div class="cart-total-row" style="color: var(--text-muted);">
-                <span>Postage:</span>
-                <span id="cart-postage">£0.00</span>
-            </div>
-            <div class="cart-final-total-row">
-                <span>Total:</span>
-                <span id="cart-final-total">£0.00</span>
-            </div>
-            
-            <div id="paypal-button-container" style="margin-top: 15px;"></div>
-        </div>
-    </div>
-
-    <div id="stock-alert" class="stock-alert-overlay">
-        <div class="stock-alert-box">
-            <h2 style="margin-top: 0; color: var(--accent-red);">Stock Limit Reached</h2>
-            <p id="stock-alert-msg"></p>
-            <button class="stock-alert-btn" onclick="document.getElementById('stock-alert').style.display='none'">Understood</button>
-        </div>
-    </div>
 
     <footer>
         <div class="social-links">
@@ -357,105 +242,9 @@
     </footer>
 
     <script>
-        document.addEventListener("DOMContentLoaded", async () => {
+        document.addEventListener("DOMContentLoaded", () => {
             
-            // ==========================================
-            // 1. BULLETPROOF DOM & MEMORY INITIALIZATION
-            // ==========================================
-            
-            // Check Wholesale State
-            const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
-            const cartKey = isWholesale ? 'folkloreWholesaleCart' : 'folkloreCart';
-            
-            // Persistent Discount Memory Load
-            let activeDiscount = JSON.parse(sessionStorage.getItem('folkloreDiscount')) || null;
-            let validDiscounts = {};
-
-            // Secure Cart Initialization
-            let cart = [];
-            try {
-                cart = JSON.parse(sessionStorage.getItem(cartKey)) || [];
-                cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
-            } catch(e) { cart = []; }
-
-            // UI Elements
-            const banner = document.getElementById('wholesale-banner');
-            const cartHeaderTitle = document.getElementById('cart-title');
-            const discountContainerElement = document.getElementById('discount-container');
-            const discountInput = document.getElementById('discount-code');
-            const discountMsg = document.getElementById('discount-msg');
-
-            // Apply Wholesale or Retail Environment
-            if (isWholesale) {
-                if (banner) banner.style.display = 'flex';
-                if (cartHeaderTitle) cartHeaderTitle.textContent = 'Wholesale Cart';
-                
-                // Wholesale failsafe: Nuke any saved retail discounts
-                activeDiscount = null;
-                sessionStorage.removeItem('folkloreDiscount');
-                if (discountContainerElement) discountContainerElement.style.display = 'none';
-
-                // Standard Wholesale Cart Merger Logic
-                let rCart = JSON.parse(sessionStorage.getItem('folkloreCart')) || [];
-                if (rCart.length > 0) {
-                    let wCart = JSON.parse(sessionStorage.getItem('folkloreWholesaleCart')) || [];
-                    rCart.forEach(rItem => {
-                        let existingW = wCart.find(w => (w.cartItemId || w.id) === (rItem.cartItemId || rItem.id));
-                        let discountedPrice = Math.round(rItem.price * 0.60 * 100) / 100;
-                        if (existingW) {
-                            existingW.quantity += (rItem.quantity || 1);
-                        } else {
-                            wCart.push({
-                                id: rItem.id, cartItemId: rItem.cartItemId || rItem.id, title: rItem.title,
-                                price: discountedPrice, postalClass: rItem.postalClass, size: rItem.size || null, quantity: rItem.quantity || 1
-                            });
-                        }
-                    });
-                    sessionStorage.setItem('folkloreWholesaleCart', JSON.stringify(wCart));
-                    sessionStorage.removeItem('folkloreCart');
-                }
-            } else {
-                if (discountContainerElement) discountContainerElement.style.display = 'flex';
-                // Pre-fill the discount box if a code was already saved to memory
-                if (activeDiscount && discountInput) {
-                    discountInput.value = activeDiscount.code;
-                    if (discountMsg) {
-                        discountMsg.textContent = "Discount active!";
-                        discountMsg.style.color = "#28a745";
-                    }
-                }
-            }
-
-            // Logout Wholesale Logic
-            const logoutBtn = document.getElementById('wholesale-logout-btn');
-            if (logoutBtn) {
-                logoutBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    let wCart = JSON.parse(sessionStorage.getItem('folkloreWholesaleCart')) || [];
-                    let rCart = JSON.parse(sessionStorage.getItem('folkloreCart')) || [];
-                    
-                    wCart.forEach(wItem => {
-                        let existingRItem = rCart.find(rItem => (rItem.cartItemId || rItem.id) === (wItem.cartItemId || wItem.id));
-                        if (existingRItem) {
-                            existingRItem.quantity += (wItem.quantity || 1);
-                        } else {
-                            let retailPrice = Math.round((wItem.price / 0.60) * 100) / 100;
-                            rCart.push({
-                                id: wItem.id, cartItemId: wItem.cartItemId || wItem.id, title: wItem.title,
-                                price: retailPrice, postalClass: wItem.postalClass, size: wItem.size || null, quantity: wItem.quantity || 1
-                            });
-                        }
-                    });
-
-                    sessionStorage.setItem('folkloreCart', JSON.stringify(rCart));
-                    sessionStorage.removeItem('folkloreWholesaleCart');
-                    sessionStorage.removeItem('wholesaleAuthenticated');
-                    alert("You have exited Wholesale Mode. Returning to the standard retail shop.");
-                    window.location.reload(); 
-                });
-            }
-
-            // Mobile Navigation Toggle
+            // --- UI Navigation Script ---
             const mobileToggle = document.getElementById('mobile-toggle');
             const navList = document.getElementById('nav-list');
             if (mobileToggle && navList) {
@@ -465,130 +254,80 @@
                 });
             }
 
-            // Sticky Header Effects
             const header = document.getElementById('main-header');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    header.style.boxShadow = '0 2px 20px rgba(255, 0, 0, 0.1)';
-                    header.style.borderBottom = '1px solid var(--accent-red)';
-                } else {
-                    header.style.boxShadow = 'none';
-                    header.style.borderBottom = '1px solid #333333';
-                }
-            });
+            if (header) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 50) {
+                        header.style.boxShadow = '0 2px 20px rgba(255, 0, 0, 0.1)';
+                        header.style.borderBottom = '1px solid var(--accent-red)';
+                    } else {
+                        header.style.boxShadow = 'none';
+                        header.style.borderBottom = '1px solid #333333';
+                    }
+                });
+            }
 
-            // ==========================================
-            // 2. FETCH SHOP DATABASES
-            // ==========================================
+            // --- Shop Grid Logic ---
             const shopGrid = document.getElementById('shop-grid');
             const filterBar = document.getElementById('filter-bar');
             let products = [];
             let filteredProducts = [];
             let availableCategories = new Set();
-            let postalRates = {};
+            
+            const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
 
-            // Fetch Postal Rates
-            try {
-                const postalResponse = await fetch('postal.txt', { cache: 'no-store' });
-                if (postalResponse.ok) {
-                    const postalText = await postalResponse.text();
-                    postalText.split('---').forEach(block => {
-                        if(!block.trim()) return;
-                        let currentClass = "";
-                        let rates = {};
-                        block.trim().split('\n').forEach(line => {
-                            const sepIndex = line.indexOf(':');
-                            if(sepIndex > -1) {
-                                const key = line.slice(0, sepIndex).trim().toLowerCase();
-                                const value = line.slice(sepIndex + 1).trim();
-                                if(key === 'class') currentClass = value;
-                                else if(key === 'uk base') rates.ukBase = parseFloat(value);
-                                else if(key === 'uk additional') rates.ukAdd = parseFloat(value);
-                                else if(key === 'int base') rates.intBase = parseFloat(value);
-                                else if(key === 'int additional') rates.intAdd = parseFloat(value);
+            async function initializeShop() {
+                try {
+                    const response = await fetch('products.txt?v=' + new Date().getTime(), { cache: 'no-store' });
+                    if(!response.ok) throw new Error("Could not load products.txt.");
+                    const text = await response.text();
+                    
+                    const blocks = text.split(/---\s*[\r\n]+/);
+                    
+                    blocks.forEach(block => {
+                        if (block.trim() === '') return;
+                        const lines = block.split('\n');
+                        
+                        let product = { basePrice: 0, sections: '' }; 
+                        
+                        lines.forEach(line => {
+                            const colonIdx = line.indexOf(':');
+                            if (colonIdx > -1) {
+                                const key = line.substring(0, colonIdx).trim().toLowerCase();
+                                const value = line.substring(colonIdx + 1).trim();
+                                if (key === 'title') {
+                                    product.title = value;
+                                    product.id = value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+                                }
+                                else if (key === 'main image') {
+                                    product.mainImage = value.replace(/^\.\//, '').replace(/^images\//, '');
+                                }
+                                else if (key === 'sections') {
+                                    product.sections = value;
+                                    value.split(',').forEach(sec => {
+                                        if(sec.trim()) availableCategories.add(sec.trim());
+                                    });
+                                }
+                                else if (key === 'item cost') {
+                                    product.basePrice = parseFloat(value.replace(/[^0-9.]/g, '')) || 0;
+                                }
                             }
                         });
-                        if(currentClass) postalRates[currentClass] = rates;
-                    });
-                }
-            } catch(e) { console.error("Could not load postal rates.", e); }
-            
-            // Fetch Discounts
-            try {
-                const discResponse = await fetch('discounts.txt', { cache: 'no-store' });
-                if (discResponse.ok) {
-                    const discText = await discResponse.text();
-                    discText.split('\n').forEach(line => {
-                        const parts = line.split(':');
-                        if (parts.length === 2) {
-                            validDiscounts[parts[0].trim().toUpperCase()] = parts[1].trim();
-                        }
-                    });
-                }
-            } catch(e) { console.error("Could not load discount codes."); }
 
-            // Fetch Products
-            try {
-                const response = await fetch('products.txt?v=' + new Date().getTime(), { cache: 'no-store' });
-                if(!response.ok) throw new Error("Could not load products.txt.");
-                const text = await response.text();
-                const blocks = text.split(/---\s*[\r\n]+/);
-                
-                blocks.forEach(block => {
-                    if (block.trim() === '') return;
-                    const lines = block.split('\n');
-                    
-                    let product = { 
-                        basePrice: 0, sections: '', 
-                        stock: 10, stockS: 10, stockM: 10, stockL: 10, stockXL: 10, stockXXL: 10 
-                    }; 
-                    
-                    lines.forEach(line => {
-                        const colonIdx = line.indexOf(':');
-                        if (colonIdx > -1) {
-                            const key = line.substring(0, colonIdx).trim().toLowerCase();
-                            const value = line.substring(colonIdx + 1).trim();
-                            if (key === 'title') product.title = value;
-                            else if (key === 'main image') {
-                                let cleanPath = value.replace(/^\.\//, '').replace(/^images\//, '');
-                                product.mainImage = cleanPath;
-                            }
-                            else if (key === 'sections') {
-                                product.sections = value;
-                                value.split(',').forEach(sec => {
-                                    if(sec.trim()) availableCategories.add(sec.trim());
-                                });
-                            }
-                            else if (key === 'postal class') product.postalClass = value;
-                            else if (key === 'item cost') product.basePrice = parseFloat(value.replace(/[^0-9.]/g, '')) || 0;
-                            
-                            else if (key === 'stock') product.stock = isNaN(parseInt(value)) ? 10 : parseInt(value);
-                            else if (key === 'stock s') product.stockS = isNaN(parseInt(value)) ? 10 : parseInt(value);
-                            else if (key === 'stock m') product.stockM = isNaN(parseInt(value)) ? 10 : parseInt(value);
-                            else if (key === 'stock l') product.stockL = isNaN(parseInt(value)) ? 10 : parseInt(value);
-                            else if (key === 'stock xl') product.stockXL = isNaN(parseInt(value)) ? 10 : parseInt(value);
-                            else if (key === 'stock xxl') product.stockXXL = isNaN(parseInt(value)) ? 10 : parseInt(value);
-                        }
+                        if (product.title) products.push(product);
                     });
-
-                    if (product.title) {
-                        product.id = product.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
-                        products.push(product);
-                    }
-                });
-                
-                filteredProducts = [...products];
-                buildFilters();
-                renderGrid();
-                updateCartUI();
-            } catch (err) {
-                console.error("Error loading products:", err);
-                if (shopGrid) shopGrid.innerHTML = `<p style="text-align: center; color: var(--accent-red); margin-top: 2rem;"><strong>Unable to load shop inventory.</strong><br>If you are testing this locally, ensure you are using a local server (like Live Server in VS Code) to bypass CORS restrictions.</p>`;
+                    
+                    filteredProducts = [...products];
+                    buildFilters();
+                    renderGrid();
+                } catch (err) {
+                    console.error("Error loading products:", err);
+                    if (shopGrid) shopGrid.innerHTML = `<p style="text-align: center; color: var(--accent-red); margin-top: 2rem;"><strong>Unable to load shop inventory.</strong><br>If you are testing this locally, ensure you are using a local server.</p>`;
+                }
             }
+            
+            initializeShop();
 
-            // ==========================================
-            // 3. RENDER SHOP GRID & FILTERS
-            // ==========================================
             function buildFilters() {
                 if(!filterBar) return;
                 filterBar.innerHTML = `<button class="filter-btn active" onclick="filterCategory('All')">All Items</button>`;
@@ -636,387 +375,11 @@
                 }
                 renderGrid();
             };
-
-            // ==========================================
-            // 4. DISCOUNT & CART LOGIC
-            // ==========================================
-            // Note: Clear out the input field and hit apply to remove an applied discount!
-            window.applyDiscount = function() {
-                if (isWholesale) return; // Prevent entirely for wholesale
-                
-                const input = document.getElementById('discount-code').value.trim().toUpperCase();
-                const msgEl = document.getElementById('discount-msg');
-
-                if (!input) {
-                    // Wipe the discount entirely from session memory
-                    activeDiscount = null;
-                    sessionStorage.removeItem('folkloreDiscount');
-                    msgEl.textContent = "";
-                    updateCartUI();
-                    return;
-                }
-
-                if (validDiscounts[input]) {
-                    const val = validDiscounts[input];
-                    if (val.startsWith('%')) {
-                        activeDiscount = { code: input, type: 'percent', value: parseFloat(val.substring(1)) };
-                    } else if (val.startsWith('-')) {
-                        activeDiscount = { code: input, type: 'fixed', value: parseFloat(val.substring(1)) };
-                    }
-                    
-                    // Save to Session Storage
-                    sessionStorage.setItem('folkloreDiscount', JSON.stringify(activeDiscount));
-                    
-                    msgEl.textContent = "Discount applied!";
-                    msgEl.style.color = "#28a745";
-                } else {
-                    activeDiscount = null;
-                    sessionStorage.removeItem('folkloreDiscount');
-                    msgEl.textContent = "Invalid discount code.";
-                    msgEl.style.color = "var(--accent-red)";
-                }
-                updateCartUI();
-            };
-
-            window.updateQuantity = function(index, delta) {
-                if (delta > 0) {
-                    const item = cart[index];
-                    const productData = products.find(p => p.id === item.id);
-                    let maxStock = 10;
-                    
-                    if (productData) {
-                        if (item.size === 'S') maxStock = productData.stockS;
-                        else if (item.size === 'M') maxStock = productData.stockM;
-                        else if (item.size === 'L') maxStock = productData.stockL;
-                        else if (item.size === 'XL') maxStock = productData.stockXL;
-                        else if (item.size === 'XXL') maxStock = productData.stockXXL;
-                        else maxStock = productData.stock;
-                        
-                        if (item.quantity + delta > maxStock) {
-                            document.getElementById('stock-alert-msg').textContent = `Apologies. We only have ${maxStock} of this item in stock.`;
-                            document.getElementById('stock-alert').style.display = 'flex';
-                            return;
-                        }
-                    }
-                }
-
-                cart[index].quantity += delta;
-                if (cart[index].quantity <= 0) {
-                    cart.splice(index, 1);
-                }
-                saveAndRefreshCart();
-            };
-
-            window.removeFromCart = function(index) {
-                cart.splice(index, 1);
-                saveAndRefreshCart();
-            };
-
-            function saveAndRefreshCart() {
-                sessionStorage.setItem(cartKey, JSON.stringify(cart));
-                updateCartUI();
-            }
-
-            const destSelect = document.getElementById('cart-destination');
-            if (destSelect) destSelect.addEventListener('change', updateCartUI);
-
-            function updateCartUI() {
-                const cartContainer = document.getElementById('cart-items');
-                if(!cartContainer) return;
-                
-                const cartCountLabel = document.getElementById('cart-count');
-                const mbCartCountLabel = document.getElementById('mobile-cart-count');
-                const cartSubtotalLabel = document.getElementById('cart-subtotal');
-                const cartPostageLabel = document.getElementById('cart-postage');
-                const cartFinalTotalLabel = document.getElementById('cart-final-total');
-                const paypalContainer = document.getElementById('paypal-button-container');
-                const cartWarning = document.getElementById('cart-warning');
-                
-                cartContainer.innerHTML = '';
-                let totalItems = 0;
-                let subtotal = 0;
-                let shippingTotal = 0;
-
-                if (cart.length === 0) {
-                    cartContainer.innerHTML = '<p style="color:var(--text-muted); text-align:center; margin-top:40px;">Your cart is empty.</p>';
-                    paypalContainer.style.display = 'none';
-                    cartWarning.style.display = 'none';
-                    
-                    if (cartSubtotalLabel) cartSubtotalLabel.innerText = `£0.00`;
-                    if (cartPostageLabel) cartPostageLabel.innerText = `£0.00`;
-                    if (cartFinalTotalLabel) cartFinalTotalLabel.innerText = `£0.00`;
-                    if (cartCountLabel) cartCountLabel.innerText = "0";
-                    if (mbCartCountLabel) mbCartCountLabel.innerText = "0";
-                    
-                    const existingDiscRow = document.getElementById('cart-discount-row-render');
-                    if (existingDiscRow) existingDiscRow.remove();
-                    
-                    return;
-                }
-
-                const dest = destSelect ? destSelect.value : 'uk';
-                let maxBase = -1; let maxBaseItem = null; 
-
-                // Render items & find largest postal base
-                cart.forEach((item, index) => {
-                    const qty = item.quantity || 1;
-                    totalItems += qty;
-                    subtotal += item.price * qty;
-
-                    const sizeHtml = item.size ? `<p class="cart-item-meta">Size: ${item.size}</p>` : '';
-                    cartContainer.innerHTML += `
-                        <div class="cart-item">
-                            <div class="cart-item-details">
-                                <h4 class="cart-item-title">${item.title}</h4>
-                                ${sizeHtml}
-                                <p class="cart-item-meta">£${item.price.toFixed(2)}</p>
-                            </div>
-                            <div class="cart-qty-controls">
-                                <button class="qty-btn" onclick="updateQuantity(${index}, -1)">-</button>
-                                <span>${qty}</span>
-                                <button class="qty-btn" onclick="updateQuantity(${index}, 1)">+</button>
-                            </div>
-                            <button class="remove-btn" onclick="removeFromCart(${index})">&times;</button>
-                        </div>
-                    `;
-
-                    const rates = postalRates[item.postalClass];
-                    if(rates) {
-                        const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
-                        if(baseRate > maxBase) { maxBase = baseRate; maxBaseItem = item; }
-                    }
-                });
-
-                // Calculate precise dynamic shipping
-                let baseRateApplied = false;
-                cart.forEach((item) => {
-                    const rates = postalRates[item.postalClass];
-                    if(rates) {
-                        const qty = item.quantity || 1;
-                        const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
-                        const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
-
-                        if (maxBaseItem && item.cartItemId === maxBaseItem.cartItemId && !baseRateApplied) {
-                            shippingTotal += baseRate + (addRate * (qty - 1));
-                            baseRateApplied = true;
-                        } else {
-                            shippingTotal += addRate * qty;
-                        }
-                    }
-                });
-
-                // Calculate Discount 
-                let discountAmount = 0;
-                if (activeDiscount && !isWholesale) {
-                    if (activeDiscount.type === 'percent') {
-                        discountAmount = subtotal * (activeDiscount.value / 100);
-                    } else if (activeDiscount.type === 'fixed') {
-                        discountAmount = activeDiscount.value;
-                    }
-                    if (discountAmount > subtotal) discountAmount = subtotal; // Prevent negative subtotals
-                }
-
-                if (cartSubtotalLabel) cartSubtotalLabel.innerText = `£${subtotal.toFixed(2)}`;
-                if (cartPostageLabel) cartPostageLabel.innerText = `£${shippingTotal.toFixed(2)}`;
-                
-                // Render discount row visually
-                const existingDiscRow = document.getElementById('cart-discount-row-render');
-                if (existingDiscRow) existingDiscRow.remove();
-
-                if (discountAmount > 0) {
-                    const finalTotalRow = document.querySelector('.cart-final-total-row');
-                    finalTotalRow.insertAdjacentHTML('beforebegin', `
-                        <div class="cart-discount-row" id="cart-discount-row-render">
-                            <span>Discount (${activeDiscount.code}):</span>
-                            <span>-£${discountAmount.toFixed(2)}</span>
-                        </div>
-                    `);
-                }
-
-                if (cartFinalTotalLabel) cartFinalTotalLabel.innerText = `£${(subtotal - discountAmount + shippingTotal).toFixed(2)}`;
-
-                if (isWholesale && subtotal < 75) {
-                    cartWarning.style.display = 'block';
-                    paypalContainer.classList.add('paypal-disabled');
-                    paypalContainer.style.display = 'block';
-                } else if (isWholesale) {
-                    cartWarning.style.display = 'none';
-                    paypalContainer.classList.remove('paypal-disabled');
-                    paypalContainer.style.display = 'block';
-                } else {
-                    cartWarning.style.display = 'none';
-                    paypalContainer.classList.remove('paypal-disabled');
-                    paypalContainer.style.display = 'block';
-                }
-
-                if (cartCountLabel) cartCountLabel.innerText = totalItems;
-                if (mbCartCountLabel) mbCartCountLabel.innerText = totalItems;
-            }
-
-            window.openCart = function() {
-                document.getElementById('cart-overlay').classList.add('active');
-                document.getElementById('cart-panel').classList.add('active');
-                document.body.style.overflow = 'hidden';
-            };
-
-            window.closeCart = function() {
-                document.getElementById('cart-overlay').classList.remove('active');
-                document.getElementById('cart-panel').classList.remove('active');
-                document.body.style.overflow = '';
-            };
-
-            // Sync cart automatically on Back button navigation
-            window.addEventListener('pageshow', (event) => {
-                if (event.persisted) {
-                    cart = JSON.parse(sessionStorage.getItem(cartKey)) || [];
-                    cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
-                    updateCartUI();
-                }
-            });
-
-            // ==========================================
-            // 5. PAYPAL SDK LOGIC
-            // ==========================================
-            paypal.Buttons({
-                createOrder: function(data, actions) {
-                    let itemsTotal = 0; let shippingTotal = 0; let maxBase = -1; let maxBaseItem = null;
-                    const dest = destSelect ? destSelect.value : 'uk';
-                    
-                    // 1. Calculate items and find heaviest shipping base
-                    cart.forEach(item => {
-                        const qty = item.quantity || 1;
-                        itemsTotal += item.price * qty;
-                        const rates = postalRates[item.postalClass];
-                        if(rates) {
-                            const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
-                            if(baseRate > maxBase) { maxBase = baseRate; maxBaseItem = item; }
-                        }
-                    });
-
-                    // 2. Calculate accurate grouped shipping
-                    let baseRateApplied = false;
-                    cart.forEach(item => {
-                        const rates = postalRates[item.postalClass];
-                        if(rates) {
-                            const qty = item.quantity || 1;
-                            const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
-                            const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
-                            
-                            if (maxBaseItem && item.cartItemId === maxBaseItem.cartItemId && !baseRateApplied) {
-                                shippingTotal += baseRate + (addRate * (qty - 1));
-                                baseRateApplied = true;
-                            } else {
-                                shippingTotal += addRate * qty;
-                            }
-                        }
-                    });
-                    
-                    // 3. Build the Itemized Array for PayPal
-                    const paypalItems = cart.map(item => {
-                        return {
-                            name: item.title + (item.size ? ` (${item.size})` : ''),
-                            unit_amount: { currency_code: 'GBP', value: item.price.toFixed(2) },
-                            quantity: (item.quantity || 1).toString()
-                        };
-                    });
-
-                    // 4. Calculate Discount
-                    let discountAmount = 0;
-                    if (activeDiscount && !isWholesale) {
-                        if (activeDiscount.type === 'percent') discountAmount = itemsTotal * (activeDiscount.value / 100);
-                        else discountAmount = activeDiscount.value;
-                        if (discountAmount > itemsTotal) discountAmount = itemsTotal; 
-                    }
-
-                    // 5. Wholesale limit failsafe check
-                    const isWholesaleMode = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
-                    if (isWholesaleMode && itemsTotal < 75) { 
-                        alert("Minimum wholesale spend of £75 not met."); 
-                        return; 
-                    }
-
-                    // Treat postage as a physical product to stop PayPal overriding it
-                    if (shippingTotal > 0) {
-                        paypalItems.push({
-                            name: `Postage & Packaging (${dest === 'uk' ? 'UK' : 'International'})`,
-                            unit_amount: { currency_code: 'GBP', value: shippingTotal.toFixed(2) },
-                            quantity: "1"
-                        });
-                        itemsTotal += shippingTotal; 
-                        shippingTotal = 0; 
-                    }
-
-                    let finalTotal = itemsTotal - discountAmount + shippingTotal; 
-                    if (finalTotal <= 0) { alert("Your cart is empty or the total is zero!"); return; }
-
-                    // 6. Send the detailed breakdown natively to PayPal
-                    return actions.order.create({
-                        purchase_units: [{ 
-                            amount: { 
-                                currency_code: 'GBP', 
-                                value: finalTotal.toFixed(2),
-                                breakdown: {
-                                    item_total: { currency_code: 'GBP', value: itemsTotal.toFixed(2) },
-                                    shipping: { currency_code: 'GBP', value: shippingTotal.toFixed(2) },
-                                    discount: { currency_code: 'GBP', value: discountAmount.toFixed(2) }
-                                }
-                            },
-                            items: paypalItems
-                        }]
-                    });
-                },
-                onApprove: function(data, actions) {
-                    return actions.order.capture().then(function(details) {
-                        // EmailJS Confirmation
-                        try {
-                            let orderBreakdown = "";
-                            cart.forEach(item => {
-                                const itemTotal = (item.price * (item.quantity || 1)).toFixed(2);
-                                const sizeStr = item.size ? ` (Size: ${item.size})` : '';
-                                orderBreakdown += `${item.quantity || 1}x ${item.title}${sizeStr} - £${itemTotal}\n`;
-                            });
-
-                            let discountText = "";
-                            if (activeDiscount && !isWholesale) {
-                                let discountAmount = 0;
-                                let subtotal = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
-                                if (activeDiscount.type === 'percent') discountAmount = subtotal * (activeDiscount.value / 100);
-                                else discountAmount = activeDiscount.value;
-                                if (discountAmount > subtotal) discountAmount = subtotal;
-                                
-                                if (discountAmount > 0) {
-                                    orderBreakdown += `\nDiscount Applied (${activeDiscount.code}): -£${discountAmount.toFixed(2)}\n`;
-                                }
-                            }
-
-                            const templateParams = {
-                                to_name: details.payer.name.given_name,
-                                to_email: details.payer.email_address,
-                                order_details: orderBreakdown,
-                                shipping_cost: document.getElementById('cart-postage').textContent,
-                                total_paid: document.getElementById('cart-final-total').textContent.replace('£', '')
-                            };
-
-                            if (typeof emailjs !== 'undefined') {
-                                emailjs.send('service_zmm27cb', 'template_ld7uqbh', templateParams)
-                                    .catch(err => console.error('Email failed to send...', err));
-                            }
-                        } catch (err) { console.error('EmailJS Error:', err); }
-
-                        alert('Payment successful! We have received your order, ' + details.payer.name.given_name + ', and an email confirmation will be sent to you shortly.');
-                        cart = [];
-                        activeDiscount = null; // Clear discount on success
-                        sessionStorage.removeItem('folkloreDiscount');
-                        saveAndRefreshCart();
-                        closeCart();
-                    });
-                },
-                onError: function (err) {
-                    console.error("PayPal Checkout Error:", err);
-                }
-            }).render('#paypal-button-container');
-
         });
     </script>
+    
+    <!-- GLOBAL CART COMPONENT SCRIPT -->
+    <script src="global-cart.js"></script>
+
 </body>
 </html>
