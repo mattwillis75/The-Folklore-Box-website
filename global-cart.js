@@ -1,10 +1,8 @@
-// global-cart.js
-
-document.addEventListener("DOMContentLoaded", async () => {
-    
+(async function initializeGlobalCart() {
     // 1. INJECT THE CENTRALIZED HTML
     try {
         const response = await fetch('cart-components.html', { cache: 'no-store' });
+        if (!response.ok) throw new Error("Could not fetch cart components");
         const html = await response.text();
         document.body.insertAdjacentHTML('beforeend', html);
     } catch (e) {
@@ -24,7 +22,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
     } catch(e) { cart = []; }
 
-    // Grab the newly injected UI Elements
+    // Grab UI Elements
     const banner = document.getElementById('wholesale-banner');
     const cartHeaderTitle = document.getElementById('cart-title');
     const logoutBtn = document.getElementById('wholesale-logout-btn');
@@ -39,19 +37,30 @@ document.addEventListener("DOMContentLoaded", async () => {
     const discountMsg = document.getElementById('discount-msg');
     const paypalContainer = document.getElementById('paypal-button-container');
 
-    // Attach functionality to hardcoded header buttons
+    // Nav/Header elements (these are on the main page, not injected)
     const cartToggle = document.getElementById('cart-toggle');
     const mobileCartToggle = document.getElementById('mobile-cart-toggle');
+    
+    // Grab Injected elements (close buttons etc)
     const closeCartBtn = document.getElementById('close-cart');
     
-    window.openCart = () => { if(cartSidebar) { cartSidebar.classList.add('open'); cartOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; }};
-    window.closeCartSidebar = () => { if(cartSidebar) { cartSidebar.classList.remove('open'); cartOverlay.classList.remove('active'); document.body.style.overflow = ''; }};
+    window.openCart = () => { 
+        if(cartSidebar) cartSidebar.classList.add('open'); 
+        if(cartOverlay) cartOverlay.classList.add('active'); 
+        document.body.style.overflow = 'hidden'; 
+    };
+    
+    window.closeCart = () => { 
+        if(cartSidebar) cartSidebar.classList.remove('open'); 
+        if(cartOverlay) cartOverlay.classList.remove('active'); 
+        document.body.style.overflow = ''; 
+    };
 
-    if (cartToggle) cartToggle.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
-    if (mobileCartToggle) mobileCartToggle.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
-    if (closeCartBtn) closeCartBtn.addEventListener('click', window.closeCartSidebar);
-    if (cartOverlay) cartOverlay.addEventListener('click', window.closeCartSidebar);
-    if (destSelect) destSelect.addEventListener('change', window.updateCartUI);
+    if (cartToggle) cartToggle.addEventListener('click', (e) => { e.preventDefault(); window.openCart(); });
+    if (mobileCartToggle) mobileCartToggle.addEventListener('click', (e) => { e.preventDefault(); window.openCart(); });
+    if (closeCartBtn) closeCartBtn.addEventListener('click', window.closeCart);
+    if (cartOverlay) cartOverlay.addEventListener('click', window.closeCart);
+    if (destSelect) destSelect.addEventListener('change', () => window.updateCartUI());
 
     // Apply Wholesale UI Overrides
     if (isWholesale) {
@@ -100,24 +109,26 @@ document.addEventListener("DOMContentLoaded", async () => {
     let postalRates = {}; 
     try {
         const postalResponse = await fetch('postal.txt', { cache: 'no-store' });
-        const postalText = await postalResponse.text();
-        postalText.split('---').forEach(block => {
-            if(!block.trim()) return;
-            let currentClass = ""; let rates = {};
-            block.trim().split('\n').forEach(line => {
-                const sepIndex = line.indexOf(':');
-                if(sepIndex > -1) {
-                    const key = line.slice(0, sepIndex).trim().toLowerCase();
-                    const value = line.slice(sepIndex + 1).trim();
-                    if(key === 'class') currentClass = value;
-                    else if(key === 'uk base') rates.ukBase = parseFloat(value);
-                    else if(key === 'uk additional') rates.ukAdd = parseFloat(value);
-                    else if(key === 'int base') rates.intBase = parseFloat(value);
-                    else if(key === 'int additional') rates.intAdd = parseFloat(value);
-                }
+        if (postalResponse.ok) {
+            const postalText = await postalResponse.text();
+            postalText.split('---').forEach(block => {
+                if(!block.trim()) return;
+                let currentClass = ""; let rates = {};
+                block.trim().split('\n').forEach(line => {
+                    const sepIndex = line.indexOf(':');
+                    if(sepIndex > -1) {
+                        const key = line.slice(0, sepIndex).trim().toLowerCase();
+                        const value = line.slice(sepIndex + 1).trim();
+                        if(key === 'class') currentClass = value;
+                        else if(key === 'uk base') rates.ukBase = parseFloat(value);
+                        else if(key === 'uk additional') rates.ukAdd = parseFloat(value);
+                        else if(key === 'int base') rates.intBase = parseFloat(value);
+                        else if(key === 'int additional') rates.intAdd = parseFloat(value);
+                    }
+                });
+                if(currentClass) postalRates[currentClass] = rates;
             });
-            if(currentClass) postalRates[currentClass] = rates;
-        });
+        }
     } catch(e) { console.error("Could not load postal rates."); }
 
     try {
@@ -135,9 +146,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     window.applyDiscount = function() {
         if (isWholesale) return; 
         const input = document.getElementById('discount-code').value.trim().toUpperCase();
+        const msgEl = document.getElementById('discount-msg');
+        
         if (!input) {
             activeDiscount = null; sessionStorage.removeItem('folkloreDiscount');
-            if(discountMsg) discountMsg.textContent = "";
+            if(msgEl) msgEl.textContent = "";
             window.updateCartUI(); return;
         }
         if (validDiscounts[input]) {
@@ -145,10 +158,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (val.startsWith('%')) activeDiscount = { code: input, type: 'percent', value: parseFloat(val.substring(1)) };
             else if (val.startsWith('-')) activeDiscount = { code: input, type: 'fixed', value: parseFloat(val.substring(1)) };
             sessionStorage.setItem('folkloreDiscount', JSON.stringify(activeDiscount));
-            if(discountMsg) { discountMsg.textContent = "Discount applied!"; discountMsg.style.color = "#28a745"; }
+            if(msgEl) { msgEl.textContent = "Discount applied!"; msgEl.style.color = "#28a745"; }
         } else {
             activeDiscount = null; sessionStorage.removeItem('folkloreDiscount');
-            if(discountMsg) { discountMsg.textContent = "Invalid discount code."; discountMsg.style.color = "var(--accent-red)"; }
+            if(msgEl) { msgEl.textContent = "Invalid discount code."; msgEl.style.color = "var(--accent-red)"; }
         }
         window.updateCartUI();
     };
@@ -214,11 +227,14 @@ document.addEventListener("DOMContentLoaded", async () => {
             const sizeStr = item.size ? `<br><span style="font-size:0.85rem; color:#aaa;">Size: ${item.size}</span>` : '';
             cartItemsContainer.innerHTML += `
                 <div class="cart-item">
-                    <div class="cart-item-title">${item.title} ${sizeStr}<br><span style="font-size:0.8rem; color:#888; font-weight:normal;">£${item.price.toFixed(2)} each</span></div>
+                    <div class="cart-item-details">
+                        <h4 class="cart-item-title">${item.title} ${sizeStr}</h4>
+                        <p class="cart-item-meta" style="font-size:0.8rem; color:#888; margin:0;">£${item.price.toFixed(2)} each</p>
+                    </div>
                     <div class="cart-qty-controls">
-                        <button onclick="window.updateQuantity(${index}, -1)">-</button>
+                        <button class="qty-btn" onclick="window.updateQuantity(${index}, -1)">-</button>
                         <span>${qty}</span>
-                        <button onclick="window.updateQuantity(${index}, 1)">+</button>
+                        <button class="qty-btn" onclick="window.updateQuantity(${index}, 1)">+</button>
                     </div>
                     <div class="cart-item-total">£${(item.price * qty).toFixed(2)}</div>
                     <button class="remove-btn" onclick="window.removeFromCart(${index})">&times;</button>
@@ -260,11 +276,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         if (discountAmount > 0 && !isWholesale) {
             const finalTotalRow = document.getElementById('cart-total');
-            finalTotalRow.insertAdjacentHTML('beforebegin', `
-                <div class="cart-row cart-discount-row" id="cart-discount-row-render">
-                    <span>Discount (${activeDiscount.code}):</span><span>-£${discountAmount.toFixed(2)}</span>
-                </div>
-            `);
+            if (finalTotalRow) {
+                finalTotalRow.insertAdjacentHTML('beforebegin', `
+                    <div class="cart-row cart-discount-row" id="cart-discount-row-render">
+                        <span>Discount (${activeDiscount.code}):</span><span>-£${discountAmount.toFixed(2)}</span>
+                    </div>
+                `);
+            }
         }
 
         if (document.getElementById('cart-total')) document.getElementById('cart-total').textContent = `Total: £${finalTotal.toFixed(2)}`;
@@ -287,11 +305,18 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     };
 
+    // RUN THE RENDER IMMEDIATELY ON PAGE LOAD!
     window.updateCartUI();
 
-    // PayPal SDK Logic
+    // Check if cart should auto-open
+    if (sessionStorage.getItem('openCartOnLoad') === 'true') {
+        sessionStorage.removeItem('openCartOnLoad');
+        window.openCart();
+    }
+
+    // PAYPAL SDK LOGIC
     try {
-        if (document.getElementById('paypal-button-container')) {
+        if (typeof paypal !== 'undefined' && document.getElementById('paypal-button-container')) {
             paypal.Buttons({
                 style: { color: 'gold', shape: 'rect', label: 'checkout', layout: 'vertical' },
                 createOrder: function(data, actions) {
@@ -377,11 +402,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                         alert('Payment successful! We have received your order, ' + details.payer.name.given_name + ', and an email confirmation will be sent to you shortly.');
                         cart = []; activeDiscount = null; sessionStorage.removeItem('folkloreDiscount');
                         sessionStorage.setItem(cartKey, JSON.stringify(cart)); 
-                        window.updateCartUI(); window.closeCartSidebar();
+                        window.updateCartUI(); window.closeCart();
                     });
                 }
             }).render('#paypal-button-container');
         }
     } catch (error) { console.warn("PayPal SDK could not initialize.", error); }
-
-});
+})();
