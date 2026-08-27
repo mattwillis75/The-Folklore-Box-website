@@ -359,13 +359,13 @@
                             </select>
                             <div id="size-error" style="color:var(--accent-red); font-size:0.85rem; margin-top:0.5rem; display:none;">Please select a size before adding to cart.</div>
                         </div>
-                        <button class="add-cart-btn" onclick="addToCartAction()">Add to Cart</button>
+                        <button class="add-cart-btn" onclick="window.addToCartAction(event)">Add to Cart</button>
                     `;
                 } else {
                     if (currentProduct.stock <= 0) {
                         formHtml = `<button class="add-cart-btn" disabled>Out of Stock</button>`;
                     } else {
-                        formHtml = `<button class="add-cart-btn" onclick="addToCartAction()">Add to Cart</button>`;
+                        formHtml = `<button class="add-cart-btn" onclick="window.addToCartAction(event)">Add to Cart</button>`;
                     }
                 }
 
@@ -408,7 +408,13 @@
                 thumbElement.classList.add('active');
             };
 
-            window.addToCartAction = function() {
+            // Global-bound action so the HTML onclick can access it cleanly
+            window.addToCartAction = function(event) {
+                if (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+
                 const isTshirt = currentProduct.sections && currentProduct.sections.toLowerCase().includes('t-shirts');
                 let selectedSize = null;
 
@@ -447,8 +453,10 @@
                 }
 
                 // Call the centralized addToCart function from global-cart.js
-                if (window.addToCart) {
+                if (typeof window.addToCart === 'function') {
                     window.addToCart(currentProduct.id, currentProduct.title, currentProduct.basePrice, currentProduct.postalClass, selectedSize);
+                } else {
+                    alert("The cart is still loading. Please try again in a few seconds.");
                 }
             };
         });
