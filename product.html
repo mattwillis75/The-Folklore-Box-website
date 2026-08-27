@@ -328,9 +328,10 @@
                 let thumbsHtml = '';
                 if(galleryImages.length > 1) {
                     galleryImages.forEach((img, i) => {
-                        const thumbPath = img.replace(/\.jpg$/i, '-thumb.jpg'); 
+                        // CRITICAL FIX: The onerror property falls back to the full-size image if the -thumb version doesn't exist
+                        const thumbPath = img.replace(/\.jpg$/i, '-thumb.jpg').replace(/\.png$/i, '-thumb.png'); 
                         const activeClass = i === 0 ? 'active' : '';
-                        thumbsHtml += `<img src="${thumbPath}" class="${activeClass}" onclick="swapImage(this, '${img}')" alt="Thumbnail">`;
+                        thumbsHtml += `<img src="${thumbPath}" onerror="this.onerror=null; this.src='${img}';" class="${activeClass}" onclick="swapImage(this, '${img}')" alt="Thumbnail ${i+1}">`;
                     });
                 }
 
