@@ -107,7 +107,7 @@
         });
     }
 
-    // Fetch Postal Data
+    // Fetch Postal & Discount Data
     let postalRates = {}; 
     try {
         const postalResponse = await fetch('postal.txt', { cache: 'no-store' });
@@ -133,7 +133,6 @@
         }
     } catch(e) { console.error("Could not load postal rates."); }
 
-    // Fetch Discounts
     try {
         const discResponse = await fetch('discounts.txt', { cache: 'no-store' });
         if (discResponse.ok) {
@@ -149,9 +148,11 @@
     window.applyDiscount = function() {
         if (isWholesale) return; 
         const input = document.getElementById('discount-code').value.trim().toUpperCase();
+        const msgEl = document.getElementById('discount-msg');
+        
         if (!input) {
             activeDiscount = null; sessionStorage.removeItem('folkloreDiscount');
-            if(discountMsg) discountMsg.textContent = "";
+            if(msgEl) msgEl.textContent = "";
             window.updateCartUI(); return;
         }
         if (validDiscounts[input]) {
@@ -159,10 +160,10 @@
             if (val.startsWith('%')) activeDiscount = { code: input, type: 'percent', value: parseFloat(val.substring(1)) };
             else if (val.startsWith('-')) activeDiscount = { code: input, type: 'fixed', value: parseFloat(val.substring(1)) };
             sessionStorage.setItem('folkloreDiscount', JSON.stringify(activeDiscount));
-            if(discountMsg) { discountMsg.textContent = "Discount applied!"; discountMsg.style.color = "#28a745"; }
+            if(msgEl) { msgEl.textContent = "Discount applied!"; msgEl.style.color = "#28a745"; }
         } else {
             activeDiscount = null; sessionStorage.removeItem('folkloreDiscount');
-            if(discountMsg) { discountMsg.textContent = "Invalid discount code."; discountMsg.style.color = "var(--accent-red)"; }
+            if(msgEl) { msgEl.textContent = "Invalid discount code."; msgEl.style.color = "var(--accent-red)"; }
         }
         window.updateCartUI();
     };
@@ -302,7 +303,9 @@
         }
     };
 
-    // RUN THE RENDER IMMEDIATELY ON PAGE LOAD TO SYNC UI!
+    // ==========================================
+    // CRITICAL FIX: RUN THE RENDER IMMEDIATELY ON PAGE LOAD!
+    // ==========================================
     window.updateCartUI();
 
     // Check if cart should auto-open
@@ -311,7 +314,9 @@
         window.openCart();
     }
 
+    // ==========================================
     // PAYPAL SDK LOGIC
+    // ==========================================
     try {
         if (typeof paypal !== 'undefined' && document.getElementById('paypal-button-container')) {
             paypal.Buttons({
