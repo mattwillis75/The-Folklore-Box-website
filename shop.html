@@ -352,32 +352,91 @@
     <!-- Floating Launch Promo Roundel -->
 <style>
     .promo-roundel {
-        position: fixed; bottom: 30px; right: 30px; background-color: var(--accent-red); color: #ffffff;
-        width: 110px; height: 110px; border-radius: 50%; display: flex; flex-direction: column;
-        align-items: center; justify-content: center; text-align: center; box-shadow: 0 10px 25px rgba(204, 0, 0, 0.4);
-        z-index: 1500; font-family: var(--font-body); cursor: pointer; transition: transform 0.3s ease;
-        animation: floatPromo 3s ease-in-out infinite; border: 2px solid #ffffff;
+        position: fixed; 
+        top: 50%; /* Vertically centers the element */
+        right: 30px; 
+        background-color: #49b44c; /* Updated Green */
+        width: 110px; height: 110px; 
+        border-radius: 50%; 
+        box-shadow: 0 10px 25px rgba(73, 180, 76, 0.4); /* Matched shadow to new green */
+        z-index: 1500; 
+        cursor: pointer; 
+        transition: transform 0.3s ease;
+        animation: floatPromo 3s ease-in-out infinite; 
+        /* Border removed as requested */
     }
-    .promo-roundel:hover { transform: scale(1.1); }
-    .promo-val { font-family: 'Spectral', serif; font-size: 2rem; font-weight: bold; line-height: 1; margin-bottom: 2px; }
-    .promo-txt { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; line-height: 1.2; }
     
+    /* Pauses the float and scales up slightly on hover */
+    .promo-roundel:hover { 
+        animation-play-state: paused;
+        transform: translateY(-50%) scale(1.08); 
+    }
+
+    /* Container to hold both layers perfectly on top of each other */
+    .promo-layer {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        display: flex; flex-direction: column;
+        align-items: center; justify-content: center; 
+        text-align: center; border-radius: 50%;
+        overflow: hidden; /* Ensures the image stays round */
+    }
+
+    /* The Text Layer */
+    .promo-text-layer {
+        color: #ffffff;
+        animation: textFade 10s infinite;
+    }
+    .promo-val { font-family: 'Spectral', serif; font-size: 2rem; font-weight: bold; line-height: 1; margin-bottom: 2px; }
+    .promo-txt { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; line-height: 1.2; font-family: 'Lato', sans-serif;}
+
+    /* The Image Layer */
+    .promo-img-layer {
+        animation: imgFade 10s infinite;
+        opacity: 0; /* Hidden by default */
+    }
+    .promo-img-layer img {
+        width: 100%; height: 100%; object-fit: cover;
+    }
+    
+    /* Adjusted to center relative to its 50% top position */
     @keyframes floatPromo {
-        0% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
-        100% { transform: translateY(0px); }
+        0% { transform: translateY(-50%); }
+        50% { transform: translateY(calc(-50% - 10px)); }
+        100% { transform: translateY(-50%); }
+    }
+
+    /* 10 Second Cross-Fade Loop */
+    @keyframes textFade {
+        0%, 75% { opacity: 1; }   /* Visible for 7.5s */
+        80%, 95% { opacity: 0; }  /* Hidden for 1.5s while image shows */
+        100% { opacity: 1; }      /* Fade back in */
+    }
+    
+    @keyframes imgFade {
+        0%, 75% { opacity: 0; }   /* Hidden for 7.5s */
+        80%, 95% { opacity: 1; }  /* Visible for 1.5s */
+        100% { opacity: 0; }      /* Fade back out */
     }
     
     @media (max-width: 600px) {
-        .promo-roundel { bottom: 20px; right: 20px; width: 90px; height: 90px; }
+        .promo-roundel { right: 20px; width: 90px; height: 90px; }
         .promo-val { font-size: 1.6rem; }
         .promo-txt { font-size: 0.6rem; }
     }
 </style>
 
 <div class="promo-roundel" id="promo-roundel" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
-    <span class="promo-val">15%</span>
-    <span class="promo-txt">OFF ORDERS<br>OVER £30</span>
+    <!-- Image Layer (Fades in) -->
+    <div class="promo-layer promo-img-layer">
+        <img src="./images/green-man-roundel.jpg" alt="The Green Man">
+    </div>
+    
+    <!-- Text Layer (Fades out) -->
+    <div class="promo-layer promo-text-layer">
+        <span class="promo-val">15%</span>
+        <span class="promo-txt">OFF ORDERS<br>OVER £30</span>
+    </div>
 </div>
 
 <script>
