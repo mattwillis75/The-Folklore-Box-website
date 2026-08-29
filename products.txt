@@ -12,7 +12,9 @@ Stock M: 10
 Stock L: 10
 Stock XL: 10
 Stock XXL: 10
-Description: Order for Lisa
+Description: 12cm by 12cm versions of Wirdston-in-the-Wold and Spooky oak tree
+
+
 ---
 Title: Green Man T-Shirt
 Main Image: images/green-man-t-shirt-1.jpg
