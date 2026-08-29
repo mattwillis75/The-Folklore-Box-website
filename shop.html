@@ -349,5 +349,43 @@
     <!-- GLOBAL CART COMPONENT SCRIPT -->
     <script src="global-cart.js"></script>
 
+    <!-- Floating Launch Promo Roundel -->
+<style>
+    .promo-roundel {
+        position: fixed; bottom: 30px; right: 30px; background-color: var(--accent-red); color: #ffffff;
+        width: 110px; height: 110px; border-radius: 50%; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; text-align: center; box-shadow: 0 10px 25px rgba(204, 0, 0, 0.4);
+        z-index: 1500; font-family: var(--font-body); cursor: pointer; transition: transform 0.3s ease;
+        animation: floatPromo 3s ease-in-out infinite; border: 2px solid #ffffff;
+    }
+    .promo-roundel:hover { transform: scale(1.1); }
+    .promo-val { font-family: 'Spectral', serif; font-size: 2rem; font-weight: bold; line-height: 1; margin-bottom: 2px; }
+    .promo-txt { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; line-height: 1.2; }
+    
+    @keyframes floatPromo {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+    }
+    
+    @media (max-width: 600px) {
+        .promo-roundel { bottom: 20px; right: 20px; width: 90px; height: 90px; }
+        .promo-val { font-size: 1.6rem; }
+        .promo-txt { font-size: 0.6rem; }
+    }
+</style>
+
+<div class="promo-roundel" id="promo-roundel" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+    <span class="promo-val">15%</span>
+    <span class="promo-txt">OFF ORDERS<br>OVER £30</span>
+</div>
+
+<script>
+    if (sessionStorage.getItem('wholesaleAuthenticated') === 'true') {
+        const roundel = document.getElementById('promo-roundel');
+        if (roundel) roundel.style.display = 'none';
+    }
+</script>
+
 </body>
 </html>
