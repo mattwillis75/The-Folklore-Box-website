@@ -14,6 +14,7 @@
     const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
     const cartKey = isWholesale ? 'folkloreWholesaleCart' : 'folkloreCart';
     let validDiscounts = {};
+    let autoDiscount = null; // New Auto Promo Logic
     let activeDiscount = JSON.parse(sessionStorage.getItem('folkloreDiscount')) || null;
     
     let cart = [];
@@ -72,12 +73,6 @@
         if (discountContainerElement) discountContainerElement.style.display = 'none';
         activeDiscount = null;
         sessionStorage.removeItem('folkloreDiscount');
-    } else {
-        if (discountContainerElement) discountContainerElement.style.display = 'flex';
-        if (activeDiscount && discountInput) {
-            discountInput.value = activeDiscount.code;
-            if (discountMsg) { discountMsg.textContent = "Discount active!"; discountMsg.style.color = "#28a745"; }
-        }
     }
 
     // Wholesale Logout Event
@@ -107,7 +102,7 @@
         });
     }
 
-    // Fetch Postal & Discount Data
+    // Fetch Postal Data
     let postalRates = {}; 
     try {
         const postalResponse = await fetch('postal.txt', { cache: 'no-store' });
@@ -133,37 +128,60 @@
         }
     } catch(e) { console.error("Could not load postal rates."); }
 
+    // Fetch Discount Data
     try {
         const discResponse = await fetch('discounts.txt', { cache: 'no-store' });
         if (discResponse.ok) {
             const discText = await discResponse.text();
             discText.split('\n').forEach(line => {
                 const parts = line.split(':');
-                if (parts.length === 2) validDiscounts[parts[0].trim().toUpperCase()] = parts[1].trim();
+                if (parts.length >= 2) {
+                    const code = parts[0].trim().toUpperCase();
+                    const valueStr = parts.slice(1).join(':').trim(); 
+                    
+                    // Parse the new AUTO code
+                    if (code === 'AUTO') {
+                        const valParts = valueStr.split(',');
+                        const discStr = valParts[0].trim();
+                        const minSpend = valParts.length > 1 ? parseFloat(valParts[1].trim()) : 0;
+                        let type = 'fixed', val = 0;
+                        if (discStr.startsWith('%')) { type = 'percent'; val = parseFloat(discStr.substring(1)); }
+                        else if (discStr.startsWith('-')) { type = 'fixed'; val = parseFloat(discStr.substring(1)); }
+                        autoDiscount = { type: type, value: val, minSpend: minSpend };
+                    } else {
+                        validDiscounts[code] = valueStr;
+                    }
+                }
             });
         }
     } catch(e) { console.error("Could not load discount codes."); }
 
-    // Global Functions
+    // Manual Discount Function
     window.applyDiscount = function() {
         if (isWholesale) return; 
         const input = document.getElementById('discount-code').value.trim().toUpperCase();
-        const msgEl = document.getElementById('discount-msg');
         
         if (!input) {
             activeDiscount = null; sessionStorage.removeItem('folkloreDiscount');
-            if(msgEl) msgEl.textContent = "";
+            if(discountMsg) discountMsg.textContent = "";
             window.updateCartUI(); return;
         }
+        
         if (validDiscounts[input]) {
             const val = validDiscounts[input];
-            if (val.startsWith('%')) activeDiscount = { code: input, type: 'percent', value: parseFloat(val.substring(1)) };
-            else if (val.startsWith('-')) activeDiscount = { code: input, type: 'fixed', value: parseFloat(val.substring(1)) };
+            const parts = val.split(',');
+            const discStr = parts[0].trim();
+            const minSpend = parts.length > 1 ? parseFloat(parts[1].trim()) : 0;
+
+            if (discStr.startsWith('%')) {
+                activeDiscount = { code: input, type: 'percent', value: parseFloat(discStr.substring(1)), minSpend: minSpend };
+            } else if (discStr.startsWith('-')) {
+                activeDiscount = { code: input, type: 'fixed', value: parseFloat(discStr.substring(1)), minSpend: minSpend };
+            }
             sessionStorage.setItem('folkloreDiscount', JSON.stringify(activeDiscount));
-            if(msgEl) { msgEl.textContent = "Discount applied!"; msgEl.style.color = "#28a745"; }
         } else {
             activeDiscount = null; sessionStorage.removeItem('folkloreDiscount');
-            if(msgEl) { msgEl.textContent = "Invalid discount code."; msgEl.style.color = "var(--accent-red)"; }
+            if(discountMsg) { discountMsg.textContent = "Invalid discount code."; discountMsg.style.color = "#cc0000"; }
         }
         window.updateCartUI();
     };
@@ -214,6 +232,10 @@
             
             const existingDiscRow = document.getElementById('cart-discount-row-render');
             if (existingDiscRow) existingDiscRow.remove();
+            const existingAutoBanner = document.getElementById('auto-promo-banner');
+            if (existingAutoBanner) existingAutoBanner.remove();
+            
+            if (!isWholesale && discountContainerElement) discountContainerElement.style.display = 'flex';
             return;
         }
 
@@ -260,11 +282,66 @@
             }
         });
 
+        // Evaluate Promos
         let discountAmount = 0;
-        if (activeDiscount && !isWholesale) {
-            if (activeDiscount.type === 'percent') discountAmount = itemsTotal * (activeDiscount.value / 100);
-            else discountAmount = activeDiscount.value;
-            if (discountAmount > itemsTotal) discountAmount = itemsTotal; 
+        let appliedDiscountName = "";
+        
+        const existingAutoBanner = document.getElementById('auto-promo-banner');
+        if (existingAutoBanner) existingAutoBanner.remove();
+
+        if (!isWholesale) {
+            if (autoDiscount && itemsTotal >= autoDiscount.minSpend) {
+                // Auto Discount Overrides Everything
+                if (autoDiscount.type === 'percent') discountAmount = itemsTotal * (autoDiscount.value / 100);
+                else discountAmount = autoDiscount.value;
+                if (discountAmount > itemsTotal) discountAmount = itemsTotal;
+                appliedDiscountName = "Launch Offer";
+                
+                if (discountContainerElement) discountContainerElement.style.display = 'none'; // Hide manual box
+                if (discountMsg) discountMsg.textContent = ""; 
+                
+            } else {
+                // Restore manual box if auto doesn't apply
+                if (discountContainerElement) discountContainerElement.style.display = 'flex';
+                
+                // Show incentive banner if they are close
+                if (autoDiscount && itemsTotal > 0 && itemsTotal < autoDiscount.minSpend) {
+                    const difference = (autoDiscount.minSpend - itemsTotal).toFixed(2);
+                    const offerStr = autoDiscount.type === 'percent' ? `${autoDiscount.value}% off` : `£${autoDiscount.value.toFixed(2)} off`;
+                    
+                    const finalTotalRow = document.querySelector('.cart-final-total-row');
+                    if (finalTotalRow) {
+                        finalTotalRow.insertAdjacentHTML('beforebegin', `
+                            <div id="auto-promo-banner" style="background: rgba(40, 167, 69, 0.1); border: 1px solid #28a745; color: #28a745; padding: 10px; text-align: center; border-radius: 4px; margin-bottom: 15px; font-family: 'Lato', sans-serif; font-size: 0.85rem;">
+                                Add <strong>£${difference}</strong> more to your cart to automatically get ${offerStr}!
+                            </div>
+                        `);
+                    }
+                }
+                
+                // Fallback to manual active discount
+                if (activeDiscount) {
+                    const minSpend = activeDiscount.minSpend || 0;
+                    if (itemsTotal < minSpend) {
+                        if (discountMsg) {
+                            discountMsg.textContent = `Spend £${(minSpend - itemsTotal).toFixed(2)} more to use code ${activeDiscount.code}.`;
+                            discountMsg.style.color = "#cc0000";
+                        }
+                        discountAmount = 0;
+                    } else {
+                        if (discountMsg) {
+                            discountMsg.textContent = "Discount applied!";
+                            discountMsg.style.color = "#28a745";
+                        }
+                        if (activeDiscount.type === 'percent') discountAmount = itemsTotal * (activeDiscount.value / 100);
+                        else discountAmount = activeDiscount.value;
+                        if (discountAmount > itemsTotal) discountAmount = itemsTotal; 
+                        appliedDiscountName = activeDiscount.code;
+                    }
+                } else if (discountInput && discountInput.value === "") {
+                    if (discountMsg) discountMsg.textContent = ""; // Clear errors if blank
+                }
+            }
         }
 
         finalTotal = itemsTotal - discountAmount + shippingTotal;
@@ -279,7 +356,7 @@
             if (finalTotalRow) {
                 finalTotalRow.insertAdjacentHTML('beforebegin', `
                     <div class="cart-row cart-discount-row" id="cart-discount-row-render" style="display: flex; justify-content: space-between; color: #28a745; margin-bottom: 10px; font-family: 'Lato', sans-serif;">
-                        <span>Discount (${activeDiscount.code}):</span><span>-£${discountAmount.toFixed(2)}</span>
+                        <span>Discount (${appliedDiscountName}):</span><span>-£${discountAmount.toFixed(2)}</span>
                     </div>
                 `);
             }
@@ -303,20 +380,14 @@
         }
     };
 
-    // ==========================================
-    // CRITICAL FIX: RUN THE RENDER IMMEDIATELY ON PAGE LOAD!
-    // ==========================================
     window.updateCartUI();
 
-    // Check if cart should auto-open
     if (sessionStorage.getItem('openCartOnLoad') === 'true') {
         sessionStorage.removeItem('openCartOnLoad');
         window.openCart();
     }
 
-    // ==========================================
     // PAYPAL SDK LOGIC
-    // ==========================================
     try {
         if (typeof paypal !== 'undefined' && document.getElementById('paypal-button-container')) {
             paypal.Buttons({
@@ -350,11 +421,21 @@
                         return { name: item.title + (item.size ? ` (${item.size})` : ''), unit_amount: { currency_code: 'GBP', value: item.price.toFixed(2) }, quantity: (item.quantity || 1).toString() };
                     });
 
+                    // Evaluate Promos for Checkout
                     let discountAmount = 0;
-                    if (activeDiscount && !isWholesale) {
-                        if (activeDiscount.type === 'percent') discountAmount = itemsTotal * (activeDiscount.value / 100);
-                        else discountAmount = activeDiscount.value;
-                        if (discountAmount > itemsTotal) discountAmount = itemsTotal;
+                    if (!isWholesale) {
+                        if (autoDiscount && itemsTotal >= autoDiscount.minSpend) {
+                            if (autoDiscount.type === 'percent') discountAmount = itemsTotal * (autoDiscount.value / 100);
+                            else discountAmount = autoDiscount.value;
+                            if (discountAmount > itemsTotal) discountAmount = itemsTotal;
+                        } else if (activeDiscount) {
+                            const minSpend = activeDiscount.minSpend || 0;
+                            if (itemsTotal >= minSpend) {
+                                if (activeDiscount.type === 'percent') discountAmount = itemsTotal * (activeDiscount.value / 100);
+                                else discountAmount = activeDiscount.value;
+                                if (discountAmount > itemsTotal) discountAmount = itemsTotal;
+                            }
+                        }
                     }
 
                     if (isWholesale && itemsTotal < 75) { alert("Minimum wholesale spend of £75 not met."); return; }
@@ -375,19 +456,34 @@
                     return actions.order.capture().then(function(details) {
                         try {
                             let orderBreakdown = "";
+                            let subtotal = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
                             cart.forEach(item => {
                                 const itemTotal = (item.price * (item.quantity || 1)).toFixed(2);
                                 const sizeStr = item.size ? ` (Size: ${item.size})` : '';
                                 orderBreakdown += `${item.quantity || 1}x ${item.title}${sizeStr} - £${itemTotal}\n`;
                             });
                             
-                            if (activeDiscount && !isWholesale) {
+                            // Re-evaluate discount for the receipt
+                            if (!isWholesale) {
                                 let discountAmount = 0;
-                                let subtotal = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
-                                if (activeDiscount.type === 'percent') discountAmount = subtotal * (activeDiscount.value / 100);
-                                else discountAmount = activeDiscount.value;
-                                if (discountAmount > subtotal) discountAmount = subtotal;
-                                if (discountAmount > 0) orderBreakdown += `\nDiscount Applied (${activeDiscount.code}): -£${discountAmount.toFixed(2)}\n`;
+                                let appliedDiscountName = "";
+                                
+                                if (autoDiscount && subtotal >= autoDiscount.minSpend) {
+                                    if (autoDiscount.type === 'percent') discountAmount = subtotal * (autoDiscount.value / 100);
+                                    else discountAmount = autoDiscount.value;
+                                    if (discountAmount > subtotal) discountAmount = subtotal;
+                                    appliedDiscountName = "Launch Offer";
+                                } else if (activeDiscount) {
+                                    const minSpend = activeDiscount.minSpend || 0;
+                                    if (subtotal >= minSpend) {
+                                        if (activeDiscount.type === 'percent') discountAmount = subtotal * (activeDiscount.value / 100);
+                                        else discountAmount = activeDiscount.value;
+                                        if (discountAmount > subtotal) discountAmount = subtotal;
+                                        appliedDiscountName = activeDiscount.code;
+                                    }
+                                }
+                                
+                                if (discountAmount > 0) orderBreakdown += `\nDiscount Applied (${appliedDiscountName}): -£${discountAmount.toFixed(2)}\n`;
                             }
 
                             const templateParams = {
