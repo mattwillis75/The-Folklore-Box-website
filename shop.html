@@ -74,17 +74,8 @@
         /* Main Wrapper & Wholesale Banner */
         main { padding-top: 85px; flex-grow: 1; display: flex; flex-direction: column; }
         
-        .wholesale-banner { 
-            background: #222; color: var(--accent-red); border-bottom: 1px solid #333; text-align: center; 
-            padding: 0.8rem 2rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; 
-            margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap; 
-        }
-        
-        .exit-wholesale-btn { 
-            background: transparent; color: #fff; border: 1px solid var(--accent-red); padding: 0.4rem 1rem; 
-            font-family: 'Lato', sans-serif; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; 
-            cursor: pointer; border-radius: 3px; transition: all 0.3s ease; 
-        }
+        .wholesale-banner { background: #222; color: var(--accent-red); border-bottom: 1px solid #333; text-align: center; padding: 0.8rem 2rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .exit-wholesale-btn { background: transparent; color: #fff; border: 1px solid var(--accent-red); padding: 0.4rem 1rem; font-family: 'Lato', sans-serif; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; border-radius: 3px; transition: all 0.3s ease; }
         .exit-wholesale-btn:hover { background: var(--accent-red); }
 
         /* Shop Layout */
@@ -140,6 +131,100 @@
             .product-prices p { font-size: 1rem; }
             .wholesale-banner { flex-direction: column; gap: 10px; padding: 10px; }
         }
+
+        /* --- DESKTOP FLOATING ROUNDEL / MOBILE FULL-WIDTH STRIP --- */
+        .promo-element {
+            position: fixed; 
+            top: 50%; 
+            right: 30px; 
+            background-color: #49b44c; 
+            width: 110px; height: 110px; 
+            border-radius: 50%; 
+            box-shadow: 0 10px 25px rgba(73, 180, 76, 0.4); 
+            z-index: 1500; 
+            cursor: pointer; 
+            transition: transform 0.3s ease;
+            transform: translateY(-50%); /* Centers it perfectly vertically */
+            animation: floatPromo 3s ease-in-out infinite; 
+        }
+        
+        .promo-element:hover { 
+            animation-play-state: paused;
+            transform: translateY(-50%) scale(1.08); 
+        }
+
+        .promo-layer {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center; 
+            text-align: center; border-radius: 50%;
+            overflow: hidden; 
+        }
+
+        /* Text Layer (Fades Out) */
+        .promo-text-layer {
+            color: #ffffff;
+            animation: textFade 10s infinite;
+        }
+        .promo-val { font-family: 'Spectral', serif; font-size: 2rem; font-weight: bold; line-height: 1; margin-bottom: 2px; }
+        .promo-txt { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; line-height: 1.2; font-family: 'Lato', sans-serif;}
+
+        /* Image Layer (Fades In) */
+        .promo-img-layer {
+            animation: imgFade 10s infinite;
+            opacity: 0; 
+        }
+        .promo-img-layer img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+        
+        /* Margin-based float prevents conflicts with the Y-axis centering */
+        @keyframes floatPromo {
+            0% { margin-top: 0; }
+            50% { margin-top: -10px; }
+            100% { margin-top: 0; }
+        }
+
+        /* 10 Second Cross-Fade Loop */
+        @keyframes textFade {
+            0%, 75% { opacity: 1; }   /* Visible for 7.5s */
+            80%, 95% { opacity: 0; }  /* Hidden for 1.5s while image shows */
+            100% { opacity: 1; }      /* Fade back in */
+        }
+        
+        @keyframes imgFade {
+            0%, 75% { opacity: 0; }   /* Hidden for 7.5s */
+            80%, 95% { opacity: 1; }  /* Visible for 1.5s */
+            100% { opacity: 0; }      /* Fade back out */
+        }
+        
+        /* --- MOBILE FULL-WIDTH STRIP OVERRIDE --- */
+        @media (max-width: 800px) {
+            .promo-element {
+                position: relative; /* Snaps back into normal page flow */
+                top: auto; right: auto; margin-top: 0; transform: none;
+                width: 100%; height: 50px; 
+                border-radius: 0; 
+                box-shadow: none;
+                animation: none; /* Stops floating */
+                margin-bottom: 20px;
+            }
+            
+            .promo-element:hover { transform: none; }
+            
+            .promo-layer {
+                flex-direction: row; gap: 10px; border-radius: 0;
+            }
+            
+            .promo-val { font-size: 1.4rem; margin-bottom: 0; }
+            .promo-txt { font-size: 0.75rem; text-align: left; }
+            .mobile-hide { display: none; } /* Removes the line break so text reads horizontally */
+            
+            .promo-img-layer img {
+                width: auto; height: 40px; border-radius: 4px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -175,9 +260,31 @@
     </header>
 
     <main>
+        <!-- Floating Launch Promo / Mobile Strip -->
+        <div class="promo-element" id="promo-element" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+            <!-- Image Layer -->
+            <div class="promo-layer promo-img-layer">
+                <img src="./images/green-man-roundel.jpg" alt="The Green Man">
+            </div>
+            <!-- Text Layer -->
+            <div class="promo-layer promo-text-layer">
+                <span class="promo-val">15%</span>
+                <span class="promo-txt">OFF ORDERS <span class="mobile-hide"><br></span>OVER £30</span>
+            </div>
+        </div>
+
+        <script>
+            // Hides the promo immediately if the user is logged into the wholesale portal
+            if (sessionStorage.getItem('wholesaleAuthenticated') === 'true') {
+                const promoEl = document.getElementById('promo-element');
+                if (promoEl) promoEl.style.display = 'none';
+            }
+        </script>
+
+        <!-- Dynamic Wholesale Banner -->
         <div class="wholesale-banner" id="wholesale-banner" style="display: none;">
             <span>Minimum spend to allow the wholesale discount is £75.</span>
-            <button id="wholesale-logout-btn" class="exit-wholesale-btn">Exit Wholesale</button>
+            <button id="wholesale-logout-btn" class="exit-wholesale-btn" style="display: none;">Exit Wholesale</button>
         </div>
 
         <div class="container">
@@ -313,7 +420,7 @@
                         ? `<p><span class="original-price">£${product.basePrice.toFixed(2)}</span> £${displayPrice.toFixed(2)}</p>` 
                         : `<p>£${displayPrice.toFixed(2)}</p>`;
 
-                    let thumbPath = product.mainImage ? `images/${product.mainImage.replace(/\.jpg$/i, '-thumb.jpg')}` : 'placeholder.jpg';
+                    let thumbPath = product.mainImage ? `images/${product.mainImage.replace(/\.jpg$/i, '-thumb.jpg').replace(/\.png$/i, '-thumb.png')}` : 'placeholder.jpg';
                     let originalPath = product.mainImage ? `images/${product.mainImage}` : 'placeholder.jpg';
 
                     shopGrid.innerHTML += `
@@ -348,103 +455,6 @@
     
     <!-- GLOBAL CART COMPONENT SCRIPT -->
     <script src="global-cart.js"></script>
-
-    <!-- Floating Launch Promo Roundel -->
-<style>
-    .promo-roundel {
-        position: fixed; 
-        top: 50%; /* Vertically centers the element */
-        right: 30px; 
-        background-color: #49b44c; /* Updated Green */
-        width: 110px; height: 110px; 
-        border-radius: 50%; 
-        box-shadow: 0 10px 25px rgba(73, 180, 76, 0.4); /* Matched shadow to new green */
-        z-index: 1500; 
-        cursor: pointer; 
-        transition: transform 0.3s ease;
-        animation: floatPromo 3s ease-in-out infinite; 
-        /* Border removed as requested */
-    }
-    
-    /* Pauses the float and scales up slightly on hover */
-    .promo-roundel:hover { 
-        animation-play-state: paused;
-        transform: translateY(-50%) scale(1.08); 
-    }
-
-    /* Container to hold both layers perfectly on top of each other */
-    .promo-layer {
-        position: absolute;
-        top: 0; left: 0; width: 100%; height: 100%;
-        display: flex; flex-direction: column;
-        align-items: center; justify-content: center; 
-        text-align: center; border-radius: 50%;
-        overflow: hidden; /* Ensures the image stays round */
-    }
-
-    /* The Text Layer */
-    .promo-text-layer {
-        color: #ffffff;
-        animation: textFade 10s infinite;
-    }
-    .promo-val { font-family: 'Spectral', serif; font-size: 2rem; font-weight: bold; line-height: 1; margin-bottom: 2px; }
-    .promo-txt { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; line-height: 1.2; font-family: 'Lato', sans-serif;}
-
-    /* The Image Layer */
-    .promo-img-layer {
-        animation: imgFade 10s infinite;
-        opacity: 0; /* Hidden by default */
-    }
-    .promo-img-layer img {
-        width: 100%; height: 100%; object-fit: cover;
-    }
-    
-    /* Adjusted to center relative to its 50% top position */
-    @keyframes floatPromo {
-        0% { transform: translateY(-50%); }
-        50% { transform: translateY(calc(-50% - 10px)); }
-        100% { transform: translateY(-50%); }
-    }
-
-    /* 10 Second Cross-Fade Loop */
-    @keyframes textFade {
-        0%, 75% { opacity: 1; }   /* Visible for 7.5s */
-        80%, 95% { opacity: 0; }  /* Hidden for 1.5s while image shows */
-        100% { opacity: 1; }      /* Fade back in */
-    }
-    
-    @keyframes imgFade {
-        0%, 75% { opacity: 0; }   /* Hidden for 7.5s */
-        80%, 95% { opacity: 1; }  /* Visible for 1.5s */
-        100% { opacity: 0; }      /* Fade back out */
-    }
-    
-    @media (max-width: 600px) {
-        .promo-roundel { right: 20px; width: 90px; height: 90px; }
-        .promo-val { font-size: 1.6rem; }
-        .promo-txt { font-size: 0.6rem; }
-    }
-</style>
-
-<div class="promo-roundel" id="promo-roundel" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
-    <!-- Image Layer (Fades in) -->
-    <div class="promo-layer promo-img-layer">
-        <img src="./images/green-man-roundel.jpg" alt="The Green Man">
-    </div>
-    
-    <!-- Text Layer (Fades out) -->
-    <div class="promo-layer promo-text-layer">
-        <span class="promo-val">15%</span>
-        <span class="promo-txt">OFF ORDERS<br>OVER £30</span>
-    </div>
-</div>
-
-<script>
-    if (sessionStorage.getItem('wholesaleAuthenticated') === 'true') {
-        const roundel = document.getElementById('promo-roundel');
-        if (roundel) roundel.style.display = 'none';
-    }
-</script>
 
 </body>
 </html>
