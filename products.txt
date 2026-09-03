@@ -1,21 +1,3 @@
-Title: Order for Lisa
-Main Image: images/order-for-lisa.jpg
-Images: 
-Sections: 
-Size: Custom
-Materials: 350gsm card, ink
-Postal Class: Second Class Large Letter
-Item Cost: 24
-Stock: 10
-Stock S: 10
-Stock M: 10
-Stock L: 10
-Stock XL: 10
-Stock XXL: 10
-Description: 12cm by 12cm versions of Wirdston-in-the-Wold and Spooky oak tree
-
-
----
 Title: Green Man T-Shirt
 Main Image: images/green-man-t-shirt-1.jpg
 Images: images/green-man-t-shirt-2.jpg
