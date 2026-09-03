@@ -1,14 +1,14 @@
 Slide: 1
-Format: Shop Update
-Heading: Black Shuck T-Shirts
-Description: My new Black Shuck T-Shirts  are on my shop page!
-Image: images/Carousel-1.jpg
----
-Slide: 2
 Format: EVENT
 Heading: Black Shuck Festival
 Description: Pictures from around and about the festival on the Journal page.
 Image: images/Carousel-2.jpg
+---
+Slide: 2
+Format: Shop Update
+Heading: Black Shuck T-Shirts
+Description: My new Black Shuck T-Shirts  are on my shop page!
+Image: images/Carousel-1.jpg
 ---
 Slide: 3
 Format: GEEGAW
