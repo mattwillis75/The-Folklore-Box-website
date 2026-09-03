@@ -4352,7 +4352,7 @@ The packaging may differ to the photographs depending on other items in the orde
 Title: Birch Plywood The Bower Decoration with Skulls, Matt Willis Illustration
 Main Image: images/standing-bower-decoration-skulls-1.jpg
 Images: images/standing-bower-decoration-skulls-2.jpg, images/standing-bower-decoration-skulls-3.jpg, images/standing-bower-decoration-skulls-4.jpg
-Sections: Hanging Decorations
+Sections: Standing Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Large Letter
@@ -4575,3 +4575,4 @@ Stock XXL: 10
 Description: A black tote bag  with a white print Witch riding  a Goat design printed onto the front.
 
 **Please be aware that delivery can take up to 10 days on this item. Email us if you would like it quicker and we will let you know if this is possible. **
+---
