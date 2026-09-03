@@ -1,6 +1,6 @@
 Slide: 1
 Format: SALE
-Heading: 15% Discount on all orders over £30
+Heading: 15% off all orders over £30
 Description: Sale ends midnight Sunday 6th September
 Image: images/Sale.jpg
 ---
