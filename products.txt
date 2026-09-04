@@ -76,7 +76,7 @@ The print will be posted in a card backed envelope to ensure safety in transit.
 ---
 Title: Black Shuck Leaping T-Shirt
 Main Image: images/k-shuck-leaping-final-1.jpg
-Images: images/k-shuck-leaping-final-2.jpg
+Images: images/k-shuck-leaping-final-2.jpg, images/size-guide.jpg
 Sections: T-Shirts
 Size: 
 Materials: 100% Organic ringspun combed cotton
