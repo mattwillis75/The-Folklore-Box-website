@@ -1,6 +1,6 @@
 Title: Green Man T-Shirt
 Main Image: images/green-man-t-shirt-1.jpg
-Images: images/green-man-t-shirt-2.jpg
+Images: images/green-man-t-shirt-2.jpg, images/size-guide.jpg
 Sections: T-Shirts
 Size: 
 Materials: 100% Organic ringspun combed cotton
