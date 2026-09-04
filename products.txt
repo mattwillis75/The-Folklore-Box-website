@@ -126,7 +126,7 @@ On the exact same day, about 13 miles away at Holy Trinity Church in Blythburgh,
 ---
 Title: Black Shuck Head T-Shirt
 Main Image: images/k-shuck-head-final-1.jpg
-Images: images/k-shuck-head-final-2.jpg
+Images: images/k-shuck-head-final-2.jpg, images/size-guide.jpg
 Sections: T-Shirts
 Size: S/M/L/XL/XXL
 Materials: 100% Organic ringspun combed cotton
