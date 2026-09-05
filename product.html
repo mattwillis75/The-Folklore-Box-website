@@ -123,10 +123,16 @@
         .meta-list li { margin-bottom: 8px; font-size: 0.95rem; color: var(--text-muted); }
         .meta-list li strong { color: var(--text-light); }
 
-        .variant-select { margin-bottom: 25px; }
-        .variant-select label { display: block; margin-bottom: 8px; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; }
-        .variant-select select { width: 100%; padding: 15px; background: #111; color: #fff; border: 1px solid var(--border-color); border-radius: 3px; outline: none; font-family: var(--font-body); font-size: 1rem; cursor: pointer; }
-        .variant-select select:focus { border-color: var(--accent-red); }
+        /* --- BULK QUANTITY VARIANT STYLES --- */
+        .bulk-variant-select { margin-bottom: 25px; border: 1px solid var(--border-color); border-radius: 3px; padding: 15px; background: #0a0a0a; }
+        .bulk-variant-select h4 { margin-top: 0; margin-bottom: 15px; font-family: var(--font-body); font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
+        .size-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .size-row:last-child { margin-bottom: 0; }
+        .size-row span { font-size: 0.95rem; font-weight: bold; min-width: 80px; }
+        .size-row input { width: 60px; padding: 8px; background: #111; color: #fff; border: 1px solid var(--border-color); border-radius: 3px; outline: none; font-family: var(--font-body); text-align: center; font-size: 1rem;}
+        .size-row input:focus { border-color: var(--accent-red); }
+        .size-row input:disabled { opacity: 0.4; cursor: not-allowed; }
+        .size-row small { color: var(--accent-red); font-size: 0.75rem; font-weight: normal; margin-left: auto; margin-right: 15px; }
 
         .add-cart-btn { width: 100%; padding: 18px; background: var(--accent-red); color: #fff; border: none; border-radius: 3px; cursor: pointer; text-transform: uppercase; font-weight: 300; letter-spacing: 1.5px; font-size: 1.1rem; transition: background var(--transition-speed); font-family: var(--font-body); }
         .add-cart-btn:hover:not(:disabled) { background: #e60000; }
@@ -328,7 +334,6 @@
                 let thumbsHtml = '';
                 if(galleryImages.length > 1) {
                     galleryImages.forEach((img, i) => {
-                        // CRITICAL FIX: The onerror property falls back to the full-size image if the -thumb version doesn't exist
                         const thumbPath = img.replace(/\.jpg$/i, '-thumb.jpg').replace(/\.png$/i, '-thumb.png'); 
                         const activeClass = i === 0 ? 'active' : '';
                         thumbsHtml += `<img src="${thumbPath}" onerror="this.onerror=null; this.src='${img}';" class="${activeClass}" onclick="swapImage(this, '${img}')" alt="Thumbnail ${i+1}">`;
@@ -347,18 +352,29 @@
                 let formHtml = '';
 
                 if (isTshirt) {
+                    // --- BULK SIZE GRID GENERATOR ---
+                    const sizeInputs = ['S', 'M', 'L', 'XL', 'XXL'].map(sz => {
+                        let maxStock = currentProduct['stock' + (sz === 'XXL' ? 'XXL' : sz)];
+                        let label = sz === 'S' ? 'Small' : sz === 'M' ? 'Medium' : sz === 'L' ? 'Large' : sz === 'XL' ? 'X-Large' : '2XL';
+                        let disabled = maxStock <= 0 ? 'disabled' : '';
+                        let stockWarning = maxStock <= 0 ? '<small>(Out of Stock)</small>' : '';
+                        
+                        return `
+                        <div class="size-row">
+                            <span>${label}</span>
+                            ${stockWarning}
+                            <input type="number" id="qty-${sz}" min="0" max="${maxStock}" value="0" ${disabled} 
+                                   onchange="if(this.value < 0) this.value=0; document.getElementById('size-error').style.display='none';" 
+                                   onfocus="if(this.value==='0')this.value=''" 
+                                   onblur="if(this.value==='' || this.value < 0)this.value='0'">
+                        </div>`;
+                    }).join('');
+
                     formHtml = `
-                        <div class="variant-select">
-                            <label for="tshirt-size">Select Size <span style="color:var(--accent-red)">*</span></label>
-                            <select id="tshirt-size" onchange="document.getElementById('size-error').style.display='none'">
-                                <option value="">-- Choose a size --</option>
-                                <option value="S" ${currentProduct.stockS <= 0 ? 'disabled style="color:#555;"' : ''}>Small ${currentProduct.stockS <= 0 ? '(Out of Stock)' : ''}</option>
-                                <option value="M" ${currentProduct.stockM <= 0 ? 'disabled style="color:#555;"' : ''}>Medium ${currentProduct.stockM <= 0 ? '(Out of Stock)' : ''}</option>
-                                <option value="L" ${currentProduct.stockL <= 0 ? 'disabled style="color:#555;"' : ''}>Large ${currentProduct.stockL <= 0 ? '(Out of Stock)' : ''}</option>
-                                <option value="XL" ${currentProduct.stockXL <= 0 ? 'disabled style="color:#555;"' : ''}>X-Large ${currentProduct.stockXL <= 0 ? '(Out of Stock)' : ''}</option>
-                                <option value="XXL" ${currentProduct.stockXXL <= 0 ? 'disabled style="color:#555;"' : ''}>XX-Large ${currentProduct.stockXXL <= 0 ? '(Out of Stock)' : ''}</option>
-                            </select>
-                            <div id="size-error" style="color:var(--accent-red); font-size:0.85rem; margin-top:0.5rem; display:none;">Please select a size before adding to cart.</div>
+                        <div class="bulk-variant-select">
+                            <h4>Order Quantities by Size</h4>
+                            ${sizeInputs}
+                            <div id="size-error" style="color:var(--accent-red); font-size:0.85rem; margin-top:0.5rem; display:none;">Please enter a quantity for at least one size.</div>
                         </div>
                         <button class="add-cart-btn" onclick="window.addToCartAction(event)">Add to Cart</button>
                     `;
@@ -409,7 +425,7 @@
                 thumbElement.classList.add('active');
             };
 
-            // Global-bound action so the HTML onclick can access it cleanly
+            // --- REWRITTEN CART ACTION ---
             window.addToCartAction = function(event) {
                 if (event) {
                     event.preventDefault();
@@ -417,47 +433,85 @@
                 }
 
                 const isTshirt = currentProduct.sections && currentProduct.sections.toLowerCase().includes('t-shirts');
-                let selectedSize = null;
 
                 if (isTshirt) {
-                    const sizeSelect = document.getElementById('tshirt-size');
-                    selectedSize = sizeSelect.value;
-                    if (!selectedSize) {
+                    const sizes = [
+                        { id: 'S', stock: currentProduct.stockS },
+                        { id: 'M', stock: currentProduct.stockM },
+                        { id: 'L', stock: currentProduct.stockL },
+                        { id: 'XL', stock: currentProduct.stockXL },
+                        { id: 'XXL', stock: currentProduct.stockXXL }
+                    ];
+
+                    let validationFailed = false;
+                    let totalItemsRequested = 0;
+
+                    // Pull current cart logic to check if they exceed bounds with what they already have
+                    const cartKey = sessionStorage.getItem('wholesaleAuthenticated') === 'true' ? 'folkloreWholesaleCart' : 'folkloreCart';
+                    let currentCart = JSON.parse(sessionStorage.getItem(cartKey)) || [];
+
+                    // 1. Validation Pass
+                    sizes.forEach(sizeObj => {
+                        let input = document.getElementById('qty-' + sizeObj.id);
+                        if (input && parseInt(input.value) > 0) {
+                            let requestedQty = parseInt(input.value);
+                            totalItemsRequested += requestedQty;
+                            
+                            let cartItemId = `${currentProduct.id}-${sizeObj.id}`;
+                            let existingItem = currentCart.find(item => (item.cartItemId || item.id) === cartItemId);
+                            let currentQty = existingItem ? existingItem.quantity : 0;
+
+                            if (currentQty + requestedQty > sizeObj.stock) {
+                                validationFailed = true;
+                                alert(`Apologies. We only have ${sizeObj.stock} of Size ${sizeObj.id} in stock (You already have ${currentQty} in your cart).`);
+                            }
+                        }
+                    });
+
+                    if (validationFailed) return;
+
+                    if (totalItemsRequested === 0) {
                         document.getElementById('size-error').style.display = 'block';
                         return;
                     }
-                }
 
-                // Check Stock Data Limit before passing to global cart
-                let maxStock = 10;
-                if (selectedSize === 'S') maxStock = currentProduct.stockS;
-                else if (selectedSize === 'M') maxStock = currentProduct.stockM;
-                else if (selectedSize === 'L') maxStock = currentProduct.stockL;
-                else if (selectedSize === 'XL') maxStock = currentProduct.stockXL;
-                else if (selectedSize === 'XXL') maxStock = currentProduct.stockXXL;
-                else maxStock = currentProduct.stock;
-
-                const cartKey = sessionStorage.getItem('wholesaleAuthenticated') === 'true' ? 'folkloreWholesaleCart' : 'folkloreCart';
-                let currentCart = JSON.parse(sessionStorage.getItem(cartKey)) || [];
-                const cartItemId = selectedSize ? `${currentProduct.id}-${selectedSize}` : currentProduct.id;
-                let existingItem = currentCart.find(item => (item.cartItemId || item.id) === cartItemId);
-                let currentQty = existingItem ? existingItem.quantity : 0;
-
-                if (currentQty + 1 > maxStock) {
-                    const alertMsg = document.getElementById('stock-alert-msg');
-                    const alertBox = document.getElementById('stock-alert');
-                    if (alertMsg && alertBox) {
-                        alertMsg.textContent = `Apologies. We only have ${maxStock} of this item in stock.`;
-                        alertBox.style.display = 'flex';
+                    // 2. Action Pass (Triggers global addToCart for each individual item requested)
+                    if (typeof window.addToCart === 'function') {
+                        sizes.forEach(sizeObj => {
+                            let input = document.getElementById('qty-' + sizeObj.id);
+                            if (input && parseInt(input.value) > 0) {
+                                let requestedQty = parseInt(input.value);
+                                
+                                for (let i = 0; i < requestedQty; i++) {
+                                    window.addToCart(currentProduct.id, currentProduct.title, currentProduct.basePrice, currentProduct.postalClass, sizeObj.id);
+                                }
+                                
+                                // Reset the input cleanly back to zero
+                                input.value = '0'; 
+                            }
+                        });
+                    } else {
+                        alert("The cart is still loading. Please try again in a few seconds.");
                     }
-                    return; 
-                }
 
-                // Call the centralized addToCart function from global-cart.js
-                if (typeof window.addToCart === 'function') {
-                    window.addToCart(currentProduct.id, currentProduct.title, currentProduct.basePrice, currentProduct.postalClass, selectedSize);
                 } else {
-                    alert("The cart is still loading. Please try again in a few seconds.");
+                    // Standard Non-Tshirt Logic
+                    let maxStock = currentProduct.stock;
+                    const cartKey = sessionStorage.getItem('wholesaleAuthenticated') === 'true' ? 'folkloreWholesaleCart' : 'folkloreCart';
+                    let currentCart = JSON.parse(sessionStorage.getItem(cartKey)) || [];
+                    let existingItem = currentCart.find(item => item.id === currentProduct.id);
+                    let currentQty = existingItem ? existingItem.quantity : 0;
+
+                    if (currentQty + 1 > maxStock) {
+                        alert(`Apologies. We only have ${maxStock} of this item in stock.`);
+                        return; 
+                    }
+
+                    if (typeof window.addToCart === 'function') {
+                        window.addToCart(currentProduct.id, currentProduct.title, currentProduct.basePrice, currentProduct.postalClass, null);
+                    } else {
+                        alert("The cart is still loading. Please try again in a few seconds.");
+                    }
                 }
             };
         });
