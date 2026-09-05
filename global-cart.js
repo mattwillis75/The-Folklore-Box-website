@@ -344,9 +344,22 @@
             }
         }
 
+        // === NEW: FREE POSTAGE OVER £100 ===
+        let isFreeShipping = (itemsTotal - discountAmount) > 100;
+        if (isFreeShipping) {
+            shippingTotal = 0;
+        }
+
         finalTotal = itemsTotal - discountAmount + shippingTotal;
         if (cartSubtotalLabel) cartSubtotalLabel.textContent = `£${itemsTotal.toFixed(2)}`;
-        if (cartPostageLabel) cartPostageLabel.textContent = `£${shippingTotal.toFixed(2)}`;
+        
+        if (cartPostageLabel) {
+            if (isFreeShipping) {
+                cartPostageLabel.innerHTML = `<span style="color: var(--accent-red); font-weight: bold;">FREE</span>`;
+            } else {
+                cartPostageLabel.textContent = `£${shippingTotal.toFixed(2)}`;
+            }
+        }
         
         const existingDiscRow = document.getElementById('cart-discount-row-render');
         if (existingDiscRow) existingDiscRow.remove();
@@ -436,6 +449,11 @@
                                 if (discountAmount > itemsTotal) discountAmount = itemsTotal;
                             }
                         }
+                    }
+
+                    // === NEW: FREE POSTAGE OVER £100 (PayPal Check) ===
+                    if ((itemsTotal - discountAmount) > 100) {
+                        shippingTotal = 0;
                     }
 
                     if (isWholesale && itemsTotal < 75) { alert("Minimum wholesale spend of £75 not met."); return; }
