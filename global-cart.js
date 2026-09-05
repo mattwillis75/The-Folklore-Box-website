@@ -14,7 +14,7 @@
     const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
     const cartKey = isWholesale ? 'folkloreWholesaleCart' : 'folkloreCart';
     let validDiscounts = {};
-    let autoDiscount = null; // New Auto Promo Logic
+    let autoDiscount = null; // Auto Promo Logic
     let activeDiscount = JSON.parse(sessionStorage.getItem('folkloreDiscount')) || null;
     
     let cart = [];
@@ -139,7 +139,6 @@
                     const code = parts[0].trim().toUpperCase();
                     const valueStr = parts.slice(1).join(':').trim(); 
                     
-                    // Parse the new AUTO code
                     if (code === 'AUTO') {
                         const valParts = valueStr.split(',');
                         const discStr = valParts[0].trim();
@@ -269,18 +268,25 @@
             }
         });
 
-        let baseRateApplied = false;
-        cart.forEach((item) => {
-            const rates = postalRates[item.postalClass];
-            if(rates) {
-                const qty = item.quantity || 1;
-                const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
-                const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
-                if (maxBaseItem && item.cartItemId === maxBaseItem.cartItemId && !baseRateApplied) {
-                    shippingTotal += baseRate + (addRate * (qty - 1)); baseRateApplied = true;
-                } else { shippingTotal += addRate * qty; }
-            }
-        });
+        // Calculate Shipping Rate
+        if (isWholesale) {
+            // Flat rate £10 for all wholesale orders
+            shippingTotal = 10.00;
+        } else {
+            // Standard individual postal class calculations for retail
+            let baseRateApplied = false;
+            cart.forEach((item) => {
+                const rates = postalRates[item.postalClass];
+                if(rates) {
+                    const qty = item.quantity || 1;
+                    const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                    const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
+                    if (maxBaseItem && item.cartItemId === maxBaseItem.cartItemId && !baseRateApplied) {
+                        shippingTotal += baseRate + (addRate * (qty - 1)); baseRateApplied = true;
+                    } else { shippingTotal += addRate * qty; }
+                }
+            });
+        }
 
         // Evaluate Promos
         let discountAmount = 0;
@@ -291,20 +297,17 @@
 
         if (!isWholesale) {
             if (autoDiscount && itemsTotal >= autoDiscount.minSpend) {
-                // Auto Discount Overrides Everything
                 if (autoDiscount.type === 'percent') discountAmount = itemsTotal * (autoDiscount.value / 100);
                 else discountAmount = autoDiscount.value;
                 if (discountAmount > itemsTotal) discountAmount = itemsTotal;
                 appliedDiscountName = "Launch Offer";
                 
-                if (discountContainerElement) discountContainerElement.style.display = 'none'; // Hide manual box
+                if (discountContainerElement) discountContainerElement.style.display = 'none';
                 if (discountMsg) discountMsg.textContent = ""; 
                 
             } else {
-                // Restore manual box if auto doesn't apply
                 if (discountContainerElement) discountContainerElement.style.display = 'flex';
                 
-                // Show incentive banner if they are close
                 if (autoDiscount && itemsTotal > 0 && itemsTotal < autoDiscount.minSpend) {
                     const difference = (autoDiscount.minSpend - itemsTotal).toFixed(2);
                     const offerStr = autoDiscount.type === 'percent' ? `${autoDiscount.value}% off` : `£${autoDiscount.value.toFixed(2)} off`;
@@ -319,7 +322,6 @@
                     }
                 }
                 
-                // Fallback to manual active discount
                 if (activeDiscount) {
                     const minSpend = activeDiscount.minSpend || 0;
                     if (itemsTotal < minSpend) {
@@ -339,27 +341,14 @@
                         appliedDiscountName = activeDiscount.code;
                     }
                 } else if (discountInput && discountInput.value === "") {
-                    if (discountMsg) discountMsg.textContent = ""; // Clear errors if blank
+                    if (discountMsg) discountMsg.textContent = "";
                 }
             }
         }
 
-        // === NEW: FREE POSTAGE OVER £100 ===
-        let isFreeShipping = (itemsTotal - discountAmount) > 100;
-        if (isFreeShipping) {
-            shippingTotal = 0;
-        }
-
         finalTotal = itemsTotal - discountAmount + shippingTotal;
         if (cartSubtotalLabel) cartSubtotalLabel.textContent = `£${itemsTotal.toFixed(2)}`;
-        
-        if (cartPostageLabel) {
-            if (isFreeShipping) {
-                cartPostageLabel.innerHTML = `<span style="color: var(--accent-red); font-weight: bold;">FREE</span>`;
-            } else {
-                cartPostageLabel.textContent = `£${shippingTotal.toFixed(2)}`;
-            }
-        }
+        if (cartPostageLabel) cartPostageLabel.textContent = `£${shippingTotal.toFixed(2)}`;
         
         const existingDiscRow = document.getElementById('cart-discount-row-render');
         if (existingDiscRow) existingDiscRow.remove();
@@ -417,18 +406,22 @@
                         }
                     });
 
-                    let baseRateApplied = false;
-                    cart.forEach(item => {
-                        const rates = postalRates[item.postalClass];
-                        if(rates) {
-                            const qty = item.quantity || 1;
-                            const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
-                            const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
-                            if (maxBaseItem && item.cartItemId === maxBaseItem.cartItemId && !baseRateApplied) {
-                                shippingTotal += baseRate + (addRate * (qty - 1)); baseRateApplied = true;
-                            } else { shippingTotal += addRate * qty; }
-                        }
-                    });
+                    if (isWholesale) {
+                        shippingTotal = 10.00;
+                    } else {
+                        let baseRateApplied = false;
+                        cart.forEach(item => {
+                            const rates = postalRates[item.postalClass];
+                            if(rates) {
+                                const qty = item.quantity || 1;
+                                const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
+                                const addRate = dest === 'uk' ? rates.ukAdd : rates.intAdd;
+                                if (maxBaseItem && item.cartItemId === maxBaseItem.cartItemId && !baseRateApplied) {
+                                    shippingTotal += baseRate + (addRate * (qty - 1)); baseRateApplied = true;
+                                } else { shippingTotal += addRate * qty; }
+                            }
+                        });
+                    }
                     
                     const paypalItems = cart.map(item => {
                         return { name: item.title + (item.size ? ` (${item.size})` : ''), unit_amount: { currency_code: 'GBP', value: item.price.toFixed(2) }, quantity: (item.quantity || 1).toString() };
@@ -451,15 +444,11 @@
                         }
                     }
 
-                    // === NEW: FREE POSTAGE OVER £100 (PayPal Check) ===
-                    if ((itemsTotal - discountAmount) > 100) {
-                        shippingTotal = 0;
-                    }
-
                     if (isWholesale && itemsTotal < 75) { alert("Minimum wholesale spend of £75 not met."); return; }
 
                     if (shippingTotal > 0) {
-                        paypalItems.push({ name: `Postage & Packaging (${dest === 'uk' ? 'UK' : 'International'})`, unit_amount: { currency_code: 'GBP', value: shippingTotal.toFixed(2) }, quantity: "1" });
+                        const pnpLabel = isWholesale ? `Wholesale Postage & Packaging` : `Postage & Packaging (${dest === 'uk' ? 'UK' : 'International'})`;
+                        paypalItems.push({ name: pnpLabel, unit_amount: { currency_code: 'GBP', value: shippingTotal.toFixed(2) }, quantity: "1" });
                         itemsTotal += shippingTotal; shippingTotal = 0; 
                     }
 
@@ -481,7 +470,6 @@
                                 orderBreakdown += `${item.quantity || 1}x ${item.title}${sizeStr} - £${itemTotal}\n`;
                             });
                             
-                            // Re-evaluate discount for the receipt
                             if (!isWholesale) {
                                 let discountAmount = 0;
                                 let appliedDiscountName = "";
