@@ -1,8 +1,8 @@
 Slide: 1
-Format: SALE
-Heading: 15% off all orders over £30
-Description: Sale ends midnight Sunday 6th September
-Image: images/Sale.jpg
+Format: EVENT
+Heading: Norfolk Folklore Society: Tales from Haunted Sheringham
+Description: Saturday 12th September, 7.30pm
+Image: images/sheringham-event.jpg
 ---
 Slide: 2
 Format: Shop Update
