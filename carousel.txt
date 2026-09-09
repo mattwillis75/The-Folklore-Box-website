@@ -2,7 +2,7 @@ Slide: 1
 Format: RELEASE
 Heading: New items!
 Description: Yow Yows and Sheringham Mermaid T-Shirts, Totes and Hanging Decorations, plus the Haunted Sheringham A3 Print!
-Image: images/Sheringham Releases.jpg
+Image: images/Sheringham Releases 2.jpg
 ---
 Slide: 2
 Format: Shop Update
