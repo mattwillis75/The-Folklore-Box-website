@@ -4656,3 +4656,31 @@ To commemorate the bizarre visit, the mermaid was immortalized as a 15th-century
 
 The T-Shirt  is made from 100% Organic ringspun combed cotton.
 ---
+Title: The Sheringham Mermais Tote Bag
+Main Image: images/tote-sheringham-mermaid-1.jpg
+Images: images/tote-sheringham-mermais-2.jpg
+Sections: Tote Bags
+Size: 380 x 420mm
+Materials: 100% recycled cotton 170gsm
+Postal Class: Second Class Large Letter
+Item Cost: 15
+Stock: 10
+Stock S: 10
+Stock M: 10
+Stock L: 10
+Stock XL: 10
+Stock XXL: 10
+Description: This is a Tote bag featuring The Sheringham Mermaid from English Folklore.
+
+The Sheringham Mermaid is a famous piece of North Norfolk folklore about a sea creature lured ashore by the sound of music coming from All Saints Church in Upper Sheringham.
+
+Drawn by the heavenly singing, the mermaid dragged herself out of the water and over a mile and a half up the beach and inland to reach the 900-year-old church.
+
+When she finally arrived, the church beadle rudely slammed the heavy wooden door in her face, telling her she was not welcome because mermaids had no souls and were forbidden from entering the house of God.
+
+Undeterred by the rejection, the mermaid waited until the beadle's back was turned and crept into the back of the church to listen to the service.
+
+To commemorate the bizarre visit, the mermaid was immortalized as a 15th-century wooden carving on the bench end of a pew near the church's north door, where she remains today.
+
+The Tote Bag  is made from 100% recycled cotton 170gsm.
+---
