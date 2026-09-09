@@ -198,7 +198,7 @@ Images: images/k-shuck-leaping-final-2.jpg, images/size-guide.jpg
 Sections: T-Shirts
 Size: 
 Materials: 100% Organic ringspun combed cotton
-Postal Class: Second Class Small Parcel
+Postal Class: Second Class Large Letter
 Item Cost: 25
 Stock: 10
 Stock S: 10
