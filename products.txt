@@ -4744,3 +4744,19 @@ Stock XL: 10
 Stock XXL: 10
 Description: This listing is for my Yow Yows hanging decoration, laser cut into black painted birch plywood from an original illustration. the front and back are both painted black and it comes with a red velvet ribbon.
 ---
+Title: Sheringham Mermaid Hanging Decoration
+Main Image: images/sheringham-mermaid-shop-1.jpg
+Images: images/sheringham-mermaid-shop-2.jpg
+Sections: Hanging Decorations
+Size: 65 x 105 x 3mm
+Materials: birch plywood, black paint, red velvet ribbon
+Postal Class: First Class Letter
+Item Cost: 16
+Stock: 10
+Stock S: 10
+Stock M: 10
+Stock L: 10
+Stock XL: 10
+Stock XXL: 10
+Description: This listing is for my Sheringham Mermaid hanging decoration, laser cut into black painted birch plywood from an original illustration. the front and back are both painted black and it comes with a red velvet ribbon.
+---
