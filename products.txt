@@ -1,4 +1,4 @@
-Title: Tales from Haunted Sheringham A3 Print
+Title: Haunted Sheringham A3 Print
 Main Image: images/tales-from-haunted-sheringham-a3-print-shop-1.jpg
 Images: images/tales-from-haunted-sheringham-a3-print-shop-2.jpg, images/tales-from-haunted-sheringham-a3-print-shop-3.jpg
 Sections: A3 Art Prints
@@ -12,9 +12,9 @@ Stock M: 10
 Stock L: 10
 Stock XL: 10
 Stock XXL: 10
-Description: This is an A3 Print for made for the Norfolk Folklore Society evening at Sheringham Little Theatre.
+Description: Made for the Norfolk Folklore Society evening at Sheringham Little Theatre.
 
-It is A3 (210 x 297mm) and is printed onto 350gsm silk board.
+An A3 (210 x 297mm) art print on 350gsm silk board.
 
 The print will be posted in a card backed envelope to ensure safety in transit.
 
@@ -24,7 +24,6 @@ According to the local legend, a ship was sinking off the coast of Lower Shering
 
 Today, the phantom cries of the doomed mariners are said to echo across the water on calm days. If a boat sails toward the voice to offer rescue, the sound simply moves further away. Local fishermen treat the cries as a supernatural warning to return to shore immediately before the deadly storm, the Yow Yows, hits.
 ---
-
 Title: Yow Yows T-Shirt
 Main Image: images/yow-yows-final-1.jpg
 Images: images/yow-yows-final-2.jpg, images/size-guide.jpg
@@ -4761,4 +4760,3 @@ Description: A black tote bag  with a white print Witch riding  a Goat design pr
 
 **Please be aware that delivery can take up to 10 days on this item. Email us if you would like it quicker and we will let you know if this is possible. **
 ---
-
