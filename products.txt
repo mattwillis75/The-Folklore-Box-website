@@ -4708,7 +4708,7 @@ Images: images/tales-from-haunted-sheringham-a3-print-shop-2.jpg, images/tales-f
 Sections: A3 Art Prints
 Size: A3 - 297 x 420mm
 Materials: 350gsm card, ink
-Postal Class: First Class Letter
+Postal Class: Second Class Small Parcel
 Item Cost: 18
 Stock: 10
 Stock S: 10
@@ -4727,5 +4727,4 @@ The main image is of the Yow Yows. In the Norfolk coastal town of Sheringham, th
 According to the local legend, a ship was sinking off the coast of Lower Sheringham, but local fishermen ignored the crew's pleas for help, allegedly waiting for the ship to wreck so they could salvage its cargo. As the captain drowned, he cursed the town's fishermen.
 
 Today, the phantom cries of the doomed mariners are said to echo across the water on calm days. If a boat sails toward the voice to offer rescue, the sound simply moves further away. Local fishermen treat the cries as a supernatural warning to return to shore immediately before the deadly storm, the Yow Yows, hits.
-
 ---
