@@ -1,29 +1,3 @@
-Title: Tales from Haunted Sheringham A3 Print
-Main Image: images/tales-from-haunted-sheringham-a3-print-shop-1.jpg
-Images: images/tales-from-haunted-sheringham-a3-print-shop-2.jpg, images/tales-from-haunted-sheringham-a3-print-shop-3.jpg
-Sections: A3 Art Prints
-Size: A3 - 297 x 420mm
-Materials: 350gsm card, ink
-Postal Class: Second Class Small Parcel
-Item Cost: 18
-Stock: 10
-Stock S: 10
-Stock M: 10
-Stock L: 10
-Stock XL: 10
-Stock XXL: 10
-Description: This is an A3 Print for made for the Norfolk Folklore Society evening at Sheringham Little Theatre.
-
-It is A3 (210 x 297mm) and is printed onto 350gsm silk board.
-
-The print will be posted in a card backed envelope to ensure safety in transit.
-
-The main image is of the Yow Yows. In the Norfolk coastal town of Sheringham, the "Yow Yows" is the local name for sudden, violent squalls that strike the coast, preceded by eerie, phantom cries shifting across the waves. 
-
-According to the local legend, a ship was sinking off the coast of Lower Sheringham, but local fishermen ignored the crew's pleas for help, allegedly waiting for the ship to wreck so they could salvage its cargo. As the captain drowned, he cursed the town's fishermen.
-
-Today, the phantom cries of the doomed mariners are said to echo across the water on calm days. If a boat sails toward the voice to offer rescue, the sound simply moves further away. Local fishermen treat the cries as a supernatural warning to return to shore immediately before the deadly storm, the Yow Yows, hits.
----
 Title: Yow Yows T-Shirt
 Main Image: images/yow-yows-final-1.jpg
 Images: images/yow-yows-final-2.jpg, images/size-guide.jpg
@@ -4728,4 +4702,45 @@ Description: A black tote bag  with a white print Witch riding  a Goat design pr
 
 **Please be aware that delivery can take up to 10 days on this item. Email us if you would like it quicker and we will let you know if this is possible. **
 ---
+Title: Tales from Haunted Sheringham A3 Print
+Main Image: images/tales-from-haunted-sheringham-a3-print-shop-1.jpg
+Images: images/tales-from-haunted-sheringham-a3-print-shop-2.jpg, images/tales-from-haunted-sheringham-a3-print-shop-3.jpg
+Sections: A3 Art Prints
+Size: A3 - 297 x 420mm
+Materials: 350gsm card, ink
+Postal Class: Second Class Small Parcel
+Item Cost: 18
+Stock: 10
+Stock S: 10
+Stock M: 10
+Stock L: 10
+Stock XL: 10
+Stock XXL: 10
+Description: This is an A3 Print for made for the Norfolk Folklore Society evening at Sheringham Little Theatre.
 
+It is A3 (210 x 297mm) and is printed onto 350gsm silk board.
+
+The print will be posted in a card backed envelope to ensure safety in transit.
+
+The main image is of the Yow Yows. In the Norfolk coastal town of Sheringham, the "Yow Yows" is the local name for sudden, violent squalls that strike the coast, preceded by eerie, phantom cries shifting across the waves. 
+
+According to the local legend, a ship was sinking off the coast of Lower Sheringham, but local fishermen ignored the crew's pleas for help, allegedly waiting for the ship to wreck so they could salvage its cargo. As the captain drowned, he cursed the town's fishermen.
+
+Today, the phantom cries of the doomed mariners are said to echo across the water on calm days. If a boat sails toward the voice to offer rescue, the sound simply moves further away. Local fishermen treat the cries as a supernatural warning to return to shore immediately before the deadly storm, the Yow Yows, hits.
+---
+Title: Yoy Yows Hanging Decoration
+Main Image: images/yow-yows-shop-1.jpg
+Images: images/yow-yows-shop-2.jpg
+Sections: Hanging Decorations
+Size: 65 x 105 x 3mm
+Materials: birch plywood, black paint, red velvet ribbon
+Postal Class: Second Class Large Letter
+Item Cost: 16
+Stock: 10
+Stock S: 10
+Stock M: 10
+Stock L: 10
+Stock XL: 10
+Stock XXL: 10
+Description: This listing is for my Yow Yows hanging decoration, laser cut into black painted birch plywood from an original illustration. the front and back are both painted black and it comes with a red velvet ribbon.
+---
