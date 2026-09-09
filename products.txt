@@ -140,21 +140,28 @@ The Tote Bag is made from 100% Westford Mill organic cotton.
 
 ** Please be aware that delivery can take up to 10 days on this item. Email us if you would like it quicker and we will let you know if this is possible. **
 ---
-Title: Yoy Yows Hanging Decoration
+Title: Yow Yows Hanging Decoration
 Main Image: images/yow-yows-shop-1.jpg
 Images: images/yow-yows-shop-2.jpg
 Sections: Hanging Decorations
 Size: 65 x 105 x 3mm
 Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Large Letter
-Item Cost: 16
+Item Cost: 15
 Stock: 10
 Stock S: 10
 Stock M: 10
 Stock L: 10
 Stock XL: 10
 Stock XXL: 10
-Description: This listing is for my Yow Yows hanging decoration, laser cut into black painted birch plywood from an original illustration. the front and back are both painted black and it comes with a red velvet ribbon.
+Description: A Yow Yows hanging decoration in birch ply from an original illustration with a velvet ribbon.
+
+In the Norfolk coastal town of Sheringham, the "Yow Yows" is the local name for sudden, violent squalls that strike the coast, preceded by eerie, phantom cries shifting across the waves. 
+
+According to the local legend, a ship was sinking off the coast of Lower Sheringham, but local fishermen ignored the crew's pleas for help, allegedly waiting for the ship to wreck so they could salvage its cargo. As the captain drowned, he cursed the town's fishermen.
+
+Today, the phantom cries of the doomed mariners are said to echo across the water on calm days. If a boat sails toward the voice to offer rescue, the sound simply moves further away. Local fishermen treat the cries as a supernatural warning to return to shore immediately before the deadly storm, the Yow Yows, hits.
+
 ---
 Title: Sheringham Mermaid Hanging Decoration
 Main Image: images/sheringham-mermaid-shop-1.jpg
