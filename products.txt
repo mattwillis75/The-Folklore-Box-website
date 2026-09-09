@@ -4642,7 +4642,7 @@ Stock M: 10
 Stock L: 10
 Stock XL: 10
 Stock XXL: 10
-Description: This is a Tote bag featuring The Sheringham Mermaid from English Folklore.
+Description: This is a T-Shirt featuring The Sheringham Mermaid from English Folklore.
 
 The Sheringham Mermaid is a famous piece of North Norfolk folklore about a sea creature lured ashore by the sound of music coming from All Saints Church in Upper Sheringham.
 
