@@ -154,7 +154,8 @@ Stock M: 10
 Stock L: 10
 Stock XL: 10
 Stock XXL: 10
-Description: A Yow Yows hanging decoration in birch ply from an original illustration with a velvet ribbon.
+Description: A Yow Yows hanging decoration from an original illustration  in birch plywood 
+ with a red velvet ribbon.
 
 In the Norfolk coastal town of Sheringham, the "Yow Yows" is the local name for sudden, violent squalls that strike the coast, preceded by eerie, phantom cries shifting across the waves. 
 
@@ -176,7 +177,7 @@ Stock M: 10
 Stock L: 10
 Stock XL: 10
 Stock XXL: 10
-Description: A Sheringham Mermaid hanging decoration from an original illustration  in birch plywood 
+Description: A Sheringham Mermaid hanging decoration from an original illustration  in birch plywood
  with a red velvet ribbon.
 
 The Sheringham Mermaid is a famous piece of North Norfolk folklore about a sea creature lured ashore by the sound of music coming from All Saints Church in Upper Sheringham.
