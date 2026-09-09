@@ -1,8 +1,8 @@
 Slide: 1
-Format: EVENT
-Heading: Norfolk Folklore Society: Tales from Haunted Sheringham
-Description: Saturday 12th September, 7.30pm
-Image: images/sheringham-event.jpg
+Format: RELEASE
+Heading: New in The FOlklore Box shop! 
+Description: Yow Yows and Sheringham Mermaid T-Shirts, Totes and Hanging Decorations, pluse the Haunted SHeringham A3 Print!
+Image: images/Sheringham Releases.jpg
 ---
 Slide: 2
 Format: Shop Update
