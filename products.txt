@@ -150,7 +150,7 @@ Images: images/tote-green-man-2.jpg
 Sections: Tote Bags
 Size: 
 Materials: 100% recycled cotton 170gsm
-Postal Class: Second Class Small Parcel
+Postal Class: Second Class Large Letter
 Item Cost: 15
 Stock: 10
 Stock S: 10
