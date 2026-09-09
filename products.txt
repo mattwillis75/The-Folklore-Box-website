@@ -12,7 +12,7 @@ Stock M: 10
 Stock L: 10
 Stock XL: 10
 Stock XXL: 10
-Description: This is a T-Shirt featuring a Green Man from English Folklore.
+Description: This is a Black T-Shirt featuring a Green Man from English Folklore.
 
 While the term "Green Man" feels ancient, the carvings themselves have a complex global history. The carvings usually portray faces made of or disgorging leaves and are historically known in art history as "foliate heads" or "leaf masks." They have existed for millennia, appearing in Roman, Middle Eastern, and Indian architecture long before reaching Britain. They became hugely popular in England following the Norman Conquest, appearing extensively in 12th- to 15th-century Romanesque and Gothic churches as decorative stone and wood carvings.
 
@@ -42,7 +42,7 @@ Stock M: 10
 Stock L: 10
 Stock XL: 10
 Stock XXL: 10
-Description: This is a Tote Bag featuring a Green Man from English Folklore.
+Description: This is a Black Tote Bag featuring a Green Man from English Folklore.
 
 While the term "Green Man" feels ancient, the carvings themselves have a complex global history. The carvings usually portray faces made of or disgorging leaves and are historically known in art history as "foliate heads" or "leaf masks." They have existed for millennia, appearing in Roman, Middle Eastern, and Indian architecture long before reaching Britain. They became hugely popular in England following the Norman Conquest, appearing extensively in 12th- to 15th-century Romanesque and Gothic churches as decorative stone and wood carvings.
 
@@ -90,7 +90,7 @@ Stock M: 10
 Stock L: 10
 Stock XL: 10
 Stock XXL: 10
-Description: This is a T-Shirt featuring a leaping Black Shuck - The Devil Dog of Bungay.
+Description: This is a Black T-Shirt featuring a leaping Black Shuck - The Devil Dog of Bungay.
 
 Black Shuck is a legendary ghostly black dog from English folklore said to roam the coastline and countryside of East Anglia. The creature is typically described as an immense, shaggy hound with glowing fiery eyes and is viewed as an omen of death or misfortune. Its name likely comes from the Old English word scucca, meaning devil or fiend.
 
@@ -118,7 +118,7 @@ Stock M: 10
 Stock L: 10
 Stock XL: 10
 Stock XXL: 10
-Description: This is a Tote Bag featuring a leaping Black Shuck - The Devil Dog of Bungay.
+Description: This is a Black Tote Bag featuring a leaping Black Shuck - The Devil Dog of Bungay.
 
 Black Shuck is a legendary ghostly black dog from English folklore said to roam the coastline and countryside of East Anglia. The creature is typically described as an immense, shaggy hound with glowing fiery eyes and is viewed as an omen of death or misfortune. Its name likely comes from the Old English word scucca, meaning devil or fiend.
 
@@ -142,7 +142,7 @@ Stock M: 10
 Stock L: 10
 Stock XL: 10
 Stock XXL: 10
-Description: This is a T-Shirt featuring the likeness of Black Shuck - The Devil Dog of Bungay.
+Description: This is a Black T-Shirt featuring the likeness of Black Shuck - The Devil Dog of Bungay.
 
 Black Shuck is a legendary ghostly black dog from English folklore said to roam the coastline and countryside of East Anglia. The creature is typically described as an immense, shaggy hound with glowing fiery eyes and is viewed as an omen of death or misfortune. Its name likely comes from the Old English word scucca, meaning devil or fiend.
 
@@ -170,7 +170,7 @@ Stock M: 10
 Stock L: 10
 Stock XL: 10
 Stock XXL: 10
-Description: This is a Tote Bag featuring the likeness of Black Shuck - The Devil Dog of Bungay.
+Description: This is a Black Tote Bag featuring the likeness of Black Shuck - The Devil Dog of Bungay.
 
 Black Shuck is a legendary ghostly black dog from English folklore said to roam the coastline and countryside of East Anglia. The creature is typically described as an immense, shaggy hound with glowing fiery eyes and is viewed as an omen of death or misfortune. Its name likely comes from the Old English word scucca, meaning devil or fiend.
 
@@ -4662,7 +4662,7 @@ Undeterred by the rejection, the mermaid waited until the beadle's back was turn
 
 To commemorate the bizarre visit, the mermaid was immortalized as a 15th-century wooden carving on the bench end of a pew near the church's north door, where she remains today.
 
-The T-Shirt  is made from 100% Organic ringspun combed cotton.
+The T-Shirt is made from 100% Organic Stanley & Stella ringspun combed cotton.
 
 See images for sizes.
 
