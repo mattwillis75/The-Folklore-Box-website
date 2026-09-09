@@ -4628,7 +4628,7 @@ The Tote Bag  is made from 100% recycled cotton 170gsm.
 
 ** Please be aware that delivery can take up to 10 days on this item. Email us if you would like it quicker and we will let you know if this is possible. **
 ---
-Title: The Sherigham Mermaid T-Shirt
+Title: The Sheringham Mermaid T-Shirt
 Main Image: images/sheringham-mermaid-t-shirt-1.jpg
 Images: images/sheringham-mermaid-t-shirt-2.jpg, images/size-guide.jpg
 Sections: T-Shirts
