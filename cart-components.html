@@ -47,7 +47,13 @@
     .stock-alert-btn:hover { background: #e60000; }
 
     @media (max-width: 600px) {
-        .cart-panel { padding: 1rem; width: 100%; right: -100%; border-left: none; }
+        .cart-panel { 
+            padding: 1rem; 
+            width: 100%; 
+            right: -110%; /* Pushed slightly past 100% to guarantee it clears the screen */
+            border-left: none; 
+            box-sizing: border-box; /* Forces padding to sit inside the 100% width, not outside it */
+        }
         .cart-items-container { padding: 10px 5px; }
         .cart-header, .cart-footer { padding: 10px 0; }
     }
