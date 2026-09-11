@@ -135,9 +135,32 @@
 
         /* Mobile Carousel Adjustments */
         @media (max-width: 768px) {
-            .carousel-container { aspect-ratio: auto; height: calc(48.6vw + 200px);  min-height: auto; }
-            .carousel-slide { background-image: var(--mobile-bg); background-position: top center; background-size: contain; }
-            .carousel-overlay { position: absolute; top: 48.6vw; bottom: 0; left: 0; width: 100%; box-sizing: border-box; max-width: none; background: var(--bg-color); border: none; border-top: 1px solid #222; border-radius: 0; padding: 1.5rem; backdrop-filter: none; justify-content: flex-start; }
+            .carousel-container { 
+                aspect-ratio: unset; 
+                height: calc(48.6vw + 200px);  
+                min-height: auto; 
+            }
+            .carousel-slide { 
+                background-image: var(--mobile-bg) !important; 
+                background-position: top center !important; 
+                background-size: contain !important; 
+            }
+            .carousel-overlay { 
+                position: absolute; 
+                top: 48.6vw; 
+                bottom: 0; 
+                left: 0; 
+                width: 100%; 
+                box-sizing: border-box; 
+                max-width: none; 
+                background: var(--bg-color); 
+                border: none; 
+                border-top: 1px solid #222; 
+                border-radius: 0; 
+                padding: 1.5rem; 
+                backdrop-filter: none; 
+                justify-content: flex-start; 
+            }
             .carousel-arrow { top: 24.3vw; width: 35px; height: 35px; font-size: 1rem; }
             .carousel-overlay h3 { font-size: 1.8rem; }
             .overlay-bottom p { font-size: 0.95rem; }
@@ -336,13 +359,15 @@
 
                     slidesRaw.forEach(rawSlide => {
                         if(!rawSlide.trim()) return;
-                        let slide = { format: "", heading: "", desc: "", image: "" };
+                        
+                        let slide = { slideNum: 0, format: "", heading: "", desc: "", image: "" };
                         
                         rawSlide.trim().split('\n').forEach(line => {
                             const idx = line.indexOf(':');
                             if(idx > -1) {
                                 const key = line.slice(0,idx).trim().toLowerCase();
                                 const val = line.slice(idx+1).trim();
+                                if(key === 'slide') slide.slideNum = parseInt(val);
                                 if(key === 'format') slide.format = val;
                                 if(key === 'heading') slide.heading = val;
                                 if(key === 'description') slide.desc = val;
@@ -353,10 +378,12 @@
                         if (slide.heading || slide.image) {
                             const isActive = slideIndex === 0 ? "active" : "";
                             const imageUrlWithBuster = `${slide.image}?v=${cacheBuster}`;
-                            const mobileImageUrl = `./images/carousel-${slideIndex + 1}-mobile.jpg?v=${cacheBuster}`;
+                            
+                            const currentNum = slide.slideNum || (slideIndex + 1);
+                            const mobileImageUrl = `./images/carousel-${currentNum}-mobile.jpg?v=${cacheBuster}`;
                             
                             const html = `
-                            <div class="carousel-slide slide-${slideIndex + 1} ${isActive}" style="--desktop-bg: url('${imageUrlWithBuster}'); --mobile-bg: url('${mobileImageUrl}');">
+                            <div class="carousel-slide slide-${currentNum} ${isActive}" style="--desktop-bg: url('${imageUrlWithBuster}'); --mobile-bg: url('${mobileImageUrl}');">
                                 <div class="carousel-overlay">
                                     <h2>${slide.format || ''}</h2>
                                     <h3>${slide.heading || ''}</h3>
