@@ -154,7 +154,7 @@ Stock M: 10
 Stock L: 10
 Stock XL: 10
 Stock XXL: 10
-Description: A Yow Yows hanging decoration from an original illustration  in birch plywood 
+Description: A Yow Yows hanging decoration from an original illustration  in birch plywood
  with a red velvet ribbon.
 
 In the Norfolk coastal town of Sheringham, the "Yow Yows" is the local name for sudden, violent squalls that strike the coast, preceded by eerie, phantom cries shifting across the waves. 
@@ -4777,4 +4777,33 @@ Stock XXL: 10
 Description: A black tote bag  with a white print Witch riding  a Goat design printed onto the front.
 
 **Please be aware that delivery can take up to 10 days on this item. Email us if you would like it quicker and we will let you know if this is possible. **
+---
+Title: Apple Day Mini Zine
+Main Image: images/Apple Day 6.jpg
+Images: images/Apple Day 4.jpg, images/Apple Day 5.jpg
+Sections: Zines
+Size: A6 - 102 x 148 mm
+Materials: 250gsm silk cover, 130 gsm silk pages, ink
+Postal Class: Second Class Letter
+Item Cost: 4
+Stock: 10
+Stock S: 10
+Stock M: 10
+Stock L: 10
+Stock XL: 10
+Stock XXL: 10
+Description: How do you like these Apples! 
+
+With Apple Day approaching on October 21st (although Gressenhall museum has a very good Apple Day event on Sunday 4th October), the SHUCK Apple Day mini-zine is finally back in print and available again in the shop.
+
+If you missed out on this one the first time around, it’s the perfect companion for the turning of the season. Known as Quert in the Celtic Ogham alphabet, the apple is one of the most wildly mystical trees, representing the Otherworld and the choice to seek knowledge.  
+
+Inside this mini-zine, Ada dives deep into the rich magic and mythology of the Tree of Abundance, exploring traditional remedies, folklore, and the ancient winter custom of Wassailing. You'll learn how our ancestors would pour cider over tree roots and hang cider-soaked toast in the branches to lure robins, who act as the guardian spirits of the orchard.  
+
+Ada has also put together a beautiful charm bag spell using apple and pumpkin seeds to help bring an abundance of happiness, love, and a "feast to the soul". 
+
+This mini-zine reprints apple themed pieces from SHUCK zine alongside brand new illustrations made for this issue.
+
+A6 - 105 x 148mm - 12 pages.
+
 ---
