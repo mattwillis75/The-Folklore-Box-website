@@ -88,8 +88,8 @@ Images: images/Enamel Pin 3.jpg, images/Enamel Pin 1.jpg, images/Enamel Pin 4.jp
 Sections: Enamel Pins
 Size: 20 x 25mm
 Materials: metal, rubber, enamel
-Postal Class: First Class Letter
-Item Cost: 
+Postal Class: Second Class Large Letter
+Item Cost: 10
 Stock: 10
 Stock S: 10
 Stock M: 10
