@@ -4870,7 +4870,7 @@ Images: images/Tote Bag 1.jpg, images/Tote Bag 2.jpg, images/A4 Print 1.jpg, ima
 Sections: The Folklore Boxes
 Size: A4 - 210 x 297mm
 Materials: 
-Postal Class: Second Class Small Parcel
+Postal Class: Mugs
 Item Cost: 40
 Stock: 10
 Stock S: 10
@@ -4878,7 +4878,7 @@ Stock M: 10
 Stock L: 10
 Stock XL: 10
 Stock XXL: 10
-Description:  This is the Standing Stones Folklore Box. 
+Description: This is the Standing Stones Folklore Box.
 A curated box of products from our shop, themed around standing stones.  
 The value of the box is £55.00, if you were to buy the items individually.
 
