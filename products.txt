@@ -4822,3 +4822,24 @@ Stock XL: 10
 Stock XXL: 10
 Description: 1 x Memento Mori FOlklore Box
 ---
+Title: Moonlit Standing Stones Illustrated Tote in Black
+Main Image: images/Tote Bag 2.jpg
+Images: images/Tote Bag 1.jpg
+Sections: Tote Bags
+Size: 380 x 420mm
+Materials: 100% Organic Cotton
+Postal Class: Second Class Large Letter
+Item Cost: 
+Stock: 10
+Stock S: 10
+Stock M: 10
+Stock L: 10
+Stock XL: 10
+Stock XXL: 10
+Description: This is a tote bag featuring Moonlit Standing Stones.
+
+
+The tote is made from 100% Organic Cotton by Westford Mill.
+
+** Please be aware that delivery can take up to 10 days on this item. Email us if you would like it quicker and we will let you know if this is possible. **
+---
