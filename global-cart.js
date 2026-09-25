@@ -19,7 +19,7 @@
     
     let cart = [];
     try {
-        cart = JSON.parse(sessionStorage.getItem(cartKey)) || [];
+        cart = JSON.parse(localStorage.getItem(cartKey)) || [];
         cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
     } catch(e) { cart = []; }
 
@@ -79,8 +79,8 @@
     if (logoutBtn) {
         logoutBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            let wCart = JSON.parse(sessionStorage.getItem('folkloreWholesaleCart')) || [];
-            let rCart = JSON.parse(sessionStorage.getItem('folkloreCart')) || [];
+            let wCart = JSON.parse(localStorage.getItem('folkloreWholesaleCart')) || [];
+            let rCart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
             
             wCart.forEach(wItem => {
                 let existingRItem = rCart.find(rItem => (rItem.cartItemId || rItem.id) === (wItem.cartItemId || wItem.id));
@@ -94,8 +94,8 @@
                     });
                 }
             });
-            sessionStorage.setItem('folkloreCart', JSON.stringify(rCart));
-            sessionStorage.removeItem('folkloreWholesaleCart');
+            localStorage.setItem('folkloreCart', JSON.stringify(rCart));
+            localStorage.removeItem('folkloreWholesaleCart');
             sessionStorage.removeItem('wholesaleAuthenticated');
             alert("You have exited Wholesale Mode. Returning to the standard retail shop.");
             window.location.href = 'shop.html'; 
@@ -194,7 +194,7 @@
             let finalPrice = isWholesale ? Math.round(price * 0.60 * 100) / 100 : price;
             cart.push({ id, cartItemId, title, price: finalPrice, postalClass, size, quantity: 1 });
         }
-        sessionStorage.setItem(cartKey, JSON.stringify(cart));
+        localStorage.setItem(cartKey, JSON.stringify(cart));
         window.updateCartUI();
         window.openCart();
     };
@@ -202,13 +202,13 @@
     window.updateQuantity = function(index, delta) {
         cart[index].quantity += delta;
         if (cart[index].quantity <= 0) cart.splice(index, 1);
-        sessionStorage.setItem(cartKey, JSON.stringify(cart));
+        localStorage.setItem(cartKey, JSON.stringify(cart));
         window.updateCartUI();
     };
 
     window.removeFromCart = function(index) { 
         cart.splice(index, 1); 
-        sessionStorage.setItem(cartKey, JSON.stringify(cart)); 
+        localStorage.setItem(cartKey, JSON.stringify(cart)); 
         window.updateCartUI(); 
     };
 
@@ -346,9 +346,22 @@
             }
         }
 
+        // === NEW: FREE POSTAGE OVER £100 ===
+        let isFreeShipping = (itemsTotal - discountAmount) > 100;
+        if (isFreeShipping) {
+            shippingTotal = 0;
+        }
+
         finalTotal = itemsTotal - discountAmount + shippingTotal;
         if (cartSubtotalLabel) cartSubtotalLabel.textContent = `£${itemsTotal.toFixed(2)}`;
-        if (cartPostageLabel) cartPostageLabel.textContent = `£${shippingTotal.toFixed(2)}`;
+        
+        if (cartPostageLabel) {
+            if (isFreeShipping) {
+                cartPostageLabel.innerHTML = `<span style="color: var(--accent-red); font-weight: bold;">FREE</span>`;
+            } else {
+                cartPostageLabel.textContent = `£${shippingTotal.toFixed(2)}`;
+            }
+        }
         
         const existingDiscRow = document.getElementById('cart-discount-row-render');
         if (existingDiscRow) existingDiscRow.remove();
@@ -444,6 +457,11 @@
                         }
                     }
 
+                    // === NEW: FREE POSTAGE OVER £100 (PayPal Check) ===
+                    if ((itemsTotal - discountAmount) > 100) {
+                        shippingTotal = 0;
+                    }
+
                     if (isWholesale && itemsTotal < 75) { alert("Minimum wholesale spend of £75 not met."); return; }
 
                     if (shippingTotal > 0) {
@@ -470,6 +488,7 @@
                                 orderBreakdown += `${item.quantity || 1}x ${item.title}${sizeStr} - £${itemTotal}\n`;
                             });
                             
+                            // Re-evaluate discount for the receipt
                             if (!isWholesale) {
                                 let discountAmount = 0;
                                 let appliedDiscountName = "";
@@ -505,7 +524,7 @@
 
                         alert('Payment successful! We have received your order, ' + details.payer.name.given_name + ', and an email confirmation will be sent to you shortly.');
                         cart = []; activeDiscount = null; sessionStorage.removeItem('folkloreDiscount');
-                        sessionStorage.setItem(cartKey, JSON.stringify(cart)); 
+                        localStorage.setItem(cartKey, JSON.stringify(cart)); 
                         window.updateCartUI(); window.closeCart();
                     });
                 }
