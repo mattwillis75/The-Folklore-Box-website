@@ -94,7 +94,10 @@
 
     <header id="main-header">
         <div class="logo"><a href="index.html"><img src="./The-folklore-box-logo.png" alt="The Folklore Box Logo"></a></div>
-        <div class="mobile-menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
+        <div class="mobile-controls">
+            <a href="#" id="mobile-cart-toggle" class="mobile-cart-btn" onclick="openCart(); return false;">Cart (<span id="mobile-cart-count">0</span>)</a>
+            <div class="mobile-menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
+        </div>
         <nav>
             <ul id="nav-list">
                 <li class="dropdown">
@@ -118,7 +121,6 @@
             </ul>
         </nav>
     </header>
-
     <main>
         <div class="product-container" id="product-container">
             <!-- Loading -->
