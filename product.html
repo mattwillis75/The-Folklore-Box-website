@@ -18,19 +18,32 @@
         /* Header & Nav */
         header { position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 3rem; background: var(--header-bg); border-bottom: 1px solid #333333; z-index: 1000; box-sizing: border-box; backdrop-filter: blur(8px); }
         .logo img { max-width: 180px; height: auto; }
+        /* Navigation */
         nav ul { list-style: none; display: flex; align-items: center; gap: 2rem; margin: 0; padding: 0; }
-        nav a { text-decoration: none; color: #ffffff; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; transition: color 0.3s ease; }
+        nav a { text-decoration: none; color: #ffffff; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; transition: color 0.3s ease; white-space: nowrap; }
         nav a:hover { color: var(--accent-red); }
         #cart-toggle { color: var(--accent-red); border: 1px solid var(--accent-red); padding: 0.5rem 1rem; border-radius: 3px; }
         #cart-toggle:hover { background: var(--accent-red); color: #ffffff; }
 
+        /* Dropdown */
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-content { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background-color: var(--accent-red); min-width: 180px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5); z-index: 1001; border-radius: 4px; flex-direction: column; margin-top: 1.5rem; padding: 0.5rem 0; }
+        .dropdown-content::before { content: ""; position: absolute; top: -1.5rem; left: 0; width: 100%; height: 1.5rem; }
+        .dropdown:hover .dropdown-content { display: flex; }
+        .dropdown-content a { padding: 10px 16px; display: block; color: #ffffff; text-align: center; }
+        .dropdown-content a:hover { background-color: #a30000; color: #ffffff; }
+        .dropdown-divider { height: 1px; background-color: #ffffff; margin: 0 15px; }
+
         /* Mobile Menu */
         .mobile-menu-toggle { display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1005; }
         .mobile-menu-toggle span { width: 25px; height: 3px; background-color: #ffffff; transition: all 0.3s ease; border-radius: 3px; }
-        @media (max-width: 850px) {
+        @media (max-width: 1100px) {
             .mobile-menu-toggle { display: flex; }
-            nav ul { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background-color: rgba(0, 0, 0, 0.95); padding: 1rem 0; }
+            nav ul { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background-color: rgba(0, 0, 0, 0.95); padding: 1rem 0; border-bottom: 1px solid #333; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
             nav ul.mobile-active { display: flex; }
+            nav ul li { width: 100%; text-align: center; padding: 0.8rem 0; }
+            .dropdown-content { position: static; transform: none; background-color: transparent; box-shadow: none; margin-top: 0; display: none; }
+            .dropdown-content::before { display: none; }
         }
 
         /* Product Page Layout */
@@ -104,9 +117,23 @@
         <div class="mobile-menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
         <nav>
             <ul id="nav-list">
-                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="index.html">Home</a>
+                    <div class="dropdown-content">
+                        <a href="index.html#collections">Goods & Wares</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="index.html#about">About the Artist</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="index.html#map-teaser">The Folklore Map</a>
+                    </div>
+                </li>
                 <li><a href="portfolio.html">Portfolio</a></li>
                 <li><a href="shop.html">Shop</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="uk-folklore-map.html">Folklore Map</a></li>
+                <li><a href="journal.html">Journal</a></li>
+                <li><a href="wholesale.html">Wholesale</a></li>
+                <li><a href="contact.html">Contact</a></li>
                 <li><a href="#" id="cart-toggle">Cart (0)</a></li>
             </ul>
         </nav>
