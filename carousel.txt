@@ -1,7 +1,7 @@
 Slide: 1
-Format: 
-Heading: 
-Description: 
+Format: SHOP UPDATE
+Heading: Standing Stones
+Description: New Standing Stones products available in The Folklore Box shop.
 Image: images/Standing Stones 1.jpg
 ---
 Slide: 2
