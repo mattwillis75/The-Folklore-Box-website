@@ -155,9 +155,9 @@
             let foundProduct = null;
             let postalRates = {};
 
-            // 1. Fetch Postal Rates
+            // 1. Fetch Postal Rates (Added Cache Busting)
             try {
-                const postalResponse = await fetch('postal.txt', { cache: 'no-store' });
+                const postalResponse = await fetch('postal.txt?v=' + new Date().getTime(), { cache: 'no-store' });
                 const postalText = await postalResponse.text();
                 postalText.split('---').forEach(block => {
                     if(!block.trim()) return;
@@ -179,30 +179,37 @@
                 });
             } catch(e) { console.error("Could not load postal rates."); }
 
-            // 2. Fetch and Parse Product
+            // 2. Fetch and Parse Product (Added Cache Busting & Multi-line Parsing)
             try {
-                const response = await fetch('products.txt', { cache: 'no-store' });
+                const response = await fetch('products.txt?v=' + new Date().getTime(), { cache: 'no-store' });
                 const text = await response.text();
-                const rawItems = text.split('---');
+                const rawItems = text.split(/---\r?\n/);
 
                 for (const rawItem of rawItems) {
                     if (rawItem.trim() === '') continue;
-                    const lines = rawItem.trim().split('\n');
-                    let product = { additionalImages: [] };
+                    const lines = rawItem.split('\n');
+                    let product = { additionalImages: [], basePrice: 0, description: '' };
+                    let currentKey = '';
                     
                     lines.forEach(line => {
                         const sepIndex = line.indexOf(':');
-                        if (sepIndex > -1) {
-                            const key = line.slice(0, sepIndex).trim().toLowerCase();
+                        // Treat as a new key if it has a colon and isn't indented text
+                        if (sepIndex > -1 && sepIndex < 30 && !line.startsWith(' ') && !line.startsWith('\t')) {
+                            currentKey = line.slice(0, sepIndex).trim().toLowerCase();
                             const value = line.slice(sepIndex + 1).trim();
-                            if (key === 'title') { product.title = value; product.id = value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, ''); }
-                            else if (key === 'main image' || key === 'image') product.mainImage = value;
-                            else if (key === 'images') product.additionalImages = value.split(',').map(s => s.trim());
-                            else if (key === 'description') product.description = value;
-                            else if (key === 'postal class') product.postalClass = value;
-                            else if (key === 'item cost') product.basePrice = parseFloat(value);
+                            
+                            if (currentKey === 'title') { product.title = value; product.id = value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, ''); }
+                            else if (currentKey === 'main image' || currentKey === 'image') product.mainImage = value;
+                            else if (currentKey === 'images') product.additionalImages = value.split(',').map(s => s.trim());
+                            else if (currentKey === 'description') product.description = value;
+                            else if (currentKey === 'postal class') product.postalClass = value;
+                            else if (currentKey === 'item cost') product.basePrice = parseFloat(value.replace(/[^0-9.]/g, '')) || 0;
+                        } else if (currentKey === 'description' && line.trim() !== '') {
+                            // Safely append multi-line descriptions
+                            product.description += (product.description ? '<br><br>' : '') + line.trim();
                         }
                     });
+                    
                     if (product.id === productId) { foundProduct = product; break; }
                 }
 
@@ -247,8 +254,13 @@
                             });
                         });
                     }
+                } else {
+                    productContainer.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; color: #888;">Product not found in catalogue.</div>`;
                 }
-            } catch (err) { productContainer.innerHTML = "Error loading product."; }
+            } catch (err) { 
+                console.error("Error parsing products file:", err);
+                productContainer.innerHTML = `<div style="grid-column: 1 / -1; color: var(--accent-red); text-align: center;">Error loading product data. Please check console.</div>`; 
+            }
 
             // --- CART LOGIC ---
             let cart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
