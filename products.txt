@@ -55,32 +55,32 @@ Stock L: 10
 Stock XL: 10
 Stock XXL: 10
 Description: This is the Standing Stones Folklore Box.
-A curated box of products from our shop, themed around standing stones.  
+A curated box of products from our shop, themed around standing stones.
 The value of the box is £55.00, if you were to buy the items individually.
 
 Standing stones are monumental prehistoric structures, dating from the Neolithic and Early Bronze age, 6,000 to 35,00 years ago. They are scattered globally, with large concentrations throughout the British Isles and Northern France. Carved from regional rock formations and weighing up to several tons, these monoliths were quarried, transported, and raised by early human civilizations using only rudimentary timber sledges, earthen ramps, and lever systems. Their immense physical weight and durability have allowed these silent stone circles and solitary pillars to endure the elements for over five millennia, far outlasting the unwritten histories of the cultures that created them.
 
-Historically, rural communities viewed standing stones as supernatural entities rather than architectural ruins. Medieval folklore claimed these massive structures were thrown by arguing giants, accidentally dropped by the Devil, or were the petrified remains of cursed armies and Sabbath dancers.  Locals believed the monuments possessed magical properties, utilizing holed stones to heal ailments like rickets, aid in fertility rites, and ward off witchcraft. Legends also suggested the stones could uproot themselves at specific times, such as Midsummer, to drink or bathe in nearby waters. 
+Historically, rural communities viewed standing stones as supernatural entities rather than architectural ruins. Medieval folklore claimed these massive structures were thrown by arguing giants, accidentally dropped by the Devil, or were the petrified remains of cursed armies and Sabbath dancers. Locals believed the monuments possessed magical properties, utilizing holed stones to heal ailments like rickets, aid in fertility rites, and ward off witchcraft. Legends also suggested the stones could uproot themselves at specific times, such as Midsummer, to drink or bathe in nearby waters.
 
 In the 17th and 18th centuries, antiquarians John Aubrey and William Stukeley shifted this narrative, popularising the enduring theory that the stones were Druidic altars designed for blood sacrifices. Today, modern archeoastronomy grounds these monuments, suggesting they functioned as massive agricultural calendars and celestial observatories.
 
 The box contains:
 
 Moonlit Standing Stone Organic Cotton Tote
-A4 Stone Circle Under The Moon Art Print  
+A4 Stone Circle Under The Moon Art Print
 Birch Wood Trilithon Hanging Decoration
 Galaxy Stones Card and Envelope
 Moonlit Standing Stone Enamel Pin
- A Walk Amongst The Stones Vinyl UV sticker
+A Walk Amongst The Stones sticker
 
 All items are the same as our individual stock items, so this means you can keep the whole box for yourself or gift individual items, safe in the knowledge that your receiver is totally unaware you snapped up a bargain!
 
-The Standing Stones Folklore Box comes in an A4 PIP box.  Any bubble wrap we may use around the pin, is recycled from our suppliers.  Please reuse and recycle.
+The Standing Stones Folklore Box comes in an A4 PIP box. Any bubble wrap we may use around the pin, is recycled from our suppliers. Please reuse and recycle.
 
 T&Cs
 We cannot swap items in the box out for other items.
 The whole box can only be sent to one address.
-Boxes are only available whilst stocks last.  We have a finite supply of enamel pins.
+Boxes are only available whilst stocks last. We have a finite supply of enamel pins.
 ---
 Title: Moonlit Standing Stones Enamel Pin in Silver Coloured Metal
 Main Image: images/Enamel Pin 2.jpg
@@ -4984,3 +4984,4 @@ We also sell standing stones coasters which compliment this mug.
 *  We endeavour to keep stocks of this item, already cured and ready to go.   However, from time to time delivery can take up to 10 days if demand outweighs finished stocks.  Items are cured and this unfortunately can take time.  We will always let you know by email if this is the case.
 
 **  We only sell mugs to mainland England, Scotland and Wales.  Due to the fragile nature of ceramic, the extra manual handling oversees, including Ireland, Northern Island,  Isle of Wight, Isle of Man, Channel Islands, Isles of Scilly and the Scottish Islands makes it much more difficult for us to make sure your mug arrives intact.  Sorry.  We do love the British islands and your many folk traditions, it's just difficult this time.
+---
