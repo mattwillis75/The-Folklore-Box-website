@@ -41,7 +41,7 @@ Int Base: 17.00
 Int Additional: 2.00
 ---
 Class: Second Class Small Parcel
-UK Base: 4.00
+UK Base: 3.95
 UK Additional: 1.00
 Int Base: 15.00
 Int Additional: 2.00
