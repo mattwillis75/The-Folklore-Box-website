@@ -4843,3 +4843,24 @@ The tote is made from 100% Organic Cotton by Westford Mill.
 
 ** Please be aware that delivery can take up to 10 days on this item. Email us if you would like it quicker and we will let you know if this is possible. **
 ---
+Title: Moonlit Standing Stones Illustrated T-Shirt in Black
+Main Image: images/TShirt 1.jpg
+Images: images/TShirt 2.jpg
+Sections: T-Shirts
+Size: 
+Materials: 100% Organic ringspun combed cotton
+Postal Class: Second Class Large Letter
+Item Cost: 25
+Stock: 10
+Stock S: 10
+Stock M: 10
+Stock L: 10
+Stock XL: 10
+Stock XXL: 10
+Description: This is a T-Shirt featuring Moonlit Standing Stones.
+
+
+The T-Shirt is made from 100% Organic Stanley & Stella ringspun combed cotton.
+
+** Please be aware that delivery can take up to 10 days on this item. Email us if you would like it quicker and we will let you know if this is possible. **
+---
