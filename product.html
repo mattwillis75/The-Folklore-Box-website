@@ -18,7 +18,6 @@
         /* Header & Nav */
         header { position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 3rem; background: var(--header-bg); border-bottom: 1px solid #333333; z-index: 1000; box-sizing: border-box; backdrop-filter: blur(8px); }
         .logo img { max-width: 180px; height: auto; }
-        /* Navigation */
         nav ul { list-style: none; display: flex; align-items: center; gap: 2rem; margin: 0; padding: 0; }
         nav a { text-decoration: none; color: #ffffff; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; transition: color 0.3s ease; white-space: nowrap; }
         nav a:hover { color: var(--accent-red); }
@@ -71,7 +70,8 @@
         .price-breakdown { background: #0a0a0a; border: 1px solid #222; padding: 1.5rem; border-radius: 4px; margin-bottom: 2rem; }
         .price-total { display: flex; justify-content: space-between; font-family: 'Spectral', serif; font-size: 1.8rem; color: var(--accent-red); }
         
-        .btn { display: block; background: var(--accent-red); color: #fff; padding: 1.2rem; text-align: center; border: none; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; width: 100%; }
+        /* Added margin-bottom so the description has breathing room below it */
+        .btn { display: block; background: var(--accent-red); color: #fff; padding: 1.2rem; text-align: center; border: none; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; width: 100%; margin-bottom: 2.5rem; }
         
         /* Slide-Out Cart */
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 1001; display: none; }
@@ -279,6 +279,7 @@
                         galleryHTML += `</div>`;
                     }
 
+                    // --- REORDERED HTML TEMPLATE ---
                     productContainer.innerHTML = `
                         <div class="product-gallery">
                             <div class="product-image-container"><img id="main-product-image" src="${foundProduct.mainImage}" alt="${foundProduct.title}"></div>
@@ -286,11 +287,11 @@
                         </div>
                         <div class="product-info">
                             <h1>${foundProduct.title}</h1>
-                            <p class="product-description">${foundProduct.description}</p>
                             <div class="price-breakdown">
                                 <div class="price-total"><span>Price:</span><span>£${foundProduct.basePrice.toFixed(2)}</span></div>
                             </div>
                             <button class="btn" id="add-to-cart-btn">Add to Cart</button>
+                            <p class="product-description">${foundProduct.description}</p>
                         </div>
                     `;
 
