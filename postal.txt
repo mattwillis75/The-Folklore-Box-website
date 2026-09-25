@@ -37,8 +37,8 @@ Int Additional: 2.00
 Class: Second Class Large Letter
 UK Base: 2.50
 UK Additional: 0.50
-Int Base: 17.00
-Int Additional: 2.00
+Int Base: 10.00
+Int Additional: 1.00
 ---
 Class: Second Class Small Parcel
 UK Base: 3.95
