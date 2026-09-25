@@ -4907,8 +4907,8 @@ The whole box can only be sent to one address.
 Boxes are only available whilst stocks last.  We have a finite supply of enamel pins.
 ---
 Title: Moonlit Standing Stones Enamel Pin in Silver Coloured Metal
-Main Image: images/Enamel Pin 4.jpg
-Images: images/Enamel Pin 1.jpg, images/Enamel Pin 3.jpg, images/Enamel Pin 2.jpg
+Main Image: images/Enamel Pin 2.jpg
+Images: images/Enamel Pin 3.jpg, images/Enamel Pin 1.jpg, images/Enamel Pin 4.jpg
 Sections: Enamel Pins
 Size: 20 x 25mm
 Materials: metal, rubber, enamel
