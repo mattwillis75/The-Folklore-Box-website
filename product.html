@@ -60,13 +60,16 @@
         .gallery-thumbnails img:hover { opacity: 1; border-color: #555; }
         .gallery-thumbnails img.active { border-color: var(--accent-red); opacity: 1; }
 
-        .product-info h1 { font-size: 2.5rem; margin-top: 0; }
+        .product-info h1 { font-size: 2.5rem; margin-top: 0; margin-bottom: 0.5rem; }
+        .product-specs { margin-bottom: 1.5rem; color: #aaa; font-size: 0.95rem; }
+        .product-specs p { margin: 0.2rem 0; }
         .product-description { font-size: 1.1rem; color: #ccc; margin-bottom: 2rem; }
         
         .price-breakdown { background: #0a0a0a; border: 1px solid #222; padding: 1.5rem; border-radius: 4px; margin-bottom: 2rem; }
         .price-total { display: flex; justify-content: space-between; font-family: 'Spectral', serif; font-size: 1.8rem; color: var(--accent-red); }
         
-        .btn { display: block; background: var(--accent-red); color: #fff; padding: 1.2rem; text-align: center; border: none; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; width: 100%; margin-bottom: 2.5rem; }
+        .btn { display: block; background: var(--accent-red); color: #fff; padding: 1.2rem; text-align: center; border: none; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; width: 100%; margin-bottom: 2.5rem; transition: background 0.3s ease; }
+        .btn:hover { background: #e60000; }
         
         /* Slide-Out Cart */
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 1001; display: none; }
@@ -231,7 +234,7 @@
                 for (const rawItem of rawItems) {
                     if (rawItem.trim() === '') continue;
                     const lines = rawItem.split('\n');
-                    let product = { additionalImages: [], basePrice: 0, description: '', sizes: [] };
+                    let product = { additionalImages: [], basePrice: 0, description: '', sizes: null, size: '', materials: '' };
                     let currentKey = '';
                     
                     lines.forEach(line => {
@@ -245,7 +248,21 @@
                             else if (currentKey === 'images') product.additionalImages = value.split(',').map(s => s.trim());
                             else if (currentKey === 'description') product.description = value;
                             else if (currentKey === 'postal class') product.postalClass = value;
-                            else if (currentKey === 'sizes') product.sizes = value.split(',').map(s => s.trim());
+                            else if (currentKey === 'size') {
+                                product.size = value;
+                                // Failsafe check just in case you ever use S/M/L formatting
+                                if (value.includes('S/M/L/XL/XXL')) {
+                                    product.sizes = ['S', 'M', 'L', 'XL', 'XXL'];
+                                }
+                            }
+                            else if (currentKey === 'materials') product.materials = value;
+                            else if (currentKey === 'sections') {
+                                product.sections = value.split(',').map(s => s.trim());
+                                // AUTOMATIC T-SHIRT DETECTOR 
+                                if (product.sections.includes('T-Shirts')) {
+                                    product.sizes = ['S', 'M', 'L', 'XL', 'XXL'];
+                                }
+                            }
                             else if (currentKey === 'item cost') {
                                 product.basePrice = parseFloat(value.replace(/[^0-9.]/g, '')) || 0;
                                 if (isWholesale) {
@@ -269,17 +286,23 @@
                         galleryHTML = `<div class="gallery-thumbnails">`;
                         allImages.forEach((imgSrc, index) => {
                             const activeClass = index === 0 ? 'active' : '';
-                            galleryHTML += `<img src="${imgSrc}" class="thumbnail ${activeClass}" data-src="${imgSrc}" alt="${foundProduct.title} thumbnail">`;
+                            // Thumbnail Auto-Formatter
+                            const thumbSrc = imgSrc.replace('.png', '-thumb.png')
+                                                   .replace('.jpg', '-thumb.jpg')
+                                                   .replace('.jpeg', '-thumb.jpeg');
+                                                   
+                            galleryHTML += `<img src="${thumbSrc}" class="thumbnail ${activeClass}" data-src="${imgSrc}" alt="${foundProduct.title} thumbnail">`;
                         });
                         galleryHTML += `</div>`;
                     }
 
-                    // Generate Dynamic Size Box if Sizes Exist
+                    // Generate Dynamic Size Box
                     let sizeSelectorHTML = '';
                     if (foundProduct.sizes && foundProduct.sizes.length > 0) {
+                        const sizeLabels = { 'S': 'Small', 'M': 'Medium', 'L': 'Large', 'XL': 'X-Large', 'XXL': 'XX-Large' };
                         let rows = foundProduct.sizes.map(s => `
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem; font-family: 'Lato', sans-serif;">
-                                <span style="color: #fff; font-size: 1rem;">${s}</span>
+                                <span style="color: #fff; font-size: 1rem;">${sizeLabels[s] || s}</span>
                                 <input type="number" class="size-qty-input" data-size="${s}" min="0" value="0" style="width:70px; padding:0.6rem; background:#111; color:#fff; border:1px solid #333; border-radius:3px; text-align:center;">
                             </div>
                         `).join('');
@@ -292,6 +315,16 @@
                         `;
                     }
 
+                    // Compile Specifications
+                    let specsHtml = '';
+                    if (foundProduct.size || foundProduct.materials) {
+                        specsHtml += `<div class="product-specs">`;
+                        // Only show explicit 'Size:' text if it's not an apparel item with a selection box
+                        if (foundProduct.size && !foundProduct.sizes) specsHtml += `<p><strong>Size:</strong> ${foundProduct.size}</p>`;
+                        if (foundProduct.materials) specsHtml += `<p><strong>Materials:</strong> ${foundProduct.materials}</p>`;
+                        specsHtml += `</div>`;
+                    }
+
                     productContainer.innerHTML = `
                         <div class="product-gallery">
                             <div class="product-image-container"><img id="main-product-image" src="${foundProduct.mainImage}" alt="${foundProduct.title}"></div>
@@ -299,6 +332,7 @@
                         </div>
                         <div class="product-info">
                             <h1>${foundProduct.title}</h1>
+                            ${specsHtml}
                             <div class="price-breakdown">
                                 <div class="price-total"><span>Price:</span><span>£${foundProduct.basePrice.toFixed(2)}</span></div>
                             </div>
@@ -348,7 +382,7 @@
             cartOverlay.addEventListener('click', closeCart);
             destSelect.addEventListener('change', updateCartUI);
 
-            // UPDATED: Multi-Size Cart Logic
+            // Quantity Aggregation Logic
             document.addEventListener('click', (e) => {
                 if (e.target && e.target.id === 'add-to-cart-btn') {
                     if (!foundProduct) return;
@@ -357,7 +391,6 @@
                     let itemsAdded = false;
 
                     if (qtyInputs.length > 0) {
-                        // Loop through size inputs and add them sequentially if > 0
                         qtyInputs.forEach(input => {
                             const qty = parseInt(input.value) || 0;
                             if (qty > 0) {
@@ -378,7 +411,7 @@
                                         quantity: qty 
                                     });
                                 }
-                                input.value = 0; // Reset input field after successful addition
+                                input.value = 0; 
                                 itemsAdded = true;
                             }
                         });
@@ -388,7 +421,6 @@
                             return;
                         }
                     } else {
-                        // Standard single item addition (No sizes available)
                         let existingItem = cart.find(item => item.id === foundProduct.id);
                         if (existingItem) {
                             existingItem.quantity += 1;
@@ -410,7 +442,6 @@
                 }
             });
 
-            // UPDATED: Global Quantity modifier
             window.updateQuantity = function(index, delta) {
                 cart[index].quantity += delta;
                 if (cart[index].quantity <= 0) cart.splice(index, 1);
@@ -449,7 +480,7 @@
                 const dest = destSelect.value;
                 let maxBase = 0; let maxBaseItem = null;
 
-                // Step 1: Render items with quantity buttons
+                // Render items with quantity buttons
                 cart.forEach((item, index) => {
                     const qty = item.quantity || 1;
                     const itemTotalCost = item.price * qty;
@@ -480,7 +511,7 @@
                     }
                 });
 
-                // Step 2: Apply postage dynamically
+                // Apply postage dynamically
                 if (isWholesale) {
                     shippingTotal = 10.00;
                 } else {
