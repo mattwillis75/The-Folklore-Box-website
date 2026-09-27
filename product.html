@@ -326,6 +326,9 @@
                     }
 
                     productContainer.innerHTML = `
+                        <div style="grid-column: 1 / -1; margin-bottom: -1.5rem;">
+                            <a href="${isWholesale ? 'wholesale.html' : 'shop.html'}" style="display: inline-flex; align-items: center; gap: 0.5rem; color: #888; text-decoration: none; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease;" onmouseover="this.style.color='var(--accent-red)'" onmouseout="this.style.color='#888'">&larr; Back to Shop</a>
+                        </div>
                         <div class="product-gallery">
                             <div class="product-image-container"><img id="main-product-image" src="${foundProduct.mainImage}" alt="${foundProduct.title}"></div>
                             ${galleryHTML}
