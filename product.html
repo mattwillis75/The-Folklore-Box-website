@@ -48,17 +48,13 @@
         /* Product Page Layout */
         main { padding-top: 120px; min-height: 100vh; max-width: 1200px; margin: 0 auto; padding-bottom: 4rem; }
 
-        /* 1. Strictly cap the left column at 450px using minmax() */
         .product-container { display: grid; grid-template-columns: minmax(0, 450px) 1fr; gap: 4rem; padding: 2rem; align-items: start; }
         @media (max-width: 850px) { .product-container { grid-template-columns: 1fr; max-width: 550px; margin: 0 auto; } }
 
-        /* 2. Make the gallery fill that locked column */
         .product-gallery { display: flex; flex-direction: column; gap: 1.5rem; width: 100%; }
-        
         .product-image-container { width: 100%; }
         .product-image-container img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: 1px solid #333; border-radius: 4px; transition: opacity 0.3s ease; display: block; background: #111; }
 
-        /* 3. Use CSS Grid for the thumbnails to force precise wrapping */
         .gallery-thumbnails { display: grid; grid-template-columns: repeat(auto-fill, minmax(75px, 1fr)); gap: 1rem; width: 100%; }
         .gallery-thumbnails img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border: 2px solid transparent; border-radius: 4px; cursor: pointer; transition: all 0.3s ease; opacity: 0.6; }
         .gallery-thumbnails img:hover { opacity: 1; border-color: #555; }
@@ -70,7 +66,6 @@
         .price-breakdown { background: #0a0a0a; border: 1px solid #222; padding: 1.5rem; border-radius: 4px; margin-bottom: 2rem; }
         .price-total { display: flex; justify-content: space-between; font-family: 'Spectral', serif; font-size: 1.8rem; color: var(--accent-red); }
         
-        /* Added margin-bottom so the description has breathing room below it */
         .btn { display: block; background: var(--accent-red); color: #fff; padding: 1.2rem; text-align: center; border: none; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; width: 100%; margin-bottom: 2.5rem; }
         
         /* Slide-Out Cart */
@@ -95,7 +90,6 @@
 
         .cart-footer { border-top: 1px solid #333; padding-top: 1.5rem; }
         
-        /* New Cart Shipping Styles */
         .cart-shipping-selector { margin-bottom: 1rem; border-bottom: 1px solid #222; padding-bottom: 1rem; }
         .cart-shipping-selector label { display: block; color: #aaa; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
         .cart-shipping-selector select { width: 100%; padding: 0.8rem; background: #111; color: #fff; border: 1px solid #333; border-radius: 3px; cursor: pointer; }
@@ -237,7 +231,7 @@
                 for (const rawItem of rawItems) {
                     if (rawItem.trim() === '') continue;
                     const lines = rawItem.split('\n');
-                    let product = { additionalImages: [], basePrice: 0, description: '' };
+                    let product = { additionalImages: [], basePrice: 0, description: '', sizes: [] };
                     let currentKey = '';
                     
                     lines.forEach(line => {
@@ -251,6 +245,7 @@
                             else if (currentKey === 'images') product.additionalImages = value.split(',').map(s => s.trim());
                             else if (currentKey === 'description') product.description = value;
                             else if (currentKey === 'postal class') product.postalClass = value;
+                            else if (currentKey === 'sizes') product.sizes = value.split(',').map(s => s.trim());
                             else if (currentKey === 'item cost') {
                                 product.basePrice = parseFloat(value.replace(/[^0-9.]/g, '')) || 0;
                                 if (isWholesale) {
@@ -279,7 +274,24 @@
                         galleryHTML += `</div>`;
                     }
 
-                    // --- REORDERED HTML TEMPLATE ---
+                    // Generate Dynamic Size Box if Sizes Exist
+                    let sizeSelectorHTML = '';
+                    if (foundProduct.sizes && foundProduct.sizes.length > 0) {
+                        let rows = foundProduct.sizes.map(s => `
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem; font-family: 'Lato', sans-serif;">
+                                <span style="color: #fff; font-size: 1rem;">${s}</span>
+                                <input type="number" class="size-qty-input" data-size="${s}" min="0" value="0" style="width:70px; padding:0.6rem; background:#111; color:#fff; border:1px solid #333; border-radius:3px; text-align:center;">
+                            </div>
+                        `).join('');
+                        
+                        sizeSelectorHTML = `
+                            <div style="background:#0a0a0a; border:1px solid #222; padding:1.5rem; border-radius:4px; margin-bottom:2rem;">
+                                <label style="display:block; color:#aaa; font-size:0.85rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:1rem; font-weight:600;">Order Quantities By Size</label>
+                                ${rows}
+                            </div>
+                        `;
+                    }
+
                     productContainer.innerHTML = `
                         <div class="product-gallery">
                             <div class="product-image-container"><img id="main-product-image" src="${foundProduct.mainImage}" alt="${foundProduct.title}"></div>
@@ -290,6 +302,7 @@
                             <div class="price-breakdown">
                                 <div class="price-total"><span>Price:</span><span>£${foundProduct.basePrice.toFixed(2)}</span></div>
                             </div>
+                            ${sizeSelectorHTML}
                             <button class="btn" id="add-to-cart-btn">Add to Cart</button>
                             <p class="product-description">${foundProduct.description}</p>
                         </div>
@@ -335,23 +348,62 @@
             cartOverlay.addEventListener('click', closeCart);
             destSelect.addEventListener('change', updateCartUI);
 
-            // UPDATED: Quantity Aggregation Logic
+            // UPDATED: Multi-Size Cart Logic
             document.addEventListener('click', (e) => {
                 if (e.target && e.target.id === 'add-to-cart-btn') {
                     if (!foundProduct) return;
                     
-                    let existingItem = cart.find(item => item.id === foundProduct.id);
-                    if (existingItem) {
-                        existingItem.quantity += 1;
-                    } else {
-                        cart.push({ 
-                            id: foundProduct.id, 
-                            title: foundProduct.title, 
-                            price: foundProduct.basePrice, 
-                            postalClass: foundProduct.postalClass, 
-                            quantity: 1 
+                    const qtyInputs = document.querySelectorAll('.size-qty-input');
+                    let itemsAdded = false;
+
+                    if (qtyInputs.length > 0) {
+                        // Loop through size inputs and add them sequentially if > 0
+                        qtyInputs.forEach(input => {
+                            const qty = parseInt(input.value) || 0;
+                            if (qty > 0) {
+                                const selectedSize = input.dataset.size;
+                                const cartItemId = `${foundProduct.id}-${selectedSize}`;
+                                
+                                let existingItem = cart.find(item => (item.cartItemId || item.id) === cartItemId);
+                                if (existingItem) {
+                                    existingItem.quantity += qty;
+                                } else {
+                                    cart.push({ 
+                                        id: foundProduct.id, 
+                                        cartItemId: cartItemId,
+                                        title: foundProduct.title, 
+                                        price: foundProduct.basePrice, 
+                                        postalClass: foundProduct.postalClass, 
+                                        size: selectedSize,
+                                        quantity: qty 
+                                    });
+                                }
+                                input.value = 0; // Reset input field after successful addition
+                                itemsAdded = true;
+                            }
                         });
+                        
+                        if (!itemsAdded) {
+                            alert("Please enter a quantity for at least one size.");
+                            return;
+                        }
+                    } else {
+                        // Standard single item addition (No sizes available)
+                        let existingItem = cart.find(item => item.id === foundProduct.id);
+                        if (existingItem) {
+                            existingItem.quantity += 1;
+                        } else {
+                            cart.push({ 
+                                id: foundProduct.id, 
+                                cartItemId: foundProduct.id,
+                                title: foundProduct.title, 
+                                price: foundProduct.basePrice, 
+                                postalClass: foundProduct.postalClass, 
+                                quantity: 1 
+                            });
+                        }
                     }
+                    
                     localStorage.setItem(cartKey, JSON.stringify(cart));
                     updateCartUI();
                     openCart();
@@ -404,10 +456,11 @@
                     itemsTotal += itemTotalCost;
                     cartItemCount += qty;
                     
+                    const sizeStr = item.size ? `<br><span style="font-size:0.85rem; color:#aaa;">Size: ${item.size}</span>` : '';
                     container.innerHTML += `
                         <div class="cart-item">
                             <div class="cart-item-title">
-                                ${item.title} <br>
+                                ${item.title} ${sizeStr}<br>
                                 <span style="font-size:0.8rem; color:#888; font-weight:normal;">£${item.price.toFixed(2)} each</span>
                             </div>
                             <div class="cart-qty-controls">
@@ -503,7 +556,7 @@
                     }
                     
                     const paypalItems = cart.map(item => {
-                        return { name: item.title, unit_amount: { currency_code: 'GBP', value: item.price.toFixed(2) }, quantity: (item.quantity || 1).toString() };
+                        return { name: item.title + (item.size ? ` (${item.size})` : ''), unit_amount: { currency_code: 'GBP', value: item.price.toFixed(2) }, quantity: (item.quantity || 1).toString() };
                     });
                     
                     if (isWholesale && itemsTotal < 75) { alert("Minimum wholesale spend of £75 not met."); return; }
