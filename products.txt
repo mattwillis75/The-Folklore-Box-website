@@ -1,4 +1,5 @@
 Title: Moonlit Standing Stones Illustrated Tote in Black
+Featured: Yes
 Main Image: images/Tote Bag 2.jpg
 Images: images/Tote Bag 1.jpg
 Sections: Tote Bags
@@ -20,6 +21,7 @@ The tote is made from 100% Organic Cotton by Westford Mill.
 ** Please be aware that delivery can take up to 10 days on this item. Email us if you would like it quicker and we will let you know if this is possible. **
 ---
 Title: Moonlit Standing Stones Illustrated T-Shirt in Black
+Featured: Yes
 Main Image: images/TShirt 1.jpg
 Images: images/TShirt 2.jpg
 Sections: T-Shirts
@@ -41,6 +43,7 @@ The T-Shirt is made from 100% Organic Stanley & Stella ringspun combed cotton.
 ** Please be aware that delivery can take up to 10 days on this item. Email us if you would like it quicker and we will let you know if this is possible. **
 ---
 Title: Standing Stones Folklore Box - Curated art bundle of henge goodies
+Featured: Yes
 Main Image: images/Standing Stones Folklore Box 1.jpg
 Images: images/Tote Bag 1.jpg, images/Tote Bag 2.jpg, images/A4 Print 1.jpg, images/Card 1.jpg, images/Hanging Decoration 1.jpg, images/Enamel Pin 1.jpg, images/Sticker 1.jpg
 Sections: The Folklore Boxes
@@ -83,6 +86,7 @@ The whole box can only be sent to one address.
 Boxes are only available whilst stocks last. We have a finite supply of enamel pins.
 ---
 Title: Moonlit Standing Stones Enamel Pin in Silver Coloured Metal
+Featured: Yes
 Main Image: images/Enamel Pin 2.jpg
 Images: images/Enamel Pin 3.jpg, images/Enamel Pin 1.jpg, images/Enamel Pin 4.jpg
 Sections: Enamel Pins
