@@ -78,21 +78,29 @@
         .exit-wholesale-btn { background: transparent; color: #fff; border: 1px solid var(--accent-red); padding: 0.4rem 1rem; font-family: 'Lato', sans-serif; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; border-radius: 3px; transition: all 0.3s ease; }
         .exit-wholesale-btn:hover { background: var(--accent-red); }
 
-        /* Shop Layout */
-        .container { max-width: 1200px; margin: 20px auto 40px; padding: 0 20px; width: 100%; box-sizing: border-box; }
+        /* Shop Core Layout */
+        .container { max-width: 1400px; margin: 20px auto 40px; padding: 0 30px; width: 100%; box-sizing: border-box; }
         .page-title { text-align: center; font-family: var(--font-headings); font-size: 2.8rem; font-weight: 400; margin-bottom: 2.5rem; color: var(--text-light); letter-spacing: 1px; }
 
-        /* Filter Bar & Buttons */
-        .filter-bar { display: flex; gap: 15px; margin-bottom: 40px; flex-wrap: wrap; justify-content: center; }
-        .filter-btn { background: transparent; color: var(--text-light); border: 1px solid var(--border-color); padding: 0.6rem 1.5rem; cursor: pointer; border-radius: 3px; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.85rem; transition: all var(--transition-speed); font-family: var(--font-body); font-weight: 600; }
-        .filter-btn.active, .filter-btn:hover { border-color: var(--accent-red); background: var(--accent-red); color: var(--text-light); }
-
-        /* Grid Setup */
+        /* Featured Section */
+        .featured-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-bottom: 40px; }
+        .featured-card { border: 2px solid #ffffff !important; }
+        
+        /* Layout Grid */
+        .shop-layout { display: flex; gap: 40px; align-items: flex-start; }
+        .shop-sidebar { flex: 0 0 200px; position: sticky; top: 110px; }
+        .sidebar-title { font-family: var(--font-headings); font-size: 1.5rem; margin-top: 0; margin-bottom: 1.2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; color: var(--text-light); font-weight: 400; }
+        .shop-main { flex: 1; min-width: 0; }
         .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 30px; }
+
+        /* Sidebar Filter Buttons */
+        .filter-list { display: flex; flex-direction: column; gap: 8px; }
+        .filter-btn { background: transparent; color: var(--text-muted); border: none; border-left: 2px solid transparent; padding: 0.4rem 1rem; cursor: pointer; border-radius: 0; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.85rem; transition: all var(--transition-speed); font-family: var(--font-body); font-weight: 600; text-align: left; width: 100%; box-sizing: border-box; }
+        .filter-btn.active, .filter-btn:hover { border-left-color: var(--accent-red); color: var(--text-light); background: rgba(204, 0, 0, 0.05); }
 
         /* Product Cards */
         .product-card { background: #111; border: 1px solid #333; border-radius: 4px; transition: border-color 0.3s ease, transform 0.3s ease; cursor: pointer; position: relative; display: flex; flex-direction: column; height: 100%; }
-        .product-card:hover { border-color: var(--accent-red); transform: translateY(-5px); }
+        .product-card:hover { border-color: var(--accent-red) !important; transform: translateY(-5px); }
         .product-card a { text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%; padding: 1.5rem; box-sizing: border-box; }
         
         .product-image { width: 100%; aspect-ratio: 1 / 1; background: #0a0a0a; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
@@ -113,17 +121,25 @@
         .social-links { margin-bottom: 2rem; }
 
         /* RESPONSIVE MOBILE LAYOUT ADJUSTMENTS */
+        @media (max-width: 1000px) {
+            .featured-grid { grid-template-columns: repeat(2, 1fr); }
+            .shop-layout { flex-direction: column; gap: 20px; }
+            .shop-sidebar { position: static; width: 100%; flex: auto; border-bottom: 1px solid #333; padding-bottom: 20px; }
+            .filter-list { flex-direction: row; flex-wrap: wrap; gap: 10px; }
+            .filter-btn { width: auto; border-left: 1px solid var(--border-color); border: 1px solid var(--border-color); padding: 0.5rem 1rem; border-radius: 3px; text-align: center; }
+            .filter-btn.active, .filter-btn:hover { border-color: var(--accent-red); background: var(--accent-red); color: #fff; }
+        }
+
         @media (max-width: 800px) {
             header { padding: 1rem 1.5rem; }
             .page-title { font-size: 2.2rem; margin-bottom: 1.5rem; }
-            .filter-bar { gap: 10px; }
-            .filter-btn { padding: 0.5rem 1rem; font-size: 0.75rem; }
+            .container { padding: 0 20px; }
         }
 
         @media (max-width: 600px) {
             .mobile-cart-btn { font-size: 0.7rem; padding: 0.3rem 0.6rem; }
             .mobile-controls { gap: 10px; }
-            .shop-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
+            .shop-grid, .featured-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
             .product-card { min-height: auto; }
             .product-card a { padding: 1rem; }
             .product-image { margin-bottom: 1rem; }
@@ -133,97 +149,27 @@
         }
 
         /* --- DESKTOP FLOATING ROUNDEL / MOBILE FULL-WIDTH STRIP --- */
-        .promo-element {
-            position: fixed; 
-            top: 50%; 
-            right: 30px; 
-            background-color: #49b44c; 
-            width: 110px; height: 110px; 
-            border-radius: 50%; 
-            box-shadow: 0 10px 25px rgba(73, 180, 76, 0.4); 
-            z-index: 1500; 
-            cursor: pointer; 
-            transition: transform 0.3s ease;
-            transform: translateY(-50%); /* Centers it perfectly vertically */
-            animation: floatPromo 3s ease-in-out infinite; 
-        }
-        
-        .promo-element:hover { 
-            animation-play-state: paused;
-            transform: translateY(-50%) scale(1.08); 
-        }
-
-        .promo-layer {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center; 
-            text-align: center; border-radius: 50%;
-            overflow: hidden; 
-        }
-
-        /* Text Layer (Fades Out) */
-        .promo-text-layer {
-            color: #ffffff;
-            animation: textFade 10s infinite;
-        }
+        .promo-element { position: fixed; top: 50%; right: 30px; background-color: #49b44c; width: 110px; height: 110px; border-radius: 50%; box-shadow: 0 10px 25px rgba(73, 180, 76, 0.4); z-index: 1500; cursor: pointer; transition: transform 0.3s ease; transform: translateY(-50%); animation: floatPromo 3s ease-in-out infinite; }
+        .promo-element:hover { animation-play-state: paused; transform: translateY(-50%) scale(1.08); }
+        .promo-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border-radius: 50%; overflow: hidden; }
+        .promo-text-layer { color: #ffffff; animation: textFade 10s infinite; }
         .promo-val { font-family: 'Spectral', serif; font-size: 2rem; font-weight: bold; line-height: 1; margin-bottom: 2px; }
         .promo-txt { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; line-height: 1.2; font-family: 'Lato', sans-serif;}
-
-        /* Image Layer (Fades In) */
-        .promo-img-layer {
-            animation: imgFade 10s infinite;
-            opacity: 0; 
-        }
-        .promo-img-layer img {
-            width: 100%; height: 100%; object-fit: cover;
-        }
+        .promo-img-layer { animation: imgFade 10s infinite; opacity: 0; }
+        .promo-img-layer img { width: 100%; height: 100%; object-fit: cover; }
         
-        /* Margin-based float prevents conflicts with the Y-axis centering */
-        @keyframes floatPromo {
-            0% { margin-top: 0; }
-            50% { margin-top: -10px; }
-            100% { margin-top: 0; }
-        }
-
-        /* 10 Second Cross-Fade Loop */
-        @keyframes textFade {
-            0%, 75% { opacity: 1; }   /* Visible for 7.5s */
-            80%, 95% { opacity: 0; }  /* Hidden for 1.5s while image shows */
-            100% { opacity: 1; }      /* Fade back in */
-        }
+        @keyframes floatPromo { 0% { margin-top: 0; } 50% { margin-top: -10px; } 100% { margin-top: 0; } }
+        @keyframes textFade { 0%, 75% { opacity: 1; } 80%, 95% { opacity: 0; } 100% { opacity: 1; } }
+        @keyframes imgFade { 0%, 75% { opacity: 0; } 80%, 95% { opacity: 1; } 100% { opacity: 0; } }
         
-        @keyframes imgFade {
-            0%, 75% { opacity: 0; }   /* Hidden for 7.5s */
-            80%, 95% { opacity: 1; }  /* Visible for 1.5s */
-            100% { opacity: 0; }      /* Fade back out */
-        }
-        
-        /* --- MOBILE FULL-WIDTH STRIP OVERRIDE --- */
         @media (max-width: 800px) {
-            .promo-element {
-                position: relative; /* Snaps back into normal page flow */
-                top: auto; right: auto; margin-top: 0; transform: none;
-                width: 100%; height: 50px; 
-                border-radius: 0; 
-                box-shadow: none;
-                animation: none; /* Stops floating */
-                margin-bottom: 20px;
-            }
-            
+            .promo-element { position: relative; top: auto; right: auto; margin-top: 0; transform: none; width: 100%; height: 50px; border-radius: 0; box-shadow: none; animation: none; margin-bottom: 20px; }
             .promo-element:hover { transform: none; }
-            
-            .promo-layer {
-                flex-direction: row; gap: 10px; border-radius: 0;
-            }
-            
+            .promo-layer { flex-direction: row; gap: 10px; border-radius: 0; }
             .promo-val { font-size: 1.4rem; margin-bottom: 0; }
             .promo-txt { font-size: 0.75rem; text-align: left; }
-            .mobile-hide { display: none; } /* Removes the line break so text reads horizontally */
-            
-            .promo-img-layer img {
-                width: auto; height: 40px; border-radius: 4px;
-            }
+            .mobile-hide { display: none; } 
+            .promo-img-layer img { width: auto; height: 40px; border-radius: 4px; }
         }
     </style>
 </head>
@@ -260,8 +206,6 @@
     </header>
 
     <main>
-    
-
         <script>
             // Hides the promo immediately if the user is logged into the wholesale portal
             if (sessionStorage.getItem('wholesaleAuthenticated') === 'true') {
@@ -278,8 +222,25 @@
 
         <div class="container">
             <h1 class="page-title">The Folklore Box Shop</h1>
-            <div class="filter-bar" id="filter-bar"></div>
-            <div class="shop-grid" id="shop-grid"></div>
+            
+            <!-- Featured Section -->
+            <div id="featured-section" style="display: none;">
+                <h2 style="font-family: var(--font-headings); font-size: 2rem; margin-top: 0; margin-bottom: 1.5rem; text-align: center; color: var(--text-light); font-weight: 400;">Featured Items</h2>
+                <div class="featured-grid" id="featured-grid"></div>
+                <hr style="border: 0; border-bottom: 1px solid var(--border-color); margin: 3rem 0;">
+            </div>
+
+            <!-- Shop Layout with Sidebar -->
+            <div class="shop-layout">
+                <aside class="shop-sidebar">
+                    <h3 class="sidebar-title">Categories</h3>
+                    <div class="filter-list" id="filter-bar"></div>
+                </aside>
+                
+                <div class="shop-main">
+                    <div class="shop-grid" id="shop-grid"></div>
+                </div>
+            </div>
         </div>
     </main>
 
@@ -327,6 +288,9 @@
             // --- Shop Grid Logic ---
             const shopGrid = document.getElementById('shop-grid');
             const filterBar = document.getElementById('filter-bar');
+            const featuredSection = document.getElementById('featured-section');
+            const featuredGrid = document.getElementById('featured-grid');
+            
             let products = [];
             let filteredProducts = [];
             let availableCategories = new Set();
@@ -345,13 +309,14 @@
                         if (block.trim() === '') return;
                         const lines = block.split('\n');
                         
-                        let product = { basePrice: 0, sections: '' }; 
+                        let product = { basePrice: 0, sections: '', featured: false }; 
                         
                         lines.forEach(line => {
                             const colonIdx = line.indexOf(':');
                             if (colonIdx > -1) {
                                 const key = line.substring(0, colonIdx).trim().toLowerCase();
                                 const value = line.substring(colonIdx + 1).trim();
+                                
                                 if (key === 'title') {
                                     product.title = value;
                                     product.id = value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
@@ -368,6 +333,9 @@
                                 else if (key === 'item cost') {
                                     product.basePrice = parseFloat(value.replace(/[^0-9.]/g, '')) || 0;
                                 }
+                                else if (key === 'featured') {
+                                    product.featured = (value.toLowerCase() === 'yes' || value.toLowerCase() === 'true');
+                                }
                             }
                         });
 
@@ -376,6 +344,7 @@
                     
                     filteredProducts = [...products];
                     buildFilters();
+                    renderFeatured();
                     renderGrid('All');
                 } catch (err) {
                     console.error("Error loading products:", err);
@@ -393,13 +362,50 @@
                 });
             }
 
+            function renderFeatured() {
+                if (!featuredSection || !featuredGrid) return;
+                const featuredItems = products.filter(p => p.featured).slice(0, 4);
+                
+                if (featuredItems.length === 0) {
+                    featuredSection.style.display = 'none';
+                    return;
+                }
+                
+                featuredSection.style.display = 'block';
+                featuredGrid.innerHTML = '';
+                
+                featuredItems.forEach(product => {
+                    let displayPrice = isWholesale ? Math.round(product.basePrice * 0.60 * 100) / 100 : product.basePrice;
+                    let priceHTML = isWholesale 
+                        ? `<p><span class="original-price">£${product.basePrice.toFixed(2)}</span> £${displayPrice.toFixed(2)}</p>` 
+                        : `<p>£${displayPrice.toFixed(2)}</p>`;
+
+                    let thumbPath = product.mainImage ? `images/${product.mainImage.replace(/\.jpg$/i, '-thumb.jpg').replace(/\.png$/i, '-thumb.png')}` : 'placeholder.jpg';
+                    let originalPath = product.mainImage ? `images/${product.mainImage}` : 'placeholder.jpg';
+
+                    featuredGrid.innerHTML += `
+                        <div class="product-card featured-card">
+                            <a href="product.html?id=${encodeURIComponent(product.id)}">
+                                <div class="product-image">
+                                    <img src="${thumbPath}" onerror="this.onerror=null; this.src='${originalPath}';" alt="${product.title.replace(/"/g, '&quot;')}" loading="lazy">
+                                </div>
+                                <div class="product-details">
+                                    <h3 class="product-title">${product.title}</h3>
+                                    <div class="product-prices">${priceHTML}</div>
+                                </div>
+                            </a>
+                        </div>
+                    `;
+                });
+            }
+
             function renderGrid(filterValue) {
                 if(!shopGrid) return;
                 shopGrid.innerHTML = '';
                 const filteredList = filterValue === 'All' ? products : products.filter(p => p.sections && p.sections.split(',').map(s=>s.trim()).includes(filterValue));
 
                 if (filteredList.length === 0) {
-                    shopGrid.innerHTML = '<p style="color: #fff; grid-column: 1 / -1; text-align: center;">No products found in this section.</p>';
+                    shopGrid.innerHTML = '<p style="color: #fff; grid-column: 1 / -1; text-align: left;">No products found in this section.</p>';
                     return;
                 }
 
@@ -432,12 +438,25 @@
                 document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
                 event.target.classList.add('active');
 
+                // Toggle visibility of the featured section based on category selection
                 if (category === 'All') {
                     filteredProducts = [...products];
+                    if (featuredSection && products.some(p => p.featured)) {
+                        featuredSection.style.display = 'block';
+                    }
                 } else {
                     filteredProducts = products.filter(p => p.sections && p.sections.split(',').map(s=>s.trim()).includes(category));
+                    if (featuredSection) {
+                        featuredSection.style.display = 'none';
+                    }
                 }
+                
                 renderGrid(category);
+                
+                // Scroll to top of shop on mobile when filter changes
+                if(window.innerWidth <= 1000) {
+                    document.querySelector('.shop-layout').scrollIntoView({ behavior: 'smooth' });
+                }
             };
         });
     </script>
