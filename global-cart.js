@@ -1,5 +1,13 @@
 (async function initializeGlobalCart() {
-    // 1. INJECT THE CENTRALIZED HTML
+    // --- 1. CSS SCROLL FIX FOR PAYPAL OVERFLOW ---
+    const scrollFix = document.createElement('style');
+    scrollFix.innerHTML = `
+        #cart-sidebar { overflow-y: auto !important; }
+        #cart-items { overflow-y: visible !important; flex-grow: 0 !important; }
+    `;
+    document.head.appendChild(scrollFix);
+
+    // --- 2. INJECT THE CENTRALIZED HTML ---
     try {
         const response = await fetch('cart-components.html', { cache: 'no-store' });
         if (!response.ok) throw new Error("Could not fetch cart components");
@@ -10,11 +18,14 @@
         return; 
     }
 
-    // 2. INITIALIZE GLOBAL CART LOGIC
+    // --- 3. CLEANUP OLD CONFLICTING CARTS & INITIALIZE UNIFIED LOGIC ---
+    localStorage.removeItem('folkloreWholesaleCart');
+    sessionStorage.removeItem('folkloreWholesaleCart');
+
     const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
-    const cartKey = isWholesale ? 'folkloreWholesaleCart' : 'folkloreCart';
+    const cartKey = 'folkloreCart'; // WE NOW USE ONE UNIFIED CART FOR EVERYTHING
     let validDiscounts = {};
-    let autoDiscount = null; // Auto Promo Logic
+    let autoDiscount = null;
     let activeDiscount = JSON.parse(sessionStorage.getItem('folkloreDiscount')) || null;
     
     let cart = [];
@@ -29,6 +40,7 @@
     const logoutBtn = document.getElementById('wholesale-logout-btn');
     
     const cartPanel = document.getElementById('cart-panel'); 
+    const cartSidebar = document.getElementById('cart-sidebar'); 
     const cartOverlay = document.getElementById('cart-overlay');
     
     const destSelect = document.getElementById('cart-destination');
@@ -51,18 +63,24 @@
     // Global toggle functions
     window.openCart = () => { 
         if(cartPanel) cartPanel.classList.add('active'); 
+        if(cartSidebar) cartSidebar.classList.add('open');
         if(cartOverlay) cartOverlay.classList.add('active'); 
         document.body.style.overflow = 'hidden'; 
     };
     
     window.closeCart = () => { 
         if(cartPanel) cartPanel.classList.remove('active'); 
+        if(cartSidebar) cartSidebar.classList.remove('open');
         if(cartOverlay) cartOverlay.classList.remove('active'); 
         document.body.style.overflow = ''; 
     };
 
     if (dtToggle) dtToggle.addEventListener('click', (e) => { e.preventDefault(); window.openCart(); });
     if (mbToggle) mbToggle.addEventListener('click', (e) => { e.preventDefault(); window.openCart(); });
+    if (cartOverlay) cartOverlay.addEventListener('click', window.closeCart);
+    const closeBtn = document.getElementById('close-cart');
+    if (closeBtn) closeBtn.addEventListener('click', window.closeCart);
+
     if (destSelect) destSelect.addEventListener('change', () => window.updateCartUI());
 
     // Apply Wholesale UI Overrides
@@ -79,23 +97,6 @@
     if (logoutBtn) {
         logoutBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            let wCart = JSON.parse(localStorage.getItem('folkloreWholesaleCart')) || [];
-            let rCart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
-            
-            wCart.forEach(wItem => {
-                let existingRItem = rCart.find(rItem => (rItem.cartItemId || rItem.id) === (wItem.cartItemId || wItem.id));
-                if (existingRItem) {
-                    existingRItem.quantity += (wItem.quantity || 1);
-                } else {
-                    let retailPrice = Math.round((wItem.price / 0.60) * 100) / 100;
-                    rCart.push({
-                        id: wItem.id, cartItemId: wItem.cartItemId || wItem.id, title: wItem.title,
-                        price: retailPrice, postalClass: wItem.postalClass, size: wItem.size || null, quantity: wItem.quantity || 1
-                    });
-                }
-            });
-            localStorage.setItem('folkloreCart', JSON.stringify(rCart));
-            localStorage.removeItem('folkloreWholesaleCart');
             sessionStorage.removeItem('wholesaleAuthenticated');
             alert("You have exited Wholesale Mode. Returning to the standard retail shop.");
             window.location.href = 'shop.html'; 
@@ -191,8 +192,8 @@
         if (existingItem) {
             existingItem.quantity += 1;
         } else {
-            let finalPrice = isWholesale ? Math.round(price * 0.60 * 100) / 100 : price;
-            cart.push({ id, cartItemId, title, price: finalPrice, postalClass, size, quantity: 1 });
+            // WE ALWAYS STORE THE BASE RETAIL PRICE IN STORAGE.
+            cart.push({ id, cartItemId, title, price: price, postalClass, size, quantity: 1 });
         }
         localStorage.setItem(cartKey, JSON.stringify(cart));
         window.updateCartUI();
@@ -243,21 +244,26 @@
 
         cart.forEach((item, index) => {
             const qty = item.quantity || 1;
-            cartItemCount += qty; itemsTotal += item.price * qty;
+            
+            // DYNAMIC WHOLESALE CALCULATION
+            const displayPrice = isWholesale ? Math.round(item.price * 0.60 * 100) / 100 : item.price;
+            
+            cartItemCount += qty; 
+            itemsTotal += displayPrice * qty;
             
             const sizeStr = item.size ? `<br><span style="font-size:0.85rem; color:#aaa;">Size: ${item.size}</span>` : '';
             cartItemsContainer.innerHTML += `
                 <div class="cart-item">
                     <div class="cart-item-details">
                         <h4 class="cart-item-title">${item.title} ${sizeStr}</h4>
-                        <p class="cart-item-meta" style="font-size:0.8rem; color:#888; margin:0;">£${item.price.toFixed(2)} each</p>
+                        <p class="cart-item-meta" style="font-size:0.8rem; color:#888; margin:0;">£${displayPrice.toFixed(2)} each</p>
                     </div>
                     <div class="cart-qty-controls">
                         <button class="qty-btn" onclick="window.updateQuantity(${index}, -1)">-</button>
                         <span>${qty}</span>
                         <button class="qty-btn" onclick="window.updateQuantity(${index}, 1)">+</button>
                     </div>
-                    <div class="cart-item-total">£${(item.price * qty).toFixed(2)}</div>
+                    <div class="cart-item-total">£${(displayPrice * qty).toFixed(2)}</div>
                     <button class="remove-btn" onclick="window.removeFromCart(${index})">&times;</button>
                 </div>
             `;
@@ -270,10 +276,8 @@
 
         // Calculate Shipping Rate
         if (isWholesale) {
-            // Flat rate £10 for all wholesale orders
             shippingTotal = 10.00;
         } else {
-            // Standard individual postal class calculations for retail
             let baseRateApplied = false;
             cart.forEach((item) => {
                 const rates = postalRates[item.postalClass];
@@ -346,7 +350,7 @@
             }
         }
 
-        // === NEW: FREE POSTAGE OVER £100 ===
+        // Free Postage Check
         let isFreeShipping = (itemsTotal - discountAmount) > 100;
         if (isFreeShipping) {
             shippingTotal = 0;
@@ -411,7 +415,12 @@
                     let itemsTotal = 0; let shippingTotal = 0; let maxBase = -1; let maxBaseItem = null; 
                     const dest = destSelect ? destSelect.value : 'uk';
                     cart.forEach(item => {
-                        const qty = item.quantity || 1; itemsTotal += item.price * qty;
+                        const qty = item.quantity || 1; 
+                        
+                        // DYNAMIC WHOLESALE CALCULATION FOR PAYPAL
+                        const displayPrice = isWholesale ? Math.round(item.price * 0.60 * 100) / 100 : item.price;
+                        itemsTotal += displayPrice * qty;
+                        
                         const rates = postalRates[item.postalClass];
                         if(rates) {
                             const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
@@ -437,10 +446,10 @@
                     }
                     
                     const paypalItems = cart.map(item => {
-                        return { name: item.title + (item.size ? ` (${item.size})` : ''), unit_amount: { currency_code: 'GBP', value: item.price.toFixed(2) }, quantity: (item.quantity || 1).toString() };
+                        const displayPrice = isWholesale ? Math.round(item.price * 0.60 * 100) / 100 : item.price;
+                        return { name: item.title + (item.size ? ` (${item.size})` : ''), unit_amount: { currency_code: 'GBP', value: displayPrice.toFixed(2) }, quantity: (item.quantity || 1).toString() };
                     });
 
-                    // Evaluate Promos for Checkout
                     let discountAmount = 0;
                     if (!isWholesale) {
                         if (autoDiscount && itemsTotal >= autoDiscount.minSpend) {
@@ -457,7 +466,6 @@
                         }
                     }
 
-                    // === NEW: FREE POSTAGE OVER £100 (PayPal Check) ===
                     if ((itemsTotal - discountAmount) > 100) {
                         shippingTotal = 0;
                     }
@@ -481,14 +489,15 @@
                     return actions.order.capture().then(function(details) {
                         try {
                             let orderBreakdown = "";
-                            let subtotal = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
+                            let subtotal = 0;
                             cart.forEach(item => {
-                                const itemTotal = (item.price * (item.quantity || 1)).toFixed(2);
+                                const displayPrice = isWholesale ? Math.round(item.price * 0.60 * 100) / 100 : item.price;
+                                const itemTotal = displayPrice * (item.quantity || 1);
+                                subtotal += itemTotal;
                                 const sizeStr = item.size ? ` (Size: ${item.size})` : '';
-                                orderBreakdown += `${item.quantity || 1}x ${item.title}${sizeStr} - £${itemTotal}\n`;
+                                orderBreakdown += `${item.quantity || 1}x ${item.title}${sizeStr} - £${itemTotal.toFixed(2)}\n`;
                             });
                             
-                            // Re-evaluate discount for the receipt
                             if (!isWholesale) {
                                 let discountAmount = 0;
                                 let appliedDiscountName = "";
