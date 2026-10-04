@@ -1,3 +1,24 @@
+Title: Season of The Witch Folklore Box - a curated box of folklore goodies.
+Main Image: images/Witche Box 1.jpg
+Images: images/Witches Box 2.jpg, images/Witches Box 3.jpg, images/Witches Box 4.jpg, images/Witches Box 5.jpg, images/Witches Box 6.jpg, images/Witches Box 7.jpg, images/Witches Box 8.jpg
+Sections: The Folklore Boxes
+Size: 
+Materials: 
+Postal Class: Second Class Small Parcel
+Item Cost: 30
+Stock: 10
+Stock S: 10
+Stock M: 10
+Stock L: 10
+Stock XL: 10
+Stock XXL: 10
+Description: A curated gift box of witch themed items from our shop, at a highly discounted rate.
+
+Witch and Cauldron tote bag
+Witch on Broomstick hanging decoration
+Skull Spell Witch A4 print
+Witch Wooden pin
+---
 Title: Moonlit Standing Stones Illustrated Tote in Black
 Main Image: images/Tote Bag 2.jpg
 Images: images/Tote Bag 1.jpg
@@ -5019,25 +5040,4 @@ We also sell standing stones coasters which compliment this mug.
 *  We endeavour to keep stocks of this item, already cured and ready to go.   However, from time to time delivery can take up to 10 days if demand outweighs finished stocks.  Items are cured and this unfortunately can take time.  We will always let you know by email if this is the case.
 
 **  We only sell mugs to mainland England, Scotland and Wales.  Due to the fragile nature of ceramic, the extra manual handling oversees, including Ireland, Northern Island,  Isle of Wight, Isle of Man, Channel Islands, Isles of Scilly and the Scottish Islands makes it much more difficult for us to make sure your mug arrives intact.  Sorry.  We do love the British islands and your many folk traditions, it's just difficult this time.
----
-Title: Season of The Witch Folklore Box - a curated box of folklore goodies.
-Main Image: images/Witche Box 1.jpg
-Images: images/Witches Box 2.jpg, images/Witches Box 3.jpg, images/Witches Box 4.jpg, images/Witches Box 5.jpg, images/Witches Box 6.jpg, images/Witches Box 7.jpg, images/Witches Box 8.jpg
-Sections: The Folklore Boxes
-Size: 
-Materials: 
-Postal Class: Second Class Small Parcel
-Item Cost: 30
-Stock: 10
-Stock S: 10
-Stock M: 10
-Stock L: 10
-Stock XL: 10
-Stock XXL: 10
-Description: A curated gift box of witch themed items from our shop, at a highly discounted rate.
-
-Witch and Cauldron tote bag
-Witch on Broomstick hanging decoration
-Skull Spell Witch A4 print
-Witch Wooden pin
 ---
