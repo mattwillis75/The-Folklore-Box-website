@@ -5041,13 +5041,13 @@ We also sell standing stones coasters which compliment this mug.
 
 **  We only sell mugs to mainland England, Scotland and Wales.  Due to the fragile nature of ceramic, the extra manual handling oversees, including Ireland, Northern Island,  Isle of Wight, Isle of Man, Channel Islands, Isles of Scilly and the Scottish Islands makes it much more difficult for us to make sure your mug arrives intact.  Sorry.  We do love the British islands and your many folk traditions, it's just difficult this time.
 ---
-Title: A Walk Amongst The Stones vinyl sticker 
+Title: A Walk Amongst The Stones vinyl sticker
 Main Image: images/Sticker.jpg
 Images: 
 Sections: Stickers
 Size: 80mm diameter
 Materials: Vinyl
-Postal Class: First Class Letter
+Postal Class: Stickers
 Item Cost: 3.50
 Stock: 10
 Stock S: 10
