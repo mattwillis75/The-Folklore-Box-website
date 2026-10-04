@@ -1,7 +1,7 @@
 Slide: 1
 Format: 
-Heading: Cursed Maps
-Description: Norfolk Witch Map and Cursed Norfolk Map in The Folklore Box shop.
+Heading: 
+Description: 
 Image: images/Etsy Header Witches Folklore Box Launch.jpg
 Show Text: false
 ---
