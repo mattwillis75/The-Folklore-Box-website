@@ -9,7 +9,7 @@ Slide: 2
 Format: SHOP UPDATE
 Heading: Standing Stones
 Description: New Standing Stones products available in The Folklore Box shop.
-Image: images/Standing Stones 1.jpg
+Image: images/Etsy Header Witches Folklore Box Launch website.jpg
 Show Text: false
 ---
 Slide: 3
