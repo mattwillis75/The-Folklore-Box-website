@@ -99,6 +99,10 @@
         .container { max-width: 1400px; margin: 20px auto 40px; padding: 0 30px; width: 100%; box-sizing: border-box; }
         .page-title { text-align: center; font-family: var(--font-headings); font-size: 2.8rem; font-weight: 400; margin-bottom: 0.5rem; color: var(--text-light); letter-spacing: 1px; }
         
+        /* Featured Section */
+        .featured-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-bottom: 40px; }
+        .featured-card { border: 2px solid #ffffff !important; }
+
         /* Layout Grid */
         .shop-layout { display: flex; gap: 40px; align-items: flex-start; }
         .shop-sidebar { flex: 0 0 200px; position: sticky; top: 110px; }
@@ -161,6 +165,7 @@
 
         /* RESPONSIVE MOBILE LAYOUT ADJUSTMENTS */
         @media (max-width: 1000px) {
+            .featured-grid { grid-template-columns: repeat(2, 1fr); }
             .shop-layout { flex-direction: column; gap: 20px; }
             .shop-sidebar { position: static; width: 100%; flex: auto; border-bottom: 1px solid #333; padding-bottom: 20px; }
             .filter-list { flex-direction: row; flex-wrap: wrap; gap: 10px; }
@@ -177,7 +182,7 @@
         @media (max-width: 600px) {
             .mobile-cart-btn { font-size: 0.7rem; padding: 0.3rem 0.6rem; }
             .mobile-controls { gap: 10px; }
-            .shop-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
+            .shop-grid, .featured-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
             .product-card { min-height: auto; }
             .product-card a { padding: 1rem; }
             .product-image { margin-bottom: 1rem; }
@@ -246,7 +251,14 @@
             <h1 class="page-title">Wholesale Portal</h1>
             <p style="text-align: center; color: #888; font-style: italic; margin-top: 0; margin-bottom: 2.5rem;">All prices shown are calculated at 60% of the standard retail price.</p>
             
-            <!-- Shop Layout with Sidebar (Matches shop.html) -->
+            <!-- Featured Section -->
+            <div id="featured-section" style="display: none;">
+                <h2 style="font-family: var(--font-headings); font-size: 2rem; margin-top: 0; margin-bottom: 1.5rem; text-align: center; color: var(--text-light); font-weight: 400;">Featured Items</h2>
+                <div class="featured-grid" id="featured-grid"></div>
+                <hr style="border: 0; border-bottom: 1px solid var(--border-color); margin: 3rem 0;">
+            </div>
+
+            <!-- Shop Layout with Sidebar -->
             <div class="shop-layout">
                 <aside class="shop-sidebar">
                     <h3 class="sidebar-title">Categories</h3>
@@ -475,6 +487,9 @@
             // --- FETCH AND BUILD CATALOGUE ---
             const shopGrid = document.getElementById('shop-grid');
             const filtersContainer = document.getElementById('shop-filters');
+            const featuredSection = document.getElementById('featured-section');
+            const featuredGrid = document.getElementById('featured-grid');
+
             let products = [];
             let uniqueSections = new Set(); 
 
@@ -490,7 +505,7 @@
                         if (rawItem.trim() === '') return;
                         
                         const lines = rawItem.trim().split('\n');
-                        let product = { sections: [] };
+                        let product = { sections: [], featured: false };
                         
                         lines.forEach(line => {
                             const sepIndex = line.indexOf(':');
@@ -509,6 +524,7 @@
                                 else if (key === 'sections') product.sections = value.split(',').map(s => s.trim());
                                 else if (key === 'postal class') product.postalClass = value;
                                 else if (key === 'item cost') product.basePrice = parseFloat(value.replace(/[^0-9.]/g, '')) || 0; 
+                                else if (key === 'featured') product.featured = (value.toLowerCase() === 'yes' || value.toLowerCase() === 'true');
                             }
                         });
                         
@@ -529,7 +545,21 @@
                             btn.addEventListener('click', (e) => {
                                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                                 e.target.classList.add('active');
-                                renderGrid(e.target.dataset.filter);
+                                
+                                const category = e.target.dataset.filter;
+                                
+                                // Toggle visibility of the featured section based on category selection
+                                if (category === 'All') {
+                                    if (featuredSection && products.some(p => p.featured)) {
+                                        featuredSection.style.display = 'block';
+                                    }
+                                } else {
+                                    if (featuredSection) {
+                                        featuredSection.style.display = 'none';
+                                    }
+                                }
+
+                                renderGrid(category);
                                 
                                 // Scroll to top of shop layout on mobile when filter changes
                                 if(window.innerWidth <= 1000) {
@@ -539,6 +569,7 @@
                         });
                     }
 
+                    renderFeatured();
                     renderGrid('All');
 
                 } catch (error) {
@@ -546,9 +577,62 @@
                 }
             }
             
+            function renderFeatured() {
+                if (!featuredSection || !featuredGrid) return;
+                const featuredItems = products.filter(p => p.featured).slice(0, 4);
+                
+                if (featuredItems.length === 0) {
+                    featuredSection.style.display = 'none';
+                    return;
+                }
+                
+                featuredSection.style.display = 'block';
+                featuredGrid.innerHTML = '';
+                
+                featuredItems.forEach(product => {
+                    let displayPrice = (product.basePrice * 0.60);
+                    let priceHTML = `<p><span class="original-price">£${product.basePrice.toFixed(2)}</span> £${displayPrice.toFixed(2)}</p>`;
+
+                    let thumbPath = product.mainImage ? `images/${product.mainImage.replace(/\.jpg$/i, '-thumb.jpg').replace(/\.png$/i, '-thumb.png')}` : 'placeholder.jpg';
+                    let originalPath = product.mainImage ? `images/${product.mainImage}` : 'placeholder.jpg';
+
+                    let actionButton = '';
+                    const isTshirt = product.sections.some(s => s.toLowerCase().includes('t-shirts'));
+
+                    if (isTshirt) {
+                        actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='product.html?id=${encodeURIComponent(product.id)}'">Add to Cart</button>`;
+                    } else {
+                        actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.addToCart('${product.id}', '${product.title.replace(/'/g, "\\'")}', ${product.basePrice}, '${product.postalClass}')">Add to Cart</button>`;
+                    }
+
+                    featuredGrid.innerHTML += `
+                        <div class="product-card featured-card">
+                            <a href="product.html?id=${encodeURIComponent(product.id)}">
+                                <div class="product-image">
+                                    <img src="${thumbPath}" onerror="this.onerror=null; this.src='${originalPath}';" alt="${product.title.replace(/"/g, '&quot;')}" loading="lazy">
+                                </div>
+                                <div class="product-details">
+                                    <h3 class="product-title">${product.title}</h3>
+                                    <div class="product-prices">${priceHTML}</div>
+                                    ${actionButton}
+                                </div>
+                            </a>
+                        </div>
+                    `;
+                });
+            }
+
             function renderGrid(filterValue) {
                 shopGrid.innerHTML = '';
-                const filteredProducts = filterValue === 'All' ? products : products.filter(p => p.sections.includes(filterValue));
+                
+                let filteredProducts = [];
+                if (filterValue === 'All') {
+                    // Exclude featured items from the main grid when viewing 'All Items'
+                    filteredProducts = products.filter(p => !p.featured);
+                } else {
+                    // Show all items (including featured ones) that match the selected category
+                    filteredProducts = products.filter(p => p.sections.includes(filterValue));
+                }
 
                 if (filteredProducts.length === 0) {
                     shopGrid.innerHTML = '<p style="color: #fff; grid-column: 1 / -1; text-align: left;">No products found in this section.</p>';
