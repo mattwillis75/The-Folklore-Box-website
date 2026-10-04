@@ -342,7 +342,7 @@
 
         document.addEventListener("DOMContentLoaded", async () => {
             
-            // --- 1. DYNAMIC CAROUSEL LOGIC ---
+           // --- 1. DYNAMIC CAROUSEL LOGIC ---
             async function loadCarousel() {
                 const container = document.getElementById('carousel-slides-container');
                 if(!container) return;
@@ -360,7 +360,8 @@
                     slidesRaw.forEach(rawSlide => {
                         if(!rawSlide.trim()) return;
                         
-                        let slide = { slideNum: 0, format: "", heading: "", desc: "", image: "" };
+                        // Added showText parameter with a default of true
+                        let slide = { slideNum: 0, format: "", heading: "", desc: "", image: "", showText: true };
                         
                         rawSlide.trim().split('\n').forEach(line => {
                             const idx = line.indexOf(':');
@@ -372,6 +373,8 @@
                                 if(key === 'heading') slide.heading = val;
                                 if(key === 'description') slide.desc = val;
                                 if(key === 'image') slide.image = val;
+                                // Parse the new show text property
+                                if(key === 'show text') slide.showText = (val === 'true'); 
                             }
                         });
 
@@ -382,8 +385,8 @@
                             const currentNum = slide.slideNum || (slideIndex + 1);
                             const mobileImageUrl = `./images/carousel-${currentNum}-mobile.jpg?v=${cacheBuster}`;
                             
-                            const html = `
-                            <div class="carousel-slide slide-${currentNum} ${isActive}" style="--desktop-bg: url('${imageUrlWithBuster}'); --mobile-bg: url('${mobileImageUrl}');">
+                            // Conditionally build the overlay HTML only if showText is true
+                            const overlayHtml = slide.showText ? `
                                 <div class="carousel-overlay">
                                     <h2>${slide.format || ''}</h2>
                                     <h3>${slide.heading || ''}</h3>
@@ -391,6 +394,11 @@
                                         <p>${slide.desc || ''}</p>
                                     </div>
                                 </div>
+                            ` : '';
+                            
+                            const html = `
+                            <div class="carousel-slide slide-${currentNum} ${isActive}" style="--desktop-bg: url('${imageUrlWithBuster}'); --mobile-bg: url('${mobileImageUrl}');">
+                                ${overlayHtml}
                             </div>`;
                             container.innerHTML += html;
                             slideIndex++;
