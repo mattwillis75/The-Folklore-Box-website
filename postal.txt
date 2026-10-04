@@ -64,3 +64,9 @@ UK Additional: 1.50
 Int Base: 15.00
 Int Additional: 10.00
 ---
+Class: Hanging Decorations
+UK Base: 3.30
+UK Additional: 1.25
+Int Base: 10.00
+Int Additional: 2.00
+---
