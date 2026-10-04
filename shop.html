@@ -94,9 +94,8 @@
         .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 30px; }
 
         /* Sidebar Filter Buttons */
-        .filter-list { display: flex; flex-direction: column; gap: 0; }
-        .filter-btn { background: transparent; color: var(--text-muted); border: none; border-bottom: 1px solid #222; border-left: 2px solid transparent; padding: 0.8rem 1rem; cursor: pointer; border-radius: 0; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.85rem; transition: all var(--transition-speed); font-family: var(--font-body); font-weight: 600; text-align: left; width: 100%; box-sizing: border-box; }
-        .filter-btn:last-child { border-bottom: none; }
+        .filter-list { display: flex; flex-direction: column; gap: 8px; }
+        .filter-btn { background: transparent; color: var(--text-muted); border: none; border-left: 2px solid transparent; padding: 0.4rem 1rem; cursor: pointer; border-radius: 0; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.85rem; transition: all var(--transition-speed); font-family: var(--font-body); font-weight: 600; text-align: left; width: 100%; box-sizing: border-box; }
         .filter-btn.active, .filter-btn:hover { border-left-color: var(--accent-red); color: var(--text-light); background: rgba(204, 0, 0, 0.05); }
 
         /* Product Cards */
@@ -127,7 +126,7 @@
             .shop-layout { flex-direction: column; gap: 20px; }
             .shop-sidebar { position: static; width: 100%; flex: auto; border-bottom: 1px solid #333; padding-bottom: 20px; }
             .filter-list { flex-direction: row; flex-wrap: wrap; gap: 10px; }
-            .filter-btn { width: auto; border: 1px solid var(--border-color); padding: 0.5rem 1rem; border-radius: 3px; text-align: center; }
+            .filter-btn { width: auto; border-left: 1px solid var(--border-color); border: 1px solid var(--border-color); padding: 0.5rem 1rem; border-radius: 3px; text-align: center; }
             .filter-btn.active, .filter-btn:hover { border-color: var(--accent-red); background: var(--accent-red); color: #fff; }
         }
 
@@ -172,6 +171,10 @@
             .mobile-hide { display: none; } 
             .promo-img-layer img { width: auto; height: 40px; border-radius: 4px; }
         }
+
+        /* --- CART SCROLL FIX --- */
+        .cart-sidebar { display: flex; flex-direction: column; height: 100vh; }
+        .cart-items-container { flex-grow: 1; overflow-y: auto; min-height: 0 !important; }
     </style>
 </head>
 <body>
@@ -208,12 +211,14 @@
 
     <main>
         <script>
+            // Hides the promo immediately if the user is logged into the wholesale portal
             if (sessionStorage.getItem('wholesaleAuthenticated') === 'true') {
                 const promoEl = document.getElementById('promo-element');
                 if (promoEl) promoEl.style.display = 'none';
             }
         </script>
 
+        <!-- Dynamic Wholesale Banner -->
         <div class="wholesale-banner" id="wholesale-banner" style="display: none;">
             <span>Minimum spend to allow the wholesale discount is £75.</span>
             <button id="wholesale-logout-btn" class="exit-wholesale-btn" style="display: none;">Exit Wholesale</button>
@@ -291,6 +296,7 @@
             const featuredGrid = document.getElementById('featured-grid');
             
             let products = [];
+            let filteredProducts = [];
             let availableCategories = new Set();
             
             const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
@@ -340,6 +346,7 @@
                         if (product.title) products.push(product);
                     });
                     
+                    filteredProducts = [...products];
                     buildFilters();
                     renderFeatured();
                     renderGrid('All');
@@ -399,16 +406,7 @@
             function renderGrid(filterValue) {
                 if(!shopGrid) return;
                 shopGrid.innerHTML = '';
-                
-                let filteredList = [];
-                
-                if (filterValue === 'All') {
-                    // Exclude featured items from the main grid when viewing 'All Items'
-                    filteredList = products.filter(p => !p.featured);
-                } else {
-                    // Show all items (including featured ones) that match the selected category
-                    filteredList = products.filter(p => p.sections && p.sections.split(',').map(s=>s.trim()).includes(filterValue));
-                }
+                const filteredList = filterValue === 'All' ? products : products.filter(p => p.sections && p.sections.split(',').map(s=>s.trim()).includes(filterValue));
 
                 if (filteredList.length === 0) {
                     shopGrid.innerHTML = '<p style="color: #fff; grid-column: 1 / -1; text-align: left;">No products found in this section.</p>';
@@ -446,10 +444,12 @@
 
                 // Toggle visibility of the featured section based on category selection
                 if (category === 'All') {
+                    filteredProducts = [...products];
                     if (featuredSection && products.some(p => p.featured)) {
                         featuredSection.style.display = 'block';
                     }
                 } else {
+                    filteredProducts = products.filter(p => p.sections && p.sections.split(',').map(s=>s.trim()).includes(category));
                     if (featuredSection) {
                         featuredSection.style.display = 'none';
                     }
@@ -457,7 +457,7 @@
                 
                 renderGrid(category);
                 
-                // Scroll to top of shop layout on mobile when filter changes
+                // Scroll to top of shop on mobile when filter changes
                 if(window.innerWidth <= 1000) {
                     document.querySelector('.shop-layout').scrollIntoView({ behavior: 'smooth' });
                 }
