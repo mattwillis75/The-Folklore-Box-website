@@ -70,3 +70,9 @@ UK Additional: 1.25
 Int Base: 10.00
 Int Additional: 2.00
 ---
+Class: Stickers
+UK Base: 1.50
+UK Additional: 0.50
+Int Base: 10.00
+Int Additional: 0.50
+---
