@@ -195,6 +195,10 @@
             .request-modal { padding: 1.5rem; width: 95%; }
             .request-modal h2 { font-size: 1.5rem; }
         }
+
+        /* --- CART SCROLL FIX --- */
+        .cart-sidebar { display: flex; flex-direction: column; height: 100vh; }
+        .cart-items-container { flex-grow: 1; overflow-y: auto; min-height: 0 !important; }
     </style>
 </head>
 <body>
@@ -643,7 +647,7 @@
                     let displayPrice = (product.basePrice * 0.60);
                     let priceHTML = `<p><span class="original-price">£${product.basePrice.toFixed(2)}</span> £${displayPrice.toFixed(2)}</p>`;
 
-                    let thumbPath = product.mainImage ? `images/${product.mainImage.replace(/\.jpg$/i, '-thumb.jpg')}` : 'placeholder.jpg';
+                    let thumbPath = product.mainImage ? `images/${product.mainImage.replace(/\.jpg$/i, '-thumb.jpg').replace(/\.png$/i, '-thumb.png')}` : 'placeholder.jpg';
                     let originalPath = product.mainImage ? `images/${product.mainImage}` : 'placeholder.jpg';
 
                     let actionButton = '';
