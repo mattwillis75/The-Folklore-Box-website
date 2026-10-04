@@ -1,14 +1,14 @@
 Slide: 1
-Format: SHOP UPDATE
-Heading: Standing Stones
-Description: New Standing Stones products available in The Folklore Box shop.
-Image: images/Standing Stones 1.jpg
----
-Slide: 2
 Format: Shop Update
 Heading: Black Shuck T-Shirts
 Description: My new Black Shuck T-Shirts  are on my shop page!
 Image: images/Carousel-1.jpg
+---
+Slide: 2
+Format: SHOP UPDATE
+Heading: Standing Stones
+Description: New Standing Stones products available in The Folklore Box shop.
+Image: images/Standing Stones 1.jpg
 ---
 Slide: 3
 Format: GEEGAW
