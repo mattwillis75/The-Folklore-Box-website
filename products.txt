@@ -270,7 +270,7 @@ Images: images/standing-standing-stone-ornament-2.jpg, images/standing-standing-
 Sections: Standing Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 36
 Stock: 10
 Stock S: 10
@@ -292,7 +292,7 @@ Images: images/hanging-moon-stone-hanging-2.jpg, images/hanging-moon-stone-hangi
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 15
 Stock: 10
 Stock S: 10
@@ -316,7 +316,7 @@ Images: images/hanging-stone-circle-hanging-2.jpg, images/hanging-stone-circle-h
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 15
 Stock: 10
 Stock S: 10
@@ -340,7 +340,7 @@ Images: images/hanging-stonehenge-hanging-decoration-2.jpg, images/hanging-stone
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 15
 Stock: 10
 Stock S: 10
@@ -576,7 +576,7 @@ Images: images/standing-snow-stone-christmas-2.jpg, images/standing-snow-stone-c
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 15
 Stock: 10
 Stock S: 10
@@ -602,7 +602,7 @@ Images: images/Hanging-dec-snow-stone-globe-2.jpg, images/Hanging-dec-snow-stone
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 15
 Stock: 10
 Stock S: 10
@@ -1232,7 +1232,7 @@ Images: images/yow-yows-shop-2.jpg
 Sections: Hanging Decorations
 Size: 65 x 105 x 3mm
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 15
 Stock: 10
 Stock S: 10
@@ -1492,7 +1492,7 @@ Images: images/shuck-hanging decoration-2026-2.jpg
 Sections: Hanging Decorations
 Size: 60 x 90 x 3mm
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 15
 Stock: 10
 Stock S: 10
@@ -3959,7 +3959,7 @@ Images: images/hanging-baba-yaga-hanging-2.jpg, images/hanging-baba-yaga-hanging
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 50
 Stock: 10
 Stock S: 10
@@ -3983,7 +3983,7 @@ Images: images/hanging-baba-yaga-hanging-2.jpg, images/hanging-baba-yaga-hanging
 Sections: Hanging Decorations
 Size: Standard
 Materials: Please Update
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 20
 Stock: 10
 Stock S: 10
@@ -4009,7 +4009,7 @@ Images: images/hanging-baba-yaga-hen-2.jpg, images/hanging-baba-yaga-hen-3.jpg, 
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 20
 Stock: 10
 Stock S: 10
@@ -4035,7 +4035,7 @@ Images: images/standing-vasilisa-beautiful-ornament-2.jpg, images/standing-vasil
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 20
 Stock: 10
 Stock S: 10
@@ -4061,7 +4061,7 @@ Images: images/standing-black-witch-christmas-2.jpg, images/standing-black-witch
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 15
 Stock: 10
 Stock S: 10
@@ -4113,7 +4113,7 @@ Images: images/Hanging-dec-black-phillip-2.jpg, images/Hanging-dec-black-phillip
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 15
 Stock: 10
 Stock S: 10
@@ -4139,7 +4139,7 @@ Images: images/Hanging-dec-witch-broomstick-2.jpg, images/Hanging-dec-witch-broo
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 15
 Stock: 10
 Stock S: 10
@@ -4163,7 +4163,7 @@ Images: images/Hanging-dec-witch-cauldron-2.jpg, images/Hanging-dec-witch-cauldr
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 15
 Stock: 10
 Stock S: 10
@@ -4187,7 +4187,7 @@ Images: images/Hanging-dec-Devil-2.jpg, images/Hanging-dec-Devil-3.jpg
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 15
 Stock: 10
 Stock S: 10
@@ -4213,7 +4213,7 @@ Images: images/Hanging-dec-green-man-2.jpg, images/Hanging-dec-green-man-3.jpg
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 15
 Stock: 10
 Stock S: 10
@@ -4239,7 +4239,7 @@ Images: images/standing-horned-skull-christmas-2.jpg, images/standing-horned-sku
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 15
 Stock: 10
 Stock S: 10
@@ -4263,7 +4263,7 @@ Images: images/hanging-kelpie-hanging-decoration-2.jpg, images/hanging-kelpie-ha
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 15
 Stock: 10
 Stock S: 10
@@ -4289,7 +4289,7 @@ Images: images/hanging-krampus-christmas-decoration-2.jpg
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 15
 Stock: 10
 Stock S: 10
@@ -4315,7 +4315,7 @@ Images: images/Hanging-dec-krampus-square-2.jpg
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 15
 Stock: 10
 Stock S: 10
@@ -4341,7 +4341,7 @@ Images: images/standing-krampus-face-christmas-2.jpg, images/standing-krampus-fa
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 15
 Stock: 10
 Stock S: 10
@@ -4367,7 +4367,7 @@ Images: images/hanging-lambton-worm-wood-2.jpg, images/hanging-lambton-worm-wood
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 15
 Stock: 10
 Stock S: 10
@@ -4391,7 +4391,7 @@ Images: images/Hanging-dec-jack-o-lantern-2.jpg, images/Hanging-dec-jack-o-lante
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 15
 Stock: 10
 Stock S: 10
@@ -4415,7 +4415,7 @@ Images: images/standing-laser-cut-krampus-2.jpg, images/standing-laser-cut-kramp
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 15
 Stock: 10
 Stock S: 10
@@ -4439,7 +4439,7 @@ Images: images/hanging-mari-lwyd-horse-2.jpg, images/hanging-mari-lwyd-horse-3.j
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 15
 Stock: 10
 Stock S: 10
@@ -4463,7 +4463,7 @@ Images: images/hanging-multibuy-x3-hanging-2.jpg, images/hanging-multibuy-x3-han
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 36
 Stock: 10
 Stock S: 10
@@ -4491,7 +4491,7 @@ Images: images/hanging-multibuy-x5-hanging-2.jpg, images/hanging-multibuy-x5-han
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 55
 Stock: 10
 Stock S: 10
@@ -4519,7 +4519,7 @@ Images: images/hanging-peg-powler-hanging-2.jpg, images/hanging-peg-powler-hangi
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 15
 Stock: 10
 Stock S: 10
@@ -4545,7 +4545,7 @@ Images: images/hanging-dec-snow-spell-2.jpg
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 15
 Stock: 10
 Stock S: 10
@@ -4571,7 +4571,7 @@ Images: images/hanging-straw-bear-hanging-2.jpg, images/hanging-straw-bear-hangi
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 15
 Stock: 10
 Stock S: 10
@@ -4595,7 +4595,7 @@ Images: images/Hanging-dec-witch-goat-2.jpg, images/Hanging-dec-witch-goat-3.jpg
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 15
 Stock: 10
 Stock S: 10
@@ -4617,7 +4617,7 @@ Images: images/standing-woodwose-christmas-ornament-2.jpg, images/standing-woodw
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 15
 Stock: 10
 Stock S: 10
