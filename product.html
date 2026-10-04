@@ -282,19 +282,22 @@
                     if (foundProduct.additionalImages.length > 0) allImages = allImages.concat(foundProduct.additionalImages);
 
                     let galleryHTML = '';
-                    if (allImages.length > 1) {
-                        galleryHTML = `<div class="gallery-thumbnails">`;
-                        allImages.forEach((imgSrc, index) => {
-                            const activeClass = index === 0 ? 'active' : '';
-                            // Thumbnail Auto-Formatter
-                            const thumbSrc = imgSrc.replace('.png', '-thumb.png')
-                                                   .replace('.jpg', '-thumb.jpg')
-                                                   .replace('.jpeg', '-thumb.jpeg');
-                                                   
-                            galleryHTML += `<img src="${thumbSrc}" class="thumbnail ${activeClass}" data-src="${imgSrc}" alt="${foundProduct.title} thumbnail">`;
-                        });
-                        galleryHTML += `</div>`;
-                    }
+                    let galleryHTML = '';
+if (allImages.length > 1) {
+    galleryHTML = `<div class="gallery-thumbnails">`;
+    allImages.forEach((imgSrc, index) => {
+        const activeClass = index === 0 ? 'active' : '';
+        
+        // 1. Generate the thumbnail filename for .png, .jpg, AND .jpeg files
+        const thumbSrc = imgSrc.replace('.png', '-thumb.png')
+                               .replace('.jpg', '-thumb.jpg')
+                               .replace('.jpeg', '-thumb.jpeg');
+        
+        // 2. Put thumbSrc in the src attribute, but use onerror to fall back to the original imgSrc!
+        galleryHTML += `<img src="${thumbSrc}" onerror="this.onerror=null; this.src='${imgSrc}';" class="thumbnail ${activeClass}" data-src="${imgSrc}" loading="lazy" alt="${foundProduct.title.replace(/"/g, '&quot;')} thumbnail ${index + 1}">`;
+    });
+    galleryHTML += `</div>`;
+}
 
                     // Generate Dynamic Size Box
                     let sizeSelectorHTML = '';
