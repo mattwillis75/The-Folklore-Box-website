@@ -1,30 +1,35 @@
 Slide: 1
-Format: SHOP UPDATE
-Heading: Standing Stones
-Description: New Standing Stones products available in The Folklore Box shop.
-Image: images/Standing Stones 1.jpg
----
-Slide: 2
-Format: Shop Update
-Heading: Black Shuck T-Shirts
-Description: My new Black Shuck T-Shirts  are on my shop page!
-Image: images/Carousel-1.jpg
----
-Slide: 3
-Format: GEEGAW
-Heading: Wooden Standing Decorations
-Description: Available from The Folklore Box shop.
-Image: images/carousel-3.jpg
----
-Slide: 4
 Format: GEEGAW
 Heading: Cursed Maps
 Description: Norfolk Witch Map and Cursed Norfolk Map in The Folklore Box shop.
 Image: images/carousel-4.jpg
+Show Text: true
+---
+Slide: 2
+Format: SHOP UPDATE
+Heading: Standing Stones
+Description: New Standing Stones products available in The Folklore Box shop.
+Image: images/Standing Stones 1.jpg
+Show Text: true
+---
+Slide: 3
+Format: Shop Update
+Heading: Black Shuck T-Shirts
+Description: My new Black Shuck T-Shirts  are on my shop page!
+Image: images/Carousel-1.jpg
+Show Text: true
+---
+Slide: 4
+Format: GEEGAW
+Heading: Wooden Standing Decorations
+Description: Available from The Folklore Box shop.
+Image: images/carousel-3.jpg
+Show Text: true
 ---
 Slide: 5
 Format: GEEGAW
 Heading: SHUCK Zine
 Description: Issues 1-7 available from The Folklore Box shop.
 Image: images/shuck-zine.jpg
+Show Text: true
 ---
