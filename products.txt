@@ -72,7 +72,7 @@ Images: images/TShirt 2.jpg
 Sections: T-Shirts
 Size: 
 Materials: 100% Organic ringspun combed cotton
-Postal Class: Second Class Large Letter
+Postal Class: Totes & T-shirts
 Item Cost: 25
 Stock: 10
 Stock S: 10
