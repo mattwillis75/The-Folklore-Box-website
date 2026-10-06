@@ -38,7 +38,6 @@ Stock M: 10
 Stock L: 10
 Stock XL: 10
 Stock XXL: 10
-Featured: Yes
 Description: A curated gift box of witch themed items from our shop, at a highly discounted rate.
 
 Witch and Cauldron tote bag
@@ -52,7 +51,7 @@ Images: images/Tote Bag 1.jpg
 Sections: Tote Bags
 Size: 380 x 420mm
 Materials: 100% Organic Cotton
-Postal Class: Second Class Large Letter
+Postal Class: Totes & T-shirts
 Item Cost: 12
 Stock: 10
 Stock S: 10
@@ -60,7 +59,6 @@ Stock M: 10
 Stock L: 10
 Stock XL: 10
 Stock XXL: 10
-Featured: Yes
 Description: This is a tote bag featuring Moonlit Standing Stones.
 
 
@@ -82,7 +80,6 @@ Stock M: 10
 Stock L: 10
 Stock XL: 10
 Stock XXL: 10
-Featured: Yes
 Description: This is a T-Shirt featuring Moonlit Standing Stones.
 
 
@@ -104,7 +101,6 @@ Stock M: 10
 Stock L: 10
 Stock XL: 10
 Stock XXL: 10
-Featured: Yes
 Description: This is the Standing Stones Folklore Box.
 A curated box of products from our shop, themed around standing stones.
 The value of the box is £55.00, if you were to buy the items individually.
@@ -5071,4 +5067,3 @@ We also sell standing stones coasters which compliment this mug.
 
 **  We only sell mugs to mainland England, Scotland and Wales.  Due to the fragile nature of ceramic, the extra manual handling oversees, including Ireland, Northern Island,  Isle of Wight, Isle of Man, Channel Islands, Isles of Scilly and the Scottish Islands makes it much more difficult for us to make sure your mug arrives intact.  Sorry.  We do love the British islands and your many folk traditions, it's just difficult this time.
 ---
-
