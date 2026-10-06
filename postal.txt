@@ -76,3 +76,9 @@ UK Additional: 0.50
 Int Base: 10.00
 Int Additional: 0.50
 ---
+Class: Totes & T-shirts
+UK Base: 2.50
+UK Additional: 1.20
+Int Base: 12.00
+Int Additional: 4.00
+---
