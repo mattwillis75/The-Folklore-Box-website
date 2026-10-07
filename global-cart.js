@@ -532,14 +532,18 @@
                             if (typeof emailjs !== 'undefined') emailjs.send('service_zmm27cb', 'template_ld7uqbh', templateParams).catch(err => console.error('Email failed...', err));
 
                             // ========================================================
-                            // NEW: EXTRACT ADDRESS & SEND TO GOOGLE SHEETS
+                            // EXTRACT ADDRESS & SEND TO GOOGLE SHEETS
                             // ========================================================
                             let shippingAddress = "No address provided";
+                            let flatAddress = "No address provided";
+                            let addr = {};
+                            let shipName = details.payer.name.given_name + ' ' + (details.payer.name.surname || '');
+
                             if (details.purchase_units && details.purchase_units[0].shipping && details.purchase_units[0].shipping.address) {
-                                const addr = details.purchase_units[0].shipping.address;
-                                const shipName = details.purchase_units[0].shipping.name ? details.purchase_units[0].shipping.name.full_name : '';
+                                addr = details.purchase_units[0].shipping.address;
+                                shipName = details.purchase_units[0].shipping.name ? details.purchase_units[0].shipping.name.full_name : shipName;
                                 
-                                const flatAddress = [
+                                flatAddress = [
                                     shipName, 
                                     addr.address_line_1, 
                                     addr.address_line_2, 
@@ -548,35 +552,39 @@
                                     addr.postal_code, 
                                     addr.country_code
                                 ].filter(Boolean).join(', ');
-
-                                const sheetData = {
-                                    name: shipName || details.payer.name.given_name + ' ' + (details.payer.name.surname || ''),
-                                    email: details.payer.email_address,
-                                    address_string: flatAddress,
-                                    addr_line_1: addr.address_line_1,
-                                    addr_line_2: addr.address_line_2,
-                                    city: addr.admin_area_2,
-                                    county: addr.admin_area_1,
-                                    postcode: addr.postal_code,
-                                    country_code: addr.country_code,
-                                    order_details: orderBreakdown.trim(),
-                                    subtotal: '£' + subtotal.toFixed(2),
-                                    shipping_cost: templateParams.shipping_cost,
-                                    discount: templateParams.order_details.includes('Discount Applied') ? 'Yes' : '£0.00',
-                                    total_paid: templateParams.total_paid,
-                                    order_id: details.id
-                                };
-
-                                // PASTE YOUR GOOGLE SCRIPT WEB APP URL HERE
-                                const scriptURL = '[https://script.google.com/macros/s/AKfycbxIAMXu3CEUXHFeF7gkJBRSgIyU54EPMFJ11Xdnhq_8-wWMXwnOfw21K8XcihswYhUYWw/exec](https://script.google.com/macros/s/AKfycbxIAMXu3CEUXHFeF7gkJBRSgIyU54EPMFJ11Xdnhq_8-wWMXwnOfw21K8XcihswYhUYWw/exec)';
-                                
-                                fetch(scriptURL, {
-                                    method: 'POST',
-                                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                                    body: JSON.stringify(sheetData)
-                                }).then(() => console.log('Order saved to Google Sheets.'))
-                                  .catch(error => console.error('Error saving to Sheets:', error));
                             }
+
+                            const sheetData = {
+                                name: shipName,
+                                email: details.payer.email_address,
+                                address_string: flatAddress,
+                                addr_line_1: addr.address_line_1 || "N/A",
+                                addr_line_2: addr.address_line_2 || "",
+                                city: addr.admin_area_2 || "",
+                                county: addr.admin_area_1 || "",
+                                postcode: addr.postal_code || "",
+                                country_code: addr.country_code || "GBR",
+                                order_details: orderBreakdown.trim(),
+                                subtotal: '£' + subtotal.toFixed(2),
+                                shipping_cost: templateParams.shipping_cost,
+                                discount: templateParams.order_details.includes('Discount Applied') ? 'Yes' : '£0.00',
+                                total_paid: templateParams.total_paid,
+                                order_id: details.id
+                            };
+
+                            // PASTE YOUR NEW GOOGLE SCRIPT WEB APP URL HERE:
+                            const scriptURL = 'https://script.google.com/macros/s/AKfycbwaaQwZh7OD_ZL6kuEeehNUBjxVwfAdQfNrPd8yMajBVRUQKfJxi-H97TWeODqQ-yfN/exec';
+                            
+                            fetch(scriptURL, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                                body: JSON.stringify(sheetData)
+                            }).then(response => {
+                                if(!response.ok) throw new Error("HTTP error " + response.status);
+                                return response.text();
+                            }).then(data => {
+                                console.log('Order saved to Google Sheets/Royal Mail:', data);
+                            }).catch(error => console.error('Error saving order payload:', error));
                             // ========================================================
 
                         } catch (err) { console.error('EmailJS Error:', err); }
