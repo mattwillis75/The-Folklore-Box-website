@@ -2,8 +2,13 @@
     // --- 1. CSS SCROLL FIX FOR PAYPAL OVERFLOW ---
     const scrollFix = document.createElement('style');
     scrollFix.innerHTML = `
-        #cart-panel { overflow-y: auto !important; }
-        #cart-items { flex: 1 1 auto !important; overflow-y: auto !important; min-height: 0 !important; }
+        /* Force the main panel to be the only scrollable element */
+        #cart-panel { overflow-y: auto !important; -webkit-overflow-scrolling: touch !important; }
+        
+        /* Prevent the items list from getting crushed by the PayPal iframe */
+        #cart-items { flex: 1 0 auto !important; overflow-y: visible !important; min-height: min-content !important; }
+        
+        /* Keep the footer solid */
         .cart-footer { flex: 0 0 auto !important; }
     `;
     document.head.appendChild(scrollFix);
@@ -412,6 +417,15 @@
         if (typeof paypal !== 'undefined' && document.getElementById('paypal-button-container')) {
             paypal.Buttons({
                 style: { color: 'gold', shape: 'rect', label: 'checkout', layout: 'vertical' },
+                
+                // NEW: Automatically scroll the panel down when PayPal expands!
+                onClick: function() {
+                    setTimeout(() => {
+                        const panel = document.getElementById('cart-panel');
+                        if(panel) panel.scrollTo({ top: panel.scrollHeight, behavior: 'smooth' });
+                    }, 500);
+                },
+
                 createOrder: function(data, actions) {
                     let itemsTotal = 0; let shippingTotal = 0; let maxBase = -1; let maxBaseItem = null; 
                     const dest = destSelect ? destSelect.value : 'uk';
