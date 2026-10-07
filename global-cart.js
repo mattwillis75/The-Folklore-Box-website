@@ -528,8 +528,52 @@
                                 total_paid: document.getElementById('cart-total') ? document.getElementById('cart-total').textContent.replace('Total: £', '') : '£0.00'
                             };
 
+                            // Send Customer Email via EmailJS
                             if (typeof emailjs !== 'undefined') emailjs.send('service_zmm27cb', 'template_ld7uqbh', templateParams).catch(err => console.error('Email failed...', err));
-                        } catch (err) { console.error('EmailJS Error:', err); }
+                            
+                            // ========================================================
+                            // NEW: EXTRACT ADDRESS & SEND TO GOOGLE SHEETS
+                            // ========================================================
+                            let shippingAddress = "No address provided";
+                            if (details.purchase_units && details.purchase_units[0].shipping && details.purchase_units[0].shipping.address) {
+                                const addr = details.purchase_units[0].shipping.address;
+                                const shipName = details.purchase_units[0].shipping.name ? details.purchase_units[0].shipping.name.full_name : '';
+                                // Clean up the address string
+                                shippingAddress = [
+                                    shipName, 
+                                    addr.address_line_1, 
+                                    addr.address_line_2, 
+                                    addr.admin_area_2, // City
+                                    addr.admin_area_1, // County/State
+                                    addr.postal_code, 
+                                    addr.country_code
+                                ].filter(Boolean).join(', ');
+                            }
+
+                            const sheetData = {
+                                name: details.payer.name.given_name + ' ' + (details.payer.name.surname || ''),
+                                email: details.payer.email_address,
+                                address: shippingAddress,
+                                order_details: orderBreakdown.trim(),
+                                subtotal: '£' + subtotal.toFixed(2),
+                                shipping_cost: templateParams.shipping_cost,
+                                discount: templateParams.order_details.includes('Discount Applied') ? 'Yes' : '£0.00',
+                                total_paid: templateParams.total_paid
+                            };
+
+                            // PASTE YOUR GOOGLE SCRIPT WEB APP URL HERE
+                            const scriptURL = 'https://script.google.com/macros/s/AKfycbxIAMXu3CEUXHFeF7gkJBRSgIyU54EPMFJ11Xdnhq_8-wWMXwnOfw21K8XcihswYhUYWw/exec';
+                            
+                            fetch(scriptURL, {
+                                method: 'POST',
+                                // Using text/plain stops the browser from doing a CORS preflight block
+                                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                                body: JSON.stringify(sheetData)
+                            }).then(() => console.log('Order saved to Google Sheets.'))
+                              .catch(error => console.error('Error saving to Sheets:', error));
+                            // ========================================================
+
+                        } catch (err) { console.error('EmailJS/Google Sheet Error:', err); }
 
                         alert('Payment successful! We have received your order, ' + details.payer.name.given_name + ', and an email confirmation will be sent to you shortly.');
                         cart = []; activeDiscount = null; sessionStorage.removeItem('folkloreDiscount');
