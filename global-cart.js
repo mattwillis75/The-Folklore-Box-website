@@ -552,15 +552,16 @@
                             }
 
                             const sheetData = {
-                                name: details.payer.name.given_name + ' ' + (details.payer.name.surname || ''),
-                                email: details.payer.email_address,
-                                address: shippingAddress,
-                                order_details: orderBreakdown.trim(),
-                                subtotal: '£' + subtotal.toFixed(2),
-                                shipping_cost: templateParams.shipping_cost,
-                                discount: templateParams.order_details.includes('Discount Applied') ? 'Yes' : '£0.00',
-                                total_paid: templateParams.total_paid
-                            };
+        name: details.payer.name.given_name + ' ' + (details.payer.name.surname || ''),
+        email: details.payer.email_address,
+        address: shippingAddress,
+        order_details: orderBreakdown.trim(),
+        subtotal: '£' + subtotal.toFixed(2),
+        shipping_cost: templateParams.shipping_cost,
+        discount: templateParams.order_details.includes('Discount Applied') ? 'Yes' : '£0.00',
+        total_paid: templateParams.total_paid,
+        order_id: details.id // NEW: Pulls the unique PayPal Transaction ID
+    };
 
                             // PASTE YOUR GOOGLE SCRIPT WEB APP URL HERE
                             const scriptURL = 'https://script.google.com/macros/s/AKfycbxIAMXu3CEUXHFeF7gkJBRSgIyU54EPMFJ11Xdnhq_8-wWMXwnOfw21K8XcihswYhUYWw/exec';
