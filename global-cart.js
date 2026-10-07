@@ -2,9 +2,9 @@
     // --- 1. CSS SCROLL FIX FOR PAYPAL OVERFLOW ---
     const scrollFix = document.createElement('style');
     scrollFix.innerHTML = `
-        #cart-panel, #cart-sidebar { overflow-y: auto !important; }
-        #cart-items { overflow-y: visible !important; flex: 1 0 auto !important; }
-        .cart-footer { flex-shrink: 0 !important; }
+        #cart-panel { overflow-y: auto !important; }
+        #cart-items { flex: 1 1 auto !important; overflow-y: auto !important; min-height: 0 !important; }
+        .cart-footer { flex: 0 0 auto !important; }
     `;
     document.head.appendChild(scrollFix);
 
