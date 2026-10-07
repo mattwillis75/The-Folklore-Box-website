@@ -74,7 +74,6 @@ Stock M: 10
 Stock L: 10
 Stock XL: 10
 Stock XXL: 10
-Featured: Yes
 Description: A curated gift box of witch themed items from our shop, at a highly discounted rate.
 
 Witch and Cauldron tote bag
@@ -96,7 +95,6 @@ Stock M: 10
 Stock L: 10
 Stock XL: 10
 Stock XXL: 10
-Featured: Yes
 Description: This is a tote bag featuring Moonlit Standing Stones.
 
 
@@ -118,7 +116,6 @@ Stock M: 10
 Stock L: 10
 Stock XL: 10
 Stock XXL: 10
-Featured: Yes
 Description: This is a T-Shirt featuring Moonlit Standing Stones.
 
 
@@ -140,7 +137,6 @@ Stock M: 10
 Stock L: 10
 Stock XL: 10
 Stock XXL: 10
-Featured: Yes
 Description: This is the Standing Stones Folklore Box.
 A curated box of products from our shop, themed around standing stones.
 The value of the box is £55.00, if you were to buy the items individually.
@@ -5052,3 +5048,20 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 
 The packaging may differ to the photographs depending on other items in the order. Thank you card and sticker may vary due to availability.
+---
+Title: Test product
+Main Image: images/Instagram CHRISTMAS DECORATIONS 2025-9.jpg
+Images: 
+Sections: 
+Size: 
+Materials: 
+Postal Class: FREE
+Item Cost: 0.50
+Stock: 10
+Stock S: 10
+Stock M: 10
+Stock L: 10
+Stock XL: 10
+Stock XXL: 10
+Description: 
+---
