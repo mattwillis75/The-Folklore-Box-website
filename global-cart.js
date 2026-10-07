@@ -538,30 +538,35 @@
                             let shippingAddress = "No address provided";
                             if (details.purchase_units && details.purchase_units[0].shipping && details.purchase_units[0].shipping.address) {
                                 const addr = details.purchase_units[0].shipping.address;
-                                const shipName = details.purchase_units[0].shipping.name ? details.purchase_units[0].shipping.name.full_name : '';
-                                // Clean up the address string
-                                shippingAddress = [
-                                    shipName, 
-                                    addr.address_line_1, 
-                                    addr.address_line_2, 
-                                    addr.admin_area_2, // City
-                                    addr.admin_area_1, // County/State
-                                    addr.postal_code, 
-                                    addr.country_code
-                                ].filter(Boolean).join(', ');
-                            }
+                            const shipName = details.purchase_units[0].shipping.name ? details.purchase_units[0].shipping.name.full_name : '';
+                            
+                            const flatAddress = [
+                                shipName, 
+                                addr.address_line_1, 
+                                addr.address_line_2, 
+                                addr.admin_area_2, 
+                                addr.admin_area_1, 
+                                addr.postal_code, 
+                                addr.country_code
+                            ].filter(Boolean).join(', ');
 
                             const sheetData = {
-        name: details.payer.name.given_name + ' ' + (details.payer.name.surname || ''),
-        email: details.payer.email_address,
-        address: shippingAddress,
-        order_details: orderBreakdown.trim(),
-        subtotal: '£' + subtotal.toFixed(2),
-        shipping_cost: templateParams.shipping_cost,
-        discount: templateParams.order_details.includes('Discount Applied') ? 'Yes' : '£0.00',
-        total_paid: templateParams.total_paid,
-        order_id: details.id // NEW: Pulls the unique PayPal Transaction ID
-    };
+                                name: shipName || details.payer.name.given_name + ' ' + (details.payer.name.surname || ''),
+                                email: details.payer.email_address,
+                                address_string: flatAddress,
+                                addr_line_1: addr.address_line_1,
+                                addr_line_2: addr.address_line_2,
+                                city: addr.admin_area_2,
+                                county: addr.admin_area_1,
+                                postcode: addr.postal_code,
+                                country_code: addr.country_code,
+                                order_details: orderBreakdown.trim(),
+                                subtotal: '£' + subtotal.toFixed(2),
+                                shipping_cost: templateParams.shipping_cost,
+                                discount: templateParams.order_details.includes('Discount Applied') ? 'Yes' : '£0.00',
+                                total_paid: templateParams.total_paid,
+                                order_id: details.id
+                            };
 
                             // PASTE YOUR GOOGLE SCRIPT WEB APP URL HERE
                             const scriptURL = 'https://script.google.com/macros/s/AKfycbxIAMXu3CEUXHFeF7gkJBRSgIyU54EPMFJ11Xdnhq_8-wWMXwnOfw21K8XcihswYhUYWw/exec';
