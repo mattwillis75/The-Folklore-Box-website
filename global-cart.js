@@ -2,26 +2,26 @@
    // --- 1. CSS SCROLL FIX FOR PAYPAL OVERFLOW ---
     const scrollFix = document.createElement('style');
     scrollFix.innerHTML = `
-        /* Force the cart panel to act as a strict flex column and cap its height strictly at the window height */
+        /* Trap scroll events so they don't bleed through to the background page */
         #cart-panel { 
             display: flex !important; 
             flex-direction: column !important; 
             max-height: 100vh !important; 
             overflow-y: auto !important; 
+            overscroll-behavior: contain !important; /* THIS STOPS THE SCROLL LEAK */
             -webkit-overflow-scrolling: touch !important; 
         }
         
-        /* The header must never shrink */
         .cart-header { flex: 0 0 auto !important; }
 
-        /* The items container must grow to fill space, but can shrink if needed. Crucially, its internal overflow must be visible so it doesn't trap the PayPal dropdown. */
+        /* The items list */
         #cart-items { 
             flex: 1 1 auto !important; 
-            overflow-y: visible !important; 
-            min-height: min-content !important; 
+            overflow-y: auto !important; 
+            overscroll-behavior: contain !important; /* Stop item scrolling from leaking */
+            min-height: 0 !important; 
         }
         
-        /* The footer (containing the PayPal button) must never shrink */
         .cart-footer { flex: 0 0 auto !important; }
     `;
     document.head.appendChild(scrollFix);
