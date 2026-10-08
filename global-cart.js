@@ -94,14 +94,14 @@
         if(cartPanel) cartPanel.classList.add('active'); 
         if(cartSidebar) cartSidebar.classList.add('open');
         if(cartOverlay) cartOverlay.classList.add('active'); 
-        document.body.classList.add('cart-open'); // Use a class instead of inline style
+        document.body.classList.add('cart-open'); // THIS LOCKS THE BODY
     };
     
     window.closeCart = () => { 
         if(cartPanel) cartPanel.classList.remove('active'); 
         if(cartSidebar) cartSidebar.classList.remove('open');
         if(cartOverlay) cartOverlay.classList.remove('active'); 
-        document.body.classList.remove('cart-open');
+        document.body.classList.remove('cart-open'); // THIS UNLOCKS THE BODY
     };
 
     // Actively prevent scrolling on the overlay
