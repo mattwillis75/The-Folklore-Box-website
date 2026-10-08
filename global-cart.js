@@ -3,12 +3,13 @@
     const scrollFix = document.createElement('style');
     scrollFix.innerHTML = `
         /* Trap scroll events so they don't bleed through to the background page */
-        #cart-panel { 
+        #cart-panel, #cart-sidebar { 
             display: flex !important; 
             flex-direction: column !important; 
-            max-height: 100vh !important; 
+            height: 100vh !important; /* Force exact window height */
+            height: 100dvh !important;
             overflow-y: auto !important; 
-            overscroll-behavior: contain !important; /* THIS STOPS THE SCROLL LEAK */
+            overscroll-behavior: contain !important;
             -webkit-overflow-scrolling: touch !important; 
         }
         
@@ -17,12 +18,17 @@
         /* The items list */
         #cart-items { 
             flex: 1 1 auto !important; 
-            overflow-y: auto !important; 
-            overscroll-behavior: contain !important; /* Stop item scrolling from leaking */
-            min-height: 0 !important; 
+            overflow-y: visible !important; /* Changed back to visible to let PayPal expand */
+            min-height: min-content !important; 
         }
         
         .cart-footer { flex: 0 0 auto !important; }
+        
+        /* Lock body class */
+        body.cart-open {
+            overflow: hidden !important;
+            height: 100vh !important;
+        }
     `;
     document.head.appendChild(scrollFix);
 
@@ -84,15 +90,22 @@
         if(cartPanel) cartPanel.classList.add('active'); 
         if(cartSidebar) cartSidebar.classList.add('open');
         if(cartOverlay) cartOverlay.classList.add('active'); 
-        document.body.style.overflow = 'hidden'; 
+        document.body.classList.add('cart-open'); // Use a class instead of inline style
     };
     
     window.closeCart = () => { 
         if(cartPanel) cartPanel.classList.remove('active'); 
         if(cartSidebar) cartSidebar.classList.remove('open');
         if(cartOverlay) cartOverlay.classList.remove('active'); 
-        document.body.style.overflow = ''; 
+        document.body.classList.remove('cart-open');
     };
+
+    // Actively prevent scrolling on the overlay
+    if (cartOverlay) {
+        cartOverlay.addEventListener('click', window.closeCart);
+        cartOverlay.addEventListener('wheel', (e) => e.preventDefault(), { passive: false });
+        cartOverlay.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
+    }
 
     if (dtToggle) dtToggle.addEventListener('click', (e) => { e.preventDefault(); window.openCart(); });
     if (mbToggle) mbToggle.addEventListener('click', (e) => { e.preventDefault(); window.openCart(); });
