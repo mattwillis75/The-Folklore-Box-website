@@ -1,5 +1,5 @@
 (async function initializeGlobalCart() {
-    // --- 1. CSS SCROLL FIX FOR PAYPAL OVERFLOW ---
+   // --- 1. CSS SCROLL FIX FOR PAYPAL OVERFLOW ---
     const scrollFix = document.createElement('style');
     scrollFix.innerHTML = `
         /* Force the cart panel to act as a strict flex column and cap its height strictly at the window height */
