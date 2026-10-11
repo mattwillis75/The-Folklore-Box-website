@@ -8,26 +8,30 @@
             height: 100vh !important;
         }
 
-        /* 2. Master Cart Panel: Handles ALL scrolling and stops background leaks */
+        /* 2. Ditch Flexbox! Use a pure block layout so Chrome never forgets the scroll height */
         #cart-panel, #cart-sidebar { 
-            display: flex !important; 
-            flex-direction: column !important; 
+            display: block !important; 
             height: 100vh !important; 
             height: 100dvh !important;
             overflow-y: auto !important; 
-            overscroll-behavior: contain !important; /* Traps scroll cleanly inside the sidebar */
+            overscroll-behavior: contain !important; 
             -webkit-overflow-scrolling: touch !important; 
         }
         
-        .cart-header, .cart-footer { 
-            flex: 0 0 auto !important; 
+        /* 3. Keep the header pinned to the top natively */
+        .cart-header { 
+            position: sticky !important; 
+            top: 0 !important; 
+            background: #0a0a0a !important; /* Matches your cart background */
+            z-index: 10 !important; 
         }
 
-        /* 3. Remove nested scroll traps to destroy the dead-zones! */
-        #cart-items { 
-            flex: 1 0 auto !important; 
-            overflow-y: visible !important; 
-            min-height: min-content !important; 
+        /* 4. Let the items and footer stack naturally so their height always triggers the scrollbar */
+        #cart-items, .cart-footer { 
+            display: block !important; 
+            overflow: visible !important; 
+            height: auto !important;
+            min-height: 0 !important; 
         }
     `;
     document.head.appendChild(scrollFix);
