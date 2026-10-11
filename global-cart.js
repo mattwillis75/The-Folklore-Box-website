@@ -2,37 +2,33 @@
  // --- 1. CSS SCROLL FIX FOR PAYPAL OVERFLOW ---
     const scrollFix = document.createElement('style');
     scrollFix.innerHTML = `
-        /* Lock the background body when the cart is open */
+        /* 1. Lock the background body */
         body.cart-open {
             overflow: hidden !important;
             height: 100vh !important;
-            touch-action: none !important;
         }
 
-        /* Trap scroll events so they don't bleed through */
+        /* 2. Master Cart Panel: Handles ALL scrolling and stops background leaks */
         #cart-panel, #cart-sidebar { 
             display: flex !important; 
             flex-direction: column !important; 
             height: 100vh !important; 
             height: 100dvh !important;
             overflow-y: auto !important; 
-            overscroll-behavior: contain !important;
+            overscroll-behavior: contain !important; /* Traps scroll cleanly inside the sidebar */
             -webkit-overflow-scrolling: touch !important; 
         }
         
-        /* The header must never shrink */
-        .cart-header { flex: 0 0 auto !important; }
-
-        /* The items list must have a hard boundary to prevent the flex container from collapsing or overflowing */
-        #cart-items { 
-            flex: 1 1 auto !important; 
-            overflow-y: auto !important; 
-            min-height: 0 !important; /* Critical: allows flex container to shrink when PayPal expands */
-            overscroll-behavior: contain !important;
+        .cart-header, .cart-footer { 
+            flex: 0 0 auto !important; 
         }
-        
-        /* The footer (containing PayPal) must never shrink */
-        .cart-footer { flex: 0 0 auto !important; }
+
+        /* 3. Remove nested scroll traps to destroy the dead-zones! */
+        #cart-items { 
+            flex: 1 0 auto !important; 
+            overflow-y: visible !important; 
+            min-height: min-content !important; 
+        }
     `;
     document.head.appendChild(scrollFix);
 
