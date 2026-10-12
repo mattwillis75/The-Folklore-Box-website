@@ -2,25 +2,25 @@
     // --- 1. CSS SCROLL FIX FOR PAYPAL OVERFLOW ---
     const scrollFix = document.createElement('style');
     scrollFix.innerHTML = `
-        /* 1. The Body Lock: Stops the background from moving. */
+        /* 1. The Body Lock: Removed touch-action trap so mobile screens aren't paralyzed */
         body.cart-open {
             overflow: hidden !important;
             height: 100vh !important;
-            touch-action: none !important; /* Disables touch-scrolling on the body for mobile */
         }
 
-        /* 2. The Cart Panel: Pure Flexbox, exactly as it was originally built */
+        /* 2. The Cart Panel: Explicitly restore vertical touch scrolling for mobile */
         #cart-panel, #cart-sidebar { 
             display: flex !important; 
             flex-direction: column !important; 
             height: 100vh !important; 
             height: 100dvh !important;
             overflow-y: auto !important; 
-            overscroll-behavior: none !important; /* Stronger than contain, stops all bounce */
+            overscroll-behavior: none !important; 
             -webkit-overflow-scrolling: touch !important; 
+            touch-action: pan-y !important; /* Forces mobile browsers to allow up/down scrolling here */
         }
         
-        /* 3. The Items Container: Allowed to shrink, allowed to show overflow for PayPal */
+        /* 3. The Items Container */
         #cart-items { 
             flex: 1 1 auto !important; 
             overflow-y: visible !important; 
