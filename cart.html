@@ -254,6 +254,17 @@
             try {
                 paypal.Buttons({
                     style: { color: 'gold', shape: 'rect', label: 'checkout', layout: 'vertical' },
+                    
+                    // NEW: Automatically scroll the page down when PayPal expands!
+                    onClick: function() {
+                        setTimeout(() => {
+                            window.scrollTo({ 
+                                top: document.body.scrollHeight, 
+                                behavior: 'smooth' 
+                            });
+                        }, 500); // 500ms delay gives the iframe time to expand first
+                    },
+
                     createOrder: function(data, actions) {
                         let itemsTotal = 0; let shippingTotal = 0; let maxBase = 0; let maxBaseItem = null;
                         const dest = destSelect.value;
