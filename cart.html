@@ -311,69 +311,100 @@
                     },
                     onApprove: function(data, actions) {
                         return actions.order.capture().then(function(details) {
+                            try {
+                                let orderBreakdown = "";
+                                let subtotal = 0;
+                                cart.forEach(item => {
+                                    const displayPrice = isWholesale ? Math.round(item.price * 0.60 * 100) / 100 : item.price;
+                                    const itemTotal = displayPrice * (item.quantity || 1);
+                                    subtotal += itemTotal;
+                                    const sizeStr = item.size ? ` (Size: ${item.size})` : '';
+                                    orderBreakdown += `${item.quantity || 1}x ${item.title}${sizeStr} - £${itemTotal.toFixed(2)}\n`;
+                                });
+
+                                // Ensure shipping cost and total paid element text is extracted cleanly
+                                const shippingCostEl = document.getElementById('cart-shipping-cost');
+                                const totalPaidEl = document.getElementById('cart-total');
+                                const shippingCostText = shippingCostEl ? shippingCostEl.textContent : '£0.00';
+                                const totalPaidText = totalPaidEl ? totalPaidEl.textContent.replace('Total: ', '') : '£0.00';
+
+                                const templateParams = {
+                                    to_name: details.payer.name.given_name,
+                                    to_email: details.payer.email_address,
+                                    order_details: orderBreakdown,
+                                    shipping_cost: shippingCostText,
+                                    total_paid: totalPaidText
+                                };
+
+                                if (typeof emailjs !== 'undefined') emailjs.send('service_zmm27cb', 'template_ld7uqbh', templateParams).catch(err => console.error('Email failed...', err));
+
+                                // ========================================================
+                                // EXTRACT ADDRESS & SEND TO GOOGLE SHEETS
+                                // ========================================================
+                                let shippingAddress = "No address provided";
+                                let flatAddress = "No address provided";
+                                let addr = {};
+                                let shipName = details.payer.name.given_name + ' ' + (details.payer.name.surname || '');
+
+                                if (details.purchase_units && details.purchase_units[0].shipping && details.purchase_units[0].shipping.address) {
+                                    addr = details.purchase_units[0].shipping.address;
+                                    shipName = details.purchase_units[0].shipping.name ? details.purchase_units[0].shipping.name.full_name : shipName;
+                                    
+                                    flatAddress = [
+                                        shipName, 
+                                        addr.address_line_1, 
+                                        addr.address_line_2, 
+                                        addr.admin_area_2, 
+                                        addr.admin_area_1, 
+                                        addr.postal_code, 
+                                        addr.country_code
+                                    ].filter(Boolean).join(', ');
+                                }
+
+                                const sheetData = {
+                                    name: shipName,
+                                    email: details.payer.email_address,
+                                    address_string: flatAddress,
+                                    addr_line_1: addr.address_line_1 || "N/A",
+                                    addr_line_2: addr.address_line_2 || "",
+                                    city: addr.admin_area_2 || "",
+                                    county: addr.admin_area_1 || "",
+                                    postcode: addr.postal_code || "",
+                                    country_code: addr.country_code || "GBR",
+                                    order_details: orderBreakdown.trim(),
+                                    subtotal: '£' + subtotal.toFixed(2),
+                                    shipping_cost: shippingCostText,
+                                    discount: templateParams.order_details.includes('Discount Applied') ? 'Yes' : '£0.00',
+                                    total_paid: totalPaidText,
+                                    order_id: details.id
+                                };
+
+                                const scriptURL = 'https://script.google.com/macros/s/AKfycbwaaQwZh7OD_ZL6kuEeehNUBjxVwfAdQfNrPd8yMajBVRUQKfJxi-H97TWeODqQ-yfN/exec';
+                                
+                                fetch(scriptURL, {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                                    body: JSON.stringify(sheetData)
+                                }).then(response => {
+                                    if(!response.ok) throw new Error("HTTP error " + response.status);
+                                    return response.text();
+                                }).then(data => {
+                                    console.log('Order saved to Google Sheets/Royal Mail:', data);
+                                }).catch(error => console.error('Error saving order payload:', error));
+                                // ========================================================
+
+                            } catch (err) { console.error('Checkout Data Error:', err); }
+
+                            alert('Payment successful! We have received your order, ' + details.payer.name.given_name + ', and an email confirmation will be sent to you shortly.');
                             
-                            // 1. Compile details for EmailJS & Google Sheets
-                            let orderBreakdown = "";
-                            let subtotal = 0;
-                            cart.forEach(item => {
-                                const itemTotal = item.price * (item.quantity || 1);
-                                subtotal += itemTotal;
-                                orderBreakdown += `${item.quantity || 1}x ${item.title} - £${itemTotal.toFixed(2)}\n`;
-                            });
-
-                            const templateParams = {
-                                to_name: details.payer.name.given_name,
-                                to_email: details.payer.email_address,
-                                order_details: orderBreakdown,
-                                shipping_cost: document.getElementById('cart-shipping-cost').textContent,
-                                total_paid: document.getElementById('cart-total').textContent.replace('Total: £', '')
-                            };
-
-                            if (typeof emailjs !== 'undefined') emailjs.send('service_zmm27cb', 'template_ld7uqbh', templateParams).catch(console.error);
-
-                            // 2. Google Sheets & Click & Drop Logic
-                            let shipName = details.payer.name.given_name + ' ' + (details.payer.name.surname || '');
-                            let flatAddress = "No address provided";
-                            let addr = {};
-
-                            if (details.purchase_units && details.purchase_units[0].shipping && details.purchase_units[0].shipping.address) {
-                                addr = details.purchase_units[0].shipping.address;
-                                shipName = details.purchase_units[0].shipping.name ? details.purchase_units[0].shipping.name.full_name : shipName;
-                                flatAddress = [shipName, addr.address_line_1, addr.address_line_2, addr.admin_area_2, addr.admin_area_1, addr.postal_code, addr.country_code].filter(Boolean).join(', ');
-                            }
-
-                            const sheetData = {
-                                name: shipName,
-                                email: details.payer.email_address,
-                                address_string: flatAddress,
-                                addr_line_1: addr.address_line_1 || "N/A",
-                                addr_line_2: addr.address_line_2 || "",
-                                city: addr.admin_area_2 || "",
-                                county: addr.admin_area_1 || "",
-                                postcode: addr.postal_code || "",
-                                country_code: addr.country_code || "GBR",
-                                order_details: orderBreakdown.trim(),
-                                subtotal: '£' + subtotal.toFixed(2),
-                                shipping_cost: templateParams.shipping_cost,
-                                discount: '£0.00',
-                                total_paid: templateParams.total_paid,
-                                order_id: details.id
-                            };
-
-                            const scriptURL = 'https://script.google.com/macros/s/AKfycbwaaQwZh7OD_ZL6kuEeehNUBjxVwfAdQfNrPd8yMajBVRUQKfJxi-H97TWeODqQ-yfN/exec';
-                            fetch(scriptURL, {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                                body: JSON.stringify(sheetData)
-                            }).catch(console.error);
-
-                            // 3. Clear Cart & Complete
-                            alert('Payment successful! Thank you for your order, ' + details.payer.name.given_name + '.');
+                            // Clear cart memory
                             cart = []; 
                             localStorage.setItem(cartKey, JSON.stringify(cart)); 
-                            updateCartUI(); 
+                            
+                            // Redirect to shop page instead of closing a panel
+                            window.location.href = 'shop.html';
                         });
-                    }
+                    },
                 }).render('#paypal-button-container');
             } catch (error) { console.warn("PayPal SDK could not initialize.", error); }
         });
