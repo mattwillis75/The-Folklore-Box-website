@@ -436,44 +436,45 @@
                     const validPasswords = text.split('\n').map(pwd => pwd.trim()).filter(pwd => pwd !== '');
 
                     if (validPasswords.includes(pwdInput.value)) {
-                        sessionStorage.setItem('wholesaleAuthenticated', 'true');
-                        
-                        // Merge active retail session into wholesale cart
-                        let retailCart = JSON.parse(sessionStorage.getItem('folkloreCart')) || [];
-                        let wholesaleCart = JSON.parse(sessionStorage.getItem('folkloreWholesaleCart')) || [];
-                        
-                        if (retailCart.length > 0) {
-                            retailCart.forEach(retailItem => {
-                                let matchId = retailItem.id || retailItem.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
-                                let cartItemId = retailItem.size ? `${matchId}-${retailItem.size}` : matchId;
-                                let existingItem = wholesaleCart.find(wItem => (wItem.cartItemId || wItem.id) === cartItemId);
-                                
-                                if (existingItem) {
-                                    existingItem.quantity += (retailItem.quantity || 1);
-                                } else {
-                                    wholesaleCart.push({
-                                        id: matchId,
-                                        cartItemId: cartItemId,
-                                        title: retailItem.title,
-                                        price: Math.round(retailItem.price * 0.60 * 100) / 100, 
-                                        postalClass: retailItem.postalClass,
-                                        size: retailItem.size || null,
-                                        quantity: retailItem.quantity || 1
-                                    });
-                                }
-                            });
-                            
-                            sessionStorage.setItem('folkloreWholesaleCart', JSON.stringify(wholesaleCart));
-                            sessionStorage.removeItem('folkloreCart');
-                        }
-                        
-                        sessionStorage.setItem('openCartOnLoad', 'true');
-                        window.location.reload();
-                        
-                    } else {
-                        pwdError.style.display = 'block';
-                        pwdInput.style.borderColor = 'var(--accent-red)';
-                    }
+    sessionStorage.setItem('wholesaleAuthenticated', 'true');
+    
+    // CHANGE to localStorage so it matches your new global cart logic
+    let retailCart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
+    let wholesaleCart = JSON.parse(localStorage.getItem('folkloreWholesaleCart')) || [];
+    
+    if (retailCart.length > 0) {
+        retailCart.forEach(retailItem => {
+            let matchId = retailItem.id || retailItem.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+            let cartItemId = retailItem.size ? `${matchId}-${retailItem.size}` : matchId;
+            let existingItem = wholesaleCart.find(wItem => (wItem.cartItemId || wItem.id) === cartItemId);
+            
+            if (existingItem) {
+                existingItem.quantity += (retailItem.quantity || 1);
+            } else {
+                wholesaleCart.push({
+                    id: matchId,
+                    cartItemId: cartItemId,
+                    title: retailItem.title,
+                    price: Math.round(retailItem.price * 0.60 * 100) / 100, 
+                    postalClass: retailItem.postalClass,
+                    size: retailItem.size || null,
+                    quantity: retailItem.quantity || 1
+                });
+            }
+        });
+        
+        // CHANGE to localStorage here as well
+        localStorage.setItem('folkloreWholesaleCart', JSON.stringify(wholesaleCart));
+        localStorage.removeItem('folkloreCart');
+    }
+    
+    sessionStorage.setItem('openCartOnLoad', 'true');
+    window.location.reload();
+    
+} else {
+    pwdError.style.display = 'block';
+    pwdInput.style.borderColor = 'var(--accent-red)';
+}
                 } catch (error) {
                     console.error("Could not load passwords file.");
                     pwdError.textContent = "System error verifying password. Note: This requires running on a local server.";
@@ -604,10 +605,10 @@
                     const isTshirt = product.sections.some(s => s.toLowerCase().includes('t-shirts'));
 
                     if (isTshirt) {
-                        actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='product.html?id=${encodeURIComponent(product.id)}'">Add to Cart</button>`;
-                    } else {
-                        actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.addToCart('${product.id}', '${product.title.replace(/'/g, "\\'")}', ${product.basePrice}, '${product.postalClass}')">Add to Cart</button>`;
-                    }
+    actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='product.html?id=${encodeURIComponent(product.id)}'">Add to Cart</button>`;
+} else {
+    actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.addToSmartCart('${product.id}', '${product.title.replace(/'/g, "\\'")}', ${product.basePrice}, '${product.postalClass}')">Add to Cart</button>`;
+}
 
                     featuredGrid.innerHTML += `
                         <div class="product-card featured-card">
