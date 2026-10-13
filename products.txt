@@ -218,7 +218,7 @@ We may use plastic bubble wrap around this item in the post.  This is recycled f
 ---
 Title: Stone Circle Illustrated Mug in Black
 Main Image: images/mug-standing-stones-1.jpg
-Images: images/Standing Stones Mug 2.jpg, images/Standing Stones Mug 3.jpg, images/Standing Stones Mug 4.jpg, images/Standing Stones Mug 5.jpg, images/Standing Stones Mug 6.jpg, images/Standing Stones Mug 7.jpg
+Images: images/mug-standing-stones-2.jpg, images/Standing Stones Mug 2.jpg, images/Standing Stones Mug 3.jpg, images/Standing Stones Mug 4.jpg, images/Standing Stones Mug 5.jpg, images/Standing Stones Mug 6.jpg, images/Standing Stones Mug 7.jpg
 Sections: Mugs
 Size: 340ml
 Materials: Ceramic
