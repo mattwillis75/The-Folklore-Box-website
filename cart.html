@@ -118,8 +118,11 @@
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
             const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
-            const cartKey = isWholesale ? 'folkloreWholesaleCart' : 'folkloreCart';
+            const cartKey = 'folkloreCart'; // Unified Single Cart
             
+            // Clean up any old ghost wholesale cart if they somehow have one stuck in their browser
+            localStorage.removeItem('folkloreWholesaleCart');
+
             let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
             cart.forEach(item => { if(!item.quantity) item.quantity = 1; });
 
@@ -186,14 +189,19 @@
 
                 cart.forEach((item, index) => {
                     const qty = item.quantity || 1;
-                    const itemTotalCost = item.price * qty;
+                    
+                    // DYNAMIC DISCOUNT: Calculates 60% if Wholesale Mode is active, otherwise standard price
+                    const displayPrice = isWholesale ? Math.round(item.price * 0.60 * 100) / 100 : item.price;
+                    const itemTotalCost = displayPrice * qty;
                     itemsTotal += itemTotalCost;
+
+                    const sizeText = item.size ? `<br><span style="font-size:0.85rem; color:#888;">Size: ${item.size}</span>` : '';
 
                     cartItemsContainer.innerHTML += `
                         <div class="cart-item">
                             <div class="cart-item-title">
-                                ${item.title} <br>
-                                <span style="font-size:0.85rem; color:#888; font-weight:normal;">£${item.price.toFixed(2)} each</span>
+                                ${item.title} ${sizeText} <br>
+                                <span style="font-size:0.85rem; color:#888; font-weight:normal;">£${displayPrice.toFixed(2)} each</span>
                             </div>
                             <div class="cart-qty-controls">
                                 <button onclick="updateQuantity(${index}, -1)">-</button>
@@ -255,14 +263,13 @@
                 paypal.Buttons({
                     style: { color: 'gold', shape: 'rect', label: 'checkout', layout: 'vertical' },
                     
-                    // NEW: Automatically scroll the page down when PayPal expands!
                     onClick: function() {
                         setTimeout(() => {
                             window.scrollTo({ 
                                 top: document.body.scrollHeight, 
                                 behavior: 'smooth' 
                             });
-                        }, 500); // 500ms delay gives the iframe time to expand first
+                        }, 500); 
                     },
 
                     createOrder: function(data, actions) {
@@ -271,7 +278,8 @@
                         
                         cart.forEach(item => {
                             const qty = item.quantity || 1;
-                            itemsTotal += item.price * qty;
+                            const displayPrice = isWholesale ? Math.round(item.price * 0.60 * 100) / 100 : item.price;
+                            itemsTotal += displayPrice * qty;
                             const rates = postalRates[item.postalClass];
                             if(rates) {
                                 const baseRate = dest === 'uk' ? rates.ukBase : rates.intBase;
@@ -296,9 +304,10 @@
                         });
                         
                         const paypalItems = cart.map(item => {
+                            const displayPrice = isWholesale ? Math.round(item.price * 0.60 * 100) / 100 : item.price;
                             return {
-                                name: item.title,
-                                unit_amount: { currency_code: 'GBP', value: item.price.toFixed(2) },
+                                name: item.title + (item.size ? ` (Size: ${item.size})` : ''),
+                                unit_amount: { currency_code: 'GBP', value: displayPrice.toFixed(2) },
                                 quantity: (item.quantity || 1).toString()
                             };
                         });
@@ -333,7 +342,6 @@
                                     orderBreakdown += `${item.quantity || 1}x ${item.title}${sizeStr} - £${itemTotal.toFixed(2)}\n`;
                                 });
 
-                                // Ensure shipping cost and total paid element text is extracted cleanly
                                 const shippingCostEl = document.getElementById('cart-shipping-cost');
                                 const totalPaidEl = document.getElementById('cart-total');
                                 const shippingCostText = shippingCostEl ? shippingCostEl.textContent : '£0.00';
@@ -349,9 +357,7 @@
 
                                 if (typeof emailjs !== 'undefined') emailjs.send('service_zmm27cb', 'template_ld7uqbh', templateParams).catch(err => console.error('Email failed...', err));
 
-                                // ========================================================
-                                // EXTRACT ADDRESS & SEND TO GOOGLE SHEETS
-                                // ========================================================
+                                // GOOGLE SHEETS EXPORT
                                 let shippingAddress = "No address provided";
                                 let flatAddress = "No address provided";
                                 let addr = {};
@@ -385,7 +391,7 @@
                                     order_details: orderBreakdown.trim(),
                                     subtotal: '£' + subtotal.toFixed(2),
                                     shipping_cost: shippingCostText,
-                                    discount: templateParams.order_details.includes('Discount Applied') ? 'Yes' : '£0.00',
+                                    discount: isWholesale ? 'Wholesale Applied' : '£0.00',
                                     total_paid: totalPaidText,
                                     order_id: details.id
                                 };
@@ -398,21 +404,14 @@
                                     body: JSON.stringify(sheetData)
                                 }).then(response => {
                                     if(!response.ok) throw new Error("HTTP error " + response.status);
-                                    return response.text();
-                                }).then(data => {
-                                    console.log('Order saved to Google Sheets/Royal Mail:', data);
                                 }).catch(error => console.error('Error saving order payload:', error));
-                                // ========================================================
 
                             } catch (err) { console.error('Checkout Data Error:', err); }
 
                             alert('Payment successful! We have received your order, ' + details.payer.name.given_name + ', and an email confirmation will be sent to you shortly.');
                             
-                            // Clear cart memory
                             cart = []; 
                             localStorage.setItem(cartKey, JSON.stringify(cart)); 
-                            
-                            // Redirect to shop page instead of closing a panel
                             window.location.href = 'shop.html';
                         });
                     },
