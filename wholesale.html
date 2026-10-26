@@ -130,8 +130,10 @@
         footer { background: var(--bg-color); color: #ffffff; padding: 4rem 2rem; text-align: center; border-top: 1px solid #222; margin-top: auto; }
         footer a { color: #ffffff; text-decoration: none; margin: 0 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
         footer a:hover { color: var(--accent-red); }
+        .social-links { margin-bottom: 2rem; }
 
         @media (max-width: 1000px) {
+            .featured-grid { grid-template-columns: repeat(2, 1fr); }
             .shop-layout { flex-direction: column; gap: 20px; }
             .shop-sidebar { position: static; width: 100%; flex: auto; border-bottom: 1px solid #333; padding-bottom: 20px; }
             .filter-list { flex-direction: row; flex-wrap: wrap; gap: 10px; }
@@ -303,7 +305,9 @@
             const mobileToggle = document.getElementById('mobile-toggle');
             const navList = document.getElementById('nav-list');
             if (mobileToggle && navList) {
-                mobileToggle.addEventListener('click', () => { navList.classList.toggle('mobile-active'); });
+                mobileToggle.addEventListener('click', () => { 
+                    navList.classList.toggle('mobile-active'); 
+                });
             }
 
             if (isWholesale) {
