@@ -77,9 +77,9 @@
         .product-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
         .product-card:hover .product-image img { transform: scale(1.05); }
         
-        .product-details { display: flex; flex-direction: column; flex-grow: 1; text-align: left; }
+        .product-details { display: flex; flex-direction: column; flex-grow: 1; text-align: left; justify-content: flex-end; }
         .product-title { font-family: 'Spectral', serif; font-size: 1.6rem; font-weight: 600; margin: 0 0 auto 0; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .product-prices { font-family: 'Lato', sans-serif; margin-bottom: 0; margin-top: 0.5rem; }
+        .product-prices { font-family: 'Lato', sans-serif; margin-bottom: 1.2rem; margin-top: 1rem; }
         .product-prices p { margin: 0; font-size: 1.2rem; color: #ffffff; font-weight: 300; }
         .original-price { text-decoration: line-through; color: var(--text-muted); font-size: 0.9rem; margin-right: 8px; }
         
@@ -172,7 +172,8 @@
 
     <script>
         const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
-        let cart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
+        const cartKey = 'folkloreCart'; 
+        let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
         function updateCartCount() {
             let totalItems = 0;
@@ -236,7 +237,8 @@
                     if (block.trim() === '') return;
                     const lines = block.split('\n');
                     
-                    let product = { basePrice: 0, sections: '' }; 
+                    // CRITICAL FIX: "sections" is now initialized as an Array!
+                    let product = { basePrice: 0, sections: [] }; 
 
                     lines.forEach(line => {
                         const colonIdx = line.indexOf(':');
@@ -246,9 +248,10 @@
                             if (key === 'title') product.title = value;
                             else if (key === 'main image') product.mainImage = value.replace(/^\.\//, '').replace(/^images\//, '');
                             else if (key === 'sections') {
-                                product.sections = value;
-                                value.split(',').forEach(sec => {
-                                    if(sec.trim()) availableCategories.add(sec.trim());
+                                // Properly slice the string into a list and trim spaces
+                                product.sections = value.split(',').map(s => s.trim());
+                                product.sections.forEach(sec => {
+                                    if(sec) availableCategories.add(sec);
                                 });
                             }
                             else if (key === 'postal class') product.postalClass = value;
@@ -267,7 +270,7 @@
                 renderGrid();
             } catch (err) {
                 console.error("Error loading products:", err);
-                if (shopGrid) shopGrid.innerHTML = "<p>Unable to load shop inventory at this time.</p>";
+                if (shopGrid) shopGrid.innerHTML = "<p style='color: #cc0000; text-align: center; grid-column: 1/-1;'>Unable to load shop inventory at this time.</p>";
             }
         }
         
@@ -294,6 +297,7 @@
                 let originalPath = product.mainImage ? `images/${product.mainImage}` : 'placeholder.jpg';
                 
                 let actionButton = '';
+                // `.some()` works flawlessly now because product.sections is officially a list!
                 const isTshirt = product.sections.some(s => s.toLowerCase().includes('t-shirts'));
 
                 if (isTshirt) {
@@ -328,7 +332,8 @@
             if (category === 'All') {
                 filteredProducts = [...products];
             } else {
-                filteredProducts = products.filter(p => p.sections && p.sections.split(',').map(s=>s.trim()).includes(category));
+                // Safely checks if the item contains the exact category from the list
+                filteredProducts = products.filter(p => p.sections && p.sections.includes(category));
             }
             renderGrid();
         };
@@ -344,7 +349,7 @@
                 cart.push({ id, cartItemId, title, price: price, postalClass, size, quantity: 1 });
             }
             
-            localStorage.setItem('folkloreCart', JSON.stringify(cart));
+            localStorage.setItem(cartKey, JSON.stringify(cart));
             window.location.href = 'cart.html';
         };
     </script>
