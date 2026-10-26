@@ -90,41 +90,42 @@
         .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 30px; }
 
         .filter-list { display: flex; flex-direction: column; gap: 0; }
-        .filter-btn { background: transparent; color: var(--text-muted); border: none; border-bottom: 1px solid #222; border-left: 2px solid transparent; padding: 0.8rem 1rem; cursor: pointer; border-radius: 0; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.85rem; transition: all 0.3s; font-family: var(--font-body); font-weight: 600; text-align: left; width: 100%; box-sizing: border-box; }
+        .filter-btn { background: transparent; color: var(--text-muted); border: none; border-bottom: 1px solid #222; border-left: 2px solid transparent; padding: 0.8rem 1rem; cursor: pointer; border-radius: 0; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.85rem; transition: all var(--transition-speed); font-family: var(--font-body); font-weight: 600; text-align: left; width: 100%; box-sizing: border-box; }
         .filter-btn:last-child { border-bottom: none; }
         .filter-btn.active, .filter-btn:hover { border-left-color: var(--accent-red); color: var(--text-light); background: rgba(204, 0, 0, 0.05); }
 
-        .product-card { background: #111; border: 1px solid #333; border-radius: 4px; transition: border-color 0.3s, transform 0.3s; cursor: pointer; display: flex; flex-direction: column; height: 100%; }
+        .product-card { background: #111; border: 1px solid #333; border-radius: 4px; transition: border-color 0.3s ease, transform 0.3s ease; cursor: pointer; position: relative; display: flex; flex-direction: column; height: 100%; }
         .product-card:hover { border-color: var(--accent-red) !important; transform: translateY(-5px); }
         .product-card a { text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%; padding: 1.5rem; box-sizing: border-box; }
         
         .product-image { width: 100%; aspect-ratio: 1 / 1; background: #0a0a0a; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
-        .product-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+        .product-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
         .product-card:hover .product-image img { transform: scale(1.05); }
         
         .product-details { display: flex; flex-direction: column; flex-grow: 1; text-align: left; justify-content: flex-end; }
-        .product-title { font-family: 'Spectral', serif; font-size: 1.6rem; font-weight: 600; margin: 0 0 auto 0; line-height: 1.3; }
+        .product-title { font-family: 'Spectral', serif; font-size: 1.6rem; font-weight: 600; margin: 0 0 auto 0; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        
         .product-prices { font-family: 'Lato', sans-serif; margin-bottom: 1.2rem; margin-top: 1rem; }
         .product-prices p { margin: 0; font-size: 1.2rem; color: #ffffff; font-weight: 300; }
         .original-price { text-decoration: line-through; color: var(--text-muted); font-size: 0.9rem; margin-right: 8px; }
 
-        .add-cart-btn { background: transparent; color: #fff; border: 1px solid #fff; padding: 0.8rem; font-family: 'Lato', sans-serif; text-transform: uppercase; font-weight: bold; font-size: 0.85rem; letter-spacing: 2px; cursor: pointer; transition: 0.3s; width: 100%; box-sizing: border-box; margin-top: auto; }
+        .add-cart-btn { background: transparent; color: #fff; border: 1px solid #fff; padding: 0.8rem; font-family: 'Lato', sans-serif; text-transform: uppercase; font-weight: bold; font-size: 0.85rem; letter-spacing: 2px; cursor: pointer; transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease; width: 100%; box-sizing: border-box; margin-top: auto; }
         .add-cart-btn:hover { background: #ffffff; color: #000000; border-color: #ffffff; }
 
         .request-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); z-index: 3000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
         .request-overlay.active { display: flex; }
-        .request-modal { background: #0a0a0a; border: 1px solid #333; padding: 2.5rem; border-radius: 4px; max-width: 500px; width: 90%; position: relative; }
+        .request-modal { background: #0a0a0a; border: 1px solid #333; padding: 2.5rem; border-radius: 4px; max-width: 500px; width: 90%; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.9); text-align: left; }
         .request-modal h2 { margin-top: 0; color: #fff; font-size: 2rem; border-bottom: 1px solid var(--accent-red); padding-bottom: 0.5rem; font-family: 'Spectral', serif; text-align: left; }
         .request-modal p { color: #aaa; font-size: 0.95rem; margin-bottom: 1.5rem; }
         .request-modal form { display: flex; flex-direction: column; gap: 1rem; }
         .request-modal label { color: #fff; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
-        .request-modal input { width: 100%; padding: 0.8rem; background: #111; border: 1px solid #333; color: #fff; border-radius: 3px; box-sizing: border-box; }
+        .request-modal input { width: 100%; padding: 0.8rem; background: #111; border: 1px solid #333; color: #fff; font-family: var(--font-body); border-radius: 3px; box-sizing: border-box; text-align: left; letter-spacing: normal; }
         .request-modal input:focus { outline: none; border-color: var(--accent-red); }
         .close-modal { position: absolute; top: 1rem; right: 1.5rem; font-size: 2rem; color: #888; cursor: pointer; transition: color 0.3s; line-height: 1; }
         .close-modal:hover { color: var(--accent-red); }
 
         .form-success-message { display: none; text-align: center; padding: 2rem 0; }
-        .form-success-message h3 { color: var(--accent-red); font-size: 1.8rem; font-family: 'Spectral', serif; margin-top: 0; }
+        .form-success-message h3 { color: var(--accent-red); font-size: 1.8rem; font-family: var(--font-headings); margin-top: 0; }
         .form-success-message p { color: #ddd; font-size: 1rem; text-align: center; }
 
         footer { background: var(--bg-color); color: #ffffff; padding: 4rem 2rem; text-align: center; border-top: 1px solid #222; margin-top: auto; }
@@ -138,24 +139,36 @@
             .shop-sidebar { position: static; width: 100%; flex: auto; border-bottom: 1px solid #333; padding-bottom: 20px; }
             .filter-list { flex-direction: row; flex-wrap: wrap; gap: 10px; }
             .filter-btn { width: auto; border: 1px solid var(--border-color); padding: 0.5rem 1rem; border-radius: 3px; text-align: center; }
+            .filter-btn.active, .filter-btn:hover { border-color: var(--accent-red); background: var(--accent-red); color: #fff; }
         }
+
         @media (max-width: 800px) {
             header { padding: 1rem 1.5rem; }
             .page-title { font-size: 2.2rem; }
             .container { padding: 0 20px; }
         }
+
         @media (max-width: 600px) {
             .mobile-cart-btn { font-size: 0.7rem; padding: 0.3rem 0.6rem; }
             .mobile-controls { gap: 10px; }
             .shop-grid, .featured-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
+            .product-card { min-height: auto; }
+            .product-card a { padding: 1rem; }
+            .product-image { margin-bottom: 1rem; }
+            .product-title { font-size: 1.1rem; }
+            .product-prices p { font-size: 1rem; }
             .add-cart-btn { font-size: 0.75rem; padding: 0.6rem; letter-spacing: 1px; }
             .wholesale-banner { flex-direction: column; gap: 10px; padding: 10px; }
-            .password-modal, .request-modal { padding: 1.5rem; width: 95%; }
+            .password-modal { padding: 2.5rem 1.5rem; width: 95%; }
+            .password-modal h2 { font-size: 1.8rem; }
+            .request-modal { padding: 1.5rem; width: 95%; }
+            .request-modal h2 { font-size: 1.5rem; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Password Overlay Gate -->
     <div class="password-overlay" id="password-overlay">
         <div class="password-modal">
             <h2>Wholesale Login</h2>
@@ -170,7 +183,7 @@
     <header id="main-header">
         <div class="logo"><a href="index.html"><img src="./The-folklore-box-logo.png" alt="The Folklore Box Logo"></a></div>
         <div class="mobile-controls">
-            <a href="cart.html" class="mobile-cart-btn">Cart (<span id="mobile-cart-count">0</span>)</a>
+            <a href="cart.html" id="mobile-cart-toggle" class="mobile-cart-btn">Cart (<span id="mobile-cart-count">0</span>)</a>
             <div class="mobile-menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
         </div>
         <nav>
@@ -207,16 +220,19 @@
             <h1 class="page-title">Wholesale Portal</h1>
             <p style="text-align: center; color: #888; font-style: italic; margin-top: 0; margin-bottom: 2rem;">All prices shown are calculated at 60% of the standard retail price.</p>
             
+            <!-- Terms & Conditions Button -->
             <div style="text-align: center; margin-bottom: 3rem;">
                 <a href="wholesale-terms.html" class="btn" style="width: auto; padding: 1rem 2rem;">Wholesale Terms &amp; Conditions</a>
             </div>
 
+            <!-- Featured Section -->
             <div id="featured-section" style="display: none;">
                 <h2 style="font-family: var(--font-headings); font-size: 2rem; margin-top: 0; margin-bottom: 1.5rem; text-align: center; color: var(--text-light); font-weight: 400;">Featured Items</h2>
                 <div class="featured-grid" id="featured-grid"></div>
                 <hr style="border: 0; border-bottom: 1px solid var(--border-color); margin: 3rem 0;">
             </div>
 
+            <!-- Shop Layout with Sidebar -->
             <div class="shop-layout">
                 <aside class="shop-sidebar">
                     <h3 class="sidebar-title">Categories</h3>
@@ -232,33 +248,45 @@
         </div>
     </main>
 
+    <!-- Password Request Pop-up Modal -->
     <div class="request-overlay" id="request-overlay">
         <div class="request-modal">
             <span class="close-modal" id="close-request">&times;</span>
+            
+            <!-- Success Message (Hidden by default) -->
             <div id="request-success" class="form-success-message">
                 <h3>Request Sent</h3>
                 <p>Thank you for your interest! I will review your details and be in touch shortly with your wholesale password.</p>
             </div>
+
+            <!-- Form -->
             <div id="request-form-container">
                 <h2>Request a Password</h2>
                 <p>Enter your shop details below to apply for wholesale access.</p>
+                
                 <form id="request-form" action="https://formsubmit.co/thefolklorebox@gmail.com" method="POST">
                     <input type="hidden" name="_captcha" value="false">
                     <input type="hidden" name="_subject" value="New Wholesale Password Request!">
+                    
                     <label for="shop-name">Shop Name / Business</label>
                     <input type="text" id="shop-name" name="shop_name" required>
+                    
                     <label for="contact-name">Contact Name</label>
                     <input type="text" id="contact-name" name="contact_name" required>
+                    
                     <label for="email">Email Address</label>
                     <input type="email" id="email" name="email" required>
+                    
                     <label for="website">Website or Social Media Link</label>
                     <input type="url" id="website" name="website" placeholder="https://" required>
+                    
                     <button type="submit" class="btn" id="request-submit-btn" style="margin-top: 1rem;">Send Request</button>
                 </form>
             </div>
         </div>
     </div>
 
+    <!-- Index.html matching footer -->
     <footer>
         <div class="social-links">
             <a href="https://instagram.com/the_folklore_box" target="_blank">Instagram: @the_folklore_box</a> | 
@@ -269,26 +297,18 @@
             <a href="wholesale.html">Wholesale Enquiries</a>
             <a href="contact.html">Contact</a>
         </div>
-        <p style="font-size: 0.8rem; color: #555; font-family: 'Lato', sans-serif;">&copy; 2026 The Folklore Box by Matt Willis. All rights reserved.</p>
+        <p style="font-size: 0.8rem; color: #555; font-family: 'Lato', sans-serif;">
+            &copy; 2026 The Folklore Box by Matt Willis. All rights reserved.
+        </p>
     </footer>
 
+    <!-- Interactive Scripts -->
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
             
             const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
-            const cartKey = 'folkloreCart'; 
-            let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
-            function updateCartCount() {
-                let totalItems = 0;
-                cart.forEach(item => { totalItems += (item.quantity || 1); });
-                const cartCountLabel = document.getElementById('cart-count');
-                const mbCartCountLabel = document.getElementById('mobile-cart-count');
-                if (cartCountLabel) cartCountLabel.innerText = totalItems;
-                if (mbCartCountLabel) mbCartCountLabel.innerText = totalItems;
-            }
-            updateCartCount();
-
+            // --- UI SCRIPTS: Header & Nav ---
             const header = document.getElementById('main-header');
             if (header) {
                 window.addEventListener('scroll', () => {
@@ -299,14 +319,6 @@
                         header.style.boxShadow = 'none';
                         header.style.borderBottom = '1px solid #333333';
                     }
-                });
-            }
-
-            const mobileToggle = document.getElementById('mobile-toggle');
-            const navList = document.getElementById('nav-list');
-            if (mobileToggle && navList) {
-                mobileToggle.addEventListener('click', () => { 
-                    navList.classList.toggle('mobile-active'); 
                 });
             }
 
@@ -321,10 +333,11 @@
                     e.preventDefault();
                     sessionStorage.removeItem('wholesaleAuthenticated');
                     alert("You have exited Wholesale Mode. Returning to the standard retail shop.");
-                    window.location.reload(); 
+                    window.location.href = 'shop.html'; 
                 });
             }
 
+            // --- REQUEST PASSWORD MODAL LOGIC ---
             const openRequestBtn = document.getElementById('open-request-btn');
             const closeRequestBtn = document.getElementById('close-request');
             const requestOverlay = document.getElementById('request-overlay');
@@ -339,7 +352,9 @@
             if (openRequestBtn) openRequestBtn.addEventListener('click', openRequestModal);
             if (closeRequestBtn) closeRequestBtn.addEventListener('click', closeRequestModal);
             if (requestOverlay) {
-                requestOverlay.addEventListener('click', (e) => { if (e.target === requestOverlay) closeRequestModal(); });
+                requestOverlay.addEventListener('click', (e) => {
+                    if (e.target === requestOverlay) closeRequestModal();
+                });
             }
 
             if (requestForm) {
@@ -349,7 +364,14 @@
                     requestSubmitBtn.disabled = true;
 
                     const formData = new FormData(requestForm);
-                    fetch(requestForm.action, { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } })
+
+                    fetch(requestForm.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    })
                     .then(response => {
                         if (response.ok) {
                             requestFormContainer.style.display = 'none';
@@ -368,6 +390,7 @@
                 });
             }
 
+            // --- PASSWORD GATE LOGIC ---
             const pwdOverlay = document.getElementById('password-overlay');
             const pwdInput = document.getElementById('wholesale-password');
             const pwdSubmit = document.getElementById('submit-password');
@@ -393,15 +416,20 @@
                         pwdInput.style.borderColor = 'var(--accent-red)';
                     }
                 } catch (error) {
+                    console.error("Could not load passwords file.");
                     pwdError.textContent = "System error verifying password. Note: This requires running on a local server.";
                     pwdError.style.display = 'block';
                 }
             });
 
             pwdInput.addEventListener("keypress", function(event) {
-                if (event.key === "Enter") { event.preventDefault(); pwdSubmit.click(); }
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    pwdSubmit.click();
+                }
             });
 
+            // --- FETCH AND BUILD CATALOGUE ---
             const shopGrid = document.getElementById('shop-grid');
             const filtersContainer = document.getElementById('shop-filters');
             const featuredSection = document.getElementById('featured-section');
@@ -468,13 +496,20 @@
                                 const category = e.target.dataset.filter;
                                 
                                 if (category === 'All') {
-                                    if (featuredSection && products.some(p => p.featured)) featuredSection.style.display = 'block';
+                                    if (featuredSection && products.some(p => p.featured)) {
+                                        featuredSection.style.display = 'block';
+                                    }
                                 } else {
-                                    if (featuredSection) featuredSection.style.display = 'none';
+                                    if (featuredSection) {
+                                        featuredSection.style.display = 'none';
+                                    }
                                 }
 
                                 renderGrid(category);
-                                if(window.innerWidth <= 1000) document.querySelector('.shop-layout').scrollIntoView({ behavior: 'smooth' });
+                                
+                                if(window.innerWidth <= 1000) {
+                                    document.querySelector('.shop-layout').scrollIntoView({ behavior: 'smooth' });
+                                }
                             });
                         });
                     }
@@ -512,7 +547,7 @@
                     if (isTshirt) {
                         actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='product.html?id=${encodeURIComponent(product.id)}'">Add to Cart</button>`;
                     } else {
-                        actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); addToSmartCart('${product.id}', '${product.title.replace(/'/g, "\\'")}', ${product.basePrice}, '${product.postalClass}')">Add to Cart</button>`;
+                        actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.addToSmartCart('${product.id}', '${product.title.replace(/'/g, "\\'")}', ${product.basePrice}, '${product.postalClass}')">Add to Cart</button>`;
                     }
 
                     featuredGrid.innerHTML += `
@@ -562,7 +597,7 @@
                     if (isTshirt) {
                         actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='product.html?id=${encodeURIComponent(product.id)}'">Add to Cart</button>`;
                     } else {
-                        actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); addToSmartCart('${product.id}', '${product.title.replace(/'/g, "\\'")}', ${product.basePrice}, '${product.postalClass}')">Add to Cart</button>`;
+                        actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.addToSmartCart('${product.id}', '${product.title.replace(/'/g, "\\'")}', ${product.basePrice}, '${product.postalClass}')">Add to Cart</button>`;
                     }
 
                     shopGrid.innerHTML += `
@@ -589,6 +624,7 @@
             }
             
             window.addToSmartCart = function(id, title, price, postalClass, size = null) {
+                let cart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
                 const cartItemId = size ? `${id}-${size}` : id;
                 let existingItem = cart.find(item => (item.cartItemId || item.id) === cartItemId);
 
@@ -598,11 +634,15 @@
                     cart.push({ id, cartItemId, title, price: price, postalClass, size, quantity: 1 });
                 }
                 
-                localStorage.setItem(cartKey, JSON.stringify(cart));
+                localStorage.setItem('folkloreCart', JSON.stringify(cart));
                 window.location.href = 'cart.html';
             };
 
         });
     </script>
+
+    <!-- GLOBAL CART COMPONENT SCRIPT -->
+    <script src="global-cart.js"></script>
+    
 </body>
 </html>
