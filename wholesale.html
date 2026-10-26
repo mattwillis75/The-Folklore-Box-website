@@ -10,15 +10,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;600&family=Spectral:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- REQUIRED FOR CHECKOUT: EmailJS & PayPal SDKs -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script type="text/javascript">
        (function(){ emailjs.init({ publicKey: "qI6ltlwzFXECV29P8", }); })();
     </script>
-    <script src="https://www.paypal.com/sdk/js?client-id=BAAyFEECFHCgIYSVAcx3GUqT0FI1rHhhU_mwYJxRf6ngeAPN3zYdx3W4a1tCIEHivTFLxU7oFEeDD1NIIs&currency=GBP&locale=en_GB"></script>
 
     <style>
-        /* Base Colors & Typography */
         :root { --bg-color: #000000; --secondary-bg: #0a0a0a; --border-color: #333333; --text-light: #ffffff; --text-muted: #aaaaaa; --accent-red: #cc0000; --font-headings: 'Spectral', serif; --font-body: 'Lato', sans-serif; --transition-speed: 0.3s; --header-bg: rgba(0, 0, 0, 0.85); }
 
         html { overflow-y: scroll; scrollbar-color: #333333 transparent; }
@@ -30,11 +27,8 @@
         body { font-family: var(--font-body); font-weight: 300; background-color: var(--bg-color); color: var(--text-light); margin: 0; padding: 0; line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
         h1, h2, h3, h4, h5, h6 { font-family: var(--font-headings); font-weight: 400; color: #ffffff; }
 
-        /* Fixed Header */
         header { position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 3rem; background: var(--header-bg); border-bottom: 1px solid var(--border-color); z-index: 2000; box-sizing: border-box; backdrop-filter: blur(8px); transition: all 0.3s ease; }
         .logo img { max-width: 180px; height: auto; }
-
-        /* Navigation */
         nav ul { list-style: none; display: flex; align-items: center; gap: 2rem; margin: 0; padding: 0; }
         nav a { text-decoration: none; color: #ffffff; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; transition: color 0.3s ease; font-family: var(--font-body); white-space: nowrap; }
         nav a:hover { color: var(--accent-red); }
@@ -42,7 +36,6 @@
         #cart-toggle { color: var(--accent-red); border: 1px solid var(--accent-red); padding: 0.5rem 1rem; border-radius: 3px; }
         #cart-toggle:hover { background: var(--accent-red); color: #ffffff; }
 
-        /* Dropdown */
         .dropdown { position: relative; display: inline-block; }
         .dropdown-content { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background-color: var(--accent-red); min-width: 180px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5); z-index: 2001; border-radius: 4px; flex-direction: column; margin-top: 1.5rem; padding: 0.5rem 0; }
         .dropdown-content::before { content: ""; position: absolute; top: -1.5rem; left: 0; width: 100%; height: 1.5rem; }
@@ -51,12 +44,9 @@
         .dropdown-content a:hover { background-color: #a30000; color: #ffffff; }
         .dropdown-divider { height: 1px; background-color: #ffffff; margin: 0 15px; }
 
-        /* Mobile Controls Wrapper */
         .mobile-controls { display: none; align-items: center; gap: 15px; z-index: 2005; }
         .mobile-cart-btn { color: var(--accent-red); border: 1px solid var(--accent-red); padding: 0.4rem 0.8rem; border-radius: 3px; text-decoration: none; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-body); transition: all 0.3s ease; }
         .mobile-cart-btn:hover { background: var(--accent-red); color: #ffffff; }
-
-        /* Mobile Menu */
         .mobile-menu-toggle { display: flex; flex-direction: column; cursor: pointer; gap: 5px; }
         .mobile-menu-toggle span { width: 25px; height: 3px; background-color: #ffffff; transition: all 0.3s ease; border-radius: 3px; }
         
@@ -73,7 +63,6 @@
             .mobile-menu-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
         }
 
-        /* --- Password Overlay --- */
         .password-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.98); z-index: 1999; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); transition: opacity 0.3s ease; padding-top: 85px; box-sizing: border-box; }
         .password-modal { background: #0a0a0a; border: 1px solid #333; padding: 4rem 3rem; border-radius: 4px; max-width: 450px; width: 90%; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.9); }
         .password-modal h2 { font-size: 2.5rem; margin-top: 0; margin-bottom: 1rem; color: #fff; }
@@ -84,39 +73,31 @@
         
         .btn { display: inline-block; background: var(--accent-red); color: #fff; padding: 1.2rem 2rem; text-decoration: none; font-family: var(--font-body); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border-radius: 3px; transition: background 0.3s ease, transform 0.2s ease; border: none; cursor: pointer; width: 100%; box-sizing: border-box; text-align: center;}
         .btn:hover { background: #e60000; transform: translateY(-2px); }
-        
         .secondary-btn { background: transparent; color: #aaa; border: 1px solid #444; margin-top: 1rem; }
         .secondary-btn:hover { color: #ffffff; border-color: var(--accent-red); background: transparent; }
 
-        /* Main Wrapper & Wholesale Banner */
         main { padding-top: 85px; flex-grow: 1; display: flex; flex-direction: column; }
-        
         .wholesale-banner { background: #222; color: var(--accent-red); border-bottom: 1px solid #333; text-align: center; padding: 0.8rem 2rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap; }
         .exit-wholesale-btn { background: transparent; color: #fff; border: 1px solid var(--accent-red); padding: 0.4rem 1rem; font-family: 'Lato', sans-serif; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; border-radius: 3px; transition: all 0.3s ease; }
         .exit-wholesale-btn:hover { background: var(--accent-red); }
 
-        /* Shop Core Layout */
         .container { max-width: 1400px; margin: 20px auto 40px; padding: 0 30px; width: 100%; box-sizing: border-box; }
         .page-title { text-align: center; font-family: var(--font-headings); font-size: 2.8rem; font-weight: 400; margin-bottom: 0.5rem; color: var(--text-light); letter-spacing: 1px; }
 
-        /* Featured Section */
         .featured-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-bottom: 40px; }
         .featured-card { border: 2px solid #ffffff !important; }
 
-        /* Layout Grid */
         .shop-layout { display: flex; gap: 40px; align-items: flex-start; }
         .shop-sidebar { flex: 0 0 200px; position: sticky; top: 110px; }
         .sidebar-title { font-family: var(--font-headings); font-size: 1.5rem; margin-top: 0; margin-bottom: 1.2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; color: var(--text-light); font-weight: 400; }
         .shop-main { flex: 1; min-width: 0; }
         .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 30px; }
 
-        /* Sidebar Filter Buttons */
         .filter-list { display: flex; flex-direction: column; gap: 0; }
         .filter-btn { background: transparent; color: var(--text-muted); border: none; border-bottom: 1px solid #222; border-left: 2px solid transparent; padding: 0.8rem 1rem; cursor: pointer; border-radius: 0; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.85rem; transition: all var(--transition-speed); font-family: var(--font-body); font-weight: 600; text-align: left; width: 100%; box-sizing: border-box; }
         .filter-btn:last-child { border-bottom: none; }
         .filter-btn.active, .filter-btn:hover { border-left-color: var(--accent-red); color: var(--text-light); background: rgba(204, 0, 0, 0.05); }
 
-        /* Product Cards */
         .product-card { background: #111; border: 1px solid #333; border-radius: 4px; transition: border-color 0.3s ease, transform 0.3s ease; cursor: pointer; position: relative; display: flex; flex-direction: column; height: 100%; }
         .product-card:hover { border-color: var(--accent-red) !important; transform: translateY(-5px); }
         .product-card a { text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%; padding: 1.5rem; box-sizing: border-box; }
@@ -127,16 +108,13 @@
         
         .product-details { display: flex; flex-direction: column; flex-grow: 1; text-align: left; justify-content: flex-end; }
         .product-title { font-family: 'Spectral', serif; font-size: 1.6rem; font-weight: 600; margin: 0 0 auto 0; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        
         .product-prices { font-family: 'Lato', sans-serif; margin-bottom: 1.2rem; margin-top: 1rem; }
         .product-prices p { margin: 0; font-size: 1.2rem; color: #ffffff; font-weight: 300; }
         .original-price { text-decoration: line-through; color: var(--text-muted); font-size: 0.9rem; margin-right: 8px; }
 
-        /* Wholesale Specific Button */
         .add-cart-btn { background: transparent; color: #fff; border: 1px solid #fff; padding: 0.8rem; font-family: 'Lato', sans-serif; text-transform: uppercase; font-weight: bold; font-size: 0.85rem; letter-spacing: 2px; cursor: pointer; transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease; width: 100%; box-sizing: border-box; margin-top: auto; }
         .add-cart-btn:hover { background: #ffffff; color: #000000; border-color: #ffffff; }
 
-        /* --- Request Form Modal Styles --- */
         .request-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); z-index: 3000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
         .request-overlay.active { display: flex; }
         .request-modal { background: #0a0a0a; border: 1px solid #333; padding: 2.5rem; border-radius: 4px; max-width: 500px; width: 90%; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.9); text-align: left; }
@@ -149,7 +127,6 @@
         .close-modal { position: absolute; top: 1rem; right: 1.5rem; font-size: 2rem; color: #888; cursor: pointer; transition: color 0.3s; line-height: 1; }
         .close-modal:hover { color: var(--accent-red); }
 
-        /* Success Message */
         .form-success-message { display: none; text-align: center; padding: 2rem 0; }
         .form-success-message h3 { color: var(--accent-red); font-size: 1.8rem; font-family: var(--font-headings); margin-top: 0; }
         .form-success-message p { color: #ddd; font-size: 1rem; text-align: center; }
@@ -157,13 +134,11 @@
         .fade-in { animation: fadeIn 1.5s ease-in forwards; }
         @keyframes fadeIn { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
 
-        /* Index-matched Footer */
         footer { background: var(--bg-color); color: #ffffff; padding: 4rem 2rem; text-align: center; border-top: 1px solid #222; margin-top: auto; }
         footer a { color: #ffffff; text-decoration: none; margin: 0 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
         footer a:hover { color: var(--accent-red); }
         .social-links { margin-bottom: 2rem; }
 
-        /* RESPONSIVE MOBILE LAYOUT ADJUSTMENTS */
         @media (max-width: 1000px) {
             .featured-grid { grid-template-columns: repeat(2, 1fr); }
             .shop-layout { flex-direction: column; gap: 20px; }
@@ -195,15 +170,10 @@
             .request-modal { padding: 1.5rem; width: 95%; }
             .request-modal h2 { font-size: 1.5rem; }
         }
-
-        /* --- CART SCROLL FIX --- */
-        .cart-sidebar { display: flex; flex-direction: column; height: 100vh; }
-        .cart-items-container { flex-grow: 1; overflow-y: auto; min-height: 0 !important; }
     </style>
 </head>
 <body>
 
-    <!-- Password Overlay Gate -->
     <div class="password-overlay" id="password-overlay">
         <div class="password-modal">
             <h2>Wholesale Login</h2>
@@ -218,7 +188,7 @@
     <header id="main-header">
         <div class="logo"><a href="index.html"><img src="./The-folklore-box-logo.png" alt="The Folklore Box Logo"></a></div>
         <div class="mobile-controls">
-            <a href="cart.html" id="mobile-cart-toggle" class="mobile-cart-btn">Cart (<span id="mobile-cart-count">0</span>)</a>
+            <a href="cart.html" class="mobile-cart-btn">Cart (<span id="mobile-cart-count">0</span>)</a>
             <div class="mobile-menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
         </div>
         <nav>
@@ -255,19 +225,16 @@
             <h1 class="page-title">Wholesale Portal</h1>
             <p style="text-align: center; color: #888; font-style: italic; margin-top: 0; margin-bottom: 2rem;">All prices shown are calculated at 60% of the standard retail price.</p>
             
-            <!-- Terms & Conditions Button -->
             <div style="text-align: center; margin-bottom: 3rem;">
                 <a href="wholesale-terms.html" class="btn" style="width: auto; padding: 1rem 2rem;">Wholesale Terms &amp; Conditions</a>
             </div>
 
-            <!-- Featured Section -->
             <div id="featured-section" style="display: none;">
                 <h2 style="font-family: var(--font-headings); font-size: 2rem; margin-top: 0; margin-bottom: 1.5rem; text-align: center; color: var(--text-light); font-weight: 400;">Featured Items</h2>
                 <div class="featured-grid" id="featured-grid"></div>
                 <hr style="border: 0; border-bottom: 1px solid var(--border-color); margin: 3rem 0;">
             </div>
 
-            <!-- Shop Layout with Sidebar -->
             <div class="shop-layout">
                 <aside class="shop-sidebar">
                     <h3 class="sidebar-title">Categories</h3>
@@ -283,47 +250,36 @@
         </div>
     </main>
 
-    <!-- Password Request Pop-up Modal -->
     <div class="request-overlay" id="request-overlay">
         <div class="request-modal">
             <span class="close-modal" id="close-request">&times;</span>
             
-            <!-- Success Message (Hidden by default) -->
             <div id="request-success" class="form-success-message">
                 <h3>Request Sent</h3>
                 <p>Thank you for your interest! I will review your details and be in touch shortly with your wholesale password.</p>
             </div>
 
-            <!-- Form -->
             <div id="request-form-container">
                 <h2>Request a Password</h2>
                 <p>Enter your shop details below to apply for wholesale access.</p>
                 
                 <form id="request-form" action="https://formsubmit.co/thefolklorebox@gmail.com" method="POST">
-                    <!-- Disables the Captcha -->
                     <input type="hidden" name="_captcha" value="false">
-                    <!-- Hidden Subject Line for your inbox -->
                     <input type="hidden" name="_subject" value="New Wholesale Password Request!">
-                    
                     <label for="shop-name">Shop Name / Business</label>
                     <input type="text" id="shop-name" name="shop_name" required>
-                    
                     <label for="contact-name">Contact Name</label>
                     <input type="text" id="contact-name" name="contact_name" required>
-                    
                     <label for="email">Email Address</label>
                     <input type="email" id="email" name="email" required>
-                    
                     <label for="website">Website or Social Media Link</label>
                     <input type="url" id="website" name="website" placeholder="https://" required>
-                    
                     <button type="submit" class="btn" id="request-submit-btn" style="margin-top: 1rem;">Send Request</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Index.html matching footer -->
     <footer>
         <div class="social-links">
             <a href="https://instagram.com/the_folklore_box" target="_blank">Instagram: @the_folklore_box</a> | 
@@ -339,11 +295,23 @@
         </p>
     </footer>
 
-    <!-- Interactive Scripts -->
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
             
-            // --- UI SCRIPTS: Header & Nav ---
+            const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
+            let cartKey = 'folkloreCart'; 
+            let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+            function updateCartCount() {
+                let totalItems = 0;
+                cart.forEach(item => { totalItems += (item.quantity || 1); });
+                const cartCountLabel = document.getElementById('cart-count');
+                const mbCartCountLabel = document.getElementById('mobile-cart-count');
+                if (cartCountLabel) cartCountLabel.innerText = totalItems;
+                if (mbCartCountLabel) mbCartCountLabel.innerText = totalItems;
+            }
+            updateCartCount();
+
             const header = document.getElementById('main-header');
             if (header) {
                 window.addEventListener('scroll', () => {
@@ -362,13 +330,24 @@
             if (mobileToggle && navList) {
                 mobileToggle.addEventListener('click', () => { 
                     navList.classList.toggle('mobile-active'); 
-                    mobileToggle.classList.toggle('open');
                 });
             }
 
-            const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
+            if (isWholesale) {
+                document.getElementById('wholesale-banner').style.display = 'flex';
+                document.getElementById('wholesale-logout-btn').style.display = 'inline-block';
+            }
 
-            // --- REQUEST PASSWORD MODAL LOGIC ---
+            const logoutBtn = document.getElementById('wholesale-logout-btn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    sessionStorage.removeItem('wholesaleAuthenticated');
+                    alert("You have exited Wholesale Mode. Returning to the standard retail shop.");
+                    window.location.reload(); 
+                });
+            }
+
             const openRequestBtn = document.getElementById('open-request-btn');
             const closeRequestBtn = document.getElementById('close-request');
             const requestOverlay = document.getElementById('request-overlay');
@@ -391,7 +370,6 @@
             if (requestForm) {
                 requestForm.addEventListener('submit', function(e) {
                     e.preventDefault(); 
-                    
                     requestSubmitBtn.textContent = 'Sending...';
                     requestSubmitBtn.disabled = true;
 
@@ -422,7 +400,6 @@
                 });
             }
 
-            // --- PASSWORD GATE LOGIC ---
             const pwdOverlay = document.getElementById('password-overlay');
             const pwdInput = document.getElementById('wholesale-password');
             const pwdSubmit = document.getElementById('submit-password');
@@ -441,45 +418,12 @@
                     const validPasswords = text.split('\n').map(pwd => pwd.trim()).filter(pwd => pwd !== '');
 
                     if (validPasswords.includes(pwdInput.value)) {
-    sessionStorage.setItem('wholesaleAuthenticated', 'true');
-    
-    // CHANGE to localStorage so it matches your new global cart logic
-    let retailCart = JSON.parse(localStorage.getItem('folkloreCart')) || [];
-    let wholesaleCart = JSON.parse(localStorage.getItem('folkloreWholesaleCart')) || [];
-    
-    if (retailCart.length > 0) {
-        retailCart.forEach(retailItem => {
-            let matchId = retailItem.id || retailItem.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
-            let cartItemId = retailItem.size ? `${matchId}-${retailItem.size}` : matchId;
-            let existingItem = wholesaleCart.find(wItem => (wItem.cartItemId || wItem.id) === cartItemId);
-            
-            if (existingItem) {
-                existingItem.quantity += (retailItem.quantity || 1);
-            } else {
-                wholesaleCart.push({
-                    id: matchId,
-                    cartItemId: cartItemId,
-                    title: retailItem.title,
-                    price: Math.round(retailItem.price * 0.60 * 100) / 100, 
-                    postalClass: retailItem.postalClass,
-                    size: retailItem.size || null,
-                    quantity: retailItem.quantity || 1
-                });
-            }
-        });
-        
-        // CHANGE to localStorage here as well
-        localStorage.setItem('folkloreWholesaleCart', JSON.stringify(wholesaleCart));
-        localStorage.removeItem('folkloreCart');
-    }
-    
-    sessionStorage.setItem('openCartOnLoad', 'true');
-    window.location.reload();
-    
-} else {
-    pwdError.style.display = 'block';
-    pwdInput.style.borderColor = 'var(--accent-red)';
-}
+                        sessionStorage.setItem('wholesaleAuthenticated', 'true');
+                        window.location.reload();
+                    } else {
+                        pwdError.style.display = 'block';
+                        pwdInput.style.borderColor = 'var(--accent-red)';
+                    }
                 } catch (error) {
                     console.error("Could not load passwords file.");
                     pwdError.textContent = "System error verifying password. Note: This requires running on a local server.";
@@ -494,7 +438,6 @@
                 }
             });
 
-            // --- FETCH AND BUILD CATALOGUE ---
             const shopGrid = document.getElementById('shop-grid');
             const filtersContainer = document.getElementById('shop-filters');
             const featuredSection = document.getElementById('featured-section');
@@ -558,7 +501,6 @@
                                 
                                 const category = e.target.dataset.filter;
                                 
-                                // Toggle visibility of the featured section based on category selection
                                 if (category === 'All') {
                                     if (featuredSection && products.some(p => p.featured)) {
                                         featuredSection.style.display = 'block';
@@ -571,7 +513,6 @@
 
                                 renderGrid(category);
                                 
-                                // Scroll to top of shop layout on mobile when filter changes
                                 if(window.innerWidth <= 1000) {
                                     document.querySelector('.shop-layout').scrollIntoView({ behavior: 'smooth' });
                                 }
@@ -610,27 +551,27 @@
                     const isTshirt = product.sections.some(s => s.toLowerCase().includes('t-shirts'));
 
                     if (isTshirt) {
-    actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='product.html?id=${encodeURIComponent(product.id)}'">Add to Cart</button>`;
-} else {
-    actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.addToSmartCart('${product.id}', '${product.title.replace(/'/g, "\\'")}', ${product.basePrice}, '${product.postalClass}')">Add to Cart</button>`;
-}
+                        actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='product.html?id=${encodeURIComponent(product.id)}'">Add to Cart</button>`;
+                    } else {
+                        actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.addToSmartCart('${product.id}', '${product.title.replace(/'/g, "\\'")}', ${product.basePrice}, '${product.postalClass}')">Add to Cart</button>`;
+                    }
 
                     featuredGrid.innerHTML += `
-    <div class="product-card featured-card">
-        <a href="product.html?id=${encodeURIComponent(product.id)}" style="height: auto; flex-grow: 1; padding-bottom: 1rem;">
-            <div class="product-image">
-                <img src="${thumbPath}" onerror="this.onerror=null; this.src='${originalPath}';" alt="${product.title.replace(/"/g, '&quot;')}" loading="lazy">
-            </div>
-            <div class="product-details" style="justify-content: flex-start;">
-                <h3 class="product-title">${product.title}</h3>
-                <div class="product-prices" style="margin-bottom: 0;">${priceHTML}</div>
-            </div>
-        </a>
-        <div style="padding: 0 1.5rem 1.5rem 1.5rem;">
-            ${actionButton}
-        </div>
-    </div>
-`;
+                        <div class="product-card featured-card">
+                            <a href="product.html?id=${encodeURIComponent(product.id)}" style="height: auto; flex-grow: 1; padding-bottom: 1rem;">
+                                <div class="product-image">
+                                    <img src="${thumbPath}" onerror="this.onerror=null; this.src='${originalPath}';" alt="${product.title.replace(/"/g, '&quot;')}" loading="lazy">
+                                </div>
+                                <div class="product-details" style="justify-content: flex-start;">
+                                    <h3 class="product-title">${product.title}</h3>
+                                    <div class="product-prices" style="margin-bottom: 0;">${priceHTML}</div>
+                                </div>
+                            </a>
+                            <div style="padding: 0 1.5rem 1.5rem 1.5rem;">
+                                ${actionButton}
+                            </div>
+                        </div>
+                    `;
                 });
             }
 
@@ -639,10 +580,8 @@
                 
                 let filteredProducts = [];
                 if (filterValue === 'All') {
-                    // Exclude featured items from the main grid when viewing 'All Items'
                     filteredProducts = products.filter(p => !p.featured);
                 } else {
-                    // Show all items (including featured ones) that match the selected category
                     filteredProducts = products.filter(p => p.sections.includes(filterValue));
                 }
 
@@ -664,39 +603,47 @@
                     if (isTshirt) {
                         actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='product.html?id=${encodeURIComponent(product.id)}'">Add to Cart</button>`;
                     } else {
-                        // Relies on global-cart.js to handle window.addToCart correctly
-                        actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.addToCart('${product.id}', '${product.title.replace(/'/g, "\\'")}', ${product.basePrice}, '${product.postalClass}')">Add to Cart</button>`;
+                        actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.addToSmartCart('${product.id}', '${product.title.replace(/'/g, "\\'")}', ${product.basePrice}, '${product.postalClass}')">Add to Cart</button>`;
                     }
 
                     shopGrid.innerHTML += `
-    <div class="product-card">
-        <a href="product.html?id=${encodeURIComponent(product.id)}" style="height: auto; flex-grow: 1; padding-bottom: 1rem;">
-            <div class="product-image">
-                <img src="${thumbPath}" onerror="this.onerror=null; this.src='${originalPath}';" alt="${product.title.replace(/"/g, '&quot;')}" loading="lazy">
-            </div>
-            <div class="product-details" style="justify-content: flex-start;">
-                <h3 class="product-title">${product.title}</h3>
-                <div class="product-prices" style="margin-bottom: 0;">${priceHTML}</div>
-            </div>
-        </a>
-        <div style="padding: 0 1.5rem 1.5rem 1.5rem;">
-            ${actionButton}
-        </div>
-    </div>
-`;
+                        <div class="product-card">
+                            <a href="product.html?id=${encodeURIComponent(product.id)}" style="height: auto; flex-grow: 1; padding-bottom: 1rem;">
+                                <div class="product-image">
+                                    <img src="${thumbPath}" onerror="this.onerror=null; this.src='${originalPath}';" alt="${product.title.replace(/"/g, '&quot;')}" loading="lazy">
+                                </div>
+                                <div class="product-details" style="justify-content: flex-start;">
+                                    <h3 class="product-title">${product.title}</h3>
+                                    <div class="product-prices" style="margin-bottom: 0;">${priceHTML}</div>
+                                </div>
+                            </a>
+                            <div style="padding: 0 1.5rem 1.5rem 1.5rem;">
+                                ${actionButton}
+                            </div>
+                        </div>
+                    `;
                 });
             }
 
-            // Initialize catalog if user is already verified via session
             if (isWholesale) {
                 initializeProducts();
             }
+            
+            window.addToSmartCart = function(id, title, price, postalClass, size = null) {
+                const cartItemId = size ? `${id}-${size}` : id;
+                let existingItem = cart.find(item => (item.cartItemId || item.id) === cartItemId);
+
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({ id, cartItemId, title, price: price, postalClass, size, quantity: 1 });
+                }
+                
+                localStorage.setItem(cartKey, JSON.stringify(cart));
+                window.location.href = 'cart.html';
+            };
 
         });
     </script>
-
-    <!-- GLOBAL CART COMPONENT SCRIPT -->
-    <script src="global-cart.js"></script>
-    
 </body>
 </html>
