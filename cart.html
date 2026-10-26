@@ -85,7 +85,7 @@
     <main>
         <div class="cart-container">
             <div class="cart-header">
-                <h1>Your Cart</h1>
+                <h1 id="cart-title-text">Your Cart</h1>
                 <a href="shop.html" class="continue-shopping">Continue Shopping &rarr;</a>
             </div>
             
@@ -118,9 +118,13 @@
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
             const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
-            const cartKey = 'folkloreCart'; // Unified Single Cart
+            const cartKey = 'folkloreCart'; 
             
-            // Clean up any old ghost wholesale cart if they somehow have one stuck in their browser
+            if (isWholesale) {
+                document.getElementById('cart-title-text').innerText = "Wholesale Cart";
+            }
+
+            // Cleanup any ghost wholesale carts so they stop returning
             localStorage.removeItem('folkloreWholesaleCart');
 
             let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
@@ -190,18 +194,19 @@
                 cart.forEach((item, index) => {
                     const qty = item.quantity || 1;
                     
-                    // DYNAMIC DISCOUNT: Calculates 60% if Wholesale Mode is active, otherwise standard price
+                    // DYNAMIC DISCOUNT: Automatically calculates Wholesale Pricing visually!
                     const displayPrice = isWholesale ? Math.round(item.price * 0.60 * 100) / 100 : item.price;
                     const itemTotalCost = displayPrice * qty;
                     itemsTotal += itemTotalCost;
 
                     const sizeText = item.size ? `<br><span style="font-size:0.85rem; color:#888;">Size: ${item.size}</span>` : '';
+                    const strikeThrough = isWholesale ? `<span style="text-decoration:line-through; font-size: 0.75rem; margin-right:5px;">£${item.price.toFixed(2)}</span>` : '';
 
                     cartItemsContainer.innerHTML += `
                         <div class="cart-item">
                             <div class="cart-item-title">
                                 ${item.title} ${sizeText} <br>
-                                <span style="font-size:0.85rem; color:#888; font-weight:normal;">£${displayPrice.toFixed(2)} each</span>
+                                <span style="font-size:0.85rem; color:#888; font-weight:normal;">${strikeThrough}£${displayPrice.toFixed(2)} each</span>
                             </div>
                             <div class="cart-qty-controls">
                                 <button onclick="updateQuantity(${index}, -1)">-</button>
@@ -243,7 +248,6 @@
                 document.getElementById('cart-shipping-cost').textContent = `£${shippingTotal.toFixed(2)}`;
                 document.getElementById('cart-total').textContent = `Total: £${finalTotal.toFixed(2)}`;
 
-                // Wholesale Validation
                 if (isWholesale) {
                     if (itemsTotal >= 75) {
                         cartWarning.style.display = 'none';
@@ -258,17 +262,13 @@
             destSelect.addEventListener('change', updateCartUI);
             updateCartUI();
 
-            // PayPal SDK Initialization
             try {
                 paypal.Buttons({
                     style: { color: 'gold', shape: 'rect', label: 'checkout', layout: 'vertical' },
                     
                     onClick: function() {
                         setTimeout(() => {
-                            window.scrollTo({ 
-                                top: document.body.scrollHeight, 
-                                behavior: 'smooth' 
-                            });
+                            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
                         }, 500); 
                     },
 
@@ -356,55 +356,6 @@
                                 };
 
                                 if (typeof emailjs !== 'undefined') emailjs.send('service_zmm27cb', 'template_ld7uqbh', templateParams).catch(err => console.error('Email failed...', err));
-
-                                // GOOGLE SHEETS EXPORT
-                                let shippingAddress = "No address provided";
-                                let flatAddress = "No address provided";
-                                let addr = {};
-                                let shipName = details.payer.name.given_name + ' ' + (details.payer.name.surname || '');
-
-                                if (details.purchase_units && details.purchase_units[0].shipping && details.purchase_units[0].shipping.address) {
-                                    addr = details.purchase_units[0].shipping.address;
-                                    shipName = details.purchase_units[0].shipping.name ? details.purchase_units[0].shipping.name.full_name : shipName;
-                                    
-                                    flatAddress = [
-                                        shipName, 
-                                        addr.address_line_1, 
-                                        addr.address_line_2, 
-                                        addr.admin_area_2, 
-                                        addr.admin_area_1, 
-                                        addr.postal_code, 
-                                        addr.country_code
-                                    ].filter(Boolean).join(', ');
-                                }
-
-                                const sheetData = {
-                                    name: shipName,
-                                    email: details.payer.email_address,
-                                    address_string: flatAddress,
-                                    addr_line_1: addr.address_line_1 || "N/A",
-                                    addr_line_2: addr.address_line_2 || "",
-                                    city: addr.admin_area_2 || "",
-                                    county: addr.admin_area_1 || "",
-                                    postcode: addr.postal_code || "",
-                                    country_code: addr.country_code || "GBR",
-                                    order_details: orderBreakdown.trim(),
-                                    subtotal: '£' + subtotal.toFixed(2),
-                                    shipping_cost: shippingCostText,
-                                    discount: isWholesale ? 'Wholesale Applied' : '£0.00',
-                                    total_paid: totalPaidText,
-                                    order_id: details.id
-                                };
-
-                                const scriptURL = 'https://script.google.com/macros/s/AKfycbwaaQwZh7OD_ZL6kuEeehNUBjxVwfAdQfNrPd8yMajBVRUQKfJxi-H97TWeODqQ-yfN/exec';
-                                
-                                fetch(scriptURL, {
-                                    method: 'POST',
-                                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                                    body: JSON.stringify(sheetData)
-                                }).then(response => {
-                                    if(!response.ok) throw new Error("HTTP error " + response.status);
-                                }).catch(error => console.error('Error saving order payload:', error));
 
                             } catch (err) { console.error('Checkout Data Error:', err); }
 
