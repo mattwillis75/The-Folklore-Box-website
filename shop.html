@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop British Folklore Art, Prints & Wooden Wares | The Folklore Box</title>
+    <title>Shop | The Folklore Box</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,17 +20,18 @@
         ::-webkit-scrollbar-thumb:hover { background: var(--accent-red); }
 
         body { font-family: var(--font-body); font-weight: 300; background-color: var(--bg-color); color: var(--text-light); margin: 0; padding: 0; line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
-        h1, h2, h3, h4, h5, h6 { font-family: var(--font-headings); font-weight: 400; color: #ffffff; }
 
-        /* Fixed Header */
+        /* Fixed Header - Matching styling exactly */
         header { position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 3rem; background: var(--header-bg); border-bottom: 1px solid var(--border-color); z-index: 2000; box-sizing: border-box; backdrop-filter: blur(8px); transition: all 0.3s ease; }
         .logo img { max-width: 180px; height: auto; }
 
-        /* Navigation */
+        /* Navigation - Matching styling exactly */
         nav ul { list-style: none; display: flex; align-items: center; gap: 2rem; margin: 0; padding: 0; }
         nav a { text-decoration: none; color: #ffffff; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; transition: color 0.3s ease; font-family: var(--font-body); white-space: nowrap; }
         nav a:hover { color: var(--accent-red); }
         .active-page { color: var(--accent-red) !important; }
+        
+        /* Red outlined Cart button */
         #cart-toggle { color: var(--accent-red); border: 1px solid var(--accent-red); padding: 0.5rem 1rem; border-radius: 3px; }
         #cart-toggle:hover { background: var(--accent-red); color: #ffffff; }
 
@@ -47,6 +48,7 @@
         .mobile-controls { display: none; align-items: center; gap: 15px; z-index: 2005; }
         .mobile-cart-btn { color: var(--accent-red); border: 1px solid var(--accent-red); padding: 0.4rem 0.8rem; border-radius: 3px; text-decoration: none; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-body); transition: all 0.3s ease; }
         .mobile-cart-btn:hover { background: var(--accent-red); color: #ffffff; }
+
         .mobile-menu-toggle { display: flex; flex-direction: column; cursor: pointer; gap: 5px; }
         .mobile-menu-toggle span { width: 25px; height: 3px; background-color: #ffffff; transition: all 0.3s ease; border-radius: 3px; }
         
@@ -63,12 +65,22 @@
             .mobile-menu-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
         }
 
-        /* Shop Core Layout */
         main { padding-top: 85px; flex-grow: 1; display: flex; flex-direction: column; }
-        .wholesale-banner { background: #222; color: var(--accent-red); border-bottom: 1px solid #333; text-align: center; padding: 0.8rem 2rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap; }
-        .exit-wholesale-btn { background: transparent; color: #fff; border: 1px solid var(--accent-red); padding: 0.4rem 1rem; font-family: 'Lato', sans-serif; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; border-radius: 3px; transition: all 0.3s ease; }
+        
+        .wholesale-banner { 
+            background: #222; color: var(--accent-red); border-bottom: 1px solid #333; text-align: center; 
+            padding: 0.8rem 2rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; 
+            margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap; 
+        }
+        
+        .exit-wholesale-btn { 
+            background: transparent; color: #fff; border: 1px solid var(--accent-red); padding: 0.4rem 1rem; 
+            font-family: 'Lato', sans-serif; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; 
+            cursor: pointer; border-radius: 3px; transition: all 0.3s ease; 
+        }
         .exit-wholesale-btn:hover { background: var(--accent-red); }
 
+        /* Shop Layout Alignment */
         .container { max-width: 1400px; margin: 20px auto 40px; padding: 0 30px; width: 100%; box-sizing: border-box; }
         .page-title { text-align: center; font-family: var(--font-headings); font-size: 2.8rem; font-weight: 400; margin-bottom: 2.5rem; color: var(--text-light); letter-spacing: 1px; }
 
@@ -76,6 +88,8 @@
         .shop-sidebar { flex: 0 0 200px; position: sticky; top: 110px; }
         .sidebar-title { font-family: var(--font-headings); font-size: 1.5rem; margin-top: 0; margin-bottom: 1.2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; color: var(--text-light); font-weight: 400; }
         .shop-main { flex: 1; min-width: 0; }
+        
+        /* 100% Matching Grid Constraints */
         .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 30px; }
 
         .filter-list { display: flex; flex-direction: column; gap: 0; }
@@ -83,7 +97,7 @@
         .filter-btn:last-child { border-bottom: none; }
         .filter-btn.active, .filter-btn:hover { border-left-color: var(--accent-red); color: var(--text-light); background: rgba(204, 0, 0, 0.05); }
 
-        /* Product Cards */
+        /* Exact matching product card CSS */
         .product-card { background: #111; border: 1px solid #333; border-radius: 4px; transition: border-color 0.3s ease, transform 0.3s ease; cursor: pointer; position: relative; display: flex; flex-direction: column; height: 100%; }
         .product-card:hover { border-color: var(--accent-red) !important; transform: translateY(-5px); }
         .product-card a { text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%; padding: 1.5rem; box-sizing: border-box; }
@@ -102,6 +116,7 @@
         .add-cart-btn { background: transparent; color: #fff; border: 1px solid #fff; padding: 0.8rem; font-family: 'Lato', sans-serif; text-transform: uppercase; font-weight: bold; font-size: 0.85rem; letter-spacing: 2px; cursor: pointer; transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease; width: 100%; box-sizing: border-box; margin-top: auto; }
         .add-cart-btn:hover { background: #ffffff; color: #000000; border-color: #ffffff; }
 
+        /* Index-matched Footer */
         footer { background: var(--bg-color); color: #ffffff; padding: 4rem 2rem; text-align: center; border-top: 1px solid #222; margin-top: auto; }
         footer a { color: #ffffff; text-decoration: none; margin: 0 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
         footer a:hover { color: var(--accent-red); }
@@ -114,11 +129,12 @@
             .filter-btn { width: auto; border: 1px solid var(--border-color); padding: 0.5rem 1rem; border-radius: 3px; text-align: center; }
             .filter-btn.active, .filter-btn:hover { border-color: var(--accent-red); background: var(--accent-red); color: #fff; }
         }
+
         @media (max-width: 800px) {
             header { padding: 1rem 1.5rem; }
-            .page-title { font-size: 2.2rem; }
-            .container { padding: 0 20px; }
+            .page-title { font-size: 2.2rem; margin-bottom: 1.5rem; }
         }
+
         @media (max-width: 600px) {
             .mobile-cart-btn { font-size: 0.7rem; padding: 0.3rem 0.6rem; }
             .mobile-controls { gap: 10px; }
@@ -129,6 +145,7 @@
             .product-title { font-size: 1.1rem; }
             .product-prices p { font-size: 1rem; }
             .add-cart-btn { font-size: 0.75rem; padding: 0.6rem; letter-spacing: 1px; }
+            .wholesale-banner { flex-direction: column; gap: 10px; padding: 10px; }
         }
     </style>
 </head>
@@ -153,18 +170,18 @@
                     </div>
                 </li>
                 <li><a href="portfolio.html">Portfolio</a></li>
-                <li><a href="shop.html" class="active-page">Shop</a></li>
+                <li><a href="shop.html" class="active-page" id="nav-shop-link">Shop</a></li>
                 <li><a href="uk-folklore-map.html">Folklore Map</a></li>
                 <li><a href="journal.html">Journal</a></li>
                 <li><a href="wholesale.html" id="nav-wholesale-link">Wholesale</a></li>
-                <li><a href="cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+                <li><a href="cart.html" id="cart-toggle">Cart (<span id="cart-count">0</span>)</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
         <div class="wholesale-banner" id="wholesale-banner" style="display: none;">
-            <span>Wholesale Account Active: Prices are 60% of standard retail. Minimum spend £75.</span>
+            <span>Minimum spend to allow the wholesale discount is £75.</span>
             <button id="wholesale-logout-btn" class="exit-wholesale-btn">Exit Wholesale</button>
         </div>
 
@@ -203,7 +220,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
             
-            // 1. Unified Cart Setup
+            // 1. Unified Cart Logic
             const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
             const cartKey = 'folkloreCart'; 
             let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
@@ -220,14 +237,16 @@
 
             if (isWholesale) {
                 document.getElementById('nav-wholesale-link').classList.add('active-page');
+                document.getElementById('nav-shop-link').classList.remove('active-page');
                 document.getElementById('wholesale-banner').style.display = 'flex';
             }
 
-            // Clean Logout: Drops wholesale mode and triggers a simple reload. The cart logic will adapt dynamically!
+            // 2. Safe Logout Logic
             const logoutBtn = document.getElementById('wholesale-logout-btn');
             if (logoutBtn) {
                 logoutBtn.addEventListener('click', (e) => {
                     e.preventDefault();
+                    // Simply remove the wholesale flag. The items stay in the single localStorage cart at their retail price.
                     sessionStorage.removeItem('wholesaleAuthenticated');
                     alert("You have exited Wholesale Mode. Returning to the standard retail shop.");
                     window.location.reload(); 
@@ -253,7 +272,7 @@
                 });
             }
 
-            // 2. Load Products & Apply Visual Discount
+            // 3. Product Loading and Display
             const shopGrid = document.getElementById('shop-grid');
             const filtersContainer = document.getElementById('shop-filters');
             let products = [];
@@ -268,7 +287,7 @@
                     rawItems.forEach(rawItem => {
                         if (rawItem.trim() === '') return;
                         const lines = rawItem.trim().split('\n');
-                        let product = { sections: [] }; 
+                        let product = { sections: [] }; // Initialized as an array to prevent .some() crashes
 
                         lines.forEach(line => {
                             const sepIndex = line.indexOf(':');
@@ -281,7 +300,12 @@
                                     product.id = value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
                                 }
                                 else if (key === 'main image' || key === 'image') product.mainImage = value.replace(/^\.\//, '').replace(/^images\//, '');
-                                else if (key === 'sections') product.sections = value.split(',').map(s => s.trim());
+                                else if (key === 'sections') {
+                                    product.sections = value.split(',').map(s => s.trim());
+                                    product.sections.forEach(sec => {
+                                        if(sec) uniqueSections.add(sec);
+                                    });
+                                }
                                 else if (key === 'postal class') product.postalClass = value;
                                 else if (key === 'item cost') product.basePrice = parseFloat(value.replace(/[^0-9.]/g, '')) || 0;
                             }
@@ -289,7 +313,6 @@
 
                         if (product.title) {
                             products.push(product);
-                            product.sections.forEach(section => uniqueSections.add(section));
                         }
                     });
                     
@@ -327,7 +350,6 @@
                 }
 
                 filteredProducts.forEach(product => {
-                    // Visually calculate discount on the fly
                     let displayPrice = isWholesale ? Math.round(product.basePrice * 0.60 * 100) / 100 : product.basePrice;
                     let priceHTML = isWholesale 
                         ? `<p><span class="original-price">£${product.basePrice.toFixed(2)}</span> £${displayPrice.toFixed(2)}</p>` 
@@ -342,7 +364,6 @@
                     if (isTshirt) {
                         actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='product.html?id=${encodeURIComponent(product.id)}'">Add to Cart</button>`;
                     } else {
-                        // We strictly pass product.basePrice here. 
                         actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); addToSmartCart('${product.id}', '${product.title.replace(/'/g, "\\'")}', ${product.basePrice}, '${product.postalClass}')">Add to Cart</button>`;
                     }
 
@@ -367,7 +388,7 @@
 
             initializeShop();
 
-            // 3. Add to Cart: Saves the Retail Price explicitly and redirects immediately to the Cart.
+            // 4. Add to Cart Logic
             window.addToSmartCart = function(id, title, price, postalClass, size = null) {
                 const cartItemId = size ? `${id}-${size}` : id;
                 let existingItem = cart.find(item => (item.cartItemId || item.id) === cartItemId);
