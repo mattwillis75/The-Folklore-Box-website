@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wholesale Folklore Art & Gifts | Stockists | The Folklore Box</title>
-    <meta name="description" content="Apply for a wholesale account with The Folklore Box. Stock your shop with Matt Willis's original British folklore prints, wooden wares, apparel, and zines.">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,8 +15,7 @@
     </script>
 
     <style>
-        :root { --bg-color: #000000; --secondary-bg: #0a0a0a; --border-color: #333333; --text-light: #ffffff; --text-muted: #aaaaaa; --accent-red: #cc0000; --font-headings: 'Spectral', serif; --font-body: 'Lato', sans-serif; --transition-speed: 0.3s; --header-bg: rgba(0, 0, 0, 0.85); }
-
+        :root { --bg-color: #000000; --secondary-bg: #0a0a0a; --border-color: #333333; --text-light: #ffffff; --text-muted: #aaaaaa; --accent-red: #cc0000; --font-headings: 'Spectral', serif; --font-body: 'Lato', sans-serif; --header-bg: rgba(0, 0, 0, 0.85); }
         html { overflow-y: scroll; scrollbar-color: #333333 transparent; }
         ::-webkit-scrollbar { width: 12px; }
         ::-webkit-scrollbar-track { background: transparent; }
@@ -42,7 +40,6 @@
         .dropdown:hover .dropdown-content { display: flex; }
         .dropdown-content a { padding: 10px 16px; display: block; color: #ffffff; text-align: center; }
         .dropdown-content a:hover { background-color: #a30000; color: #ffffff; }
-        .dropdown-divider { height: 1px; background-color: #ffffff; margin: 0 15px; }
 
         .mobile-controls { display: none; align-items: center; gap: 15px; z-index: 2005; }
         .mobile-cart-btn { color: var(--accent-red); border: 1px solid var(--accent-red); padding: 0.4rem 0.8rem; border-radius: 3px; text-decoration: none; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-body); transition: all 0.3s ease; }
@@ -57,7 +54,6 @@
             nav ul.mobile-active { display: flex; }
             nav ul li { width: 100%; text-align: center; padding: 0.8rem 0; }
             .dropdown-content { position: static; transform: none; background-color: transparent; box-shadow: none; margin-top: 0; display: none; }
-            .dropdown-content::before { display: none; }
             .mobile-menu-toggle.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
             .mobile-menu-toggle.open span:nth-child(2) { opacity: 0; }
             .mobile-menu-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
@@ -94,81 +90,65 @@
         .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 30px; }
 
         .filter-list { display: flex; flex-direction: column; gap: 0; }
-        .filter-btn { background: transparent; color: var(--text-muted); border: none; border-bottom: 1px solid #222; border-left: 2px solid transparent; padding: 0.8rem 1rem; cursor: pointer; border-radius: 0; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.85rem; transition: all var(--transition-speed); font-family: var(--font-body); font-weight: 600; text-align: left; width: 100%; box-sizing: border-box; }
+        .filter-btn { background: transparent; color: var(--text-muted); border: none; border-bottom: 1px solid #222; border-left: 2px solid transparent; padding: 0.8rem 1rem; cursor: pointer; border-radius: 0; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.85rem; transition: all 0.3s; font-family: var(--font-body); font-weight: 600; text-align: left; width: 100%; box-sizing: border-box; }
         .filter-btn:last-child { border-bottom: none; }
         .filter-btn.active, .filter-btn:hover { border-left-color: var(--accent-red); color: var(--text-light); background: rgba(204, 0, 0, 0.05); }
 
-        .product-card { background: #111; border: 1px solid #333; border-radius: 4px; transition: border-color 0.3s ease, transform 0.3s ease; cursor: pointer; position: relative; display: flex; flex-direction: column; height: 100%; }
+        .product-card { background: #111; border: 1px solid #333; border-radius: 4px; transition: border-color 0.3s, transform 0.3s; cursor: pointer; display: flex; flex-direction: column; height: 100%; }
         .product-card:hover { border-color: var(--accent-red) !important; transform: translateY(-5px); }
         .product-card a { text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%; padding: 1.5rem; box-sizing: border-box; }
         
         .product-image { width: 100%; aspect-ratio: 1 / 1; background: #0a0a0a; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
-        .product-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+        .product-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
         .product-card:hover .product-image img { transform: scale(1.05); }
         
         .product-details { display: flex; flex-direction: column; flex-grow: 1; text-align: left; justify-content: flex-end; }
-        .product-title { font-family: 'Spectral', serif; font-size: 1.6rem; font-weight: 600; margin: 0 0 auto 0; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .product-title { font-family: 'Spectral', serif; font-size: 1.6rem; font-weight: 600; margin: 0 0 auto 0; line-height: 1.3; }
         .product-prices { font-family: 'Lato', sans-serif; margin-bottom: 1.2rem; margin-top: 1rem; }
         .product-prices p { margin: 0; font-size: 1.2rem; color: #ffffff; font-weight: 300; }
         .original-price { text-decoration: line-through; color: var(--text-muted); font-size: 0.9rem; margin-right: 8px; }
 
-        .add-cart-btn { background: transparent; color: #fff; border: 1px solid #fff; padding: 0.8rem; font-family: 'Lato', sans-serif; text-transform: uppercase; font-weight: bold; font-size: 0.85rem; letter-spacing: 2px; cursor: pointer; transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease; width: 100%; box-sizing: border-box; margin-top: auto; }
+        .add-cart-btn { background: transparent; color: #fff; border: 1px solid #fff; padding: 0.8rem; font-family: 'Lato', sans-serif; text-transform: uppercase; font-weight: bold; font-size: 0.85rem; letter-spacing: 2px; cursor: pointer; transition: 0.3s; width: 100%; box-sizing: border-box; margin-top: auto; }
         .add-cart-btn:hover { background: #ffffff; color: #000000; border-color: #ffffff; }
 
         .request-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); z-index: 3000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
         .request-overlay.active { display: flex; }
-        .request-modal { background: #0a0a0a; border: 1px solid #333; padding: 2.5rem; border-radius: 4px; max-width: 500px; width: 90%; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.9); text-align: left; }
+        .request-modal { background: #0a0a0a; border: 1px solid #333; padding: 2.5rem; border-radius: 4px; max-width: 500px; width: 90%; position: relative; }
         .request-modal h2 { margin-top: 0; color: #fff; font-size: 2rem; border-bottom: 1px solid var(--accent-red); padding-bottom: 0.5rem; font-family: 'Spectral', serif; text-align: left; }
         .request-modal p { color: #aaa; font-size: 0.95rem; margin-bottom: 1.5rem; }
         .request-modal form { display: flex; flex-direction: column; gap: 1rem; }
         .request-modal label { color: #fff; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
-        .request-modal input { width: 100%; padding: 0.8rem; background: #111; border: 1px solid #333; color: #fff; font-family: var(--font-body); border-radius: 3px; box-sizing: border-box; text-align: left; letter-spacing: normal; }
+        .request-modal input { width: 100%; padding: 0.8rem; background: #111; border: 1px solid #333; color: #fff; border-radius: 3px; box-sizing: border-box; }
         .request-modal input:focus { outline: none; border-color: var(--accent-red); }
         .close-modal { position: absolute; top: 1rem; right: 1.5rem; font-size: 2rem; color: #888; cursor: pointer; transition: color 0.3s; line-height: 1; }
         .close-modal:hover { color: var(--accent-red); }
 
         .form-success-message { display: none; text-align: center; padding: 2rem 0; }
-        .form-success-message h3 { color: var(--accent-red); font-size: 1.8rem; font-family: var(--font-headings); margin-top: 0; }
+        .form-success-message h3 { color: var(--accent-red); font-size: 1.8rem; font-family: 'Spectral', serif; margin-top: 0; }
         .form-success-message p { color: #ddd; font-size: 1rem; text-align: center; }
-        
-        .fade-in { animation: fadeIn 1.5s ease-in forwards; }
-        @keyframes fadeIn { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
 
         footer { background: var(--bg-color); color: #ffffff; padding: 4rem 2rem; text-align: center; border-top: 1px solid #222; margin-top: auto; }
         footer a { color: #ffffff; text-decoration: none; margin: 0 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
         footer a:hover { color: var(--accent-red); }
-        .social-links { margin-bottom: 2rem; }
 
         @media (max-width: 1000px) {
-            .featured-grid { grid-template-columns: repeat(2, 1fr); }
             .shop-layout { flex-direction: column; gap: 20px; }
             .shop-sidebar { position: static; width: 100%; flex: auto; border-bottom: 1px solid #333; padding-bottom: 20px; }
             .filter-list { flex-direction: row; flex-wrap: wrap; gap: 10px; }
             .filter-btn { width: auto; border: 1px solid var(--border-color); padding: 0.5rem 1rem; border-radius: 3px; text-align: center; }
-            .filter-btn.active, .filter-btn:hover { border-color: var(--accent-red); background: var(--accent-red); color: #fff; }
         }
-
         @media (max-width: 800px) {
             header { padding: 1rem 1.5rem; }
             .page-title { font-size: 2.2rem; }
             .container { padding: 0 20px; }
         }
-
         @media (max-width: 600px) {
             .mobile-cart-btn { font-size: 0.7rem; padding: 0.3rem 0.6rem; }
             .mobile-controls { gap: 10px; }
             .shop-grid, .featured-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
-            .product-card { min-height: auto; }
-            .product-card a { padding: 1rem; }
-            .product-image { margin-bottom: 1rem; }
-            .product-title { font-size: 1.1rem; }
-            .product-prices p { font-size: 1rem; }
             .add-cart-btn { font-size: 0.75rem; padding: 0.6rem; letter-spacing: 1px; }
             .wholesale-banner { flex-direction: column; gap: 10px; padding: 10px; }
-            .password-modal { padding: 2.5rem 1.5rem; width: 95%; }
-            .password-modal h2 { font-size: 1.8rem; }
-            .request-modal { padding: 1.5rem; width: 95%; }
-            .request-modal h2 { font-size: 1.5rem; }
+            .password-modal, .request-modal { padding: 1.5rem; width: 95%; }
         }
     </style>
 </head>
@@ -253,16 +233,13 @@
     <div class="request-overlay" id="request-overlay">
         <div class="request-modal">
             <span class="close-modal" id="close-request">&times;</span>
-            
             <div id="request-success" class="form-success-message">
                 <h3>Request Sent</h3>
                 <p>Thank you for your interest! I will review your details and be in touch shortly with your wholesale password.</p>
             </div>
-
             <div id="request-form-container">
                 <h2>Request a Password</h2>
                 <p>Enter your shop details below to apply for wholesale access.</p>
-                
                 <form id="request-form" action="https://formsubmit.co/thefolklorebox@gmail.com" method="POST">
                     <input type="hidden" name="_captcha" value="false">
                     <input type="hidden" name="_subject" value="New Wholesale Password Request!">
@@ -290,16 +267,14 @@
             <a href="wholesale.html">Wholesale Enquiries</a>
             <a href="contact.html">Contact</a>
         </div>
-        <p style="font-size: 0.8rem; color: #555; font-family: 'Lato', sans-serif;">
-            &copy; 2026 The Folklore Box by Matt Willis. All rights reserved.
-        </p>
+        <p style="font-size: 0.8rem; color: #555; font-family: 'Lato', sans-serif;">&copy; 2026 The Folklore Box by Matt Willis. All rights reserved.</p>
     </footer>
 
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
             
             const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
-            let cartKey = 'folkloreCart'; 
+            const cartKey = 'folkloreCart'; 
             let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
             function updateCartCount() {
@@ -328,9 +303,7 @@
             const mobileToggle = document.getElementById('mobile-toggle');
             const navList = document.getElementById('nav-list');
             if (mobileToggle && navList) {
-                mobileToggle.addEventListener('click', () => { 
-                    navList.classList.toggle('mobile-active'); 
-                });
+                mobileToggle.addEventListener('click', () => { navList.classList.toggle('mobile-active'); });
             }
 
             if (isWholesale) {
@@ -362,9 +335,7 @@
             if (openRequestBtn) openRequestBtn.addEventListener('click', openRequestModal);
             if (closeRequestBtn) closeRequestBtn.addEventListener('click', closeRequestModal);
             if (requestOverlay) {
-                requestOverlay.addEventListener('click', (e) => {
-                    if (e.target === requestOverlay) closeRequestModal();
-                });
+                requestOverlay.addEventListener('click', (e) => { if (e.target === requestOverlay) closeRequestModal(); });
             }
 
             if (requestForm) {
@@ -374,14 +345,7 @@
                     requestSubmitBtn.disabled = true;
 
                     const formData = new FormData(requestForm);
-
-                    fetch(requestForm.action, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'Accept': 'application/json'
-                        }
-                    })
+                    fetch(requestForm.action, { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } })
                     .then(response => {
                         if (response.ok) {
                             requestFormContainer.style.display = 'none';
@@ -425,17 +389,13 @@
                         pwdInput.style.borderColor = 'var(--accent-red)';
                     }
                 } catch (error) {
-                    console.error("Could not load passwords file.");
                     pwdError.textContent = "System error verifying password. Note: This requires running on a local server.";
                     pwdError.style.display = 'block';
                 }
             });
 
             pwdInput.addEventListener("keypress", function(event) {
-                if (event.key === "Enter") {
-                    event.preventDefault();
-                    pwdSubmit.click();
-                }
+                if (event.key === "Enter") { event.preventDefault(); pwdSubmit.click(); }
             });
 
             const shopGrid = document.getElementById('shop-grid');
@@ -458,7 +418,7 @@
                         if (rawItem.trim() === '') return;
                         
                         const lines = rawItem.trim().split('\n');
-                        let product = { sections: [], featured: false };
+                        let product = { sections: [], featured: false, basePrice: 0 };
                         
                         lines.forEach(line => {
                             const sepIndex = line.indexOf(':');
@@ -471,12 +431,14 @@
                                     product.id = value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
                                 }
                                 else if (key === 'main image' || key === 'image') {
-                                    let cleanPath = value.replace(/^\.\//, '').replace(/^images\//, '');
-                                    product.mainImage = cleanPath;
+                                    product.mainImage = value.replace(/^\.\//, '').replace(/^images\//, '');
                                 }
                                 else if (key === 'sections') product.sections = value.split(',').map(s => s.trim());
                                 else if (key === 'postal class') product.postalClass = value;
-                                else if (key === 'item cost') product.basePrice = parseFloat(value.replace(/[^0-9.]/g, '')) || 0; 
+                                else if (key === 'item cost') {
+                                    let parsedPrice = parseFloat(value.replace(/[^0-9.]/g, ''));
+                                    product.basePrice = isNaN(parsedPrice) ? 0 : parsedPrice;
+                                }
                                 else if (key === 'featured') product.featured = (value.toLowerCase() === 'yes' || value.toLowerCase() === 'true');
                             }
                         });
@@ -502,20 +464,13 @@
                                 const category = e.target.dataset.filter;
                                 
                                 if (category === 'All') {
-                                    if (featuredSection && products.some(p => p.featured)) {
-                                        featuredSection.style.display = 'block';
-                                    }
+                                    if (featuredSection && products.some(p => p.featured)) featuredSection.style.display = 'block';
                                 } else {
-                                    if (featuredSection) {
-                                        featuredSection.style.display = 'none';
-                                    }
+                                    if (featuredSection) featuredSection.style.display = 'none';
                                 }
 
                                 renderGrid(category);
-                                
-                                if(window.innerWidth <= 1000) {
-                                    document.querySelector('.shop-layout').scrollIntoView({ behavior: 'smooth' });
-                                }
+                                if(window.innerWidth <= 1000) document.querySelector('.shop-layout').scrollIntoView({ behavior: 'smooth' });
                             });
                         });
                     }
@@ -553,7 +508,7 @@
                     if (isTshirt) {
                         actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='product.html?id=${encodeURIComponent(product.id)}'">Add to Cart</button>`;
                     } else {
-                        actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.addToSmartCart('${product.id}', '${product.title.replace(/'/g, "\\'")}', ${product.basePrice}, '${product.postalClass}')">Add to Cart</button>`;
+                        actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); addToSmartCart('${product.id}', '${product.title.replace(/'/g, "\\'")}', ${product.basePrice}, '${product.postalClass}')">Add to Cart</button>`;
                     }
 
                     featuredGrid.innerHTML += `
@@ -603,7 +558,7 @@
                     if (isTshirt) {
                         actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='product.html?id=${encodeURIComponent(product.id)}'">Add to Cart</button>`;
                     } else {
-                        actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); window.addToSmartCart('${product.id}', '${product.title.replace(/'/g, "\\'")}', ${product.basePrice}, '${product.postalClass}')">Add to Cart</button>`;
+                        actionButton = `<button class="add-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); addToSmartCart('${product.id}', '${product.title.replace(/'/g, "\\'")}', ${product.basePrice}, '${product.postalClass}')">Add to Cart</button>`;
                     }
 
                     shopGrid.innerHTML += `
