@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wholesale Terms & Conditions | The Folklore Box</title>
+    <meta name="description" content="Wholesale terms and conditions for The Folklore Box stockists.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;600&family=Spectral:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Base Colors & Typography */
+        :root { --bg-color: #000000; --secondary-bg: #0a0a0a; --border-color: #333333; --text-light: #ffffff; --text-muted: #aaaaaa; --accent-red: #cc0000; --font-headings: 'Spectral', serif; --font-body: 'Lato', sans-serif; --header-bg: rgba(0, 0, 0, 0.85); }
+
+        html { overflow-y: scroll; scrollbar-color: #333333 transparent; }
+        ::-webkit-scrollbar { width: 12px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #333333; border-radius: 6px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-red); }
+
+        body { font-family: var(--font-body); font-weight: 300; background-color: var(--bg-color); color: var(--text-light); margin: 0; padding: 0; line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
+        h1, h2, h3, h4, h5, h6 { font-family: var(--font-headings); font-weight: 400; color: #ffffff; margin-top: 0; }
+
+        /* Fixed Header */
+        header { position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 3rem; background: var(--header-bg); border-bottom: 1px solid var(--border-color); z-index: 2000; box-sizing: border-box; backdrop-filter: blur(8px); transition: all 0.3s ease; }
+        .logo img { max-width: 180px; height: auto; }
+
+        /* Navigation */
+        nav ul { list-style: none; display: flex; align-items: center; gap: 2rem; margin: 0; padding: 0; }
+        nav a { text-decoration: none; color: #ffffff; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; transition: color 0.3s ease; font-family: var(--font-body); white-space: nowrap; }
+        nav a:hover { color: var(--accent-red); }
+        .active-page { color: var(--accent-red) !important; }
+        #cart-toggle { color: var(--accent-red); border: 1px solid var(--accent-red); padding: 0.5rem 1rem; border-radius: 3px; }
+        #cart-toggle:hover { background: var(--accent-red); color: #ffffff; }
+
+        /* Dropdown */
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-content { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background-color: var(--accent-red); min-width: 180px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5); z-index: 2001; border-radius: 4px; flex-direction: column; margin-top: 1.5rem; padding: 0.5rem 0; }
+        .dropdown-content::before { content: ""; position: absolute; top: -1.5rem; left: 0; width: 100%; height: 1.5rem; }
+        .dropdown:hover .dropdown-content { display: flex; }
+        .dropdown-content a { padding: 10px 16px; display: block; color: #ffffff; text-align: center; }
+        .dropdown-content a:hover { background-color: #a30000; color: #ffffff; }
+        .dropdown-divider { height: 1px; background-color: #ffffff; margin: 0 15px; }
+
+        /* Mobile Controls Wrapper */
+        .mobile-controls { display: none; align-items: center; gap: 15px; z-index: 2005; }
+        .mobile-cart-btn { color: var(--accent-red); border: 1px solid var(--accent-red); padding: 0.4rem 0.8rem; border-radius: 3px; text-decoration: none; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-body); transition: all 0.3s ease; }
+        .mobile-cart-btn:hover { background: var(--accent-red); color: #ffffff; }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle { display: flex; flex-direction: column; cursor: pointer; gap: 5px; }
+        .mobile-menu-toggle span { width: 25px; height: 3px; background-color: #ffffff; transition: all 0.3s ease; border-radius: 3px; }
+        
+        @media (max-width: 1100px) {
+            .mobile-controls { display: flex; }
+            #nav-list li:last-child { display: none; } 
+            nav ul { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background-color: rgba(0, 0, 0, 0.95); padding: 1rem 0; border-bottom: 1px solid #333; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+            nav ul.mobile-active { display: flex; }
+            nav ul li { width: 100%; text-align: center; padding: 0.8rem 0; }
+            .dropdown-content { position: static; transform: none; background-color: transparent; box-shadow: none; margin-top: 0; display: none; }
+            .dropdown-content::before { display: none; }
+            .mobile-menu-toggle.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .mobile-menu-toggle.open span:nth-child(2) { opacity: 0; }
+            .mobile-menu-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+        }
+
+        /* Content Layout */
+        main { padding-top: 120px; flex-grow: 1; display: flex; flex-direction: column; align-items: center; }
+        .container { max-width: 900px; margin: 0 auto 60px; padding: 0 30px; width: 100%; box-sizing: border-box; }
+        
+        .page-title { text-align: center; font-size: 2.8rem; margin-bottom: 2rem; color: var(--text-light); letter-spacing: 1px; }
+
+        /* Terms Box */
+        .terms-box { background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 4px; padding: 3rem 4rem; color: #ccc; font-size: 1.05rem; }
+        .terms-box p { margin-bottom: 1.5rem; line-height: 1.8; }
+        .terms-box a { color: var(--accent-red); text-decoration: none; transition: color 0.3s; }
+        .terms-box a:hover { color: #fff; }
+
+        .btn { display: inline-block; background: transparent; color: #fff; border: 1px solid var(--accent-red); padding: 1rem 2rem; text-decoration: none; font-family: var(--font-body); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border-radius: 3px; transition: all 0.3s ease; cursor: pointer; margin-top: 2rem; }
+        .btn:hover { background: var(--accent-red); }
+
+        /* Index-matched Footer */
+        footer { background: var(--bg-color); color: #ffffff; padding: 4rem 2rem; text-align: center; border-top: 1px solid #222; margin-top: auto; }
+        footer a { color: #ffffff; text-decoration: none; margin: 0 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
+        footer a:hover { color: var(--accent-red); }
+        .social-links { margin-bottom: 2rem; }
+
+        @media (max-width: 800px) {
+            header { padding: 1rem 1.5rem; }
+            .page-title { font-size: 2.2rem; }
+            .terms-box { padding: 2rem; }
+        }
+        @media (max-width: 600px) {
+            .mobile-cart-btn { font-size: 0.7rem; padding: 0.3rem 0.6rem; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header id="main-header">
+        <div class="logo"><a href="index.html"><img src="./The-folklore-box-logo.png" alt="The Folklore Box Logo"></a></div>
+        <div class="mobile-controls">
+            <a href="cart.html" id="mobile-cart-toggle" class="mobile-cart-btn">Cart (<span id="mobile-cart-count">0</span>)</a>
+            <div class="mobile-menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
+        </div>
+        <nav>
+            <ul id="nav-list">
+                <li class="dropdown">
+                    <a href="index.html">Home</a>
+                    <div class="dropdown-content">
+                        <a href="index.html#collections">Goods & Wares</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="index.html#about">About the Artist</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="index.html#map-teaser">The Folklore Map</a>
+                    </div>
+                </li>
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="uk-folklore-map.html">Folklore Map</a></li>
+                <li><a href="journal.html">Journal</a></li>
+                <li><a href="wholesale.html" class="active-page">Wholesale</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="cart.html" id="cart-toggle">Cart (<span id="cart-count">0</span>)</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1 class="page-title">Wholesale Terms &amp; Conditions</h1>
+            
+            <div class="terms-box">
+                <p><strong><u>We currently only sell wholesale to England, Scotland, Northern Ireland and Wales.</u></strong> If you are outside this region then please contact us on <a href="mailto:wholesale@thefolklorebox.com">wholesale@thefolklorebox.com</a> to discuss this further.</p>
+                
+                <p>Our <strong>MINIMUM ORDER QUANTITY</strong> is £75.</p>
+                
+                <p>Accepted payments are credit and debit cards and Paypal.</p>
+                
+                <p><strong>Shipping</strong> can take up to 10 days. Tracking numbers will be provided.</p>
+                
+                <p>Our couriers will try to deliver twice. It is your responsibility to ensure that goods are received, or alternative delivery times or points are organised directly with the courier, through their tracking system. Items returned to us can be recouriered to you for an additional £10 cost.</p>
+                
+                <p><strong>Returns:</strong> You have a 7 day window in which to notify us of items you wish to return. We only accept returns on damaged or defective items, this is because we make these items in our studio just for you. Postal cost for returns will be paid by the buyer initially. Once the items are received and deemed to be defective or damaged a refund will be given for the items and 50% of the return postal cost will be returned also. If you wish to have the items replaced, we will pay the postage.</p>
+                
+                <p>For items lost in the post. We would ask that you deal directly with the courier for the first 7 days after the item is due. After which, please contact us and we will raise a lost parcel enquiry with the courier. Once this is fully resolved and repaid by the courier, we will issue either a refund or replacement goods.</p>
+                
+                <p>The <strong>MINIMUM ADVERTISED PRICE</strong> for all goods will be displayed on your invoice. This is also the <strong>RRP</strong>. The wholesale order price is 60% of RRP. Our retail website thefolklorebox.com sells at this price. This price should never be undercut. General site wide RRP increases occur in the fiscal new year.</p>
+                
+                <p>Any wholesale purchase is made subject to these terms and conditions.</p>
+                
+                <p>Please do not hesitate to contact us if you have any questions.</p>
+                
+                <div style="text-align: center;">
+                    <a href="wholesale.html" class="btn">Return to Wholesale Portal</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://instagram.com/the_folklore_box" target="_blank">Instagram: @the_folklore_box</a> | 
+            <a href="https://facebook.com/thefolklorebox" target="_blank">Facebook: @thefolklorebox</a>
+        </div>
+        <div style="margin-bottom: 2rem;">
+            <a href="shop.html">Shop</a>
+            <a href="wholesale.html">Wholesale Enquiries</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <p style="font-size: 0.8rem; color: #555; font-family: 'Lato', sans-serif;">
+            &copy; 2026 The Folklore Box by Matt Willis. All rights reserved.
+        </p>
+    </footer>
+
+    <!-- Interactive Scripts for Nav styling & mobile -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const header = document.getElementById('main-header');
+            if (header) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 50) {
+                        header.style.boxShadow = '0 2px 20px rgba(255, 0, 0, 0.1)';
+                        header.style.borderBottom = '1px solid var(--accent-red)';
+                    } else {
+                        header.style.boxShadow = 'none';
+                        header.style.borderBottom = '1px solid #333333';
+                    }
+                });
+            }
+
+            const mobileToggle = document.getElementById('mobile-toggle');
+            const navList = document.getElementById('nav-list');
+            if (mobileToggle && navList) {
+                mobileToggle.addEventListener('click', () => { 
+                    navList.classList.toggle('mobile-active'); 
+                    mobileToggle.classList.toggle('open');
+                });
+            }
+        });
+    </script>
+    
+    <!-- GLOBAL CART COMPONENT SCRIPT -->
+    <script src="global-cart.js"></script>
+
+</body>
+</html>
