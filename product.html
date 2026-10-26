@@ -10,14 +10,29 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;600&family=Spectral:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
-        :root { --bg-color: #000000; --secondary-bg: #0a0a0a; --border-color: #333333; --text-light: #ffffff; --text-muted: #aaaaaa; --accent-red: #cc0000; --font-headings: 'Spectral', serif; --font-body: 'Lato', sans-serif; --header-bg: rgba(0, 0, 0, 0.85); }
+        :root {
+            --bg-color: #000000;
+            --secondary-bg: #0a0a0a;
+            --border-color: #333333;
+            --text-light: #ffffff;
+            --text-muted: #aaaaaa;
+            --accent-red: #cc0000;
+            --font-headings: 'Spectral', serif;
+            --font-body: 'Lato', sans-serif;
+            --transition-speed: 0.3s;
+            --header-bg: rgba(0, 0, 0, 0.85);
+        }
+
         html { overflow-y: scroll; scrollbar-color: #333333 transparent; }
         ::-webkit-scrollbar { width: 12px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #333333; border-radius: 6px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--accent-red); }
 
-        body { font-family: var(--font-body); font-weight: 300; background-color: var(--bg-color); color: var(--text-light); margin: 0; padding: 0; line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
+        body {
+            font-family: var(--font-body); font-weight: 300; background-color: var(--bg-color); color: var(--text-light);
+            margin: 0; padding: 0; line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden;
+        }
 
         header { position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 3rem; background: var(--header-bg); border-bottom: 1px solid var(--border-color); z-index: 2000; box-sizing: border-box; backdrop-filter: blur(8px); transition: all 0.3s ease; }
         .logo img { max-width: 180px; height: auto; }
@@ -40,6 +55,7 @@
         .mobile-controls { display: none; align-items: center; gap: 15px; z-index: 1005; }
         .mobile-cart-btn { color: var(--accent-red); border: 1px solid var(--accent-red); padding: 0.4rem 0.8rem; border-radius: 3px; text-decoration: none; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-body); transition: all 0.3s ease; }
         .mobile-cart-btn:hover { background: var(--accent-red); color: #ffffff; }
+
         .mobile-menu-toggle { display: flex; flex-direction: column; cursor: pointer; gap: 5px; }
         .mobile-menu-toggle span { width: 25px; height: 3px; background-color: #ffffff; transition: all 0.3s ease; border-radius: 3px; }
         
@@ -57,20 +73,30 @@
         }
 
         main { padding-top: 85px; flex-grow: 1; display: flex; flex-direction: column; }
-        .wholesale-banner { background: #222; color: var(--accent-red); border-bottom: 1px solid #333; text-align: center; padding: 0.8rem 2rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; margin-bottom: 2rem; display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap; }
-        .exit-wholesale-btn { background: transparent; color: #fff; border: 1px solid var(--accent-red); padding: 0.4rem 1rem; font-family: 'Lato', sans-serif; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; border-radius: 3px; transition: all 0.3s ease; }
+        
+        .wholesale-banner { 
+            background: #222; color: var(--accent-red); border-bottom: 1px solid #333; text-align: center; 
+            padding: 0.8rem 2rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; 
+            margin-bottom: 2rem; display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap; 
+        }
+        
+        .exit-wholesale-btn { 
+            background: transparent; color: #fff; border: 1px solid var(--accent-red); padding: 0.4rem 1rem; 
+            font-family: 'Lato', sans-serif; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; 
+            cursor: pointer; border-radius: 3px; transition: all 0.3s ease; 
+        }
         .exit-wholesale-btn:hover { background: var(--accent-red); }
 
         .container { max-width: 1100px; margin: 0 auto 60px; padding: 0 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; min-height: 500px; }
         @media (max-width: 800px) { .container { grid-template-columns: 1fr; } }
 
-        .back-btn { background: transparent; color: var(--text-light); border: 1px solid var(--border-color); padding: 8px 20px; cursor: pointer; text-transform: uppercase; font-weight: 300; letter-spacing: 1px; border-radius: 3px; transition: border-color 0.3s, color 0.3s; text-decoration: none; display: inline-block; font-size: 0.9rem; }
+        .back-btn { background: transparent; color: var(--text-light); border: 1px solid var(--border-color); padding: 8px 20px; cursor: pointer; text-transform: uppercase; font-weight: 300; letter-spacing: 1px; border-radius: 3px; transition: border-color var(--transition-speed), color var(--transition-speed); text-decoration: none; display: inline-block; font-size: 0.9rem; }
         .back-btn:hover { border-color: var(--accent-red); color: var(--accent-red); }
 
         .gallery-main { width: 100%; aspect-ratio: 4 / 3; height: auto; background: #111; border: 1px solid var(--border-color); border-radius: 4px; margin-bottom: 15px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
         .gallery-main img { width: 100%; height: 100%; object-fit: cover; }
         .gallery-thumbs { display: flex; gap: 10px; overflow-x: auto; }
-        .gallery-thumbs img { width: 80px; height: 80px; object-fit: cover; border: 1px solid var(--border-color); border-radius: 3px; cursor: pointer; transition: 0.3s; }
+        .gallery-thumbs img { width: 80px; height: 80px; object-fit: cover; border: 1px solid var(--border-color); border-radius: 3px; cursor: pointer; transition: border-color var(--transition-speed); }
         .gallery-thumbs img:hover, .gallery-thumbs img.active { border-color: var(--accent-red); }
 
         .product-details { display: flex; flex-direction: column; }
@@ -87,14 +113,15 @@
         .variant-select select { width: 100%; padding: 15px; background: #111; color: #fff; border: 1px solid var(--border-color); border-radius: 3px; outline: none; font-family: var(--font-body); font-size: 1rem; cursor: pointer; }
         .variant-select select:focus { border-color: var(--accent-red); }
 
-        .add-cart-btn { width: 100%; padding: 18px; background: var(--accent-red); color: #fff; border: none; border-radius: 3px; cursor: pointer; text-transform: uppercase; font-weight: 300; letter-spacing: 1.5px; font-size: 1.1rem; transition: 0.3s; font-family: var(--font-body); }
+        .add-cart-btn { width: 100%; padding: 18px; background: var(--accent-red); color: #fff; border: none; border-radius: 3px; cursor: pointer; text-transform: uppercase; font-weight: 300; letter-spacing: 1.5px; font-size: 1.1rem; transition: background var(--transition-speed); font-family: var(--font-body); }
         .add-cart-btn:hover:not(:disabled) { background: #e60000; }
         .add-cart-btn:disabled { background: #333; color: #777; cursor: not-allowed; }
 
+        /* Stock Alert */
         .stock-alert-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.8); z-index: 4000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
         .stock-alert-box { background: #0a0a0a; border: 1px solid var(--accent-red); padding: 2.5rem; border-radius: 4px; max-width: 400px; width: 90%; text-align: center; color: #fff; box-shadow: 0 10px 30px rgba(204,0,0,0.15); }
         .stock-alert-box p { margin-bottom: 2rem; font-size: 1.1rem; }
-        .stock-alert-btn { background: var(--accent-red); color: #fff; border: none; padding: 1rem 2rem; text-transform: uppercase; font-weight: 300; letter-spacing: 1px; cursor: pointer; border-radius: 3px; transition: 0.3s; width: 100%; font-family: var(--font-body); }
+        .stock-alert-btn { background: var(--accent-red); color: #fff; border: none; padding: 1rem 2rem; text-transform: uppercase; font-weight: 300; letter-spacing: 1px; cursor: pointer; border-radius: 3px; transition: background 0.3s ease; width: 100%; font-family: var(--font-body); }
         .stock-alert-btn:hover { background: #e60000; }
 
         footer { background: #000000; color: #ffffff; padding: 4rem 2rem; text-align: center; border-top: 1px solid #222; margin-top: auto; }
@@ -151,6 +178,7 @@
         </div>
     </main>
 
+    <!-- Custom Stock Alert Modal -->
     <div id="stock-alert" class="stock-alert-overlay">
         <div class="stock-alert-box">
             <h2 style="margin-top: 0; color: var(--accent-red);">Stock Limit Reached</h2>
@@ -207,7 +235,10 @@
         const mobileToggle = document.getElementById('mobile-toggle');
         const navList = document.getElementById('nav-list');
         if (mobileToggle && navList) {
-            mobileToggle.addEventListener('click', () => { navList.classList.toggle('mobile-active'); });
+            mobileToggle.addEventListener('click', () => {
+                navList.classList.toggle('mobile-active');
+                mobileToggle.classList.toggle('open');
+            });
         }
 
         const header = document.getElementById('main-header');
@@ -239,7 +270,7 @@
                     const lines = block.split('\n');
                     
                     let product = { 
-                        basePrice: 0, sections: '', size: '', materials: '', images: '',
+                        basePrice: 0, sections: [], size: '', materials: '', images: '',
                         stock: 10, stockS: 10, stockM: 10, stockL: 10, stockXL: 10, stockXXL: 10 
                     }; 
                     let isParsingDesc = false;
@@ -254,7 +285,7 @@
                                 if (key === 'title') product.title = value;
                                 else if (key === 'main image') product.mainImage = value.replace(/^\.\//, '').replace(/^images\//, '');
                                 else if (key === 'images') product.images = value.split(',').map(i => i.trim().replace(/^\.\//, '').replace(/^images\//, '')).join(',');
-                                else if (key === 'sections') product.sections = value;
+                                else if (key === 'sections') product.sections = value.split(',').map(s => s.trim());
                                 else if (key === 'size') product.size = value;
                                 else if (key === 'materials') product.materials = value;
                                 else if (key === 'postal class') product.postalClass = value;
@@ -307,7 +338,9 @@
         function renderProduct() {
             let galleryImages = [];
             
-            if(currentProduct.mainImage) galleryImages.push(`images/${currentProduct.mainImage}`);
+            if(currentProduct.mainImage) {
+                galleryImages.push(`images/${currentProduct.mainImage}`);
+            }
             if(currentProduct.images) {
                 const extras = currentProduct.images.split(',').map(img => `images/${img.trim()}`).filter(Boolean);
                 galleryImages = galleryImages.concat(extras);
@@ -330,7 +363,7 @@
                 metaHtml += `</ul>`;
             }
 
-            const isTshirt = currentProduct.sections && currentProduct.sections.toLowerCase().includes('t-shirts');
+            const isTshirt = currentProduct.sections && currentProduct.sections.some(s => s.toLowerCase().includes('t-shirts'));
             let formHtml = '';
 
             if (isTshirt) {
@@ -397,7 +430,7 @@
         };
 
         window.addToCartAction = function() {
-            const isTshirt = currentProduct.sections && currentProduct.sections.toLowerCase().includes('t-shirts');
+            const isTshirt = currentProduct.sections && currentProduct.sections.some(s => s.toLowerCase().includes('t-shirts'));
             let selectedSize = null;
 
             if (isTshirt) {
