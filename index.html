@@ -6,12 +6,10 @@
     <title>The Folklore Box | British Folklore Illustrations & Zines</title>
     <meta name="description" content="Shop handmade wooden decorations, art prints, apparel, and SHUCK zine by illustrator Matt Willis. Discover art inspired by British folklore and Norfolk myths.">
     
-    <!-- Google Fonts: Lato Light (300) and Spectral Regular (400) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;600&family=Spectral:wght@400&display=swap" rel="stylesheet">
     
-    <!-- REQUIRED FOR CHECKOUT: EmailJS & PayPal SDKs -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script type="text/javascript">
        (function(){ emailjs.init({ publicKey: "qI6ltlwzFXECV29P8", }); })();
@@ -19,13 +17,9 @@
     <script src="https://www.paypal.com/sdk/js?client-id=BAAyFEECFHCgIYSVAcx3GUqT0FI1rHhhU_mwYJxRf6ngeAPN3zYdx3W4a1tCIEHivTFLxU7oFEeDD1NIIs&currency=GBP&locale=en_GB"></script>
 
     <style>
-        /* Base Colors & Typography */
         :root { --bg-color: #000000; --text-color: #ffffff; --accent-red: #cc0000; --header-bg: rgba(0, 0, 0, 0.85); --font-body: 'Lato', sans-serif; }
         
-        /* Force scrollbar space to stop judder, but make the track invisible */
         html { overflow-y: scroll; scrollbar-color: #333333 transparent; }
-
-        /* WebKit (Chrome, Safari, Edge) Custom Scrollbar */
         ::-webkit-scrollbar { width: 12px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #333333; border-radius: 6px; }
@@ -34,11 +28,9 @@
         body { font-family: var(--font-body); font-weight: 300; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 0; line-height: 1.6; overflow-x: hidden; }
         h1, h2, h3, h4, h5, h6 { font-family: 'Spectral', serif; font-weight: 400; color: #ffffff;  }
 
-        /* Fixed Header */
         header { position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 3rem; background: var(--header-bg); border-bottom: 1px solid #333333; z-index: 1000; box-sizing: border-box; backdrop-filter: blur(8px); transition: all 0.3s ease; }
         .logo img { max-width: 180px; height: auto; }
 
-        /* Navigation */
         nav ul { list-style: none; display: flex; align-items: center; gap: 2rem; margin: 0; padding: 0; }
         nav a { text-decoration: none; color: #ffffff; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; transition: color 0.3s ease; font-family: var(--font-body); white-space: nowrap; }
         nav a:hover { color: var(--accent-red); }
@@ -46,7 +38,6 @@
         #cart-toggle { color: var(--accent-red); border: 1px solid var(--accent-red); padding: 0.5rem 1rem; border-radius: 3px; }
         #cart-toggle:hover { background: var(--accent-red); color: #ffffff; }
 
-        /* Dropdown */
         .dropdown { position: relative; display: inline-block; }
         .dropdown-content { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background-color: var(--accent-red); min-width: 180px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5); z-index: 1001; border-radius: 4px; flex-direction: column; margin-top: 1.5rem; padding: 0.5rem 0; }
         .dropdown-content::before { content: ""; position: absolute; top: -1.5rem; left: 0; width: 100%; height: 1.5rem; }
@@ -55,7 +46,6 @@
         .dropdown-content a:hover { background-color: #a30000; color: #ffffff; }
         .dropdown-divider { height: 1px; background-color: #ffffff; margin: 0 15px; }
 
-        /* Mobile Menu */
         .mobile-controls { display: none; align-items: center; gap: 15px; z-index: 1005; }
         .mobile-cart-btn { color: var(--accent-red); border: 1px solid var(--accent-red); padding: 0.4rem 0.8rem; border-radius: 3px; text-decoration: none; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-body); transition: all 0.3s ease; }
         .mobile-cart-btn:hover { background: var(--accent-red); color: #ffffff; }
@@ -77,32 +67,18 @@
             .mobile-menu-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
         }
 
-        /* Layout */
         main { padding-top: 0px; }
         .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
         section { margin-bottom: 2.5rem; scroll-margin-top: 100px; }
 
-        /* --- FOLKLORE BOX FLOATING BUTTON --- */
         .floating-newsletter-btn { position: fixed; top: 50%; right: 20px; transform: translateY(-50%); background: var(--accent-red, #cc0000); width: 110px; height: 110px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; color: #ffffff; font-family: var(--font-body); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; line-height: 1.3; cursor: pointer; z-index: 1001; box-shadow: 0 4px 15px rgba(204, 0, 0, 0.4); transition: transform 0.3s ease, background 0.3s ease; padding: 10px; box-sizing: border-box; }
         .floating-newsletter-btn:hover { transform: translateY(-50%) scale(1.1); background: #a30000; }
 
-        /* Mobile specific bottom-right override for Newsletter button */
         @media (max-width: 800px) {
-            .floating-newsletter-btn {
-                top: auto; 
-                bottom: 20px; 
-                right: 20px; 
-                transform: none; 
-                width: 90px; 
-                height: 90px; 
-                font-size: 0.65rem;
-            }
-            .floating-newsletter-btn:hover { 
-                transform: scale(1.1); 
-            }
+            .floating-newsletter-btn { top: auto; bottom: 20px; right: 20px; transform: none; width: 90px; height: 90px; font-size: 0.65rem; }
+            .floating-newsletter-btn:hover { transform: scale(1.1); }
         }
 
-        /* --- FOLKLORE BOX MODAL --- */
         #newsletter-backdrop { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); z-index: 2999; backdrop-filter: blur(4px); }
         #newsletter-modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 3000; width: 90%; max-width: 450px; background: #0a0a0a; padding: 3rem 2rem; border: 1px solid #333; border-radius: 4px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.9); }
         #newsletter-modal .close-modal { position: absolute; top: 15px; right: 20px; color: #aaa; font-size: 2rem; cursor: pointer; transition: color 0.3s ease; line-height: 1; }
@@ -115,58 +91,30 @@
         #newsletter-modal button { background: var(--accent-red, #cc0000); color: #ffffff; border: none; padding: 1rem; font-family: var(--font-body); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border-radius: 3px; cursor: pointer; transition: all 0.3s ease; }
         #newsletter-modal button:hover { background: #e60000; transform: translateY(-2px); }
 
-        /* Full-Width Carousel */
         .carousel-container { position: relative; width: 100vw; aspect-ratio: 1920 / 505; min-height: 250px; margin-top: 70px; overflow: hidden; background-color: #000; }
         .carousel-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out; background-size: cover; background-position: center; background-repeat: no-repeat; background-image: var(--desktop-bg); }
         .carousel-slide.active { opacity: 1; z-index: 10; }
 
-        /* Carousel Overlay */
         .carousel-overlay { position: absolute; bottom: 15%; left: 5%; background: rgba(0, 0, 0, 0.75); border: 1px solid rgba(255, 255, 255, 0.15); padding: 2.5rem; border-radius: 4px; max-width: 500px; z-index: 20; display: flex; flex-direction: column; gap: 0.5rem; backdrop-filter: blur(5px); }
         .carousel-overlay h2 { font-size: 0.9rem; margin: 0; letter-spacing: 2px; color: var(--accent-red); text-transform: uppercase; }
         .carousel-overlay h3 { font-size: 2.2rem; margin: 0 0 0.5rem 0; line-height: 1.2; }
         .overlay-bottom { display: flex; align-items: flex-end; justify-content: space-between; margin-top: 0.5rem; }
         .overlay-bottom p { font-size: 1rem; flex: 1; margin: 0; color: #ddd; }
 
-        /* Carousel Navigation Arrows */
         .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0, 0, 0, 0.7); color: #fff; border: 1px solid rgba(255, 255, 255, 0.3); width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; z-index: 30; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; }
         .carousel-arrow:hover { background: var(--accent-red); border-color: var(--accent-red); }
         .arrow-left { left: 20px; }
         .arrow-right { right: 20px; }
 
-        /* Mobile Carousel Adjustments */
         @media (max-width: 768px) {
-            .carousel-container { 
-                aspect-ratio: unset; 
-                height: calc(48.6vw + 200px);  
-                min-height: auto; 
-            }
-            .carousel-slide { 
-                background-image: var(--mobile-bg) !important; 
-                background-position: top center !important; 
-                background-size: contain !important; 
-            }
-            .carousel-overlay { 
-                position: absolute; 
-                top: 48.6vw; 
-                bottom: 0; 
-                left: 0; 
-                width: 100%; 
-                box-sizing: border-box; 
-                max-width: none; 
-                background: var(--bg-color); 
-                border: none; 
-                border-top: 1px solid #222; 
-                border-radius: 0; 
-                padding: 1.5rem; 
-                backdrop-filter: none; 
-                justify-content: flex-start; 
-            }
+            .carousel-container { aspect-ratio: unset; height: calc(48.6vw + 200px); min-height: auto; }
+            .carousel-slide { background-image: var(--mobile-bg) !important; background-position: top center !important; background-size: contain !important; }
+            .carousel-overlay { position: absolute; top: 48.6vw; bottom: 0; left: 0; width: 100%; box-sizing: border-box; max-width: none; background: var(--bg-color); border: none; border-top: 1px solid #222; border-radius: 0; padding: 1.5rem; backdrop-filter: none; justify-content: flex-start; }
             .carousel-arrow { top: 24.3vw; width: 35px; height: 35px; font-size: 1rem; }
             .carousel-overlay h3 { font-size: 1.8rem; }
             .overlay-bottom p { font-size: 0.95rem; }
         }
 
-        /* Typography & Elements */
         h2 { font-size: 2.2rem; margin-bottom: 2rem; padding-bottom: 0.5rem; display: inline-block; position: relative; }
         #collections h2 { margin-bottom: 2rem; }
         #about h2 { margin-bottom: 2rem; }
@@ -176,12 +124,10 @@
         .btn { display: inline-block; background: var(--accent-red); color: #fff; padding: 1rem 2rem; text-decoration: none; font-family: var(--font-body); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border-radius: 3px; transition: background 0.3s ease, transform 0.2s ease; }
         .btn:hover { background: #e60000; transform: translateY(-2px); }
 
-        /* Grid, Map & Text Base Styles */
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
         .grid-item h3 { font-size: 1.5rem; margin-top: 0; transition: color 0.3s ease; }
         .about-text { max-width: 800px; font-size: 1.2rem; line-height: 1.8; margin-bottom: 2rem; color: #dddddd; transition: color 0.3s ease; }
         
-        /* Interactive Links & Image Hovers */
         .interactive-link { display: block; text-decoration: none; color: inherit; }
         .image-wrapper { overflow: hidden; border-radius: 4px; margin-bottom: 1.5rem; }
         .map-link .image-wrapper { margin-bottom: 2rem; }
@@ -190,13 +136,11 @@
         .interactive-link:hover .grid-image, .interactive-link:hover .map-teaser-img { transform: scale(1.05); }
         .interactive-link:hover h3, .interactive-link:hover .about-text { color: var(--accent-red); }
 
-        /* Footer */
         footer { background: #000000; color: #ffffff; padding: 4rem 2rem; text-align: center; border-top: 1px solid #222; }
         footer a { color: #ffffff; text-decoration: none; margin: 0 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
         footer a:hover { color: var(--accent-red); }
         .social-links { margin-bottom: 2rem; }
 
-        /* --- Animations --- */
         .animate-on-scroll { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
         .animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
         .grid-item:nth-child(1) { transition-delay: 0.1s; }
@@ -239,20 +183,15 @@
     </header>
 
     <main>
-        
         <!-- Full Width Hero Carousel -->
         <section class="carousel-container animate-on-scroll" id="dynamic-carousel">
             <button class="carousel-arrow arrow-left" onclick="moveSlide(-1)">&#10094;</button>
             <button class="carousel-arrow arrow-right" onclick="moveSlide(1)">&#10095;</button>
             
-            <div id="carousel-slides-container">
-                <!-- Slides will be dynamically injected here -->
-            </div>
+            <div id="carousel-slides-container"></div>
         </section>
 
-        <!-- Container for remaining sections -->
         <div class="container">
-            
             <!-- Featured Collections Grid -->
             <section id="collections" class="collections">
                 <h2 class="animate-on-scroll">Goods & Wares</h2>
@@ -312,7 +251,6 @@
                 </a>
                 <a href="uk-folklore-map.html" class="btn">Explore the Map</a>
             </section>
-
         </div>
     </main>
 
@@ -334,7 +272,6 @@
 
     <!-- Interactive Scripts -->
     <script>
-        // --- 0. PREVENT SCROLL CREEP ON REFRESH ---
         if ('scrollRestoration' in history) {
             history.scrollRestoration = 'manual';
             window.scrollTo(0, 0);
@@ -342,7 +279,6 @@
 
         document.addEventListener("DOMContentLoaded", async () => {
             
-           // --- 1. DYNAMIC CAROUSEL LOGIC ---
             async function loadCarousel() {
                 const container = document.getElementById('carousel-slides-container');
                 if(!container) return;
@@ -360,7 +296,6 @@
                     slidesRaw.forEach(rawSlide => {
                         if(!rawSlide.trim()) return;
                         
-                        // Added showText parameter with a default of true
                         let slide = { slideNum: 0, format: "", heading: "", desc: "", image: "", showText: true };
                         
                         rawSlide.trim().split('\n').forEach(line => {
@@ -373,7 +308,6 @@
                                 if(key === 'heading') slide.heading = val;
                                 if(key === 'description') slide.desc = val;
                                 if(key === 'image') slide.image = val;
-                                // Parse the new show text property
                                 if(key === 'show text') slide.showText = (val === 'true'); 
                             }
                         });
@@ -381,11 +315,9 @@
                         if (slide.heading || slide.image) {
                             const isActive = slideIndex === 0 ? "active" : "";
                             const imageUrlWithBuster = `${slide.image}?v=${cacheBuster}`;
-                            
                             const currentNum = slide.slideNum || (slideIndex + 1);
                             const mobileImageUrl = `./images/carousel-${currentNum}-mobile.jpg?v=${cacheBuster}`;
                             
-                            // Conditionally build the overlay HTML only if showText is true
                             const overlayHtml = slide.showText ? `
                                 <div class="carousel-overlay">
                                     <h2>${slide.format || ''}</h2>
@@ -449,13 +381,7 @@
 
             loadCarousel();
 
-            // --- Scroll Animations Logic ---
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.15 
-            };
-
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -469,7 +395,6 @@
                 observer.observe(element);
             });
 
-            // --- Header Scroll Effect ---
             const header = document.getElementById('main-header');
             window.addEventListener('scroll', () => {
                 if (window.scrollY > 50) {
@@ -481,19 +406,8 @@
                 }
             });
 
-            // --- Mobile Menu Toggle Script ---
-            const mobileToggle = document.getElementById('mobile-toggle');
-            const navList = document.getElementById('nav-list');
-            if (mobileToggle && navList) {
-                mobileToggle.addEventListener('click', () => {
-                    navList.classList.toggle('mobile-active');
-                    mobileToggle.classList.toggle('open');
-                });
-            }
-
         });
 
-        // --- Newsletter Modal Logic ---
         window.openNewsletterModal = function(event) {
             if(event) event.preventDefault();
             document.getElementById('newsletter-backdrop').style.display = 'block';
@@ -513,27 +427,21 @@
             const btn = document.getElementById('newsletter-submit-btn');
             btn.innerText = 'Success! Welcome to the Archives.';
             btn.style.background = 'var(--secondary-green, #2b3d1b)'; 
-            
             setTimeout(closeNewsletterModal, 2500);
         };
     </script>
     
-    <!-- Floating Button -->
     <div class="floating-newsletter-btn" onclick="openNewsletterModal(event)" title="Join the Newsletter">
         Join the mailing<br>list here.
     </div>
 
-    <!-- Modal & Backdrop -->
     <div id="newsletter-backdrop" onclick="closeNewsletterModal()"></div>
     <div id="newsletter-modal">
         <span class="close-modal" onclick="closeNewsletterModal()">×</span>
         <h3>Join the Archives</h3>
         <p>Sign up for updates on new lore, original artwork, and upcoming issues of SHUCK.</p>
         
-        <!-- The Invisible Iframe Trick -->
         <iframe name="hidden_mailerlite" style="display:none;"></iframe>
-        
-        <!-- PASTE YOUR MAILERLITE URL HERE -->
         <form action="YOUR_MAILERLITE_URL_HERE" method="post" target="hidden_mailerlite" onsubmit="showSuccessState()">
             <input type="email" name="fields[email]" placeholder="Enter your email address" required>
             <button type="submit" id="newsletter-submit-btn">Subscribe</button>
