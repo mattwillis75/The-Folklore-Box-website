@@ -5126,7 +5126,7 @@ Images: images/IMG_5411.jpg, images/IMG_5414.jpg
 Sections: Badges
 Size: 50 x 50 x 3mm
 Materials: birch plywood, black paint, metal
-Postal Class: First Class Letter
+Postal Class: Wooden Badges
 Item Cost: 8
 Stock: 10
 Stock S: 10
