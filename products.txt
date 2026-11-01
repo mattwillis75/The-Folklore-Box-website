@@ -5020,7 +5020,7 @@ Images: images/IMG_5383.jpg, images/IMG_5384.jpg, images/IMG_5385.jpg, images/IM
 Sections: Hanging Decorations
 Size: 90 x 210 x 3mm
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Second Class Large Letter
+Postal Class: Hanging Decorations
 Item Cost: 20
 Stock: 10
 Stock S: 10
