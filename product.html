@@ -200,7 +200,7 @@
         <p style="font-size: 0.8rem; color: #555; font-family: 'Lato', sans-serif;">&copy; 2026 The Folklore Box by Matt Willis. All rights reserved.</p>
     </footer>
 
-    <script>
+   <script>
         const isWholesale = sessionStorage.getItem('wholesaleAuthenticated') === 'true';
         let cartKey = 'folkloreCart';
         let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
@@ -366,6 +366,14 @@
             const isTshirt = currentProduct.sections && currentProduct.sections.some(s => s.toLowerCase().includes('t-shirts'));
             let formHtml = '';
 
+            // NEW: Adding the Notes HTML field
+            let notesHtml = `
+                <div style="margin-bottom: 20px;">
+                    <label for="product-notes" style="display:block; margin-bottom:8px; font-weight:600; text-transform:uppercase; font-size:0.85rem; letter-spacing:1px;">Personalisation / Notes (Optional)</label>
+                    <textarea id="product-notes" rows="3" placeholder="Add a gift message or special request..." style="width: 100%; padding: 15px; background: #111; color: #fff; border: 1px solid var(--border-color); border-radius: 3px; outline: none; font-family: var(--font-body); font-size: 1rem; box-sizing: border-box; resize: vertical;"></textarea>
+                </div>
+            `;
+
             if (isTshirt) {
                 formHtml = `
                     <div class="variant-select">
@@ -416,6 +424,7 @@
                         ${metaHtml}
                     </div>
                     <div style="margin-top: 20px;">
+                        ${notesHtml}
                         ${formHtml}
                     </div>
                 </div>
@@ -432,6 +441,8 @@
         window.addToCartAction = function() {
             const isTshirt = currentProduct.sections && currentProduct.sections.some(s => s.toLowerCase().includes('t-shirts'));
             let selectedSize = null;
+            // NEW: Grab the text from the notes field
+            let itemNotes = document.getElementById('product-notes') ? document.getElementById('product-notes').value.trim() : '';
 
             if (isTshirt) {
                 const sizeSelect = document.getElementById('tshirt-size');
@@ -441,10 +452,11 @@
                     return;
                 }
             }
-            addToSmartCart(currentProduct.id, currentProduct.title, currentProduct.basePrice, currentProduct.postalClass, selectedSize);
+            addToSmartCart(currentProduct.id, currentProduct.title, currentProduct.basePrice, currentProduct.postalClass, selectedSize, itemNotes);
         };
 
-        window.addToSmartCart = function(id, title, price, postalClass, size = null) {
+        // NEW: Accept the 'notes' parameter
+        window.addToSmartCart = function(id, title, price, postalClass, size = null, notes = '') {
             const productData = allProducts.find(p => p.id === id);
             let maxStock = 10;
             if (productData) {
@@ -456,7 +468,11 @@
                 else maxStock = productData.stock;
             }
             
-            const cartItemId = size ? `${id}-${size}` : id;
+            // NEW: If a customer orders 2 items but with DIFFERENT notes, they need to be treated as separate rows in the cart.
+            // This creates a safe, unique cartItemId by appending a snippet of the note text to the ID.
+            const safeNotesId = notes ? '-' + notes.replace(/[^a-zA-Z0-9]/g, '').substring(0, 10) : '';
+            const cartItemId = size ? `${id}-${size}${safeNotesId}` : `${id}${safeNotesId}`;
+
             let existingItem = cart.find(item => (item.cartItemId || item.id) === cartItemId);
             let currentQty = existingItem ? existingItem.quantity : 0;
 
@@ -469,7 +485,8 @@
             if (existingItem) {
                 existingItem.quantity += 1;
             } else {
-                cart.push({ id, cartItemId, title, price: price, postalClass, size, quantity: 1 });
+                // NEW: Push 'notes' into the localStorage array
+                cart.push({ id, cartItemId, title, price: price, postalClass, size, notes: notes, quantity: 1 });
             }
             
             localStorage.setItem(cartKey, JSON.stringify(cart));
