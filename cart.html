@@ -373,7 +373,22 @@
                                     total_paid: totalPaidText
                                 };
 
-                                if (typeof emailjs !== 'undefined') emailjs.send('service_zmm27cb', 'template_ld7uqbh', templateParams).catch(err => console.error('Email failed...', err));
+                                if (typeof emailjs !== 'undefined') {
+                                    emailjs.send('service_zmm27cb', 'template_ld7uqbh', templateParams)
+                                        .catch(err => console.error('Customer email failed...', err));
+                                    
+                                    // Optional Option 2 Admin Email (if you set it up):
+                                    // const adminParams = {
+                                    //     customer_name: details.payer.name.given_name,
+                                    //     customer_email: details.payer.email_address,
+                                    //     order_details: orderBreakdown,
+                                    //     shipping_cost: shippingCostText,
+                                    //     total_paid: totalPaidText,
+                                    //     reply_to: details.payer.email_address
+                                    // };
+                                    // emailjs.send('service_zmm27cb', 'YOUR_ADMIN_TEMPLATE_ID', adminParams)
+                                    //     .catch(err => console.error('Admin email failed...', err));
+                                }
 
                                 let shippingAddress = "No address provided";
                                 let flatAddress = "No address provided";
@@ -413,7 +428,8 @@
                                     order_id: details.id
                                 };
 
-                                const scriptURL = 'https://script.google.com/macros/s/AKfycbwaaQwZh7OD_ZL6kuEeehNUBjxVwfAdQfNrPd8yMajBVRUQKfJxi-H97TWeODqQ-yfN/exec';
+                                // RESTORED SCRIPT URL: Using the exact URL confirmed working previously
+                                const scriptURL = 'https://script.google.com/macros/s/AKfycbxIAMXu3CEUXHFeF7gkJBRSgIyU54EPMFJ11Xdnhq_8-wWMXwnOfw21K8XcihswYhUYWw/exec';
                                 
                                 fetch(scriptURL, {
                                     method: 'POST',
