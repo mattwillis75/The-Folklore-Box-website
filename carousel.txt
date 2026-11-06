@@ -1,30 +1,30 @@
 Slide: 1
-Format: SHOP UPDATE
-Heading: Standing Stones
-Description: New Standing Stones products available in The Folklore Box shop.
-Image: images/Etsy Header Witches Folklore Box Launch website.jpg
+Format: 
+Heading: 
+Description: 
+Image: images/Krampus tide.jpg
 Show Text: false
 ---
 Slide: 2
+Format: SHOP UPDATE
+Heading: Standing Stones
+Description: New Standing Stones products available in The Folklore Box shop.
+Image: images/Mari Lwyd Web Header.jpg
+Show Text: false
+---
+Slide: 3
 Format: 
 Heading: 
 Description: 
 Image: images/Etsy Header 1.jpg
 Show Text: false
 ---
-Slide: 3
+Slide: 4
 Format: Shop Update
 Heading: Black Shuck T-Shirts
 Description: My new Black Shuck T-Shirts  are on my shop page!
 Image: images/Carousel-1.jpg
 Show Text: true
----
-Slide: 4
-Format: 
-Heading: 
-Description: 
-Image: images/Krampus tide.jpg
-Show Text: false
 ---
 Slide: 5
 Format: GEEGAW
