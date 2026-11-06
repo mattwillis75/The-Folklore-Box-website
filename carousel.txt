@@ -20,11 +20,11 @@ Image: images/Carousel-1.jpg
 Show Text: true
 ---
 Slide: 4
-Format: GEEGAW
-Heading: Wooden Standing Decorations
-Description: Available from The Folklore Box shop.
-Image: images/carousel-3.jpg
-Show Text: true
+Format: 
+Heading: 
+Description: 
+Image: images/Krampus tide.jpg
+Show Text: false
 ---
 Slide: 5
 Format: GEEGAW
