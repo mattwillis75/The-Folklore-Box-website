@@ -4,6 +4,7 @@ Heading:
 Description: 
 Image: images/Krampus tide.jpg
 Show Text: false
+Category: Krampus
 ---
 Slide: 2
 Format: SHOP UPDATE
