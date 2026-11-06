@@ -7,10 +7,11 @@ Show Text: false
 ---
 Slide: 2
 Format: SHOP UPDATE
-Heading: Standing Stones
-Description: New Standing Stones products available in The Folklore Box shop.
+Heading: Mari Lwyd
+Description: Mari Lwyd items available at The Folklore Box
 Image: images/Mari Lwyd Web Header.jpg
 Show Text: false
+Category: Mari Lwyd
 ---
 Slide: 3
 Format: 
