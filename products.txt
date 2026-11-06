@@ -41,7 +41,7 @@ The utmost care is taken with the packaging so this piece will be suitable to se
 Title: New Mari Lwyd Horse Skull Hanging Decoration – Welsh Folklore Art
 Main Image: images/IMG_5391.jpg
 Images: images/IMG_5392.jpg, images/IMG_5393.jpg, images/IMG_5422.jpg
-Sections: Hanging Decorations
+Sections: Hanging Decorations, Mari Lwyd
 Size: 60 x 90 x 3mm
 Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Hanging Decorations
@@ -107,7 +107,7 @@ The utmost care is taken with the packaging so this piece will be suitable to se
 Title: MULTIBUY x3 Hanging Decorations
 Main Image: images/hanging-multibuy-x3-hanging-1.jpg
 Images: images/hanging-multibuy-x3-hanging-2.jpg, images/hanging-multibuy-x3-hanging-3.jpg, images/hanging-multibuy-x3-hanging-4.jpg, images/hanging-multibuy-x3-hanging-5.jpg, images/hanging-multibuy-x3-hanging-6.jpg, images/hanging-multibuy-x3-hanging-7.jpg, images/hanging-multibuy-x3-hanging-8.jpg, images/hanging-multibuy-x3-hanging-9.jpg, images/hanging-multibuy-x3-hanging-10.jpg
-Sections: Hanging Decorations
+Sections: Hanging Decorations, Mari Lwyd
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Hanging Decorations
@@ -134,7 +134,7 @@ Images: images/hanging-multibuy-x5-hanging-2.jpg, images/hanging-multibuy-x5-han
 Sections: Hanging Decorations
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
-Postal Class: Hanging Decorations
+Postal Class: Hanging Decorations, Mari Lwyd
 Item Cost: 60
 Stock: 10
 Stock S: 10
@@ -206,7 +206,7 @@ Images: images/IMG_5408.jpg, images/IMG_5414.jpg
 Sections: Badges
 Size: 50 x 50 x 3mm
 Materials: birch plywood, black paint, metal
-Postal Class: Wooden Badges
+Postal Class: Wooden Badges, Mari Lwyd
 Item Cost: 8
 Stock: 10
 Stock S: 10
@@ -3261,7 +3261,7 @@ If you purchase along with other items from my shop and a "do not bend envelope"
 Title: Mari Lwyd A4 Print – Welsh Winter Folklore, Hobby Horse
 Main Image: images/print-a4-mari-lwyd-welsh-1.jpg
 Images: 
-Sections: A4 Art Prints
+Sections: A4 Art Prints, Mari Lwyd
 Size: Standard
 Materials: 350gsm card, ink
 Postal Class: Second Class Large Letter
@@ -3815,7 +3815,7 @@ Thanks for looking!
 Title: Wassail! A4 Print - Wassailing - Mari Lwyd - Twelfth Night - Folklore
 Main Image: images/print-a4-wassail-wassailing-mari-1.jpg
 Images: images/print-a4-wassail-wassailing-mari-2.jpg
-Sections: A4 Art Prints
+Sections: A4 Art Prints, Mari Lwyd
 Size: Standard
 Materials: 350gsm card, ink
 Postal Class: Second Class Large Letter
@@ -4336,7 +4336,7 @@ All my cards come in a recyclable cellophane bag and are sent in rigid protectiv
 Title: Mari Lywd Greetings Card - Gothic Skull Horse Art by Matt Willis
 Main Image: images/card-mari-lywd-greetings-1.jpg
 Images: 
-Sections: Greetings Cards
+Sections: Greetings Cards, Mari Lwyd
 Size: Standard
 Materials: 350gsm card, ink
 Postal Class: Second Class Letter
@@ -4892,7 +4892,7 @@ The uptmost care is taken with the packaging so this piece will be suitable to s
 Title: Mari Lwyd Horse Skull Hanging Decoration – Welsh Folklore Art
 Main Image: images/hanging-mari-lwyd-horse-1.jpg
 Images: images/hanging-mari-lwyd-horse-2.jpg, images/hanging-mari-lwyd-horse-3.jpg, images/hanging-mari-lwyd-horse-4.jpg
-Sections: Hanging Decorations
+Sections: Hanging Decorations, Mari Lwyd
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Hanging Decorations
@@ -5232,7 +5232,7 @@ The packaging may differ to the photographs depending on other items in the orde
 Title: Birch Plywood Standing Decorations - Sunlit Stone, Mari Lwyd, Sheela Na Gig
 Main Image: images/standing-standing-decorations-sunlit-1.jpg
 Images: images/standing-standing-decorations-sunlit-2.jpg, images/standing-standing-decorations-sunlit-3.jpg, images/standing-standing-decorations-sunlit-4.jpg, images/standing-standing-decorations-sunlit-5.jpg, images/standing-standing-decorations-sunlit-6.jpg, images/standing-standing-decorations-sunlit-7.jpg, images/standing-standing-decorations-sunlit-8.jpg, images/standing-standing-decorations-sunlit-9.jpg
-Sections: Standing Decorations
+Sections: Standing Decorations, Mari Lwyd
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Large Letter
@@ -5282,7 +5282,7 @@ The packaging may differ to the photographs depending on other items in the orde
 Title: Mari Lwyd Decoration - Birch Plywood Welsh Hobby Horse
 Main Image: images/standing-mari-lwyd-decoration-1.jpg
 Images: images/standing-mari-lwyd-decoration-2.jpg, images/standing-mari-lwyd-decoration-3.jpg, images/standing-mari-lwyd-decoration-4.jpg, images/standing-mari-lwyd-decoration-5.jpg
-Sections: Standing Decorations
+Sections: Standing Decorations, Mari Lwyd
 Size: Standard
 Materials: birch plywood, black paint, red velvet ribbon
 Postal Class: Second Class Large Letter
