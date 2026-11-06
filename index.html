@@ -296,7 +296,8 @@
                     slidesRaw.forEach(rawSlide => {
                         if(!rawSlide.trim()) return;
                         
-                        let slide = { slideNum: 0, format: "", heading: "", desc: "", image: "", showText: true };
+                        // NEW: Added category property
+                        let slide = { slideNum: 0, format: "", heading: "", desc: "", image: "", showText: true, category: "" };
                         
                         rawSlide.trim().split('\n').forEach(line => {
                             const idx = line.indexOf(':');
@@ -309,6 +310,8 @@
                                 if(key === 'description') slide.desc = val;
                                 if(key === 'image') slide.image = val;
                                 if(key === 'show text') slide.showText = (val === 'true'); 
+                                // NEW: Extract the category if it exists in carousel.txt
+                                if(key === 'category') slide.category = val;
                             }
                         });
 
@@ -317,6 +320,10 @@
                             const imageUrlWithBuster = `${slide.image}?v=${cacheBuster}`;
                             const currentNum = slide.slideNum || (slideIndex + 1);
                             const mobileImageUrl = `./images/carousel-${currentNum}-mobile.jpg?v=${cacheBuster}`;
+                            
+                            // NEW: Setup click actions if a category was found
+                            const clickAction = slide.category ? `onclick="window.location.href='shop.html?category=${encodeURIComponent(slide.category)}'"` : '';
+                            const cursorStyle = slide.category ? 'cursor: pointer;' : '';
                             
                             const overlayHtml = slide.showText ? `
                                 <div class="carousel-overlay">
@@ -328,10 +335,12 @@
                                 </div>
                             ` : '';
                             
+                            // NEW: Injected cursorStyle and clickAction into the slide div
                             const html = `
-                            <div class="carousel-slide slide-${currentNum} ${isActive}" style="--desktop-bg: url('${imageUrlWithBuster}'); --mobile-bg: url('${mobileImageUrl}');">
+                            <div class="carousel-slide slide-${currentNum} ${isActive}" style="--desktop-bg: url('${imageUrlWithBuster}'); --mobile-bg: url('${mobileImageUrl}'); ${cursorStyle}" ${clickAction}>
                                 ${overlayHtml}
                             </div>`;
+                            
                             container.innerHTML += html;
                             slideIndex++;
                         }
@@ -343,6 +352,8 @@
                     let slideInterval;
 
                     window.moveSlide = function(step) {
+                        // Stop click event on the arrow from triggering the link on the slide below it
+                        if(event) { event.stopPropagation(); }
                         showSlide(currentSlide + step);
                         resetInterval();
                     };
