@@ -242,7 +242,7 @@
             let filteredProducts = [];
             let availableCategories = new Set();
             
-            async function initializeShop() {
+           async function initializeShop() {
                 try {
                     const response = await fetch('products.txt?v=' + new Date().getTime(), { cache: 'no-store' });
                     const text = await response.text();
@@ -280,7 +280,17 @@
                     
                     filteredProducts = [...products];
                     buildFilters();
-                    renderGrid('All');
+                    
+                    // NEW: Check the URL for a category parameter and trigger it automatically
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const urlCategory = urlParams.get('category');
+                    
+                    if (urlCategory && availableCategories.has(urlCategory)) {
+                        filterCategory(urlCategory); 
+                    } else {
+                        renderGrid('All');
+                    }
+
                 } catch (err) {
                     console.error("Error loading products:", err);
                     if (shopGrid) shopGrid.innerHTML = "<p style='color: #cc0000; text-align: center; grid-column: 1/-1;'>Unable to load shop inventory at this time.</p>";
@@ -291,9 +301,10 @@
 
             function buildFilters() {
                 if(!filterBar) return;
-                filterBar.innerHTML = `<button class="filter-btn active" onclick="filterCategory('All')">All Goods</button>`;
+                // NEW: Added 'event' argument to the onclick handlers
+                filterBar.innerHTML = `<button class="filter-btn active" onclick="filterCategory('All', event)">All Goods</button>`;
                 Array.from(availableCategories).sort().forEach(category => {
-                    filterBar.innerHTML += `<button class="filter-btn" onclick="filterCategory('${category.replace(/'/g, "\\'")}')">${category}</button>`;
+                    filterBar.innerHTML += `<button class="filter-btn" onclick="filterCategory('${category.replace(/'/g, "\\'")}', event)">${category}</button>`;
                 });
             }
 
@@ -333,9 +344,20 @@
                 });
             }
 
-            window.filterCategory = function(category) {
+            // NEW: Modified to handle programmatic URL triggers safely without breaking the click styling
+            window.filterCategory = function(category, event) {
                 document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-                event.target.classList.add('active');
+                
+                if (event && event.target) {
+                    event.target.classList.add('active'); // Manual click
+                } else {
+                    // Page load URL trigger: Find the correct button programmatically and highlight it
+                    document.querySelectorAll('.filter-btn').forEach(btn => {
+                        if (btn.innerText.trim() === category || (category === 'All' && btn.innerText.trim() === 'All Goods')) {
+                            btn.classList.add('active');
+                        }
+                    });
+                }
 
                 if (category === 'All') {
                     filteredProducts = [...products];
@@ -344,7 +366,8 @@
                 }
                 renderGrid(category);
                 
-                if(window.innerWidth <= 1000) {
+                // Only scroll if triggered by a manual click (we don't want the page jumping down randomly on load)
+                if(event && window.innerWidth <= 1000) {
                     document.querySelector('.shop-layout').scrollIntoView({ behavior: 'smooth' });
                 }
             };
