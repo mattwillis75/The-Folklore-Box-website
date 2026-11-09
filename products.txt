@@ -2525,7 +2525,7 @@ Images: images/item-all-seeing-eye-2.jpg, images/item-all-seeing-eye-3.jpg, imag
 Sections: A3 Art Prints
 Size: Standard
 Materials: Please Update
-Postal Class: Second Class Large Letter
+Postal Class: Second Class Small Parcel
 Item Cost: 16
 Stock: 10
 Stock S: 10
