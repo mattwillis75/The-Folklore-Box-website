@@ -2549,7 +2549,7 @@ Images: images/card-art-nouveau-tarot-2.jpg, images/card-art-nouveau-tarot-3.jpg
 Sections: A3 Art Prints
 Size: A3 - 297 x 420mm
 Materials: 350gsm card, ink
-Postal Class: Second Class Letter
+Postal Class: Second Class Small Parcel
 Item Cost: 16
 Stock: 10
 Stock S: 10
@@ -5351,3 +5351,4 @@ Please be aware that there may be slight differences in colouring with each piec
 The uptmost care is taken with the packaging so this piece will be suitable to send as a gift. Let me know if you would like any sentiments included in the box and I will be happy to write them for you.
 
 The packaging may differ to the photographs depending on other items in the order. Thank you card and sticker may vary due to availability.
+---
