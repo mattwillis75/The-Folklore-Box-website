@@ -47,8 +47,8 @@ Int Base: 17.00
 Int Additional: 10.00
 ---
 Class: Second Class Medium Parcel
-UK Base: 2.50
-UK Additional: 1.00
+UK Base: 5.00
+UK Additional: 1.50
 Int Base: 12.00
 Int Additional: 3.00
 ---
