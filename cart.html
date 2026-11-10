@@ -428,16 +428,19 @@
                                     order_id: details.id
                                 };
 
-                                // RESTORED SCRIPT URL: Using the exact URL confirmed working previously
-                                const scriptURL = 'https://script.google.com/macros/s/AKfycbxIAMXu3CEUXHFeF7gkJBRSgIyU54EPMFJ11Xdnhq_8-wWMXwnOfw21K8XcihswYhUYWw/exec';
-                                
-                                fetch(scriptURL, {
-                                    method: 'POST',
-                                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                                    body: JSON.stringify(sheetData)
-                                }).then(response => {
-                                    if(!response.ok) throw new Error("HTTP error " + response.status);
-                                }).catch(error => console.error('Error saving order payload:', error));
+                                // USING THE CORRECT, AUTHORIZED WEB APP URL
+const scriptURL = 'https://script.google.com/macros/s/AKfycbwaaQwZh7OD_ZL6kuEeehNUBjxVwfAdQfNrPd8yMajBVRUQKfJxi-H97TWeODqQ-yfN/exec';
+
+fetch(scriptURL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(sheetData)
+}).then(response => {
+    if(!response.ok) throw new Error("HTTP error " + response.status);
+    return response.text();
+}).then(data => {
+    console.log('Order saved to Google Sheets/Royal Mail:', data);
+}).catch(error => console.error('Error saving order payload:', error));
 
                             } catch (err) { console.error('Checkout Data Error:', err); }
 
