@@ -429,26 +429,35 @@
                                 };
 
                                 // USING THE CORRECT, AUTHORIZED WEB APP URL
-const scriptURL = 'https://script.google.com/macros/s/AKfycbwaaQwZh7OD_ZL6kuEeehNUBjxVwfAdQfNrPd8yMajBVRUQKfJxi-H97TWeODqQ-yfN/exec';
+                                const scriptURL = 'https://script.google.com/macros/s/AKfycbwaaQwZh7OD_ZL6kuEeehNUBjxVwfAdQfNrPd8yMajBVRUQKfJxi-H97TWeODqQ-yfN/exec';
 
-fetch(scriptURL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify(sheetData)
-}).then(response => {
-    if(!response.ok) throw new Error("HTTP error " + response.status);
-    return response.text();
-}).then(data => {
-    console.log('Order saved to Google Sheets/Royal Mail:', data);
-}).catch(error => console.error('Error saving order payload:', error));
+                                fetch(scriptURL, {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                                    body: JSON.stringify(sheetData)
+                                }).then(response => {
+                                    if(!response.ok) throw new Error("HTTP error " + response.status);
+                                    return response.text();
+                                }).then(data => {
+                                    console.log('Order saved to Google Sheets/Royal Mail:', data);
+                                }).catch(error => {
+                                    console.error('Error saving order payload:', error);
+                                }).finally(() => {
+                                    // 🚨 WAIT for the fetch to finish before redirecting!
+                                    alert('Payment successful! We have received your order, ' + details.payer.name.given_name + ', and an email confirmation will be sent to you shortly.');
+                                    cart = []; 
+                                    localStorage.setItem(cartKey, JSON.stringify(cart)); 
+                                    window.location.href = 'shop.html';
+                                });
 
-                            } catch (err) { console.error('Checkout Data Error:', err); }
-
-                            alert('Payment successful! We have received your order, ' + details.payer.name.given_name + ', and an email confirmation will be sent to you shortly.');
-                            
-                            cart = []; 
-                            localStorage.setItem(cartKey, JSON.stringify(cart)); 
-                            window.location.href = 'shop.html';
+                            } catch (err) { 
+                                console.error('Checkout Data Error:', err);
+                                // Fallback just in case building the payload fails
+                                alert('Payment successful! We have received your order, ' + details.payer.name.given_name + ', and an email confirmation will be sent to you shortly.');
+                                cart = []; 
+                                localStorage.setItem(cartKey, JSON.stringify(cart)); 
+                                window.location.href = 'shop.html';
+                            }
                         });
                     },
                 }).render('#paypal-button-container');
