@@ -435,11 +435,29 @@
         };
 
         window.showSuccessState = function() {
-            const btn = document.getElementById('newsletter-submit-btn');
-            btn.innerText = 'Success! Welcome to the Archives.';
-            btn.style.background = 'var(--secondary-green, #2b3d1b)'; 
-            setTimeout(closeNewsletterModal, 2500);
-        };
+    const emailInput = document.querySelector('#newsletter-modal input[type="email"]');
+    const subscriberEmail = emailInput ? emailInput.value.trim() : '';
+
+    if (subscriberEmail) {
+        fetch("https://formsubmit.co/ajax/thefolklorebox@gmail.com", {
+            method: "POST",
+            headers: { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                _subject: "New Folklore Box Newsletter Subscriber!",
+                "Subscriber Email": subscriberEmail,
+                "Signed Up On": new Date().toLocaleString('en-GB')
+            })
+        }).catch(err => console.error('Subscriber alert failed:', err));
+    }
+
+    const btn = document.getElementById('newsletter-submit-btn');
+    btn.innerText = 'Success! Welcome to the Archives.';
+    btn.style.background = 'var(--secondary-green, #2b3d1b)'; 
+    setTimeout(closeNewsletterModal, 2500);
+};
     </script>
     
     <div class="floating-newsletter-btn" onclick="openNewsletterModal(event)" title="Join the Newsletter">
