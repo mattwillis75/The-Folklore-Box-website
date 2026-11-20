@@ -272,8 +272,13 @@
                     
                     onClick: function() {
                         setTimeout(() => {
-                            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-                        }, 500); 
+                            const paypalEl = document.getElementById('paypal-button-container');
+                            if (paypalEl) {
+                                const headerOffset = 110; // Leaves room for the fixed header
+                                const topPos = paypalEl.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+                                window.scrollTo({ top: Math.max(0, topPos), behavior: 'smooth' });
+                            }
+                        }, 400); 
                     },
 
                     createOrder: function(data, actions) {
