@@ -439,20 +439,23 @@
     const subscriberEmail = emailInput ? emailInput.value.trim() : '';
 
     if (subscriberEmail) {
+        const formData = new FormData();
+        formData.append("_subject", "New Folklore Box Newsletter Subscriber!");
+        formData.append("_captcha", "false");
+        formData.append("_template", "table");
+        formData.append("Subscriber Email", subscriberEmail);
+        formData.append("Signed Up On", new Date().toLocaleString('en-GB'));
+
         fetch("https://formsubmit.co/ajax/thefolklorebox@gmail.com", {
             method: "POST",
-            headers: { 
-                'Content-Type': 'application/json',
+            body: formData,
+            headers: {
                 'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                _subject: "New Folklore Box Newsletter Subscriber!",
-                _captcha: "false",
-                _template: "table",
-                "Subscriber Email": subscriberEmail,
-                "Signed Up On": new Date().toLocaleString('en-GB')
-            })
-        }).catch(err => console.error('Subscriber alert failed:', err));
+            }
+        })
+        .then(res => res.json())
+        .then(data => console.log("FormSubmit response:", data))
+        .catch(err => console.error("Subscriber alert failed:", err));
     }
 
     const btn = document.getElementById('newsletter-submit-btn');
