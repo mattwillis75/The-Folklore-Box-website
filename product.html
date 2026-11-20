@@ -424,12 +424,12 @@
                             £${displayPrice.toFixed(2)}
                             ${isWholesale ? ' <span style="font-size: 0.9rem; color: #888;">(Wholesale)</span>' : ''}
                         </p>
+                        <div style="margin-bottom: 30px;">
+                            ${notesHtml}
+                            ${formHtml}
+                        </div>
                         <div class="product-description">${currentProduct.description || 'No description available.'}</div>
                         ${metaHtml}
-                    </div>
-                    <div style="margin-top: 20px;">
-                        ${notesHtml}
-                        ${formHtml}
                     </div>
                 </div>
             `;
